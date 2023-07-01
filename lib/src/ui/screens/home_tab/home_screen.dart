@@ -1,0 +1,187 @@
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cricket_fantacy/src/ui/screens/home_tab/fantacy_tab.dart';
+import 'package:cricket_fantacy/src/utils/color_scheme.dart';
+import 'package:cricket_fantacy/src/utils/image_utils.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/placeholder.dart';
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int _currentIndex = 0;
+
+  void changeIndex(int index) {
+    _currentIndex = index;
+    setState(() {});
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: PreferredSize(
+          preferredSize: Size.fromHeight(0),
+          child: AppBar(
+            elevation: 0,
+          )),
+      body: Column(
+        children: [
+          Container(
+            // height: MediaQuery.of(context).size.height/5,
+            width: MediaQuery.of(context).size.width / 1,
+            decoration: const BoxDecoration(
+              color: ColorConstant.primaryColor,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    // height: MediaQuery.of(context).size.height/10,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          width: MediaQuery.of(context).size.width / 4,
+                          alignment: Alignment.centerLeft,
+                          child: Image.asset(
+                            ImageUitls.Profile_icon,
+                            height: 35,
+                            width: 35,
+                          ),
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width / 3,
+                          alignment: Alignment.center,
+                          child: const Text(
+                            "My Fantacy11",
+                            style: TextStyle(
+                                color: ColorConstant.primaryWhiteColor,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width / 4,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Image.asset(
+                                ImageUitls.Notification_icon,
+                                height: 20,
+                                width: 20,
+                              ),
+                              SizedBox(
+                                width: 15,
+                              ),
+                              Image.asset(
+                                ImageUitls.Wallet_icon,
+                                height: 20,
+                                width: 20,
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Container(
+// height: MediaQuery.of(context).size.height/9,
+                      child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          changeIndex(0);
+                        },
+                        child: Container(
+                          width: MediaQuery.of(context).size.width / 2.2,
+                          height: 45,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(35),
+                            color: _currentIndex == 0
+                                ? ColorConstant.primaryWhiteColor
+                                : ColorConstant.un_selected_color,
+                          ),
+                          alignment: Alignment.center,
+                          child: const Text(
+                            "Fantacy",
+                            style: TextStyle(
+                                color: ColorConstant.primaryBlackColor,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          changeIndex(1);
+                        },
+                        child: Container(
+                          width: MediaQuery.of(context).size.width / 2.2,
+                          height: 45,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(35),
+                            color: _currentIndex == 1
+                                ? ColorConstant.primaryWhiteColor
+                                : ColorConstant.un_selected_color,
+                          ),
+                          alignment: Alignment.center,
+                          child: const Text(
+                            "Prediction",
+                            style: TextStyle(
+                                color: ColorConstant.primaryBlackColor,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                      )
+                    ],
+                  ))
+                ],
+              ),
+            ),
+          ),
+          CarouselSlider(
+              items: [
+                Container(
+                  color: ColorConstant.bg_color,
+                  child: FantacyTab(),
+                ),
+                Container(
+                  color: ColorConstant.bg_color,
+                ),
+              ],
+              options: CarouselOptions(
+                height: MediaQuery.of(context).size.height / 1.37,
+                aspectRatio: 16 / 9,
+                viewportFraction: 1.0,
+                initialPage: 0,
+                enableInfiniteScroll: false,
+                reverse: false,
+                autoPlay: false,
+                autoPlayInterval: Duration(seconds: 3),
+                autoPlayAnimationDuration: Duration(milliseconds: 800),
+                autoPlayCurve: Curves.fastOutSlowIn,
+                enlargeCenterPage: false,
+                enlargeFactor: 0.3,
+                onPageChanged: (index, reason) {
+                changeIndex(index);
+                  //controller.updateHome2Slider(index);
+                },
+                scrollDirection: Axis.horizontal,
+              )),
+        ],
+      ),
+    );
+  }
+}
