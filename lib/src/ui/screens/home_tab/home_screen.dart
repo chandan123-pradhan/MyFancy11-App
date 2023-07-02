@@ -27,6 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(0),
           child: AppBar(
+            backgroundColor: ColorConstant.primaryColor,
             elevation: 0,
           )),
       body: Column(
@@ -64,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             style: TextStyle(
                                 color: ColorConstant.primaryWhiteColor,
                                 fontSize: 18,
-                                fontWeight: FontWeight.w600),
+                                fontWeight: FontWeight.w500),
                           ),
                         ),
                         Container(
@@ -153,12 +154,16 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           CarouselSlider(
               items: [
-                Container(
+            _currentIndex==0?    Container(
                   color: ColorConstant.bg_color,
                   child: FantacyTab(),
+                ): Container(
+                  color: ColorConstant.bg_color,
+                  child: Center(child: Text("Prediction Tab")),
                 ),
                 Container(
                   color: ColorConstant.bg_color,
+                  child: Center(child: Text("Prediction Tab")),
                 ),
               ],
               options: CarouselOptions(

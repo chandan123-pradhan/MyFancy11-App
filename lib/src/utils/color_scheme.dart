@@ -7,5 +7,7 @@ class ColorConstant{
   static const Color un_selected_color=Colors.white10;
   static const Color selected_color=Colors.white70;
   static const Color disableColor=Colors.black38;
-  static Color? bg_color=Colors.red[50];
+  static const Color greenColor=Colors.green;
+  static const Color deviderColor=Colors.black12;
+  static Color? bg_color=Colors.white;
 }
