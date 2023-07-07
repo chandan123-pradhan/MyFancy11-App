@@ -1,5 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:cricket_fantacy/src/ui/screens/home_tab/upcomming_matches_dtails.dart';
+import 'package:cricket_fantacy/src/ui/screens/home_tab/upcomming_matches_details.dart';
 import 'package:cricket_fantacy/src/ui/widgets/current_match_card_widget.dart';
 import 'package:cricket_fantacy/src/ui/widgets/upcomming_matches_card_widget.dart';
 import 'package:cricket_fantacy/src/utils/color_scheme.dart';

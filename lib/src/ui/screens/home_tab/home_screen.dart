@@ -97,7 +97,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   Container(
 // height: MediaQuery.of(context).size.height/9,
-                      child: Row(
+                      child:
+                      
+                       Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       InkWell(
@@ -148,6 +150,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       )
                     ],
                   ))
+              
+              
                 ],
               ),
             ),
