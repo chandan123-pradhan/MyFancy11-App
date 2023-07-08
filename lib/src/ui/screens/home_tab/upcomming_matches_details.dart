@@ -70,7 +70,7 @@ class _UpcommingMatchesDetailsState extends State<UpcommingMatchesDetails> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
            
-           StepperWidget(),
+           StepperWidget(step: 2,),
            Container(
               height: 40,
               child: Padding(

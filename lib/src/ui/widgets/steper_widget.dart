@@ -4,8 +4,9 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
 class StepperWidget extends StatefulWidget {
-  const StepperWidget({super.key});
-
+  int step;
+  StepperWidget({required this.step});
+  
   @override
   State<StepperWidget> createState() => _StepperWidgetState();
 }
@@ -64,12 +65,29 @@ class _StepperWidgetState extends State<StepperWidget> {
                             color: ColorConstant.primaryWhiteColor,
                           ),
                         ),
+                  
+                  
                         Container(
                           width: MediaQuery.of(context).size.width / 2.41,
                           height: 2,
-                          color: ColorConstant.greenColor,
+                          color:
+                          
+                          
+                           ColorConstant.greenColor
                         ),
-                        Container(
+                     widget.step==3?  Container(
+                          height: 12,
+                          width: 12,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: ColorConstant.greenColor),
+                          alignment: Alignment.center,
+                          child: Icon(
+                            Icons.check,
+                            size: 8,
+                            color: ColorConstant.primaryWhiteColor,
+                          ),
+                        ):      Container(
                           height: 12,
                           width: 12,
                           decoration: BoxDecoration(
@@ -81,8 +99,11 @@ class _StepperWidgetState extends State<StepperWidget> {
                         Container(
                             width: MediaQuery.of(context).size.width / 2.41,
                             height: 2,
-                            color: Colors.grey[400]),
-                        Container(
+                            color: 
+                            widget.step==3?ColorConstant.greenColor:
+                            
+                            Colors.grey[400]),
+                     Container(
                           height: 12,
                           width: 12,
                           decoration: BoxDecoration(

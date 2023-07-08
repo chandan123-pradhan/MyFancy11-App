@@ -10,4 +10,5 @@ class ColorConstant{
   static const Color greenColor=Colors.green;
   static const Color deviderColor=Colors.black12;
   static Color? bg_color=Colors.white;
+  
 }

@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cricket_fantacy/src/ui/screens/home_tab/Leader_baord_tab.dart';
+import 'package:cricket_fantacy/src/ui/screens/home_tab/pick_player_screen.dart';
 import 'package:cricket_fantacy/src/ui/screens/home_tab/winning_tab_screen.dart';
 import 'package:cricket_fantacy/src/ui/widgets/mega_contest_widget.dart';
 import 'package:cricket_fantacy/src/ui/widgets/multiple_contest_widget.dart';
@@ -139,39 +140,46 @@ class _UpcommingMatchesDetailsState extends State<JoinContest> {
 
           Padding(
             padding: const EdgeInsets.all(15.0),
-            child: Container(
-              height: 35,
-              width: MediaQuery.of(context).size.width / 1,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(4),
-                  color: ColorConstant.greenColor),
-              alignment: Alignment.center,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Text(
-                    "JOIN  ",
-                    style: TextStyle(
-                        color: ColorConstant.primaryWhiteColor,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500),
-                  ),
-                  Text(
-                    "₹49",
-                    style: TextStyle(
-                        decoration: TextDecoration.lineThrough,
-                        color: Color.fromRGBO(255, 255, 255, 1),
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500),
-                  ),
-                  Text(
-                    "  ₹4",
-                    style: TextStyle(
-                        color: ColorConstant.primaryWhiteColor,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500),
-                  ),
-                ],
+            child: InkWell(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context){
+                  return const PickPlayerScreen();
+                }));
+              },
+              child: Container(
+                height: 35,
+                width: MediaQuery.of(context).size.width / 1,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4),
+                    color: ColorConstant.greenColor),
+                alignment: Alignment.center,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Text(
+                      "JOIN  ",
+                      style: TextStyle(
+                          color: ColorConstant.primaryWhiteColor,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500),
+                    ),
+                    Text(
+                      "₹49",
+                      style: TextStyle(
+                          decoration: TextDecoration.lineThrough,
+                          color: Color.fromRGBO(255, 255, 255, 1),
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500),
+                    ),
+                    Text(
+                      "  ₹4",
+                      style: TextStyle(
+                          color: ColorConstant.primaryWhiteColor,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
