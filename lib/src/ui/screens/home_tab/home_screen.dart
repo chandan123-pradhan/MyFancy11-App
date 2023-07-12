@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cricket_fantacy/src/ui/screens/auth_screens/auth_landing_page.dart';
 import 'package:cricket_fantacy/src/ui/screens/home_tab/fantacy_tab.dart';
 import 'package:cricket_fantacy/src/utils/color_scheme.dart';
 import 'package:cricket_fantacy/src/utils/image_utils.dart';
@@ -51,10 +52,17 @@ class _HomeScreenState extends State<HomeScreen> {
                         Container(
                           width: MediaQuery.of(context).size.width / 4,
                           alignment: Alignment.centerLeft,
-                          child: Image.asset(
-                            ImageUitls.Profile_icon,
-                            height: 35,
-                            width: 35,
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context){
+                                return AuthLandingPage();
+                              }));
+                            },
+                            child: Image.asset(
+                              ImageUitls.Profile_icon,
+                              height: 35,
+                              width: 35,
+                            ),
                           ),
                         ),
                         Container(

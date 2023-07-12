@@ -202,7 +202,13 @@ class _UpcommingMatchesDetailsState extends State<UpcommingMatchesDetails> {
                   Padding(
                      padding: const EdgeInsets.only(left: 15,right: 14,top: 10),
                        
-                    child: MultipleContest(),
+                    child: InkWell(
+                      onTap: (){
+                        Navigator.push(context,MaterialPageRoute(builder: (context){
+                          return JoinContest();
+                        }));
+                      },
+                      child: MultipleContest()),
                   ),
                   
                             
@@ -223,7 +229,13 @@ class _UpcommingMatchesDetailsState extends State<UpcommingMatchesDetails> {
                   Padding(
                      padding: const EdgeInsets.only(left: 15,right: 14,top: 10),
                        
-                    child: MultipleContest(),
+                    child: InkWell(
+                      onTap: (){
+                        Navigator.push(context,MaterialPageRoute(builder: (context){
+                          return JoinContest();
+                        }));
+                      },
+                      child: MultipleContest()),
                   ),
                             
                   SizedBox(height: 10,),            

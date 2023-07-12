@@ -82,7 +82,7 @@ class _UpcommingMatchCardWidgetState extends State<UpcommingMatchCardWidget> {
                         children: [
                           Container(
                             height: 30,
-                            width: 60,
+                            width: 80,
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
                                 color: Colors.black12),

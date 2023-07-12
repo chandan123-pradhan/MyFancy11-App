@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cricket_fantacy/src/ui/screens/auth_screens/auth_landing_page.dart';
 import 'package:cricket_fantacy/src/ui/screens/dashboard_screen.dart';
 import 'package:cricket_fantacy/src/utils/color_scheme.dart';
 import 'package:cricket_fantacy/src/utils/image_utils.dart';
@@ -20,7 +21,7 @@ Timer? _timer;
 void _navigateFromThisPage(){
   _timer=Timer(Duration(seconds: 2), () {
     Navigator.push(context, MaterialPageRoute(builder: (context){
-      return DashboardScreen();
+      return AuthLandingPage();
     }));
    });
 }

@@ -1,4 +1,6 @@
 import 'package:cricket_fantacy/src/ui/screens/home_tab/home_screen.dart';
+import 'package:cricket_fantacy/src/ui/screens/my_matches_tab/my_matches_tab.dart';
+import 'package:cricket_fantacy/src/ui/screens/winners_tab/winners_tab.dart';
 import 'package:cricket_fantacy/src/ui/widgets/bottom_bar_item.dart';
 import 'package:cricket_fantacy/src/utils/color_scheme.dart';
 import 'package:cricket_fantacy/src/utils/image_utils.dart';
@@ -7,7 +9,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
 class DashboardScreen extends StatefulWidget {
-  const DashboardScreen({super.key});
+  final int index;
+  DashboardScreen({required this.index});
 
   @override
   State<DashboardScreen> createState() => _DashboardScreenState();
@@ -18,21 +21,22 @@ class _DashboardScreenState extends State<DashboardScreen> {
 Widget _body=Container();
   void _changeIndex(int value) {
     _currentIndex = value;
- _body=_screens[1];
+ _body=_screens[_currentIndex];
     setState(() {});
 
   }
 
   
 
-  List<Widget> _screens = [HomeScreen(), HomeScreen(), HomeScreen()];
+  List<Widget> _screens = [HomeScreen(), MyMatchesTab(), WinnersTab()];
 
 @override
   void initState() {
-    _body=_screens[0];
+    _body=_screens[widget.index];
     // TODO: implement initState
     super.initState();
   }
+
 
   @override
   Widget build(BuildContext context) {
