@@ -1,11 +1,15 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cricket_fantacy/src/controllers/splash_controller.dart';
 import 'package:cricket_fantacy/src/ui/screens/auth_screens/auth_landing_page.dart';
 import 'package:cricket_fantacy/src/ui/screens/home_tab/fantacy_tab.dart';
 import 'package:cricket_fantacy/src/utils/color_scheme.dart';
 import 'package:cricket_fantacy/src/utils/image_utils.dart';
+import 'package:cricket_fantacy/src/utils/local_storage/shared_prefrences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:get/get.dart';
+import 'package:http/http.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -16,10 +20,17 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
-
+  var controller = Get.put(HomeController());
   void changeIndex(int index) {
     _currentIndex = index;
     setState(() {});
+  }
+
+  @override
+  void initState() {
+    controller.getUsersProfile();
+    // TODO: implement initState
+    super.initState();
   }
 
   @override
@@ -52,18 +63,31 @@ class _HomeScreenState extends State<HomeScreen> {
                         Container(
                           width: MediaQuery.of(context).size.width / 4,
                           alignment: Alignment.centerLeft,
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context){
-                                return AuthLandingPage();
-                              }));
-                            },
-                            child: Image.asset(
-                              ImageUitls.Profile_icon,
-                              height: 35,
-                              width: 35,
-                            ),
-                          ),
+                          child: GetBuilder<HomeController>(
+                              init: HomeController(),
+                              builder: (controller) {
+                                return InkWell(
+                                  onTap: () {
+                                    SharedPref sharedPref = new SharedPref();
+                                    sharedPref.logout();
+                                    Get.deleteAll();
+                                    Navigator.pushAndRemoveUntil(context,
+                                        MaterialPageRoute(builder: (context) {
+                                      return AuthLandingPage();
+                                    }), (route) => false);
+                                  },
+                                  child: Container(
+                                    height: 40,
+                                    width: 40,
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        image: DecorationImage(
+                                            image: NetworkImage(
+                                          controller.profilePicUrl,
+                                        ))), // backgroundColor: ColorConstant.primaryColor,
+                                  ),
+                                );
+                              }),
                         ),
                         Container(
                           width: MediaQuery.of(context).size.width / 3,
@@ -105,9 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   Container(
 // height: MediaQuery.of(context).size.height/9,
-                      child:
-                      
-                       Row(
+                      child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       InkWell(
@@ -158,21 +180,21 @@ class _HomeScreenState extends State<HomeScreen> {
                       )
                     ],
                   ))
-              
-              
                 ],
               ),
             ),
           ),
           CarouselSlider(
               items: [
-            _currentIndex==0?    Container(
-                  color: ColorConstant.bg_color,
-                  child: FantacyTab(),
-                ): Container(
-                  color: ColorConstant.bg_color,
-                  child: Center(child: Text("Prediction Tab")),
-                ),
+                _currentIndex == 0
+                    ? Container(
+                        color: ColorConstant.bg_color,
+                        child: FantacyTab(),
+                      )
+                    : Container(
+                        color: ColorConstant.bg_color,
+                        child: Center(child: Text("Prediction Tab")),
+                      ),
                 Container(
                   color: ColorConstant.bg_color,
                   child: Center(child: Text("Prediction Tab")),
@@ -192,7 +214,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 enlargeCenterPage: false,
                 enlargeFactor: 0.3,
                 onPageChanged: (index, reason) {
-                changeIndex(index);
+                  changeIndex(index);
                   //controller.updateHome2Slider(index);
                 },
                 scrollDirection: Axis.horizontal,

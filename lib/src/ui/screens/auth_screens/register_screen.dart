@@ -1,9 +1,11 @@
+import 'package:cricket_fantacy/src/controllers/auth_controllers.dart';
 import 'package:cricket_fantacy/src/ui/screens/auth_screens/otp_screen.dart';
 import 'package:cricket_fantacy/src/utils/color_scheme.dart';
 import 'package:cricket_fantacy/src/utils/image_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:get/get.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -14,7 +16,7 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   bool _isActive = true;
-
+var controller=Get.put(AuthController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,7 +52,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
            Padding(
             padding: const EdgeInsets.all(15.0),
             child: TextFormField(
-            
+            controller: controller.referByController,
               onChanged: (val){
                 
               },
@@ -62,6 +64,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
           Padding(
             padding: const EdgeInsets.all(15.0),
             child: TextFormField(
+              controller:controller.phoneNumberController ,
+              enabled: false,
               onChanged: (val){
                
               },
@@ -74,14 +78,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
             child: InkWell(
               onTap: () {
                 if (_isActive == true) {
-                  Navigator.push(
-                    context,
-                    (MaterialPageRoute(
-                      builder: (context) {
-                        return OtpScreen();
-                      },
-                    )),
-                  );
+                  controller.verifyRefferalCode(context);
+                  // Navigator.push(
+                  //   context,
+                  //   (MaterialPageRoute(
+                  //     builder: (context) {
+                  //       return OtpScreen();
+                  //     },
+                  //   )),
+                  // );
                 }
               },
               child: Container(

@@ -275,7 +275,7 @@ Padding(
                     context,
                     (MaterialPageRoute(
                       builder: (context) {
-                        return RegisterScreen();
+                        return LoginScreen();
                       },
                     )),
                   );

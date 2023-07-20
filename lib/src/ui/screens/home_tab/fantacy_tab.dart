@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cricket_fantacy/src/controllers/splash_controller.dart';
 import 'package:cricket_fantacy/src/ui/screens/home_tab/upcomming_matches_details.dart';
 import 'package:cricket_fantacy/src/ui/widgets/current_match_card_widget.dart';
 import 'package:cricket_fantacy/src/ui/widgets/upcomming_matches_card_widget.dart';
@@ -7,6 +8,8 @@ import 'package:cricket_fantacy/src/utils/image_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:get/get.dart';
+import 'package:http/http.dart';
 
 class FantacyTab extends StatefulWidget {
   const FantacyTab({super.key});
@@ -17,6 +20,7 @@ class FantacyTab extends StatefulWidget {
 
 class _FantacyTabState extends State<FantacyTab> {
   int _currentIndex=0;
+  var controller=Get.put(HomeController());
   void _changeIndex(int index){
     _currentIndex=index;
     setState(() {
@@ -79,74 +83,25 @@ class _FantacyTabState extends State<FantacyTab> {
             child: CarouselSlider(
               items: [
                 //1st Image of Slider
-                Container(
+               for(int i=0;i<controller.splashDataApiResponse.loginBanner.length;i++)
+ Container(
                   margin: EdgeInsets.all(6.0),
                   decoration: BoxDecoration(
+                    border: Border.all(width: 1,color: ColorConstant.primaryColor),
                     borderRadius: BorderRadius.circular(8.0),
-                    image: const DecorationImage(
+                    image:  DecorationImage(
                       image: NetworkImage(
-                          "https://leaddigital.in/wp-content/uploads/2021/04/Banner-IPL.jpg"),
+                          controller.splashDataApiResponse.loginBanner[i].img),
                       fit: BoxFit.fill,
                     ),
                   ),
                 ),
-
-                //2nd Image of Slider
-                Container(
-                  margin: EdgeInsets.all(6.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                    image: const DecorationImage(
-                      image: NetworkImage(
-                          "https://leaddigital.in/wp-content/uploads/2021/04/Banner-IPL.jpg"),
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                ),
-
-                //3rd Image of Slider
-                Container(
-                  margin: EdgeInsets.all(6.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                    image: const DecorationImage(
-                      image: NetworkImage(
-                          "https://leaddigital.in/wp-content/uploads/2021/04/Banner-IPL.jpg"),
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                ),
-
-                //4th Image of Slider
-                Container(
-                  margin: EdgeInsets.all(6.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                    image: const DecorationImage(
-                      image: NetworkImage(
-                          "https://leaddigital.in/wp-content/uploads/2021/04/Banner-IPL.jpg"),
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                ),
-
-                //5th Image of Slider
-                Container(
-                  margin: EdgeInsets.all(6.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                    image: const DecorationImage(
-                      image: NetworkImage(
-                          "https://leaddigital.in/wp-content/uploads/2021/04/Banner-IPL.jpg"),
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                ),
+               
               ],
 
               //Slider Container properties
               options: CarouselOptions(
-                height: 70.0,
+                height: 100.0,
                 enlargeCenterPage: false,
                 // disableCenter: true,
                 autoPlay: true,

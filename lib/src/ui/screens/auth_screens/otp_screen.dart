@@ -1,3 +1,4 @@
+import 'package:cricket_fantacy/src/controllers/auth_controllers.dart';
 import 'package:cricket_fantacy/src/ui/screens/dashboard_screen.dart';
 import 'package:cricket_fantacy/src/utils/color_scheme.dart';
 import 'package:cricket_fantacy/src/utils/image_utils.dart';
@@ -5,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
+import 'package:get/get.dart';
+import 'package:pinput/pinput.dart';
 
 class OtpScreen extends StatefulWidget {
   const OtpScreen({super.key});
@@ -14,7 +17,8 @@ class OtpScreen extends StatefulWidget {
 }
 
 class _OtpScreenState extends State<OtpScreen> {
-  bool _isActive=false;
+  bool _isActive = false;
+  var controller = Get.put(AuthController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,100 +51,83 @@ class _OtpScreenState extends State<OtpScreen> {
       ),
       body: SingleChildScrollView(
         child: Column(children: [
-
-Padding(
-  padding: const EdgeInsets.all(15),
-  child:   Container(
-    alignment: Alignment.centerLeft,
-    child: Text("Otp sent to 9065974832",
-    style: TextStyle(
-      color: ColorConstant.disableColor,fontSize: 14,fontWeight: FontWeight.w400
-    ),
-    ),
-  ),
-),
-SizedBox(height: 10,),
-
+          Padding(
+            padding: const EdgeInsets.all(15),
+            child: Container(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                "Otp sent to ${controller.phoneNumberController.text}",
+                style: TextStyle(
+                    color: ColorConstant.disableColor,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
           Padding(
             padding: const EdgeInsets.all(15.0),
             child: Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                border: Border.all(width: 1,color: Colors.black54)
-              ),
+                  borderRadius: BorderRadius.circular(5),
+                  border: Border.all(width: 1, color: Colors.black54)),
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Column(
                   children: [
-                    Text("Enter the OTP you received",
-              style: TextStyle(
-                color: ColorConstant.primaryBlackColor,fontSize: 14,fontWeight: FontWeight.w400
-              ),
-              ),
-              SizedBox(height: 15,),
+                    Text(
+                      "Enter the OTP you received",
+                      style: TextStyle(
+                          color: ColorConstant.primaryBlackColor,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
                     Container(
+                      width: MediaQuery.of(context).size.width/1,
                       height: 50,
-                      child: OtpTextField(
-                        numberOfFields: 5,
-                        fieldWidth: 40,
-                        borderColor: Color(0xFF512DA8),
-                        //set to true to show as box or false to show as dash
-                        showFieldAsBox: true, 
-                        fillColor: Colors.black,
-                        cursorColor: ColorConstant.primaryColor,
-                        enabledBorderColor: Colors.black38,
-                        borderWidth: 1,
-                        focusedBorderColor: ColorConstant.primaryColor,
-                        
-                        
-                        //runs when a code is typed in
-                        onCodeChanged: (String code) {
-                        //handle validation or checks here           
+                      child: Pinput(
+                        onChanged: (val){
+                          if(val!=null){
+                            setState(() {
+                              _isActive=true;
+                            });
+                          }else{
+                            setState(() {
+                              _isActive=false;
+                            });
+                          }
                         },
-                        //runs when every textfield is filled
-                        onSubmit: (String verificationCode){
-                      setState(() {
-                        _isActive=true;
-                      });
-                        }, // end onSubmit
-                                      ),
+                        controller: controller.otpController,
+                        length: 5,
+                        onCompleted: (pin) => print(pin),
+                      ),
                     ),
                   ],
                 ),
               ),
             ),
           ),
-     
-     Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-          Text("You Should receive otp in",
-              style: TextStyle(
-                color: ColorConstant.disableColor,fontSize: 14,fontWeight: FontWeight.w400
-              ),
-              ),
-              SizedBox(width: 5,),
-               Text("20 Seconds",
-              style: TextStyle(
-                color: ColorConstant.primaryColor,fontSize: 14,fontWeight: FontWeight.w400
-              ),
-              ),
-      ],
-     ),
-
-      Padding(
+         
+         
+          Padding(
             padding: const EdgeInsets.fromLTRB(15, 15, 15, 20),
             child: InkWell(
               onTap: () {
                 if (_isActive == true) {
-                  Navigator.push(
-                    context,
-                    (MaterialPageRoute(
-                      builder: (context) {
-                        return DashboardScreen(index: 0,);
-                      },
-                    )),
-                  );
+                  controller.validateOtp(context);
+                  // Navigator.push(
+                  //   context,
+                  //   (MaterialPageRoute(
+                  //     builder: (context) {
+                  //       return DashboardScreen(index: 0,);
+                  //     },
+                  //   )),
+                  // );
                 }
               },
               child: Container(
@@ -162,7 +149,6 @@ SizedBox(height: 10,),
               ),
             ),
           ),
-     
         ]),
       ),
     );

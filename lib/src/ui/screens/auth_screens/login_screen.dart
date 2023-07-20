@@ -1,9 +1,12 @@
+import 'package:cricket_fantacy/src/controllers/auth_controllers.dart';
 import 'package:cricket_fantacy/src/ui/screens/auth_screens/otp_screen.dart';
+import 'package:cricket_fantacy/src/ui/screens/auth_screens/register_screen.dart';
 import 'package:cricket_fantacy/src/utils/color_scheme.dart';
 import 'package:cricket_fantacy/src/utils/image_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:get/instance_manager.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -14,7 +17,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool _isActive = false;
-
+  var controller=Get.put(AuthController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -143,6 +146,7 @@ class _LoginScreenState extends State<LoginScreen> {
           Padding(
             padding: const EdgeInsets.all(15.0),
             child: TextFormField(
+              controller: controller.phoneNumberController,
               onChanged: (val){
                 if(val.isNotEmpty){
                   setState(() {
@@ -163,14 +167,8 @@ class _LoginScreenState extends State<LoginScreen> {
             child: InkWell(
               onTap: () {
                 if (_isActive == true) {
-                  Navigator.push(
-                    context,
-                    (MaterialPageRoute(
-                      builder: (context) {
-                        return OtpScreen();
-                      },
-                    )),
-                  );
+                  controller.callValidatePhoneApi(context);
+                 
                 }
               },
               child: Container(
@@ -192,10 +190,22 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
           ),
-          Text(
-            "No a member? Register",
-            style: TextStyle(
-                color: Colors.black, fontSize: 12, fontWeight: FontWeight.w600),
+          InkWell(
+            onTap: (){
+              Navigator.push(
+                    context,
+                    (MaterialPageRoute(
+                      builder: (context) {
+                        return const RegisterScreen();
+                      },
+                    )),
+                  );
+            },
+            child: Text(
+              "No a member? Register",
+              style: TextStyle(
+                  color: Colors.black, fontSize: 12, fontWeight: FontWeight.w600),
+            ),
           ),
         ]),
       ),

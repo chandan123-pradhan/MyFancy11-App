@@ -39,6 +39,10 @@ dependencies:
   http: 
   carousel_slider: 
   flutter_otp_text_field: ^1.1.1
+  device_info_plus: ^9.0.2
+  shared_preferences:
+  image_picker:  
+  pinput: ^2.2.31
 
 dev_dependencies:
   flutter_test:

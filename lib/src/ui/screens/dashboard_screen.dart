@@ -1,3 +1,4 @@
+import 'package:cricket_fantacy/src/controllers/splash_controller.dart';
 import 'package:cricket_fantacy/src/ui/screens/home_tab/home_screen.dart';
 import 'package:cricket_fantacy/src/ui/screens/my_matches_tab/my_matches_tab.dart';
 import 'package:cricket_fantacy/src/ui/screens/winners_tab/winners_tab.dart';
@@ -7,6 +8,8 @@ import 'package:cricket_fantacy/src/utils/image_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:get/get.dart';
+import 'package:http/http.dart';
 
 class DashboardScreen extends StatefulWidget {
   final int index;
@@ -19,6 +22,7 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   int _currentIndex = 0;
 Widget _body=Container();
+var controller=Get.put(HomeController());
   void _changeIndex(int value) {
     _currentIndex = value;
  _body=_screens[_currentIndex];
@@ -33,6 +37,7 @@ Widget _body=Container();
 @override
   void initState() {
     _body=_screens[widget.index];
+    controller.getUsersProfile();
     // TODO: implement initState
     super.initState();
   }
