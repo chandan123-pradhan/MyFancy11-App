@@ -1,3 +1,5 @@
+import 'package:cricket_fantacy/src/controllers/splash_controller.dart';
+import 'package:cricket_fantacy/src/models/GetMatchesApiResponse.dart';
 import 'package:cricket_fantacy/src/ui/screens/home_tab/join_contest_screen.dart';
 import 'package:cricket_fantacy/src/ui/widgets/mega_contest_widget.dart';
 import 'package:cricket_fantacy/src/ui/widgets/multiple_contest_widget.dart';
@@ -7,9 +9,12 @@ import 'package:cricket_fantacy/src/utils/image_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:get/get.dart';
+import 'package:get/instance_manager.dart';
 
 class UpcommingMatchesDetails extends StatefulWidget {
-  const UpcommingMatchesDetails({super.key});
+  final Matches matches;
+  UpcommingMatchesDetails({required this.matches});
 
   @override
   State<UpcommingMatchesDetails> createState() =>
@@ -17,6 +22,15 @@ class UpcommingMatchesDetails extends StatefulWidget {
 }
 
 class _UpcommingMatchesDetailsState extends State<UpcommingMatchesDetails> {
+  var controller = Get.put(HomeController());
+
+  @override
+  void initState() {
+    controller.getContestList(context, widget.matches.matchId.toString());
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,11 +52,11 @@ class _UpcommingMatchesDetailsState extends State<UpcommingMatchesDetails> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "SS vs LKK",
+            "${widget.matches.team2.teamName} Vs ${widget.matches.team1.teamName}",
               style: TextStyle(
                   color: ColorConstant.primaryWhiteColor,
                   fontSize: 17,
-                  fontWeight: FontWeight.w600),
+                  fontWeight: FontWeight.w500),
             ),
             Text(
               "06h 55m Left",
@@ -65,13 +79,14 @@ class _UpcommingMatchesDetailsState extends State<UpcommingMatchesDetails> {
         ],
       ),
       body: Container(
-        height: MediaQuery.of(context).size.height/1,
+        height: MediaQuery.of(context).size.height / 1,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-           
-           StepperWidget(step: 2,),
-           Container(
+            StepperWidget(
+              step: 2,
+            ),
+            Container(
               height: 40,
               child: Padding(
                 padding: EdgeInsets.only(left: 15),
@@ -151,105 +166,68 @@ class _UpcommingMatchesDetailsState extends State<UpcommingMatchesDetails> {
             ),
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.only(left: 0,right: 0,top: 10),
-                child: SingleChildScrollView(
-                  physics: BouncingScrollPhysics(),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 15,right: 14),
-                        child: Text(
-                                    "Mega Contest",
-                                    style: TextStyle(
-                          color: ColorConstant.primaryBlackColor,
-                          fontSize: 13,
-                          fontWeight: FontWeight.w600),
-                                  ),
-                      ),
-                            
-                            
-                  Padding(
-                     padding: const EdgeInsets.only(left: 15,right: 14,top: 10),
-                       
-                    child: InkWell(
-                      onTap: (){
-                        Navigator.push(context,MaterialPageRoute(builder: (context){
-                          return JoinContest();
-                        }));
-                      },
-                      child: MegaContestWidget()),
-                  ),
-                  SizedBox(height: 10,),
-                  Container(
-                    height: 5,
-                    color: ColorConstant.deviderColor,
-                  ),
-                             SizedBox(height: 10,),
-                            
-                      Padding(
-                        padding: const EdgeInsets.only(left: 15,right: 14),
-                        child: Text(
-                                    "Multiplier Contests",
-                                    style: TextStyle(
-                          color: ColorConstant.primaryBlackColor,
-                          fontSize: 13,
-                          fontWeight: FontWeight.w600),
-                                  ),
-                      ),
-                            
-                            
-                  Padding(
-                     padding: const EdgeInsets.only(left: 15,right: 14,top: 10),
-                       
-                    child: InkWell(
-                      onTap: (){
-                        Navigator.push(context,MaterialPageRoute(builder: (context){
-                          return JoinContest();
-                        }));
-                      },
-                      child: MultipleContest()),
-                  ),
+                  padding: const EdgeInsets.only(left: 0, right: 0, top: 10),
+                  child:
                   
-                            
-                            SizedBox(height: 10,),
-                            
-                      Padding(
-                        padding: const EdgeInsets.only(left: 15,right: 14),
-                        child: Text(
-                                    "Only For Begginers",
+                   GetBuilder<HomeController>(
+                    init: HomeController(),
+                     builder: (controller) {
+                       return 
+                       controller.getContestListApiResponse==null?Center(
+                        child: CircularProgressIndicator(color: ColorConstant.primaryColor),
+                       ):
+                       ListView.builder(
+                          itemCount: controller
+                              .getContestListApiResponse!.contestList.length,
+                          itemBuilder: (context, index) {
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                              controller.getContestListApiResponse!
+                                            .contestList[index].data.length==0?Container():  Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 15, right: 14, top: 10),
+                                  child: Text(
+                                    controller.getContestListApiResponse!
+                                        .contestList[index].name,
                                     style: TextStyle(
-                          color: ColorConstant.primaryBlackColor,
-                          fontSize: 13,
-                          fontWeight: FontWeight.w600),
+                                        color: ColorConstant.primaryBlackColor,
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w600),
                                   ),
-                      ),
-                            
-                            
-                  Padding(
-                     padding: const EdgeInsets.only(left: 15,right: 14,top: 10),
-                       
-                    child: InkWell(
-                      onTap: (){
-                        Navigator.push(context,MaterialPageRoute(builder: (context){
-                          return JoinContest();
-                        }));
-                      },
-                      child: MultipleContest()),
-                  ),
-                            
-                  SizedBox(height: 10,),            
-                            
-                  
-                    ],
-                  ),
-                ),
-              ),
+                                ),
+                                for (int i = 0;
+                                    i <
+                                        controller.getContestListApiResponse!
+                                            .contestList[index].data.length;
+                                    i++)
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 15, right: 14, top: 10),
+                                    child: InkWell(
+                                        onTap: () {
+                                          Navigator.push(context,
+                                              MaterialPageRoute(builder: (context) {
+                                            return JoinContest(
+                                              matches: widget.matches,
+                                              contest: controller.getContestListApiResponse!
+                                            .contestList[index].data[i],
+                                            );
+                                          }));
+                                        },
+                                        child: MegaContestWidget(
+                                          contest: controller
+                                              .getContestListApiResponse!
+                                              .contestList[index]
+                                              .data[i],
+                                        )),
+                                  ),
+                              ],
+                            );
+                          });
+                     }
+                   )),
             ),
-      
-      
-      
-      
           ],
         ),
       ),

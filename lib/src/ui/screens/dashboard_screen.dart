@@ -38,6 +38,7 @@ var controller=Get.put(HomeController());
   void initState() {
     _body=_screens[widget.index];
     controller.getUsersProfile();
+    controller.getMatchesApiCall(context);
     // TODO: implement initState
     super.initState();
   }

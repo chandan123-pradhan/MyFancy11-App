@@ -1,5 +1,8 @@
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cricket_fantacy/src/controllers/splash_controller.dart';
+import 'package:cricket_fantacy/src/models/GetContestListApiResponse.dart';
+import 'package:cricket_fantacy/src/models/GetMatchesApiResponse.dart';
 import 'package:cricket_fantacy/src/ui/screens/home_tab/Leader_baord_tab.dart';
 import 'package:cricket_fantacy/src/ui/screens/home_tab/pick_player_screen.dart';
 import 'package:cricket_fantacy/src/ui/screens/home_tab/winning_tab_screen.dart';
@@ -11,9 +14,13 @@ import 'package:cricket_fantacy/src/utils/image_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:get/get.dart';
+import 'package:http/http.dart';
 
 class JoinContest extends StatefulWidget {
-  const JoinContest({super.key});
+  final Matches matches;
+  final Contest contest;
+  JoinContest({required this.matches,required this.contest});
 
   @override
   State<JoinContest> createState() => _UpcommingMatchesDetailsState();
@@ -21,7 +28,20 @@ class JoinContest extends StatefulWidget {
 
 class _UpcommingMatchesDetailsState extends State<JoinContest> {
   int _currentIndex = 0;
+ var controller=Get.put(HomeController());
+
+void callGetWinningInfo(){
+  controller.getWinningInfo(context, widget.contest.contestId);
+}
+@override
+  void initState() {
+    callGetWinningInfo();
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
+
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorConstant.bg_color,
@@ -42,7 +62,7 @@ class _UpcommingMatchesDetailsState extends State<JoinContest> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "SS vs LKK",
+              "${widget.matches.team2.teamName} Vs ${widget.matches.team1.teamName}",
               style: TextStyle(
                   color: ColorConstant.primaryWhiteColor,
                   fontSize: 17,
@@ -91,7 +111,7 @@ class _UpcommingMatchesDetailsState extends State<JoinContest> {
           Padding(
             padding: const EdgeInsets.only(left: 15.0),
             child: Text(
-              "₹ 9 Crores",
+              "₹ ${widget.contest.prizePool}",
               style: TextStyle(
                   color: ColorConstant.primaryBlackColor,
                   fontSize: 20,
@@ -121,14 +141,14 @@ class _UpcommingMatchesDetailsState extends State<JoinContest> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "22,78,230 spots left",
+                "${int.parse(widget.contest.totalTeam)-int.parse(widget.contest.joinTeam)} spots left",
                   style: TextStyle(
                       color: ColorConstant.primaryColor,
                       fontSize: 13,
                       fontWeight: FontWeight.w500),
                 ),
                 Text(
-                  "78,230 spots",
+                "${int.parse(widget.contest.totalTeam)} spots",
                   style: TextStyle(
                       color: ColorConstant.disableColor,
                       fontSize: 13,
@@ -143,7 +163,10 @@ class _UpcommingMatchesDetailsState extends State<JoinContest> {
             child: InkWell(
               onTap: (){
                 Navigator.push(context, MaterialPageRoute(builder: (context){
-                  return const PickPlayerScreen();
+                  return  PickPlayerScreen(
+                    matches: widget.matches,
+                    contest: widget.contest,
+                  );
                 }));
               },
               child: Container(
@@ -155,7 +178,7 @@ class _UpcommingMatchesDetailsState extends State<JoinContest> {
                 alignment: Alignment.center,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
+                  children:  [
                     Text(
                       "JOIN  ",
                       style: TextStyle(
@@ -163,16 +186,16 @@ class _UpcommingMatchesDetailsState extends State<JoinContest> {
                           fontSize: 14,
                           fontWeight: FontWeight.w500),
                     ),
+                    // Text(
+                    //   "₹49",
+                    //   style: TextStyle(
+                    //       decoration: TextDecoration.lineThrough,
+                    //       color: Color.fromRGBO(255, 255, 255, 1),
+                    //       fontSize: 14,
+                    //       fontWeight: FontWeight.w500),
+                    // ),
                     Text(
-                      "₹49",
-                      style: TextStyle(
-                          decoration: TextDecoration.lineThrough,
-                          color: Color.fromRGBO(255, 255, 255, 1),
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500),
-                    ),
-                    Text(
-                      "  ₹4",
+                      " ₹ ${widget.contest.entry}",
                       style: TextStyle(
                           color: ColorConstant.primaryWhiteColor,
                           fontSize: 14,
@@ -196,68 +219,63 @@ class _UpcommingMatchesDetailsState extends State<JoinContest> {
                   decoration: BoxDecoration(color: Colors.grey[100]),
                   child: Padding(
                     padding: const EdgeInsets.only(left: 15, right: 15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    child:  Row(
+
+
+
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(children: [
+                    Row(
                       children: [
-                        Row(children: [
-                          Row(
-                            children: [
-                              Text(
-                                "₹ 1 Crores",
-                                style: TextStyle(
-                                    color: Colors.black45,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w500),
-                              )
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.wine_bar_rounded,
-                                size: 20,
-                                color: Colors.black45,
-                              ),
-                              Text(
-                                "60 %",
-                                style: TextStyle(
-                                    color: Colors.black45,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w500),
-                              )
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              //Icon(Icons.wine_bar_rounded,size: 20,color: Colors.black45,),
-                              Text(
-                                "Upto 20",
-                                style: TextStyle(
-                                    color: Colors.black45,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w500),
-                              )
-                            ],
-                          )
-                        ]),
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.check_circle,
-                              size: 18,
+                        Text(
+                          "₹ ${widget.contest.firstPrize}  ",
+                          style: TextStyle(
                               color: Colors.black45,
-                            ),
-                            Text(
-                              " Guaranted",
-                              style: TextStyle(
-                                  color: Colors.black45,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w500),
-                            )
-                          ],
-                        ),
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500),
+                        )
                       ],
                     ),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.wine_bar_rounded,
+                          size: 20,
+                          color: Colors.black45,
+                        ),
+                        Text(
+                          "${widget.contest.winPercent} % ",
+                          style: TextStyle(
+                              color: Colors.black45,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500),
+                        )
+                      ],
+                    ),
+                   
+                  ]),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.check_circle,
+                        size: 18,
+                        color: Colors.black45,
+                      ),
+                      Text(
+                        " Guaranted",
+                        style: TextStyle(
+                            color: Colors.black45,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w500),
+                      )
+                    ],
+                  ),
+                ],
+              ),
+          
+          
+                
                   ),
                 ),
                 Container(
@@ -265,10 +283,10 @@ class _UpcommingMatchesDetailsState extends State<JoinContest> {
                   width: MediaQuery.of(context).size.width / 1,
                   decoration: BoxDecoration(color: Colors.red[100]),
                   alignment: Alignment.centerLeft,
-                  child: const Padding(
+                  child:  Padding(
                     padding: EdgeInsets.only(left: 15.0),
                     child: Text(
-                      "Earn 1 for every ₹10 Spent on a contest entry",
+                      "Earn ₹${widget.contest.firstPrize}   for every ₹${widget.contest.entry}   Spent on a contest entry",
                       style: TextStyle(
                           color: ColorConstant.primaryColor,
                           fontSize: 15,

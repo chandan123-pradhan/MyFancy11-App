@@ -10,6 +10,14 @@ class NetworkConstant{
   static const String ACCOUNT_UPDATE_URL='/fancy/app/account_update';
   static const String CUSTOMER_DATE_ROUTE_URL='/fancy/app/splash';
   static const String GET_AWATAR_LIST_ROUTE_URL='/fancy/app/avatar';
+  static const String GET_MATCHES='/fancy/app/match';
+  static const String GET_CONTEST='/fancy/app/contest';
+  static const String GET_WINNING_INFO='/fancy/app/winning_info';
+  static const String Get_Squad='/fancy/app/squad';
+  static const String Save_Team_URL='/fancy/app/save_team';
+  static const String Wallet_Url='/fancy/app/wallet';
+  static const String Join_Contest='/fancy/app/join_contest';
+  static const String Notification_url='/fancy/app/notification';
 
 
 
@@ -28,5 +36,15 @@ class NetworkConstant{
   static const String Email='email';
   static const String Name='name';
   static const String Profile='profile';
+  static const String Status='status';
+  static const String MatchId='match_id';
+  static const String ContestId='contest_id';
+  static const String Designationid='designationid';
+  static const String MyTeam='my_team';
+  static const String MyTeamId='my_team_id';
+  static const String List='list';
+  static const String CaptainId='captain_id';
+  static const String Vice_Captain_Id='vice_captain_id';
+  static const String PlayerId='PlayerId';
 
 }

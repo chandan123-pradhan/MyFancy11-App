@@ -1,3 +1,4 @@
+import 'package:cricket_fantacy/src/models/GetContestListApiResponse.dart';
 import 'package:cricket_fantacy/src/utils/color_scheme.dart';
 import 'package:cricket_fantacy/src/utils/image_utils.dart';
 import 'package:flutter/material.dart';
@@ -5,7 +6,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
 class MegaContestWidget extends StatefulWidget {
-  const MegaContestWidget({super.key});
+  final Contest contest;
+  MegaContestWidget({required this.contest});
 
   @override
   State<MegaContestWidget> createState() => _MegaContestWidgetState();
@@ -44,7 +46,7 @@ class _MegaContestWidgetState extends State<MegaContestWidget> {
                         width: 50,
                       ),
                       Text(
-                        "Rank 2-6 win iPhone",
+                        widget.contest.contestTag,
                         style: TextStyle(
                             color: ColorConstant.primaryColor,
                             fontSize: 14,
@@ -80,7 +82,7 @@ class _MegaContestWidgetState extends State<MegaContestWidget> {
                       height: 8,
                     ),
                     Text(
-                      "₹ 9 Crores",
+                      "₹ ${widget.contest.prizePool}",
                       style: TextStyle(
                           color: ColorConstant.primaryBlackColor,
                           fontSize: 20,
@@ -110,7 +112,7 @@ class _MegaContestWidgetState extends State<MegaContestWidget> {
                           color: ColorConstant.greenColor,
                           borderRadius: BorderRadius.circular(10)),
                       child: Text(
-                        "₹ 49",
+                        "₹ ${widget.contest.entry}",
                         style: TextStyle(
                             color: ColorConstant.primaryWhiteColor,
                             fontSize: 14,
@@ -141,14 +143,14 @@ class _MegaContestWidgetState extends State<MegaContestWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "22,78,230 spots left",
+                "${int.parse(widget.contest.totalTeam)-int.parse(widget.contest.joinTeam)} spots left",
                   style: TextStyle(
                       color: ColorConstant.primaryColor,
                       fontSize: 14,
                       fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  "78,230 spots",
+                  "${int.parse(widget.contest.totalTeam)} spots",
                   style: TextStyle(
                       color: ColorConstant.disableColor,
                       fontSize: 14,
@@ -171,13 +173,16 @@ class _MegaContestWidgetState extends State<MegaContestWidget> {
             child: Padding(
               padding: const EdgeInsets.only(left: 15, right: 15),
               child: Row(
+
+
+
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Row(children: [
                     Row(
                       children: [
                         Text(
-                          "₹ 1 Crores",
+                          "₹ ${widget.contest.firstPrize}  ",
                           style: TextStyle(
                               color: Colors.black45,
                               fontSize: 15,
@@ -193,7 +198,7 @@ class _MegaContestWidgetState extends State<MegaContestWidget> {
                           color: Colors.black45,
                         ),
                         Text(
-                          "60 %",
+                          "${widget.contest.winPercent} % ",
                           style: TextStyle(
                               color: Colors.black45,
                               fontSize: 15,
@@ -201,18 +206,7 @@ class _MegaContestWidgetState extends State<MegaContestWidget> {
                         )
                       ],
                     ),
-                    Row(
-                      children: [
-                        //Icon(Icons.wine_bar_rounded,size: 20,color: Colors.black45,),
-                        Text(
-                          "Upto 20",
-                          style: TextStyle(
-                              color: Colors.black45,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w500),
-                        )
-                      ],
-                    )
+                   
                   ]),
                   Row(
                     children: [
@@ -232,6 +226,8 @@ class _MegaContestWidgetState extends State<MegaContestWidget> {
                   ),
                 ],
               ),
+          
+          
             ),
           )
         ],

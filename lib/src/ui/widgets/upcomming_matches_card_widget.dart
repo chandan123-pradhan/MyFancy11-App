@@ -1,3 +1,4 @@
+import 'package:cricket_fantacy/src/models/GetMatchesApiResponse.dart';
 import 'package:cricket_fantacy/src/utils/color_scheme.dart';
 import 'package:cricket_fantacy/src/utils/image_utils.dart';
 import 'package:flutter/material.dart';
@@ -5,7 +6,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
 class UpcommingMatchCardWidget extends StatefulWidget {
-  const UpcommingMatchCardWidget({super.key});
+  final Matches matches;
+  UpcommingMatchCardWidget({required this.matches});
 
   @override
   State<UpcommingMatchCardWidget> createState() =>
@@ -34,7 +36,7 @@ class _UpcommingMatchCardWidgetState extends State<UpcommingMatchCardWidget> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                        Text(
-                            "Uttrakhand Premier League T20",
+                            widget.matches.leagueName,
                             style: TextStyle(
                                 color: ColorConstant.primaryBlackColor,
                                 fontSize: 13,
@@ -64,13 +66,13 @@ class _UpcommingMatchCardWidgetState extends State<UpcommingMatchCardWidget> {
                     children: [
                       Row(
                         children: [
-                          Image.asset(
-                            ImageUitls.Team_1_logo,
+                          Image.network(
+                           widget.matches.team1.teamImage,
                             height: 40,
                             width: 40,
                           ),
                           Text(
-                            "RCB",
+                            widget.matches.team1.teamShortName,
                             style: TextStyle(
                                 color: ColorConstant.primaryBlackColor,
                                 fontSize: 13,
@@ -99,7 +101,7 @@ class _UpcommingMatchCardWidgetState extends State<UpcommingMatchCardWidget> {
                             height: 5,
                           ),
                           Text(
-                            "07:15pm",
+                           widget.matches.matchDateTime,
                             style: TextStyle(
                                 color: Colors.black45,
                                 fontSize: 12,
@@ -110,7 +112,7 @@ class _UpcommingMatchCardWidgetState extends State<UpcommingMatchCardWidget> {
                       Row(
                         children: [
                           Text(
-                            "CSK",
+                            widget.matches.team2.teamShortName,
                             style: TextStyle(
                                 color: ColorConstant.primaryBlackColor,
                                 fontSize: 13,
@@ -119,8 +121,8 @@ class _UpcommingMatchCardWidgetState extends State<UpcommingMatchCardWidget> {
                           SizedBox(
                             width: 5,
                           ),
-                          Image.asset(
-                            ImageUitls.Team_2_logo,
+                          Image.network(
+                            widget.matches.team2.teamImage,
                             height: 40,
                             width: 40,
                           ),
@@ -136,14 +138,14 @@ class _UpcommingMatchCardWidgetState extends State<UpcommingMatchCardWidget> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Tehri Titan",
+                      widget.matches.team1.teamName,
                       style: TextStyle(
                           color: Colors.black45,
                           fontSize: 12,
                           fontWeight: FontWeight.w500),
                     ),
                     Text(
-                      "Haridwar Heros",
+                       widget.matches.team2.teamName,
                       style: TextStyle(
                           color: Colors.black45,
                           fontSize: 12,

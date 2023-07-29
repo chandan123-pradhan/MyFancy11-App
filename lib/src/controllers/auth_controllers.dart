@@ -123,7 +123,7 @@ homeController.getSplashData(context);
     loginApiResponse = LoginApiResponse.fromJson(response);
     sharedPref.setUserToken(loginApiResponse.data.userToken);
     sharedPref.setProfilepic(loginApiResponse.data.profile);
-
+    sharedPref.setLoginStatus();
     Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) {
       return DashboardScreen(
         index: 0,
@@ -220,6 +220,7 @@ homeController.getSplashData(context);
       Navigator.pop(context);
       updateProfileApiReponse = UpdateProfileApiReponse.fromJson(response);
       sharedPref.setProfilepic(updateProfileApiReponse.updatedData.profile);
+       sharedPref.setLoginStatus();
        messages.showMsg(context: context, message: updateProfileApiReponse.message);
       
        Navigator.pushAndRemoveUntil(context,

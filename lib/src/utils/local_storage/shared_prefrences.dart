@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:cricket_fantacy/src/global_variable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPref {
@@ -10,6 +11,7 @@ class SharedPref {
   String name='name';
   String email='email';
   String phone='phone';
+  String isLoggedIn='isLoggedIn';
   Future<String?> getUserToken() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String? uToken = preferences.getString(userToken);
@@ -51,6 +53,9 @@ Future<String?> getProfilePic() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.remove(profilePicUrl);
     preferences.remove(userToken);
+    preferences.remove(isLoggedIn);
+    logInStatus=false;
+    preferences.setString('profilePicUrl', 'https://www.computerhope.com/jargon/g/guest-user.png');
   }
   void saveAuthToken()async{
    SharedPreferences preferences = await SharedPreferences.getInstance(); 
@@ -66,6 +71,25 @@ return preferences.getString(authToken);
 
 
 
+void setLoginStatus()async
+{
+  SharedPreferences preferences = await SharedPreferences.getInstance(); 
+  preferences.setBool(isLoggedIn, true);
+  logInStatus=true;
+}
+
+void getLoginStatus()async{
+ SharedPreferences preferences = await SharedPreferences.getInstance(); 
+bool? status= preferences.getBool(isLoggedIn);
+// debugger();
+print(status);
+if(status==null || status==false){
+  logInStatus=false;
+}else{
+  logInStatus=true;
+}
+print(logInStatus);
+}
 
   
 

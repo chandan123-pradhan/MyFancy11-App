@@ -1,10 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cricket_fantacy/src/controllers/splash_controller.dart';
 import 'package:cricket_fantacy/src/ui/screens/auth_screens/login_screen.dart';
 import 'package:cricket_fantacy/src/ui/screens/auth_screens/register_screen.dart';
 import 'package:cricket_fantacy/src/utils/color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:get/get.dart';
 
 class AuthLandingPage extends StatefulWidget {
   const AuthLandingPage({super.key});
@@ -15,6 +17,7 @@ class AuthLandingPage extends StatefulWidget {
 
 class _AuthLandingPageState extends State<AuthLandingPage> {
   int _currentIndex=0;
+  var controller=Get.put(HomeController());
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +43,7 @@ class _AuthLandingPageState extends State<AuthLandingPage> {
 
 CarouselSlider(
               items: [
+           for(int i=0;i<controller.splashDataApiResponse.loginBanner.length;i++)
             Container(
               height: MediaQuery.of(context).size.height/2,
               child: Column(
@@ -48,7 +52,10 @@ CarouselSlider(
                     height: MediaQuery.of(context).size.height/3,
                     color: ColorConstant.primaryWhiteColor,
                     width: MediaQuery.of(context).size.width/1.2,
-                    child: Center(child: Text("Banners")),
+                    child: Center(child: 
+                    
+                    Image.network(controller.splashDataApiResponse.loginBanner[i].img)
+                    ),
                   ),
                     SizedBox(height: 10,),
                   Text("Welcome to Fantacy 11",
@@ -75,145 +82,7 @@ CarouselSlider(
                 ],
               ),
             ),
-             Container(
-              height: MediaQuery.of(context).size.height/2,
-              child: Column(
-                children: [
-                  Container(
-                    height: MediaQuery.of(context).size.height/3,
-                    color: ColorConstant.primaryWhiteColor,
-                    width: MediaQuery.of(context).size.width/1.2,
-                    child: Center(child: Text("Banners")),
-                  ),
-                     SizedBox(height: 10,),
-                  Text("Welcome to Fantacy 11",
-                  style: TextStyle(
-                    color: ColorConstant.primaryWhiteColor,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600
-                  ),
-                  ),
-                   SizedBox(height: 10,),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 50,right: 50),
-                    child: Text("Rady to start winning? Swipe left to learn  the basics of fantacy sports.",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white70,
-                  
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400
-                    ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-             Container(
-              height: MediaQuery.of(context).size.height/2,
-              child: Column(
-                children: [
-                  Container(
-                    height: MediaQuery.of(context).size.height/3,
-                    color: ColorConstant.primaryWhiteColor,
-                    width: MediaQuery.of(context).size.width/1.2,
-                    child: Center(child: Text("Banners")),
-                  ),
-                   
-                     SizedBox(height: 10,),
-                  Text("Welcome to Fantacy 11",
-                  style: TextStyle(
-                    color: ColorConstant.primaryWhiteColor,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600
-                  ),
-                  ),
-                   SizedBox(height: 10,),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 50,right: 50),
-                    child: Text("Rady to start winning? Swipe left to learn  the basics of fantacy sports.",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white70,
-                  
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400
-                    ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-             Container(
-              height: MediaQuery.of(context).size.height/2,
-              child: Column(
-                children: [
-                  Container(
-                    height: MediaQuery.of(context).size.height/3,
-                    color: ColorConstant.primaryWhiteColor,
-                    width: MediaQuery.of(context).size.width/1.2,
-                    child: Center(child: Text("Banners")),
-                  ),
-                    SizedBox(height: 10,),
-                  Text("Welcome to Fantacy 11",
-                  style: TextStyle(
-                    color: ColorConstant.primaryWhiteColor,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600
-                  ),
-                  ),
-                   SizedBox(height: 10,),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 50,right: 50),
-                    child: Text("Rady to start winning? Swipe left to learn  the basics of fantacy sports.",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white70,
-                  
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400
-                    ),
-                    ),
-                  )
-                   
-                ],
-              ),
-            ),
-             Container(
-              height: MediaQuery.of(context).size.height/2,
-              child: Column(
-                children: [
-                  Container(
-                    height: MediaQuery.of(context).size.height/3,
-                    color: ColorConstant.primaryWhiteColor,
-                    width: MediaQuery.of(context).size.width/1.2,
-                    child: Center(child: Text("Banners")),
-                  ),
-                  SizedBox(height: 10,),
-                  Text("Welcome to Fantacy 11",
-                  style: TextStyle(
-                    color: ColorConstant.primaryWhiteColor,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600
-                  ),
-                  ),
-                   SizedBox(height: 10,),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 50,right: 50),
-                    child: Text("Rady to start winning? Swipe left to learn  the basics of fantacy sports.",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white70,
-                  
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400
-                    ),
-                    ),
-                  )
-                   
-                ],
-              ),
-            )
+         
               ],
               options: CarouselOptions(
                 height: MediaQuery.of(context).size.height / 2,
@@ -271,6 +140,7 @@ Padding(
   padding: const EdgeInsets.all(15.0),
   child:   InkWell(
     onTap: (){
+      Get.deleteAll();
                         Navigator.push(
                     context,
                     (MaterialPageRoute(

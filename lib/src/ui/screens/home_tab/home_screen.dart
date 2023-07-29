@@ -1,10 +1,15 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cricket_fantacy/src/controllers/splash_controller.dart';
+import 'package:cricket_fantacy/src/global_variable.dart';
 import 'package:cricket_fantacy/src/ui/screens/auth_screens/auth_landing_page.dart';
+import 'package:cricket_fantacy/src/ui/screens/auth_screens/login_screen.dart';
 import 'package:cricket_fantacy/src/ui/screens/home_tab/fantacy_tab.dart';
+import 'package:cricket_fantacy/src/ui/screens/notification_screens/Notification_screen.dart';
+import 'package:cricket_fantacy/src/ui/screens/wallets/wallet_screen.dart';
 import 'package:cricket_fantacy/src/utils/color_scheme.dart';
 import 'package:cricket_fantacy/src/utils/image_utils.dart';
 import 'package:cricket_fantacy/src/utils/local_storage/shared_prefrences.dart';
+import 'package:cricket_fantacy/src/utils/messages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -70,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   onTap: () {
                                     SharedPref sharedPref = new SharedPref();
                                     sharedPref.logout();
-                                    Get.deleteAll();
+                                   // Get.deleteAll();
                                     Navigator.pushAndRemoveUntil(context,
                                         MaterialPageRoute(builder: (context) {
                                       return AuthLandingPage();
@@ -105,18 +110,36 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              Image.asset(
-                                ImageUitls.Notification_icon,
-                                height: 20,
-                                width: 20,
+                              InkWell(
+                                onTap: (){
+                                   Navigator.push(context, MaterialPageRoute(builder: (context){
+                                    return NotificationScreen();
+                                  }));
+                                },
+                                child: Image.asset(
+                                  ImageUitls.Notification_icon,
+                                  height: 20,
+                                  width: 20,
+                                ),
                               ),
                               SizedBox(
                                 width: 15,
                               ),
-                              Image.asset(
-                                ImageUitls.Wallet_icon,
-                                height: 20,
-                                width: 20,
+                              InkWell(
+                                onTap: (){
+                                if(logInStatus==true){
+                                    Navigator.push(context, MaterialPageRoute(builder: (context){
+                                    return WalletScreen();
+                                  }));
+                                }else{
+                                   Messages().showErrorMsg(context: context, message: 'You are a Guest, Please Login First');
+                                }
+                                },
+                                child: Image.asset(
+                                  ImageUitls.Wallet_icon,
+                                  height: 20,
+                                  width: 20,
+                                ),
                               ),
                             ],
                           ),

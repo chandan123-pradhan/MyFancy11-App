@@ -1,5 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cricket_fantacy/src/controllers/splash_controller.dart';
+import 'package:cricket_fantacy/src/global_variable.dart';
+import 'package:cricket_fantacy/src/ui/screens/auth_screens/login_screen.dart';
 import 'package:cricket_fantacy/src/ui/screens/home_tab/upcomming_matches_details.dart';
 import 'package:cricket_fantacy/src/ui/widgets/current_match_card_widget.dart';
 import 'package:cricket_fantacy/src/ui/widgets/upcomming_matches_card_widget.dart';
@@ -19,14 +21,13 @@ class FantacyTab extends StatefulWidget {
 }
 
 class _FantacyTabState extends State<FantacyTab> {
-  int _currentIndex=0;
-  var controller=Get.put(HomeController());
-  void _changeIndex(int index){
-    _currentIndex=index;
-    setState(() {
-      
-    });
+  int _currentIndex = 0;
+  var controller = Get.put(HomeController());
+  void _changeIndex(int index) {
+    _currentIndex = index;
+    setState(() {});
   }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -68,13 +69,8 @@ class _FantacyTabState extends State<FantacyTab> {
             ),
           ),
           const Padding(
-            padding:  EdgeInsets.only(left: 15, right: 15),
-            child: CurrentMatchCardWidget()
-            
-         
-          ),
-        
-        
+              padding: EdgeInsets.only(left: 15, right: 15),
+              child: CurrentMatchCardWidget()),
           SizedBox(
             height: 10,
           ),
@@ -83,20 +79,22 @@ class _FantacyTabState extends State<FantacyTab> {
             child: CarouselSlider(
               items: [
                 //1st Image of Slider
-               for(int i=0;i<controller.splashDataApiResponse.loginBanner.length;i++)
- Container(
-                  margin: EdgeInsets.all(6.0),
-                  decoration: BoxDecoration(
-                    border: Border.all(width: 1,color: ColorConstant.primaryColor),
-                    borderRadius: BorderRadius.circular(8.0),
-                    image:  DecorationImage(
-                      image: NetworkImage(
-                          controller.splashDataApiResponse.loginBanner[i].img),
-                      fit: BoxFit.fill,
+                for (int i = 0;
+                    i < controller.splashDataApiResponse.loginBanner.length;
+                    i++)
+                  Container(
+                    margin: EdgeInsets.all(6.0),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                          width: 1, color: ColorConstant.primaryColor),
+                      borderRadius: BorderRadius.circular(8.0),
+                      image: DecorationImage(
+                        image: NetworkImage(controller
+                            .splashDataApiResponse.loginBanner[i].img),
+                        fit: BoxFit.fill,
+                      ),
                     ),
                   ),
-                ),
-               
               ],
 
               //Slider Container properties
@@ -111,7 +109,7 @@ class _FantacyTabState extends State<FantacyTab> {
                 autoPlayAnimationDuration: Duration(milliseconds: 800),
                 viewportFraction: 0.93,
                 onPageChanged: (index, reason) {
-_changeIndex(index);
+                  _changeIndex(index);
                 },
               ),
             ),
@@ -119,67 +117,79 @@ _changeIndex(index);
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              for(int i=0;i<5;i++)
-              Padding(
-                padding: const EdgeInsets.all(3.0),
-                child: Container(
-                  height: 7,
-                  width: 7,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: _currentIndex==i?ColorConstant.primaryColor:ColorConstant.deviderColor
+              for (int i = 0; i < 5; i++)
+                Padding(
+                  padding: const EdgeInsets.all(3.0),
+                  child: Container(
+                    height: 7,
+                    width: 7,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: _currentIndex == i
+                            ? ColorConstant.primaryColor
+                            : ColorConstant.deviderColor),
                   ),
-                ),
-              )
+                )
             ],
-          )
-       ,
- Padding(
-   padding: const EdgeInsets.all(15.0),
-   child: Container(
-    alignment: Alignment.centerLeft,
-     child: const Text(
-                        "Upcomming Matches",
-                        style: TextStyle(
-                            color: ColorConstant.primaryBlackColor,
-                            fontSize: 13,
-                            fontWeight: FontWeight.w600),
-                      ),
-   ),
- ),
-
- Padding(
-  padding:  EdgeInsets.fromLTRB(15,0,15,15),
-  child:   InkWell(
-    onTap: (){
-Navigator.push(context, MaterialPageRoute(builder: (context){
-  return UpcommingMatchesDetails();
-}));
-    },
-    child: UpcommingMatchCardWidget()),
-),
- Padding(
-  padding:  EdgeInsets.fromLTRB(15,0,15,15),
-  child:   InkWell(
-    onTap: (){
-Navigator.push(context, MaterialPageRoute(builder: (context){
-  return UpcommingMatchesDetails();
-}));
-    },
-    child: UpcommingMatchCardWidget()),
-),
-
- Padding(
-  padding:  EdgeInsets.fromLTRB(15,0,15,15),
-  child:   InkWell(
-    onTap: (){
-Navigator.push(context, MaterialPageRoute(builder: (context){
-  return UpcommingMatchesDetails();
-}));
-    },
-    child: UpcommingMatchCardWidget()),
-),
-
+          ),
+          Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Container(
+              alignment: Alignment.centerLeft,
+              child: const Text(
+                "Upcomming Matches",
+                style: TextStyle(
+                    color: ColorConstant.primaryBlackColor,
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600),
+              ),
+            ),
+          ),
+          GetBuilder<HomeController>(
+              init: HomeController(),
+              builder: (controller) {
+                return controller.getMatchesApiResponse == null
+                    ? Center(
+                        child: CircularProgressIndicator(
+                          color: ColorConstant.primaryColor,
+                        ),
+                      )
+                    : Column(
+                        children: [
+                          for (int index = 0;
+                              index <=
+                                  controller
+                                          .getMatchesApiResponse!.data.length -
+                                      1;
+                              index++)
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(15, 0, 15, 15),
+                              child: InkWell(
+                                  onTap: () {
+                                   if(logInStatus==true){
+                                     Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                      return UpcommingMatchesDetails(
+                                        matches: controller.getMatchesApiResponse!.data[index],
+                                      );
+                                    }));
+                                   }else{
+                                     Navigator.pushReplacement(context,
+                                        MaterialPageRoute(builder: (context) {
+                                      return LoginScreen(
+                                       
+                                      );
+                                    }));
+                                   }
+                                  },
+                                  child: UpcommingMatchCardWidget(
+                                    matches: controller
+                                        .getMatchesApiResponse!.data[index],
+                                  )),
+                            )
+                        ],
+                      );
+              })
         ],
       ),
     );
