@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cricket_fantacy/src/controllers/splash_controller.dart';
 import 'package:cricket_fantacy/src/ui/screens/home_tab/fantacy_tab.dart';
 import 'package:cricket_fantacy/src/ui/widgets/upcomming_matches_card_widget.dart';
 import 'package:cricket_fantacy/src/utils/color_scheme.dart';
@@ -6,6 +7,7 @@ import 'package:cricket_fantacy/src/utils/image_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:get/get.dart';
 
 class MyMatchesTab extends StatefulWidget {
   const MyMatchesTab({super.key});
@@ -18,14 +20,16 @@ class _MyMatchesTabState extends State<MyMatchesTab>
     with SingleTickerProviderStateMixin {
   int _tabController = 0;
   late TabController _secondTabController;
-
+  var controller=Get.put(HomeController());
   @override
   void initState() {
     super.initState();
     _secondTabController = TabController(
         length: 3,
-        vsync: this); // Change the length to match the number of tabs
+        vsync: this); 
+     // callGetMyMatchApi();
   }
+ 
 
   @override
   void dispose() {
@@ -319,194 +323,203 @@ class _MyMatchesTabState extends State<MyMatchesTab>
 
 
 Widget upcomminMatchTabWidget(){
-  return ListView.builder(
-    physics: BouncingScrollPhysics(),
-    itemCount: 2,
-    itemBuilder: (context,index){
-    return Padding(
-        padding: const EdgeInsets.only(left:15,right: 15,top: 8,bottom: 8),
-        child: Container(
-      width: MediaQuery.of(context).size.width / 1,
-      // height: 100,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: ColorConstant.primaryWhiteColor,
-          border: Border.all(width: 1, color: Colors.black26)),
-      child: Padding(
-        padding: const EdgeInsets.all(0.0),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  return GetBuilder<HomeController>(
+    init: HomeController(),
+    builder: (controller) {
+      return 
+      controller.getUpcommingMyMatchResponse==null?Center(
+        child: CircularProgressIndicator(color: ColorConstant.primaryColor,),
+      ):
+      ListView.builder(
+        physics: BouncingScrollPhysics(),
+        itemCount: controller.getUpcommingMyMatchResponse!.data.length,
+        itemBuilder: (context,index){
+        return Padding(
+            padding: const EdgeInsets.only(left:15,right: 15,top: 8,bottom: 8),
+            child: Container(
+          width: MediaQuery.of(context).size.width / 1,
+          // height: 100,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: ColorConstant.primaryWhiteColor,
+              border: Border.all(width: 1, color: Colors.black26)),
+          child: Padding(
+            padding: const EdgeInsets.all(0.0),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
                     children: [
-                       Text(
-                            "Uttrakhand Premier League T20",
-                            style: TextStyle(
-                                color: ColorConstant.primaryBlackColor,
-                                fontSize: 13,
-                                fontWeight: FontWeight.w600),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                           Text(
+                                controller.getUpcommingMyMatchResponse!.data[index].leagueName,
+                                style: TextStyle(
+                                    color: ColorConstant.primaryBlackColor,
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              Row(
+                                children: [
+                                  Icon(Icons.movie_filter_outlined,
+                                  size: 18,
+                                  color: ColorConstant.deviderColor,
+                                  ),
+                                  SizedBox(width: 10,),
+                                  Text(
+                                "Lineup Out",
+                                style: TextStyle(
+                                    color: ColorConstant.greenColor,
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                                ],
+                              )
+                        ],
+                      ),
+                      SizedBox(height: 10,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Image.network(
+                                controller.getUpcommingMyMatchResponse!.data[index].team1.teamImage,
+                                height: 40,
+                                width: 40,
+                              ),
+                              Text(
+                                controller.getUpcommingMyMatchResponse!.data[index].team1.teamShortName,
+                                style: TextStyle(
+                                    color: ColorConstant.primaryBlackColor,
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            ],
+                          ),
+                          Column(
+                            children: [
+                              Container(
+                                height: 30,
+                                width: 80,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Colors.black12),
+                                alignment: Alignment.center,
+                                child: Text(
+                                  "02h 00m",
+                                  style: TextStyle(
+                                      color: ColorConstant.primaryColor,
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                               controller.getUpcommingMyMatchResponse!.data[index].matchDateTime,
+                                style: TextStyle(
+                                    color: Colors.black45,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400),
+                              ),
+                            ],
                           ),
                           Row(
                             children: [
-                              Icon(Icons.movie_filter_outlined,
-                              size: 18,
-                              color: ColorConstant.deviderColor,
-                              ),
-                              SizedBox(width: 10,),
                               Text(
-                            "Lineup Out",
-                            style: TextStyle(
-                                color: ColorConstant.greenColor,
-                                fontSize: 13,
-                                fontWeight: FontWeight.w500),
-                          ),
+                               controller.getUpcommingMyMatchResponse!.data[index].team2.teamShortName,
+                                style: TextStyle(
+                                    color: ColorConstant.primaryBlackColor,
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Image.network(
+                               controller.getUpcommingMyMatchResponse!.data[index].team2.teamImage,
+                                height: 40,
+                                width: 40,
+                              ),
                             ],
-                          )
-                    ],
-                  ),
-                  SizedBox(height: 10,),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Image.asset(
-                            ImageUitls.Team_1_logo,
-                            height: 40,
-                            width: 40,
-                          ),
-                          Text(
-                            "RCB",
-                            style: TextStyle(
-                                color: ColorConstant.primaryBlackColor,
-                                fontSize: 13,
-                                fontWeight: FontWeight.w600),
                           ),
                         ],
                       ),
-                      Column(
-                        children: [
-                          Container(
-                            height: 30,
-                            width: 80,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Colors.black12),
-                            alignment: Alignment.center,
-                            child: Text(
-                              "02h 00m",
-                              style: TextStyle(
-                                  color: ColorConstant.primaryColor,
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            "Today 07:15pm",
-                            style: TextStyle(
-                                color: Colors.black45,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            "CSK",
-                            style: TextStyle(
-                                color: ColorConstant.primaryBlackColor,
-                                fontSize: 13,
-                                fontWeight: FontWeight.w600),
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Image.asset(
-                            ImageUitls.Team_2_logo,
-                            height: 40,
-                            width: 40,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                   Padding(
-              padding: const EdgeInsets.fromLTRB(0,5,10,0),
-              child: Container(
-                alignment: Alignment.centerLeft,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Tehri Titan",
-                      style: TextStyle(
-                          color: Colors.black45,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500),
-                    ),
-                    Text(
-                      "Haridwar Heros",
-                      style: TextStyle(
-                          color: Colors.black45,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500),
-                    ),
-                  ],
-                ),
-              ),
-            )
-                ],
-              ),
-            ),
-            Divider(
-              height: 1,
-              color: ColorConstant.deviderColor,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Container(
-                width: MediaQuery.of(context).size.width/1,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                   
                        Padding(
-                        padding: const EdgeInsets.all(0.0),
-                        child: Text(
-                          "1 Team    1 Contest",
-                          style: TextStyle(
+                  padding: const EdgeInsets.fromLTRB(0,5,10,0),
+                  child: Container(
+                    alignment: Alignment.centerLeft,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          controller.getUpcommingMyMatchResponse!.data[index].team1.teamName,
+                          style: const TextStyle(
                               color: Colors.black45,
                               fontSize: 12,
                               fontWeight: FontWeight.w500),
                         ),
-                      ),
-                    
-                    Image.asset(ImageUitls.Notification_icon,
-                      height: 20,
-                      width: 20,
-                      color: Colors.black,
-                      
-                     
-                     ),
-                  ],
+                        Text(
+                         controller.getUpcommingMyMatchResponse!.data[index].team2.teamName,
+                          style: const TextStyle(
+                              color: Colors.black45,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+                    ],
+                  ),
                 ),
-              ),
-            )
-          ],
-        ),
-      ),
-    )
-  
-      );
-  });
+                Divider(
+                  height: 1,
+                  color: ColorConstant.deviderColor,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width/1,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                       
+                           Padding(
+                            padding: const EdgeInsets.all(0.0),
+                            child: Text(
+                              "1 Team    1 Contest",
+                              style: TextStyle(
+                                  color: Colors.black45,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                        
+                        Image.asset(ImageUitls.Notification_icon,
+                          height: 20,
+                          width: 20,
+                          color: Colors.black,
+                          
+                         
+                         ),
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        )
+      
+          );
+      });
+    }
+  );
 }
 
 

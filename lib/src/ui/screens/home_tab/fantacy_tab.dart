@@ -33,44 +33,53 @@ class _FantacyTabState extends State<FantacyTab> {
     return SingleChildScrollView(
       child: Column(
         children: [
-          Container(
-            width: MediaQuery.of(context).size.width / 1,
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    "My Matches",
-                    style: TextStyle(
-                        color: ColorConstant.primaryBlackColor,
-                        fontSize: 13,
-                        fontWeight: FontWeight.w600),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: const [
-                      Text(
-                        "View All",
-                        style: TextStyle(
-                            color: ColorConstant.disableColor,
-                            fontSize: 13,
-                            fontWeight: FontWeight.w500),
+          logInStatus == false || controller.getUpcommingMyMatchResponse==null
+              ? Container()
+              : controller.getUpcommingMyMatchResponse!.data.isEmpty
+                  ? Container()
+                  : Container(
+                      width: MediaQuery.of(context).size.width / 1,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              "My Matches",
+                              style: TextStyle(
+                                  color: ColorConstant.primaryBlackColor,
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: const [
+                                Text(
+                                  "View All",
+                                  style: TextStyle(
+                                      color: ColorConstant.disableColor,
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                Icon(
+                                  Icons.navigate_next_rounded,
+                                  color: ColorConstant.disableColor,
+                                  size: 25,
+                                )
+                              ],
+                            )
+                          ],
+                        ),
                       ),
-                      Icon(
-                        Icons.navigate_next_rounded,
-                        color: ColorConstant.disableColor,
-                        size: 25,
-                      )
-                    ],
-                  )
-                ],
-              ),
-            ),
-          ),
-          const Padding(
-              padding: EdgeInsets.only(left: 15, right: 15),
-              child: CurrentMatchCardWidget()),
+                    ),
+logInStatus == false || controller.getUpcommingMyMatchResponse==null
+              ? Container()
+              : controller.getUpcommingMyMatchResponse != null &&
+                      controller.getUpcommingMyMatchResponse!.data.isEmpty
+                  ? Container()
+                  : const Padding(
+                      padding: EdgeInsets.only(left: 15, right: 15),
+                      child: CurrentMatchCardWidget()),
           SizedBox(
             height: 10,
           ),
@@ -166,21 +175,21 @@ class _FantacyTabState extends State<FantacyTab> {
                               padding: EdgeInsets.fromLTRB(15, 0, 15, 15),
                               child: InkWell(
                                   onTap: () {
-                                   if(logInStatus==true){
-                                     Navigator.push(context,
-                                        MaterialPageRoute(builder: (context) {
-                                      return UpcommingMatchesDetails(
-                                        matches: controller.getMatchesApiResponse!.data[index],
-                                      );
-                                    }));
-                                   }else{
-                                     Navigator.pushReplacement(context,
-                                        MaterialPageRoute(builder: (context) {
-                                      return LoginScreen(
-                                       
-                                      );
-                                    }));
-                                   }
+                                    if (logInStatus == true) {
+                                      Navigator.push(context,
+                                          MaterialPageRoute(builder: (context) {
+                                        return UpcommingMatchesDetails(
+                                          matches: controller
+                                              .getMatchesApiResponse!
+                                              .data[index],
+                                        );
+                                      }));
+                                    } else {
+                                      Navigator.pushReplacement(context,
+                                          MaterialPageRoute(builder: (context) {
+                                        return LoginScreen();
+                                      }));
+                                    }
                                   },
                                   child: UpcommingMatchCardWidget(
                                     matches: controller

@@ -54,6 +54,7 @@ Future<String?> getProfilePic() async {
     preferences.remove(profilePicUrl);
     preferences.remove(userToken);
     preferences.remove(isLoggedIn);
+    preferences.remove(authToken);
     logInStatus=false;
     preferences.setString('profilePicUrl', 'https://www.computerhope.com/jargon/g/guest-user.png');
   }

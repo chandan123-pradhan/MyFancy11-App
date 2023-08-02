@@ -34,7 +34,7 @@ class AuthController extends GetxController {
   ApiProvider apiProvider = ApiProvider();
   SharedPref sharedPref = SharedPref();
   late LoginApiResponse loginApiResponse;
-  late AwatarListApiResponse awatarListApiResponse;
+   AwatarListApiResponse? awatarListApiResponse;
   String selectedAwatarLink='';
   late UpdateProfileApiReponse updateProfileApiReponse;
   var homeController=Get.put(HomeController());
@@ -153,12 +153,12 @@ homeController.getSplashData(context);
           routeUrl: NetworkConstant.REGISTER_ROUTE_URL, bodyParams: parameter);
       
       loginApiResponse = LoginApiResponse.fromJson(response);
-
+debugger();
       sharedPref.setUserToken(loginApiResponse.data.userToken);
       sharedPref.setProfilepic(loginApiResponse.data.profile);
       messages.showMsg(
           context: context, message: 'Registration Successfully Done.');
-      await getAwatarList(context);
+      sharedPref.saveAuthToken();
       Navigator.pop(context);
       Navigator.pushAndRemoveUntil(context,
           MaterialPageRoute(builder: (context) {

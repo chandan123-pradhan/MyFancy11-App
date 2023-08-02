@@ -1,8 +1,10 @@
+import 'package:cricket_fantacy/src/controllers/splash_controller.dart';
 import 'package:cricket_fantacy/src/utils/color_scheme.dart';
 import 'package:cricket_fantacy/src/utils/image_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:get/get.dart';
 
 class CurrentMatchCardWidget extends StatefulWidget {
   const CurrentMatchCardWidget({super.key});
@@ -12,6 +14,7 @@ class CurrentMatchCardWidget extends StatefulWidget {
 }
 
 class _CurrentMatchCardWidgetState extends State<CurrentMatchCardWidget> {
+  var controller=Get.put(HomeController());
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -32,13 +35,13 @@ class _CurrentMatchCardWidgetState extends State<CurrentMatchCardWidget> {
                         children: [
                           Row(
                             children: [
-                              Image.asset(
-                                ImageUitls.Team_1_logo,
+                              Image.network(
+                               controller.getUpcommingMyMatchResponse!.data[0].team1.teamImage,
                                 height: 40,
                                 width: 40,
                               ),
                               Text(
-                                "RCB",
+                               " "+controller.getUpcommingMyMatchResponse!.data[0].team1.teamShortName,
                                 style: TextStyle(
                                     color: ColorConstant.primaryBlackColor,
                                     fontSize: 13,
@@ -67,7 +70,7 @@ class _CurrentMatchCardWidgetState extends State<CurrentMatchCardWidget> {
                                 height: 5,
                               ),
                               Text(
-                                "Today, 7:15pm",
+                               controller.getUpcommingMyMatchResponse!.data[0].matchDateTime,
                                 style: TextStyle(
                                     color: Colors.black45,
                                     fontSize: 12,
@@ -78,7 +81,7 @@ class _CurrentMatchCardWidgetState extends State<CurrentMatchCardWidget> {
                           Row(
                             children: [
                               Text(
-                                "CSK",
+                                controller.getUpcommingMyMatchResponse!.data[0].team2.teamName+" ",
                                 style: TextStyle(
                                     color: ColorConstant.primaryBlackColor,
                                     fontSize: 13,
@@ -87,8 +90,8 @@ class _CurrentMatchCardWidgetState extends State<CurrentMatchCardWidget> {
                               SizedBox(
                                 width: 5,
                               ),
-                              Image.asset(
-                                ImageUitls.Team_2_logo,
+                              Image.network(
+                               controller.getUpcommingMyMatchResponse!.data[0].team2.teamImage,
                                 height: 40,
                                 width: 40,
                               ),

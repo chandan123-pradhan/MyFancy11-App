@@ -39,8 +39,14 @@ var controller=Get.put(HomeController());
     _body=_screens[widget.index];
     controller.getUsersProfile();
     controller.getMatchesApiCall(context);
+    callGetMyMatchApi();
     // TODO: implement initState
     super.initState();
+  }
+   void callGetMyMatchApi()async{
+    await controller.getMyMatch(context, 'fixture');
+    // await controller.getMyMatch(context, 'live');
+    // await controller.getMyMatch(context, 'completed');
   }
 
 

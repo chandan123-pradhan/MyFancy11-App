@@ -4,8 +4,10 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:cricket_fantacy/src/dialogs/loadingDialog.dart';
+import 'package:cricket_fantacy/src/global_variable.dart';
 import 'package:cricket_fantacy/src/models/GetContestListApiResponse.dart';
 import 'package:cricket_fantacy/src/models/GetMatchesApiResponse.dart';
+import 'package:cricket_fantacy/src/models/get_my_mateches_api_response.dart';
 import 'package:cricket_fantacy/src/models/get_squad_api_response.dart';
 import 'package:cricket_fantacy/src/models/get_wallet_api_response.dart';
 import 'package:cricket_fantacy/src/models/get_winning_info_api_response.dart';
@@ -34,7 +36,10 @@ class HomeController extends GetxController {
   GetWinningInfoApiResponse? getWinningInfoApiResponse;
   GetSquadApiResponse? getSquadApiResponse;
   GetWalletApiResponse? getWalletApiResponse;
-
+  GetMyMatchesApiResponse? getUpcommingMyMatchResponse;
+  GetMyMatchesApiResponse? getLatestMyMatchResponse;
+    GetMyMatchesApiResponse? getLiveMyMatchReponse;
+  GetMyMatchesApiResponse? getCompletedMyMatchResponse;
   List<SquadPlayer> batsManList = [];
   List<SquadPlayer> wiketKeeperList = [];
   List<SquadPlayer> allRounderList = [];
@@ -78,8 +83,9 @@ class HomeController extends GetxController {
     _navigateFromThisPage(context, splashDataApiResponse.islogin);
   }
 
-  void _navigateFromThisPage(BuildContext context, bool islogin) {
-    if (islogin == true) {
+  void _navigateFromThisPage(BuildContext context, bool islogin)async {
+    getMyMatch(context, 'fixture').then((value){
+       if (islogin == true) {
       Navigator.pushAndRemoveUntil(context,
           MaterialPageRoute(builder: (context) {
         return DashboardScreen(
@@ -94,6 +100,8 @@ class HomeController extends GetxController {
         );
       }), (route) => false);
     }
+    });
+   
   }
 
   void getUsersProfile() async {
@@ -109,7 +117,7 @@ class HomeController extends GetxController {
     Map parameter = {
       NetworkConstant.Status: 'Fixture',
     };
-    var response = await apiProvider.postAfterAuth(
+    var response = await apiProvider.postBeforeAuth(
         routeUrl: NetworkConstant.GET_MATCHES, bodyParams: parameter);
     print(response);
     getMatchesApiResponse = GetMatchesApiResponse.fromJson(response);
@@ -328,4 +336,35 @@ class HomeController extends GetxController {
 
     update();
   }
+
+
+
+
+   Future<void> getMyMatch(context,String status) async {
+   if(logInStatus){
+    try{
+       Map parameter = {
+      NetworkConstant.Status:status
+    };
+    var response = await apiProvider.postAfterAuth(
+        routeUrl: NetworkConstant.MyMatchList_Url, bodyParams: parameter);
+    print(response);
+    if(status=='fixture'){
+      getUpcommingMyMatchResponse = GetMyMatchesApiResponse.fromJson(response);
+    }else if(status=='latest'){
+      getLatestMyMatchResponse = GetMyMatchesApiResponse.fromJson(response);
+    }else if(status=='live'){
+      getLiveMyMatchReponse = GetMyMatchesApiResponse.fromJson(response);
+    }else if(status=='completed'){
+      getCompletedMyMatchResponse = GetMyMatchesApiResponse.fromJson(response);
+    }
+
+    update();
+    }catch(e){
+      update();
+      
+    }
+   }
+  }
+
 }

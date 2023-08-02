@@ -18,6 +18,7 @@ class NetworkConstant{
   static const String Wallet_Url='/fancy/app/wallet';
   static const String Join_Contest='/fancy/app/join_contest';
   static const String Notification_url='/fancy/app/notification';
+  static const String MyMatchList_Url='/fancy/app/my_match';
 
 
 
