@@ -13,6 +13,7 @@ class NetworkConstant{
   static const String GET_MATCHES='/fancy/app/match';
   static const String GET_CONTEST='/fancy/app/contest';
   static const String GET_WINNING_INFO='/fancy/app/winning_info';
+  static const String GET_LEADERBOARD_URL='/fancy/app/leaderboard';
   static const String Get_Squad='/fancy/app/squad';
   static const String Save_Team_URL='/fancy/app/save_team';
   static const String Wallet_Url='/fancy/app/wallet';

@@ -79,7 +79,8 @@ class ApiProvider {
           Uri.parse(NetworkConstant.BASE_URL + routeUrl),
           headers: {'Token': appToken!},
           body: bodyParams);
-     
+    // debugger();
+     print(response);
       if (response.statusCode == 200) {
         return json.decode(response.body);
       } else if (response.statusCode == 400) {

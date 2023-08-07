@@ -3,10 +3,12 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:cricket_fantacy/src/dialogs/AlertDialog.dart';
 import 'package:cricket_fantacy/src/dialogs/loadingDialog.dart';
 import 'package:cricket_fantacy/src/global_variable.dart';
 import 'package:cricket_fantacy/src/models/GetContestListApiResponse.dart';
 import 'package:cricket_fantacy/src/models/GetMatchesApiResponse.dart';
+import 'package:cricket_fantacy/src/models/get_leaderboard_api_response.dart';
 import 'package:cricket_fantacy/src/models/get_my_mateches_api_response.dart';
 import 'package:cricket_fantacy/src/models/get_squad_api_response.dart';
 import 'package:cricket_fantacy/src/models/get_wallet_api_response.dart';
@@ -34,11 +36,12 @@ class HomeController extends GetxController {
   GetMatchesApiResponse? getMatchesApiResponse;
   GetContestListApiResponse? getContestListApiResponse;
   GetWinningInfoApiResponse? getWinningInfoApiResponse;
+  GetLeaderboardApiResponse? getLeaderboardApiResponse;
   GetSquadApiResponse? getSquadApiResponse;
   GetWalletApiResponse? getWalletApiResponse;
   GetMyMatchesApiResponse? getUpcommingMyMatchResponse;
   GetMyMatchesApiResponse? getLatestMyMatchResponse;
-    GetMyMatchesApiResponse? getLiveMyMatchReponse;
+  GetMyMatchesApiResponse? getLiveMyMatchReponse;
   GetMyMatchesApiResponse? getCompletedMyMatchResponse;
   List<SquadPlayer> batsManList = [];
   List<SquadPlayer> wiketKeeperList = [];
@@ -83,25 +86,24 @@ class HomeController extends GetxController {
     _navigateFromThisPage(context, splashDataApiResponse.islogin);
   }
 
-  void _navigateFromThisPage(BuildContext context, bool islogin)async {
-    getMyMatch(context, 'fixture').then((value){
-       if (islogin == true) {
-      Navigator.pushAndRemoveUntil(context,
-          MaterialPageRoute(builder: (context) {
-        return DashboardScreen(
-          index: 0,
-        );
-      }), (route) => false);
-    } else {
-      Navigator.pushAndRemoveUntil(context,
-          MaterialPageRoute(builder: (context) {
-        return DashboardScreen(
-          index: 0,
-        );
-      }), (route) => false);
-    }
+  void _navigateFromThisPage(BuildContext context, bool islogin) async {
+    getMyMatch(context, 'fixture').then((value) {
+      if (islogin == true) {
+        Navigator.pushAndRemoveUntil(context,
+            MaterialPageRoute(builder: (context) {
+          return DashboardScreen(
+            index: 0,
+          );
+        }), (route) => false);
+      } else {
+        Navigator.pushAndRemoveUntil(context,
+            MaterialPageRoute(builder: (context) {
+          return DashboardScreen(
+            index: 0,
+          );
+        }), (route) => false);
+      }
     });
-   
   }
 
   void getUsersProfile() async {
@@ -148,6 +150,18 @@ class HomeController extends GetxController {
     update();
   }
 
+
+ void getLeaderBoardResponse(context, contestId) async {
+    Map parameter = {
+      NetworkConstant.ContestId: contestId,
+    };
+    var response = await apiProvider.postAfterAuth(
+        routeUrl: NetworkConstant.GET_LEADERBOARD_URL, bodyParams: parameter);
+    print(response);
+    getLeaderboardApiResponse = GetLeaderboardApiResponse.fromJson(response);
+// debugger();
+    update();
+  }
   void getSquad(context, matchId) async {
     Map parameter = {
       NetworkConstant.MatchId: matchId,
@@ -311,60 +325,85 @@ class HomeController extends GetxController {
     var response = await apiProvider.postAfterAuth(
         routeUrl: NetworkConstant.Join_Contest, bodyParams: parameter);
     Navigator.pop(context);
-   // debugger(); //
-    if (response['status'] != 200) {
-      Messages().showErrorMsg(context: context, message: response['message']);
-    } else {
-      Messages().showErrorMsg(context: context, message: response['message']);
+    debugger(); //
+
+    if(response==null) {
+      Messages().showErrorMsg(context: context, message:'Match created successfully done.');
       choosedCaptainId = null;
       choosedViceCaptainId = null;
       mySavedTeamId = '';
       choosedPlayerList.clear();
+       allRounderList.clear();
+        batsManList.clear();
+        wiketKeeperList.cast();
+        bowlerlist.cast();
       dummyBatsManList.clear();
       dummyallRounderList.clear();
       dummybowlerlist.clear();
       dummywiketKeeperList.clear();
 
-     // Get.deleteAll();
+      // Get.deleteAll();
       Navigator.pushAndRemoveUntil(context,
           MaterialPageRoute(builder: (context) {
         return DashboardScreen(
           index: 1,
         );
       }), (route) => false);
-    }
+    }else
+    if (response['status'] != 200) {
+      showAlertDialogboxWidget(context, response['message'], () {
+        choosedCaptainId = null;
+        choosedViceCaptainId = null;
+       // getSquadApiResponse=null;
+        allRounderList.clear();
+        batsManList.clear();
+        wiketKeeperList.cast();
+        bowlerlist.cast();
+        mySavedTeamId = '';
+        choosedPlayerList.clear();
+        dummyBatsManList.clear();
+        dummyallRounderList.clear();
+        dummybowlerlist.clear();
+        dummywiketKeeperList.clear();
+        
+
+        // Get.deleteAll();
+        Navigator.pushAndRemoveUntil(context,
+            MaterialPageRoute(builder: (context) {
+          return DashboardScreen(
+            index: 1,
+          );
+        }), (route) => false);
+      });
+      //  Messages().showErrorMsg();
+    } 
 
     update();
   }
 
+  Future<void> getMyMatch(context, String status) async {
+    if (logInStatus) {
+      try {
+        Map parameter = {NetworkConstant.Status: status};
+        var response = await apiProvider.postAfterAuth(
+            routeUrl: NetworkConstant.MyMatchList_Url, bodyParams: parameter);
+        print(response);
+        if (status == 'fixture') {
+          getUpcommingMyMatchResponse =
+              GetMyMatchesApiResponse.fromJson(response);
+        } else if (status == 'latest') {
+          getLatestMyMatchResponse = GetMyMatchesApiResponse.fromJson(response);
+        } else if (status == 'live') {
+          getLiveMyMatchReponse = GetMyMatchesApiResponse.fromJson(response);
+        } else if (status == 'completed') {
+          getCompletedMyMatchResponse =
+              GetMyMatchesApiResponse.fromJson(response);
+        }
 
-
-
-   Future<void> getMyMatch(context,String status) async {
-   if(logInStatus){
-    try{
-       Map parameter = {
-      NetworkConstant.Status:status
-    };
-    var response = await apiProvider.postAfterAuth(
-        routeUrl: NetworkConstant.MyMatchList_Url, bodyParams: parameter);
-    print(response);
-    if(status=='fixture'){
-      getUpcommingMyMatchResponse = GetMyMatchesApiResponse.fromJson(response);
-    }else if(status=='latest'){
-      getLatestMyMatchResponse = GetMyMatchesApiResponse.fromJson(response);
-    }else if(status=='live'){
-      getLiveMyMatchReponse = GetMyMatchesApiResponse.fromJson(response);
-    }else if(status=='completed'){
-      getCompletedMyMatchResponse = GetMyMatchesApiResponse.fromJson(response);
+        update();
+      } catch (e) {
+        update();
+      }
     }
-
-    update();
-    }catch(e){
-      update();
-      
-    }
-   }
   }
-
 }

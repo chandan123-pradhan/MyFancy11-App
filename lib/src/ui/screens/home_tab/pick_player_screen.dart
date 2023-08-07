@@ -709,7 +709,10 @@ class _PickPlayerScreenState extends State<PickPlayerScreen>
                 ),
               ),
               Expanded(
-                child: ListView.builder(
+                child:
+               dummyPlayer.isEmpty==true|| players.isEmpty==true?Center():
+                
+                 ListView.builder(
                     itemCount: players.length,
                     itemBuilder: (context, index) {
                       return Container(

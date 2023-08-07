@@ -32,6 +32,7 @@ class _UpcommingMatchesDetailsState extends State<JoinContest> {
 
 void callGetWinningInfo(){
   controller.getWinningInfo(context, widget.contest.contestId);
+  controller.getLeaderBoardResponse(context, widget.contest.contestId);
 }
 @override
   void initState() {
