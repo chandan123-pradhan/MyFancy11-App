@@ -25,6 +25,7 @@ class GetSquadApiResponse {
 
 class SquadPlayer {
   SquadPlayer({
+    required this.lastMachPlayed,
     required this.id,
     required this.playerPoints,
     required this.selectionPercent,
@@ -46,6 +47,7 @@ class SquadPlayer {
     required this.playerShortname,
     required this.playerDesigination,
   });
+  late final String lastMachPlayed;
   late final String id;
   late final String playerPoints;
   late final String selectionPercent;
@@ -68,6 +70,7 @@ class SquadPlayer {
   late final String playerDesigination;
   
   SquadPlayer.fromJson(Map<String, dynamic> json){
+    lastMachPlayed=json['last_match_played'].toString();
     id = json['id'];
     playerPoints = json['player_points'];
     selectionPercent = json['selection_percent'];
@@ -92,6 +95,7 @@ class SquadPlayer {
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
+    _data['last_match_played']=lastMachPlayed;
     _data['id'] = id;
     _data['player_points'] = playerPoints;
     _data['selection_percent'] = selectionPercent;

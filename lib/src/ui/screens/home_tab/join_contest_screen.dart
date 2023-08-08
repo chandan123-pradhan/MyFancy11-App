@@ -14,8 +14,10 @@ import 'package:cricket_fantacy/src/utils/image_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart';
+import 'package:intl/intl.dart';
 
 class JoinContest extends StatefulWidget {
   final Matches matches;
@@ -36,10 +38,29 @@ void callGetWinningInfo(){
 }
 @override
   void initState() {
+    _calculateTimeRemaining();
     callGetWinningInfo();
     // TODO: implement initState
     super.initState();
   }
+
+
+ var targetDate;
+
+  _calculateTimeRemaining() {
+    DateTime now = DateTime.now();
+    targetDate =
+        DateFormat("yyyy-MM-dd hh:mm:ss").parse(widget.matches.matchDateTime);
+    Duration remainingDuration = targetDate.difference(now);
+
+    int hours = remainingDuration.inHours;
+    int minutes = remainingDuration.inMinutes.remainder(60);
+    print('$hours hours and $minutes minutes remaining');
+    //return '';
+    setState(() {});
+  }
+
+
 
   @override
 
@@ -69,12 +90,10 @@ void callGetWinningInfo(){
                   fontSize: 17,
                   fontWeight: FontWeight.w600),
             ),
-            Text(
-              "06h 55m Left",
-              style: TextStyle(
-                  color: ColorConstant.primaryWhiteColor,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w400),
+           CountdownTimer(
+              endWidget: Text("Live"),
+              endTime: targetDate.millisecondsSinceEpoch,
+              textStyle: TextStyle(fontSize: 14),
             ),
           ],
         ),
@@ -212,7 +231,7 @@ void callGetWinningInfo(){
             height: 20,
           ),
           Container(
-            height: 100,
+           // height: 100,
             child: Column(
               children: [
                 Container(
@@ -279,19 +298,23 @@ void callGetWinningInfo(){
                 
                   ),
                 ),
-                Container(
-                  height: 40,
-                  width: MediaQuery.of(context).size.width / 1,
-                  decoration: BoxDecoration(color: Colors.red[100]),
-                  alignment: Alignment.centerLeft,
-                  child:  Padding(
-                    padding: EdgeInsets.only(left: 15.0),
-                    child: Text(
-                      "Earn ₹${widget.contest.firstPrize}   for every ₹${widget.contest.entry}   Spent on a contest entry",
-                      style: TextStyle(
-                          color: ColorConstant.primaryColor,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0,0,0,0),
+                  child: Container(
+                    //height: 40,
+                    width: MediaQuery.of(context).size.width / 1,
+                    decoration: BoxDecoration(color: Colors.red[100]),
+                    alignment: Alignment.centerLeft,
+                    child:  Padding(
+                      padding: EdgeInsets.only(left: 15.0,bottom: 5,top: 5),
+                      child: Text(
+                        widget.contest.contestDescription,
+                        // "Earn ₹${widget.contest.firstPrize}   for every ₹${widget.contest.entry}   Spent on a contest entry",
+                        style: TextStyle(
+                            color: ColorConstant.primaryColor,
+                            fontSize: 13,
+                            fontWeight: FontWeight.w500),
+                      ),
                     ),
                   ),
                 )
@@ -301,7 +324,7 @@ void callGetWinningInfo(){
 
 // SizedBox(height: 10,),
           Padding(
-            padding: const EdgeInsets.only(left: 15.0, right: 15),
+            padding: const EdgeInsets.only(left: 15.0, right: 15,top: 20),
             child: Container(
                 // height: MediaQuery.of(context).size.height/9,
                 child: Row(
@@ -373,7 +396,7 @@ void callGetWinningInfo(){
                LeaderboardTab()
               ],
               options: CarouselOptions(
-                height: MediaQuery.of(context).size.height / 2.1,
+                height: MediaQuery.of(context).size.height / 2.3,
                 aspectRatio: 16 / 9,
                 viewportFraction: 1.0,
                 initialPage: 0,

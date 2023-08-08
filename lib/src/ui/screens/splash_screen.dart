@@ -26,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
-    controller.getSplashData(context);
+    controller.getSplashData(context,1);
     
     // TODO: implement initState
     super.initState();

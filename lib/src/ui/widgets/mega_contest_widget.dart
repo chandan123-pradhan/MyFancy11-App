@@ -46,7 +46,7 @@ class _MegaContestWidgetState extends State<MegaContestWidget> {
                         width: 50,
                       ),
                       Text(
-                        widget.contest.contestTag,
+                        widget.contest.offer,
                         style: TextStyle(
                             color: ColorConstant.primaryColor,
                             fontSize: 14,

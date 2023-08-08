@@ -1,4 +1,5 @@
 import 'package:cricket_fantacy/src/models/GetMatchesApiResponse.dart';
+import 'package:cricket_fantacy/src/models/get_my_mateches_api_response.dart';
 import 'package:cricket_fantacy/src/utils/color_scheme.dart';
 import 'package:cricket_fantacy/src/utils/image_utils.dart';
 import 'package:flutter/material.dart';
@@ -7,16 +8,16 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:intl/intl.dart';
 
-class UpcommingMatchCardWidget extends StatefulWidget {
-  final Matches matches;
-  UpcommingMatchCardWidget({required this.matches});
+class MyUpcommingMatchCardWidget extends StatefulWidget {
+  final MyMatchModel matches;
+  MyUpcommingMatchCardWidget({required this.matches});
 
   @override
-  State<UpcommingMatchCardWidget> createState() =>
-      _UpcommingMatchCardWidgetState();
+  State<MyUpcommingMatchCardWidget> createState() =>
+      _MyUpcommingMatchCardWidgetState();
 }
 
-class _UpcommingMatchCardWidgetState extends State<UpcommingMatchCardWidget> {
+class _MyUpcommingMatchCardWidgetState extends State<MyUpcommingMatchCardWidget> {
   var targetDate;
   _calculateTimeRemaining() {
     DateTime now = DateTime.now();
@@ -76,7 +77,7 @@ class _UpcommingMatchCardWidgetState extends State<UpcommingMatchCardWidget> {
                             width: 10,
                           ),
                           Text(
-                            widget.matches.elevenOut==0?'':'Linup out',
+                            widget.matches.elevenOut=='0'?'':'Linup out',
                             style: TextStyle(
                                 color: ColorConstant.greenColor,
                                 fontSize: 13,

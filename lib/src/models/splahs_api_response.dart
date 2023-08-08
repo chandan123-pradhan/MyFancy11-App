@@ -10,6 +10,7 @@ class SplashDataApiResponse {
   late final String message;
   late final Data data;
   late final List<LoginBanner> loginBanner;
+  late final List<LoginBanner>homeBanner;
   late final bool islogin;
   
   SplashDataApiResponse.fromJson(Map<String, dynamic> json){
@@ -17,6 +18,7 @@ class SplashDataApiResponse {
     message = json['message'];
     data = Data.fromJson(json['data']);
     loginBanner = List.from(json['login_banner']).map((e)=>LoginBanner.fromJson(e)).toList();
+    homeBanner=List.from(json['home_banner']).map((e)=>LoginBanner.fromJson(e)).toList();
     islogin = json['islogin'];
   }
 
@@ -26,6 +28,7 @@ class SplashDataApiResponse {
     _data['message'] = message;
     _data['data'] = data.toJson();
     _data['login_banner'] = loginBanner.map((e)=>e.toJson()).toList();
+    _data['home_banner']=homeBanner.map((e)=>e.toJson()).toList();
     _data['islogin'] = islogin;
     return _data;
   }

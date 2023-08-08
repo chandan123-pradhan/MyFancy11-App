@@ -5,7 +5,9 @@ import 'package:cricket_fantacy/src/ui/widgets/steper_widget.dart';
 import 'package:cricket_fantacy/src/utils/color_scheme.dart';
 import 'package:cricket_fantacy/src/utils/image_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class PickCaptionViceCaptionScreen extends StatefulWidget {
   final Matches matches;
@@ -22,6 +24,29 @@ class _PickCaptionViceCaptionScreenState
   int captainIndex = -1;
   int vcIndex = -1;
   var controller = Get.put(HomeController());
+
+@override
+  void initState() {
+    _calculateTimeRemaining();
+    // TODO: implement initState
+    super.initState();
+  }
+
+
+   var targetDate;
+
+  _calculateTimeRemaining() {
+    DateTime now = DateTime.now();
+    targetDate =
+        DateFormat("yyyy-MM-dd hh:mm:ss").parse(widget.matches.matchDateTime);
+    Duration remainingDuration = targetDate.difference(now);
+
+    int hours = remainingDuration.inHours;
+    int minutes = remainingDuration.inMinutes.remainder(60);
+    print('$hours hours and $minutes minutes remaining');
+    //return '';
+    setState(() {});
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,19 +68,17 @@ class _PickCaptionViceCaptionScreenState
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               "Create Team",
               style: TextStyle(
                   color: ColorConstant.primaryWhiteColor,
                   fontSize: 17,
                   fontWeight: FontWeight.w600),
             ),
-            Text(
-              "06h 55m Left",
-              style: TextStyle(
-                  color: ColorConstant.primaryWhiteColor,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w400),
+          CountdownTimer(
+              endWidget: Text("Live"),
+              endTime: targetDate.millisecondsSinceEpoch,
+              textStyle: TextStyle(fontSize: 14),
             ),
           ],
         ),

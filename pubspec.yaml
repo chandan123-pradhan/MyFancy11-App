@@ -43,6 +43,8 @@ dependencies:
   shared_preferences:
   image_picker:  
   pinput: ^2.2.31
+  intl: 
+  flutter_countdown_timer:
 
 dev_dependencies:
   flutter_test:

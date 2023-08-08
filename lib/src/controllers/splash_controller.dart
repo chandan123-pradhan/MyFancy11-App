@@ -8,6 +8,7 @@ import 'package:cricket_fantacy/src/dialogs/loadingDialog.dart';
 import 'package:cricket_fantacy/src/global_variable.dart';
 import 'package:cricket_fantacy/src/models/GetContestListApiResponse.dart';
 import 'package:cricket_fantacy/src/models/GetMatchesApiResponse.dart';
+import 'package:cricket_fantacy/src/models/PlayersModel.dart';
 import 'package:cricket_fantacy/src/models/get_leaderboard_api_response.dart';
 import 'package:cricket_fantacy/src/models/get_my_mateches_api_response.dart';
 import 'package:cricket_fantacy/src/models/get_squad_api_response.dart';
@@ -48,6 +49,12 @@ class HomeController extends GetxController {
   List<SquadPlayer> allRounderList = [];
   List<SquadPlayer> bowlerlist = [];
   List<SquadPlayer> choosedPlayerList = [];
+  List<SquadPlayer> team1ChoosedPlayers = [];
+  List<SquadPlayer> team2ChoosedPlayers = [];
+  List<SquadPlayer> choosedBatsManList = [];
+  List<SquadPlayer> choosedWiketKeeperList = [];
+  List<SquadPlayer> choosedAllRounderList = [];
+  List<SquadPlayer> choosedBowlerlist = [];
 
   List<int> dummyBatsManList = [];
   List<int> dummywiketKeeperList = [];
@@ -58,7 +65,7 @@ class HomeController extends GetxController {
 
   String mySavedTeamId = '';
 
-  void getSplashData(context) async {
+  void getSplashData(context, flag) async {
     String? userToken = await sharedPref.getUserToken();
     sharedPref.getLoginStatus();
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
@@ -79,11 +86,14 @@ class HomeController extends GetxController {
     var response = await apiProvider.postBeforeAuthStaticToken(
         routeUrl: NetworkConstant.CUSTOMER_DATE_ROUTE_URL,
         bodyParams: parameter);
+    // debugger();
     print(response);
     splashDataApiResponse = SplashDataApiResponse.fromJson(response);
     sharedPref.setAppToken(splashDataApiResponse.data.appToken);
     update();
-    _navigateFromThisPage(context, splashDataApiResponse.islogin);
+    if (flag != 0) {
+      _navigateFromThisPage(context, splashDataApiResponse.islogin);
+    }
   }
 
   void _navigateFromThisPage(BuildContext context, bool islogin) async {
@@ -121,7 +131,8 @@ class HomeController extends GetxController {
     };
     var response = await apiProvider.postBeforeAuth(
         routeUrl: NetworkConstant.GET_MATCHES, bodyParams: parameter);
-    print(response);
+   // debugger();
+    // print(response);
     getMatchesApiResponse = GetMatchesApiResponse.fromJson(response);
     update();
   }
@@ -150,8 +161,7 @@ class HomeController extends GetxController {
     update();
   }
 
-
- void getLeaderBoardResponse(context, contestId) async {
+  void getLeaderBoardResponse(context, contestId) async {
     Map parameter = {
       NetworkConstant.ContestId: contestId,
     };
@@ -162,6 +172,7 @@ class HomeController extends GetxController {
 // debugger();
     update();
   }
+
   void getSquad(context, matchId) async {
     Map parameter = {
       NetworkConstant.MatchId: matchId,
@@ -171,17 +182,34 @@ class HomeController extends GetxController {
     };
     var response = await apiProvider.postAfterAuth(
         routeUrl: NetworkConstant.Get_Squad, bodyParams: parameter);
-    print(response);
+
     getSquadApiResponse = GetSquadApiResponse.fromJson(response);
+
     devidePlayersAccordingToTitle();
     update();
   }
 
   void devidePlayersAccordingToTitle() {
     batsManList.clear();
-    allRounderList.cast();
+    allRounderList.clear();
     wiketKeeperList.clear();
     bowlerlist.clear();
+
+    dummyBatsManList.clear();
+    dummyallRounderList.clear();
+    dummywiketKeeperList.clear();
+    dummybowlerlist.clear();
+
+    choosedBatsManList.clear();
+    choosedAllRounderList.clear();
+    choosedWiketKeeperList.clear();
+    choosedBowlerlist.clear();
+
+    team1ChoosedPlayers.clear();
+    team2ChoosedPlayers.clear();
+    choosedPlayerList.clear();
+
+    update();
 
     for (int i = 0; i < getSquadApiResponse!.data.length; i++) {
       switch (getSquadApiResponse!.data[i].playerDesigination) {
@@ -208,46 +236,88 @@ class HomeController extends GetxController {
     update();
   }
 
-  void chosedPlayer(SquadPlayer player, index) {
-    switch (player.playerDesigination) {
-      case AppConstant.wicketKeeper:
-        dummywiketKeeperList[index] = 1;
-        break;
-      case AppConstant.batsMan:
-        dummyBatsManList[index] = 1;
-        break;
-      case AppConstant.bowler:
-        dummybowlerlist[index] = 1;
-        break;
-      case AppConstant.allRownder:
-        dummyallRounderList[index] = 1;
-        break;
-      default:
-        break;
+  void chosedPlayer(
+      SquadPlayer player, index, String team1Id, String team2Id, context) {
+    if (player.teamid == team1Id && team1ChoosedPlayers.length >= 10) {
+      Messages().showErrorMsg(
+          context: context,
+          message: 'You can only select Maximum 10 plyer from one team.');
+    } else if (player.teamid == team2Id && team2ChoosedPlayers.length >= 10) {
+      Messages().showErrorMsg(
+          context: context,
+          message: 'You can only select Maximum 10 plyer from one team.');
+    } else {
+      switch (player.playerDesigination) {
+        case AppConstant.wicketKeeper:
+          dummywiketKeeperList[index] = 1;
+          choosedWiketKeeperList.add(player);
+
+          break;
+        case AppConstant.batsMan:
+          dummyBatsManList[index] = 1;
+          choosedBatsManList.add(player);
+          break;
+        case AppConstant.bowler:
+          dummybowlerlist[index] = 1;
+          choosedBowlerlist.add(player);
+          break;
+        case AppConstant.allRownder:
+          dummyallRounderList[index] = 1;
+          choosedAllRounderList.add(player);
+          break;
+        default:
+          break;
+      }
+      choosedPlayerList.add(player);
+      devideTeam(team1Id, team2Id, player, 1);
     }
-    choosedPlayerList.add(player);
+
     update();
   }
 
-  void removeChosedPlayer(SquadPlayer player, index) {
+  void devideTeam(String team1Id, String team2Id, SquadPlayer player, flag) {
+    if (flag == 1) {
+      //for add.
+      if (player.teamid == team1Id) {
+        team1ChoosedPlayers.add(player);
+      } else if (player.teamid == team2Id) {
+        team2ChoosedPlayers.add(player);
+      }
+    } else {
+      if (player.teamid == team1Id) {
+        team1ChoosedPlayers.remove(player);
+      } else if (player.teamid == team2Id) {
+        team2ChoosedPlayers.remove(player);
+      }
+    }
+    update();
+  }
+
+  void removeChosedPlayer(
+      SquadPlayer player, index, String team1Id, String team2Id) {
     switch (player.playerDesigination) {
       case AppConstant.wicketKeeper:
         dummywiketKeeperList[index] = 0;
+        choosedWiketKeeperList.remove(index);
         break;
       case AppConstant.batsMan:
         dummyBatsManList[index] = 0;
+        choosedBatsManList.remove(index);
         break;
       case AppConstant.bowler:
         dummybowlerlist[index] = 0;
+        choosedBowlerlist.remove(index);
         break;
       case AppConstant.allRownder:
         dummyallRounderList[index] = 0;
+        choosedAllRounderList.remove(index);
         break;
       default:
         break;
     }
     choosedPlayerList.remove(player);
     print(choosedPlayerList.length);
+    devideTeam(team1Id, team2Id, player, 0);
     update();
   }
 
@@ -327,16 +397,17 @@ class HomeController extends GetxController {
     Navigator.pop(context);
     debugger(); //
 
-    if(response==null) {
-      Messages().showErrorMsg(context: context, message:'Match created successfully done.');
+    if (response == null) {
+      Messages().showErrorMsg(
+          context: context, message: 'Match created successfully done.');
       choosedCaptainId = null;
       choosedViceCaptainId = null;
       mySavedTeamId = '';
       choosedPlayerList.clear();
-       allRounderList.clear();
-        batsManList.clear();
-        wiketKeeperList.cast();
-        bowlerlist.cast();
+      allRounderList.clear();
+      batsManList.clear();
+      wiketKeeperList.cast();
+      bowlerlist.cast();
       dummyBatsManList.clear();
       dummyallRounderList.clear();
       dummybowlerlist.clear();
@@ -349,12 +420,11 @@ class HomeController extends GetxController {
           index: 1,
         );
       }), (route) => false);
-    }else
-    if (response['status'] != 200) {
+    } else if (response['status'] != 200) {
       showAlertDialogboxWidget(context, response['message'], () {
         choosedCaptainId = null;
         choosedViceCaptainId = null;
-       // getSquadApiResponse=null;
+        // getSquadApiResponse=null;
         allRounderList.clear();
         batsManList.clear();
         wiketKeeperList.cast();
@@ -365,7 +435,6 @@ class HomeController extends GetxController {
         dummyallRounderList.clear();
         dummybowlerlist.clear();
         dummywiketKeeperList.clear();
-        
 
         // Get.deleteAll();
         Navigator.pushAndRemoveUntil(context,
@@ -376,7 +445,7 @@ class HomeController extends GetxController {
         }), (route) => false);
       });
       //  Messages().showErrorMsg();
-    } 
+    }
 
     update();
   }
@@ -387,11 +456,15 @@ class HomeController extends GetxController {
         Map parameter = {NetworkConstant.Status: status};
         var response = await apiProvider.postAfterAuth(
             routeUrl: NetworkConstant.MyMatchList_Url, bodyParams: parameter);
+        //debugger();
         print(response);
         if (status == 'fixture') {
+         // debugger();
           getUpcommingMyMatchResponse =
               GetMyMatchesApiResponse.fromJson(response);
         } else if (status == 'latest') {
+        //  debugger();
+          print(response);
           getLatestMyMatchResponse = GetMyMatchesApiResponse.fromJson(response);
         } else if (status == 'live') {
           getLiveMyMatchReponse = GetMyMatchesApiResponse.fromJson(response);

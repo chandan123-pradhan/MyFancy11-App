@@ -44,7 +44,7 @@ var controller=Get.put(HomeController());
     super.initState();
   }
    void callGetMyMatchApi()async{
-    await controller.getMyMatch(context, 'fixture');
+    await controller.getMyMatch(context, 'latest');
     // await controller.getMyMatch(context, 'live');
     // await controller.getMyMatch(context, 'completed');
   }

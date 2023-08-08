@@ -34,12 +34,12 @@ class AuthController extends GetxController {
   ApiProvider apiProvider = ApiProvider();
   SharedPref sharedPref = SharedPref();
   late LoginApiResponse loginApiResponse;
-   AwatarListApiResponse? awatarListApiResponse;
-  String selectedAwatarLink='';
+  AwatarListApiResponse? awatarListApiResponse;
+  String selectedAwatarLink = '';
   late UpdateProfileApiReponse updateProfileApiReponse;
-  var homeController=Get.put(HomeController());
+  var homeController = Get.put(HomeController());
   void callValidatePhoneApi(context) async {
-homeController.getSplashData(context);
+    homeController.getSplashData(context, 0);
     if (phoneNumberController.text.length == 10) {
       Map data = {NetworkConstant.PHONE_PARAMS: phoneNumberController.text};
       //  debugger();
@@ -49,20 +49,25 @@ homeController.getSplashData(context);
             routeUrl: NetworkConstant.VERIFY_MOBILE_NUMBER_URL,
             bodyParams: data);
         Navigator.pop(context);
-// debugger();
+//  debugger();
         print(response);
-        validatePhoneNumberApiResponse =
-            ValidatePhoneNumberApiResponse.fromJson(response);
-        messages.showMsg(
-            context: context,
-            message: "OTP has been sent on your mobile number.");
-        _navigateToOtpPage(context);
+        if (response['status'] == 200 || response['status']==400) {
+          validatePhoneNumberApiResponse =
+              ValidatePhoneNumberApiResponse.fromJson(response);
+          messages.showMsg(
+              context: context,
+              message: "OTP has been sent on your mobile number.");
+          _navigateToOtpPage(context);
+        }
+         else {
+          messages.showMsg(context: context, message: response['message']);
+        }
       } catch (e) {
         print(e);
         messages.showErrorMsg(
             context: context,
             message: 'Something Went Wrong, Please Try Again');
-        Navigator.pop(context);
+        //  Navigator.pop(context);
       }
     } else {
       messages.showErrorMsg(context: context, message: 'Invalid Phone Number');
@@ -123,6 +128,7 @@ homeController.getSplashData(context);
     loginApiResponse = LoginApiResponse.fromJson(response);
     sharedPref.setUserToken(loginApiResponse.data.userToken);
     sharedPref.setProfilepic(loginApiResponse.data.profile);
+    sharedPref.saveAuthToken();
     sharedPref.setLoginStatus();
     Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) {
       return DashboardScreen(
@@ -151,9 +157,9 @@ homeController.getSplashData(context);
     try {
       var response = await apiProvider.postBeforeAuthWithAppToken(
           routeUrl: NetworkConstant.REGISTER_ROUTE_URL, bodyParams: parameter);
-      
+
       loginApiResponse = LoginApiResponse.fromJson(response);
-debugger();
+      //debugger();
       sharedPref.setUserToken(loginApiResponse.data.userToken);
       sharedPref.setProfilepic(loginApiResponse.data.profile);
       messages.showMsg(
@@ -195,15 +201,13 @@ debugger();
       var response = await apiProvider.postAfterAuth(
           routeUrl: NetworkConstant.GET_AWATAR_LIST_ROUTE_URL,
           bodyParams: data);
-      
+
       awatarListApiResponse = AwatarListApiResponse.fromJson(response);
       update();
     } catch (e) {
       //getAwatarList(context);
     }
   }
-
-
 
   updateProfile(context) async {
     showLoaderDialog(context);
@@ -215,25 +219,27 @@ debugger();
     };
     try {
       var response = await apiProvider.postAfterAuth(
-          routeUrl: NetworkConstant.ACCOUNT_UPDATE_URL,
-          bodyParams: data);
+          routeUrl: NetworkConstant.ACCOUNT_UPDATE_URL, bodyParams: data);
       Navigator.pop(context);
       updateProfileApiReponse = UpdateProfileApiReponse.fromJson(response);
       sharedPref.setProfilepic(updateProfileApiReponse.updatedData.profile);
-       sharedPref.setLoginStatus();
-       messages.showMsg(context: context, message: updateProfileApiReponse.message);
-      
-       Navigator.pushAndRemoveUntil(context,
+      sharedPref.setLoginStatus();
+      messages.showMsg(
+          context: context, message: updateProfileApiReponse.message);
+
+      Navigator.pushAndRemoveUntil(context,
           MaterialPageRoute(builder: (context) {
-        return  DashboardScreen(index: 0,);
+        return DashboardScreen(
+          index: 0,
+        );
       }), (route) => false);
     } catch (e) {
       //getAwatarList(context);
     }
   }
 
-  void selectAwatar(String link){
-    selectedAwatarLink=link;
+  void selectAwatar(String link) {
+    selectedAwatarLink = link;
     update();
   }
 }

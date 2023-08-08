@@ -33,7 +33,7 @@ class _FantacyTabState extends State<FantacyTab> {
     return SingleChildScrollView(
       child: Column(
         children: [
-          logInStatus == false || controller.getUpcommingMyMatchResponse==null
+          logInStatus == false || controller.getUpcommingMyMatchResponse == null
               ? Container()
               : controller.getUpcommingMyMatchResponse!.data.isEmpty
                   ? Container()
@@ -72,14 +72,29 @@ class _FantacyTabState extends State<FantacyTab> {
                         ),
                       ),
                     ),
-logInStatus == false || controller.getUpcommingMyMatchResponse==null
+          logInStatus == false || controller.getLatestMyMatchResponse == null
               ? Container()
-              : controller.getUpcommingMyMatchResponse != null &&
-                      controller.getUpcommingMyMatchResponse!.data.isEmpty
+              : controller.getLatestMyMatchResponse != null &&
+                      controller.getLatestMyMatchResponse!.data.isEmpty
                   ? Container()
-                  : const Padding(
+                  : Padding(
                       padding: EdgeInsets.only(left: 15, right: 15),
-                      child: CurrentMatchCardWidget()),
+                      child: Column(
+                        children: [
+                          for (int i = 0;
+                              i <
+                                  controller
+                                      .getLatestMyMatchResponse!.data.length;
+                              i++)
+                            Padding(
+                              padding: const EdgeInsets.only(bottom:10 ),
+                              child: CurrentMatchCardWidget(
+                                myMatchModel:
+                                    controller.getLatestMyMatchResponse!.data[i],
+                              ),
+                            )
+                        ],
+                      )),
           SizedBox(
             height: 10,
           ),
@@ -89,17 +104,15 @@ logInStatus == false || controller.getUpcommingMyMatchResponse==null
               items: [
                 //1st Image of Slider
                 for (int i = 0;
-                    i < controller.splashDataApiResponse.loginBanner.length;
+                    i < controller.splashDataApiResponse.homeBanner.length;
                     i++)
                   Container(
-                    margin: EdgeInsets.all(6.0),
+                    margin: EdgeInsets.fromLTRB(6.0, 0, 6, 0),
                     decoration: BoxDecoration(
-                      border: Border.all(
-                          width: 1, color: ColorConstant.primaryColor),
                       borderRadius: BorderRadius.circular(8.0),
                       image: DecorationImage(
-                        image: NetworkImage(controller
-                            .splashDataApiResponse.loginBanner[i].img),
+                        image: NetworkImage(
+                            controller.splashDataApiResponse.homeBanner[i].img),
                         fit: BoxFit.fill,
                       ),
                     ),
