@@ -4,6 +4,7 @@ import 'package:cricket_fantacy/src/global_variable.dart';
 import 'package:cricket_fantacy/src/ui/screens/auth_screens/login_screen.dart';
 import 'package:cricket_fantacy/src/ui/screens/home_tab/upcomming_matches_details.dart';
 import 'package:cricket_fantacy/src/ui/widgets/current_match_card_widget.dart';
+import 'package:cricket_fantacy/src/ui/widgets/shimmer_effect_widget.dart';
 import 'package:cricket_fantacy/src/ui/widgets/upcomming_matches_card_widget.dart';
 import 'package:cricket_fantacy/src/utils/color_scheme.dart';
 import 'package:cricket_fantacy/src/utils/image_utils.dart';
@@ -12,6 +13,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart';
+import 'package:shimmer/shimmer.dart';
 
 class FantacyTab extends StatefulWidget {
   const FantacyTab({super.key});
@@ -31,16 +33,30 @@ class _FantacyTabState extends State<FantacyTab> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      physics: BouncingScrollPhysics(),
       child: Column(
         children: [
-          logInStatus == false || controller.getUpcommingMyMatchResponse == null
+          
+          logInStatus == false
               ? Container()
-              : controller.getUpcommingMyMatchResponse!.data.isEmpty
-                  ? Container()
-                  : Container(
+              : controller.getLatestMyMatchResponse == null
+                  ? Padding(
+                    padding: const EdgeInsets.only(top:15),
+                    child: shimerEffect(
+                      length: 3,context: context
+                    ),
+                  )
+
+                  : Padding(
+                      padding: EdgeInsets.only(left: 15, right: 15),
+                      child: Column(
+                        children: [
+                       
+              controller.getLatestMyMatchResponse!.data.isEmpty?Container():         
+                          Container(
                       width: MediaQuery.of(context).size.width / 1,
                       child: Padding(
-                        padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+                        padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -48,49 +64,43 @@ class _FantacyTabState extends State<FantacyTab> {
                               "My Matches",
                               style: TextStyle(
                                   color: ColorConstant.primaryBlackColor,
-                                  fontSize: 13,
+                                  fontSize: 15,
                                   fontWeight: FontWeight.w600),
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: const [
-                                Text(
-                                  "View All",
-                                  style: TextStyle(
-                                      color: ColorConstant.disableColor,
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                                Icon(
-                                  Icons.navigate_next_rounded,
-                                  color: ColorConstant.disableColor,
-                                  size: 25,
-                                )
-                              ],
-                            )
+                            // Row(
+                            //   mainAxisAlignment: MainAxisAlignment.end,
+                            //   children: const [
+                            //     InkWell(
+                            //       onT
+                            //       child: Text(
+                            //         "View All",
+                            //         style: TextStyle(
+                            //             color: ColorConstant.disableColor,
+                            //             fontSize: 13,
+                            //             fontWeight: FontWeight.w500),
+                            //       ),
+                            //     ),
+                            //     Icon(
+                            //       Icons.navigate_next_rounded,
+                            //       color: ColorConstant.disableColor,
+                            //       size: 25,
+                            //     )
+                            //   ],
+                            // )
                           ],
                         ),
                       ),
                     ),
-          logInStatus == false || controller.getLatestMyMatchResponse == null
-              ? Container()
-              : controller.getLatestMyMatchResponse != null &&
-                      controller.getLatestMyMatchResponse!.data.isEmpty
-                  ? Container()
-                  : Padding(
-                      padding: EdgeInsets.only(left: 15, right: 15),
-                      child: Column(
-                        children: [
                           for (int i = 0;
                               i <
                                   controller
                                       .getLatestMyMatchResponse!.data.length;
                               i++)
                             Padding(
-                              padding: const EdgeInsets.only(bottom:10 ),
+                              padding: const EdgeInsets.only(bottom: 15),
                               child: CurrentMatchCardWidget(
-                                myMatchModel:
-                                    controller.getLatestMyMatchResponse!.data[i],
+                                myMatchModel: controller
+                                    .getLatestMyMatchResponse!.data[i],
                               ),
                             )
                         ],
@@ -171,11 +181,9 @@ class _FantacyTabState extends State<FantacyTab> {
               init: HomeController(),
               builder: (controller) {
                 return controller.getMatchesApiResponse == null
-                    ? Center(
-                        child: CircularProgressIndicator(
-                          color: ColorConstant.primaryColor,
-                        ),
-                      )
+                    ? shimerEffect(
+                    length: 3,context: context
+                  )
                     : Column(
                         children: [
                           for (int index = 0;
@@ -212,6 +220,8 @@ class _FantacyTabState extends State<FantacyTab> {
                         ],
                       );
               })
+      
+      ,SizedBox(height: 60,)
         ],
       ),
     );

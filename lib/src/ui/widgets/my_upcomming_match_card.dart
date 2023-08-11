@@ -19,14 +19,15 @@ class MyUpcommingMatchCardWidget extends StatefulWidget {
 
 class _MyUpcommingMatchCardWidgetState extends State<MyUpcommingMatchCardWidget> {
   var targetDate;
+   Duration? remainingDuration;
   _calculateTimeRemaining() {
     DateTime now = DateTime.now();
     targetDate =
         DateFormat("yyyy-MM-dd hh:mm:ss").parse(widget.matches.matchDateTime);
-    Duration remainingDuration = targetDate.difference(now);
+     remainingDuration = targetDate.difference(now);
 
-    int hours = remainingDuration.inHours;
-    int minutes = remainingDuration.inMinutes.remainder(60);
+    int hours = remainingDuration!.inHours;
+    int minutes = remainingDuration!.inMinutes.remainder(60);
     print('$hours hours and $minutes minutes remaining');
     //return '';
     setState(() {});
@@ -121,7 +122,10 @@ class _MyUpcommingMatchCardWidgetState extends State<MyUpcommingMatchCardWidget>
                               child: Padding(
                                 padding: const EdgeInsets.fromLTRB(10,0,10,0),
                                 child: CountdownTimer(
-                                   endWidget: Text("Live"),
+                                   endWidget: 
+                                   remainingDuration!.inHours<0?Text("Completed"):
+                                   
+                                   Text("Live"),
                                   endTime: targetDate.millisecondsSinceEpoch,
                                   textStyle: TextStyle(fontSize: 14),
                                 ),

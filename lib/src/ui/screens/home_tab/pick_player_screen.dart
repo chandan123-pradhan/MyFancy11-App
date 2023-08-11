@@ -8,6 +8,7 @@ import 'package:cricket_fantacy/src/models/get_squad_api_response.dart';
 import 'package:cricket_fantacy/src/ui/screens/home_tab/Leader_baord_tab.dart';
 import 'package:cricket_fantacy/src/ui/screens/home_tab/pick_caption_vice_caption_screen.dart';
 import 'package:cricket_fantacy/src/ui/screens/home_tab/winning_tab_screen.dart';
+import 'package:cricket_fantacy/src/ui/screens/wallets/wallet_screen.dart';
 import 'package:cricket_fantacy/src/ui/widgets/mega_contest_widget.dart';
 import 'package:cricket_fantacy/src/ui/widgets/multiple_contest_widget.dart';
 import 'package:cricket_fantacy/src/ui/widgets/steper_widget.dart';
@@ -125,10 +126,17 @@ class _PickPlayerScreenState extends State<PickPlayerScreen>
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 20.0),
-            child: Image.asset(
-              ImageUitls.Wallet_icon,
-              height: 20,
-              width: 20,
+            child: InkWell(
+              onTap: (){
+                                    Navigator.push(context, MaterialPageRoute(builder: (context){
+                                    return WalletScreen();
+                                  }));
+              },
+              child: Image.asset(
+                ImageUitls.Wallet_icon,
+                height: 20,
+                width: 20,
+              ),
             ),
           )
         ],

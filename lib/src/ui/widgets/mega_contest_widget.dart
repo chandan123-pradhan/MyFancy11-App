@@ -26,7 +26,7 @@ class _MegaContestWidgetState extends State<MegaContestWidget> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
+        widget.contest.offer=='null' ?Container():  Container(
             height: 40,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(

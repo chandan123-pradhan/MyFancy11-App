@@ -11,4 +11,12 @@ class ImageUitls{
   static const String Team_2_logo='assets/images/team2_logo.png';
   static const String Banner1='assets/images/banners1.jpeg';
   static const String Banner2='assets/images/banner2.jpeg';
+  static const String Splash_screen='assets/images/myfancy11_splash.png';
+  static const String App_Logo='assets/images/app_logo.png';
+
+  static const String Slider1='assets/images/slider_sq1.png';
+  static const String Slider2='assets/images/slider_sq2.png';
+  static const String Slider3='assets/images/slider_sq3.png';
+  static const String Slider4='assets/images/slider_sq4.png';
+  static const String working_image='assets/images/working_img.png';
 }

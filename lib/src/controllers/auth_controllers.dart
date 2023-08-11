@@ -51,7 +51,7 @@ class AuthController extends GetxController {
         Navigator.pop(context);
 //  debugger();
         print(response);
-        if (response['status'] == 200 || response['status']==400) {
+        if (response['status'] == 200) {
           validatePhoneNumberApiResponse =
               ValidatePhoneNumberApiResponse.fromJson(response);
           messages.showMsg(
@@ -60,7 +60,7 @@ class AuthController extends GetxController {
           _navigateToOtpPage(context);
         }
          else {
-          messages.showMsg(context: context, message: response['message']);
+          messages.showErrorMsg(context: context, message: response['message']);
         }
       } catch (e) {
         print(e);
@@ -92,11 +92,11 @@ class AuthController extends GetxController {
           context: context, message: "OTP Verified Successfully Done.");
 
       if (isUnAuthenicated) {
-        //for new user.
-        Navigator.pushAndRemoveUntil(context,
-            MaterialPageRoute(builder: (context) {
-          return const RegisterScreen();
-        }), (route) => false);
+        // //for new user.
+        // Navigator.pushAndRemoveUntil(context,
+        //     MaterialPageRoute(builder: (context) {
+        //   return const RegisterScreen();
+        // }), (route) => false);
       } else {
         callLoginApi(context);
       }
@@ -165,6 +165,7 @@ class AuthController extends GetxController {
       messages.showMsg(
           context: context, message: 'Registration Successfully Done.');
       sharedPref.saveAuthToken();
+       homeController.getSplashData(context, 0);
       Navigator.pop(context);
       Navigator.pushAndRemoveUntil(context,
           MaterialPageRoute(builder: (context) {

@@ -1,6 +1,7 @@
 import 'package:cricket_fantacy/src/controllers/splash_controller.dart';
 import 'package:cricket_fantacy/src/models/GetContestListApiResponse.dart';
 import 'package:cricket_fantacy/src/models/GetMatchesApiResponse.dart';
+import 'package:cricket_fantacy/src/ui/screens/wallets/wallet_screen.dart';
 import 'package:cricket_fantacy/src/ui/widgets/steper_widget.dart';
 import 'package:cricket_fantacy/src/utils/color_scheme.dart';
 import 'package:cricket_fantacy/src/utils/image_utils.dart';
@@ -85,10 +86,17 @@ class _PickCaptionViceCaptionScreenState
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 20.0),
-            child: Image.asset(
-              ImageUitls.Wallet_icon,
-              height: 20,
-              width: 20,
+            child: InkWell(
+              onTap: (){
+                                    Navigator.push(context, MaterialPageRoute(builder: (context){
+                                    return WalletScreen();
+                                  }));
+              },
+              child: Image.asset(
+                ImageUitls.Wallet_icon,
+                height: 20,
+                width: 20,
+              ),
             ),
           )
         ],

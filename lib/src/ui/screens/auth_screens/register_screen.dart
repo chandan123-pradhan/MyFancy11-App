@@ -65,7 +65,7 @@ var controller=Get.put(AuthController());
             padding: const EdgeInsets.all(15.0),
             child: TextFormField(
               controller:controller.phoneNumberController ,
-              enabled: false,
+              enabled: true,
               onChanged: (val){
                
               },
@@ -108,10 +108,17 @@ var controller=Get.put(AuthController());
               ),
             ),
           ),
-          Text(
-            "No a member? Register",
-            style: TextStyle(
-                color: Colors.black, fontSize: 12, fontWeight: FontWeight.w600),
+          InkWell(
+            onTap: (){
+
+              Navigator.pop(context);
+                         controller.phoneNumberController.clear();
+            },
+            child: Text(
+              "Already have an account? Login",
+              style: TextStyle(
+                  color: Colors.black, fontSize: 12, fontWeight: FontWeight.w600),
+            ),
           ),
         ]),
       ),

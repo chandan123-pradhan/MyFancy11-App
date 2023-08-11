@@ -298,19 +298,19 @@ class HomeController extends GetxController {
     switch (player.playerDesigination) {
       case AppConstant.wicketKeeper:
         dummywiketKeeperList[index] = 0;
-        choosedWiketKeeperList.remove(index);
+        choosedWiketKeeperList.remove(player);
         break;
       case AppConstant.batsMan:
         dummyBatsManList[index] = 0;
-        choosedBatsManList.remove(index);
+        choosedBatsManList.remove(player);
         break;
       case AppConstant.bowler:
         dummybowlerlist[index] = 0;
-        choosedBowlerlist.remove(index);
+        choosedBowlerlist.remove(player);
         break;
       case AppConstant.allRownder:
         dummyallRounderList[index] = 0;
-        choosedAllRounderList.remove(index);
+        choosedAllRounderList.remove(player);
         break;
       default:
         break;
@@ -456,15 +456,14 @@ class HomeController extends GetxController {
         Map parameter = {NetworkConstant.Status: status};
         var response = await apiProvider.postAfterAuth(
             routeUrl: NetworkConstant.MyMatchList_Url, bodyParams: parameter);
-        //debugger();
+     //   debugger();
         print(response);
         if (status == 'fixture') {
          // debugger();
           getUpcommingMyMatchResponse =
               GetMyMatchesApiResponse.fromJson(response);
         } else if (status == 'latest') {
-        //  debugger();
-          print(response);
+        
           getLatestMyMatchResponse = GetMyMatchesApiResponse.fromJson(response);
         } else if (status == 'live') {
           getLiveMyMatchReponse = GetMyMatchesApiResponse.fromJson(response);

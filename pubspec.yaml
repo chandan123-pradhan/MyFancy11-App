@@ -45,6 +45,8 @@ dependencies:
   pinput: ^2.2.31
   intl: 
   flutter_countdown_timer:
+  shimmer: ^3.0.0
+  cached_network_image: ^3.2.3
 
 dev_dependencies:
   flutter_test:
