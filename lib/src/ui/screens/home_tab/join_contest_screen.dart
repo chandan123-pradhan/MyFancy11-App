@@ -29,23 +29,30 @@ class JoinContest extends StatefulWidget {
   State<JoinContest> createState() => _UpcommingMatchesDetailsState();
 }
 
-class _UpcommingMatchesDetailsState extends State<JoinContest> {
+class _UpcommingMatchesDetailsState extends State<JoinContest>  with SingleTickerProviderStateMixin{
   int _currentIndex = 0;
  var controller=Get.put(HomeController());
-
+ late TabController _secondTabController;
 void callGetWinningInfo(){
   controller.getWinningInfo(context, widget.contest.contestId);
   controller.getLeaderBoardResponse(context, widget.contest.contestId);
 }
 @override
   void initState() {
+     _secondTabController = TabController(length: 2, vsync: this);
     _calculateTimeRemaining();
     callGetWinningInfo();
     // TODO: implement initState
     super.initState();
   }
 
+ @override
+  void dispose() {
+    super.dispose();
+    _secondTabController.dispose();
+  }
 
+ 
  var targetDate;
 
   _calculateTimeRemaining() {
@@ -223,7 +230,7 @@ void callGetWinningInfo(){
                     //       fontWeight: FontWeight.w500),
                     // ),
                     Text(
-                      " ₹ ${widget.contest.entry}",
+                      " ₹${widget.contest.entry}",
                       style: TextStyle(
                           color: ColorConstant.primaryWhiteColor,
                           fontSize: 14,
@@ -256,8 +263,13 @@ void callGetWinningInfo(){
                   Row(children: [
                     Row(
                       children: [
+
+                        Image.asset('assets/icons/first_winner.png',
+                       height: 25,
+                       width: 25,
+                       ), 
                         Text(
-                          "₹ ${widget.contest.firstPrize}  ",
+                          "₹${widget.contest.firstPrize}  ",
                           style: TextStyle(
                               color: Colors.black45,
                               fontSize: 15,
@@ -273,7 +285,7 @@ void callGetWinningInfo(){
                           color: Colors.black45,
                         ),
                         Text(
-                          "${widget.contest.winPercent} % ",
+                          "${widget.contest.winPercent}% ",
                           style: TextStyle(
                               color: Colors.black45,
                               fontSize: 15,
@@ -286,8 +298,8 @@ void callGetWinningInfo(){
                   Row(
                     children: [
                       Icon(
-                        Icons.check_circle,
-                        size: 18,
+                        Icons.check_circle_outline,
+                        size: 15,
                         color: Colors.black45,
                       ),
                       Text(
@@ -331,97 +343,130 @@ void callGetWinningInfo(){
           ),
 
 // SizedBox(height: 10,),
-          Padding(
-            padding: const EdgeInsets.only(left: 15.0, right: 15,top: 20),
-            child: Container(
-                // height: MediaQuery.of(context).size.height/9,
-                child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                InkWell(
-                  onTap: () {
-                    changeIndex(0);
-                  },
-                  child: Container(
-                    width: MediaQuery.of(context).size.width / 2.2,
-                    height: 45,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                          width: 1, color: ColorConstant.primaryColor),
-                      borderRadius: BorderRadius.circular(35),
-                      color: _currentIndex == 0
-                          ? ColorConstant.primaryColor
-                          : ColorConstant.un_selected_color,
-                    ),
-                    alignment: Alignment.center,
-                    child: Text(
-                      "Winnings",
-                      style: TextStyle(
-                          color: _currentIndex == 0
-                              ? ColorConstant.primaryWhiteColor
-                              : ColorConstant.primaryColor,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600),
-                    ),
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    changeIndex(1);
-                  },
-                  child: Container(
-                    width: MediaQuery.of(context).size.width / 2.2,
-                    height: 45,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                          width: 1, color: ColorConstant.primaryColor),
-                      borderRadius: BorderRadius.circular(35),
-                      color: _currentIndex == 1
-                          ? ColorConstant.primaryColor
-                          : ColorConstant.un_selected_color,
-                    ),
-                    alignment: Alignment.center,
-                    child: Text(
-                      "Leaderboard",
-                      style: TextStyle(
-                          color: _currentIndex == 1
-                              ? ColorConstant.primaryWhiteColor
-                              : ColorConstant.primaryColor,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600),
-                    ),
-                  ),
-                )
-              ],
-            )),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.only(left: 15.0, right: 15,top: 20),
+          //   child: Container(
+          //       // height: MediaQuery.of(context).size.height/9,
+          //       child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //     children: [
+          //       InkWell(
+          //         onTap: () {
+          //           changeIndex(0);
+          //         },
+          //         child: Container(
+          //           width: MediaQuery.of(context).size.width / 2.2,
+          //           height: 45,
+          //           decoration: BoxDecoration(
+          //             border: Border.all(
+          //                 width: 1, color: ColorConstant.primaryColor),
+          //             borderRadius: BorderRadius.circular(35),
+          //             color: _currentIndex == 0
+          //                 ? ColorConstant.primaryColor
+          //                 : ColorConstant.un_selected_color,
+          //           ),
+          //           alignment: Alignment.center,
+          //           child: Text(
+          //             "Winnings",
+          //             style: TextStyle(
+          //                 color: _currentIndex == 0
+          //                     ? ColorConstant.primaryWhiteColor
+          //                     : ColorConstant.primaryColor,
+          //                 fontSize: 16,
+          //                 fontWeight: FontWeight.w600),
+          //           ),
+          //         ),
+          //       ),
+          //       InkWell(
+          //         onTap: () {
+          //           changeIndex(1);
+          //         },
+          //         child: Container(
+          //           width: MediaQuery.of(context).size.width / 2.2,
+          //           height: 45,
+          //           decoration: BoxDecoration(
+          //             border: Border.all(
+          //                 width: 1, color: ColorConstant.primaryColor),
+          //             borderRadius: BorderRadius.circular(35),
+          //             color: _currentIndex == 1
+          //                 ? ColorConstant.primaryColor
+          //                 : ColorConstant.un_selected_color,
+          //           ),
+          //           alignment: Alignment.center,
+          //           child: Text(
+          //             "Leaderboard",
+          //             style: TextStyle(
+          //                 color: _currentIndex == 1
+          //                     ? ColorConstant.primaryWhiteColor
+          //                     : ColorConstant.primaryColor,
+          //                 fontSize: 16,
+          //                 fontWeight: FontWeight.w600),
+          //           ),
+          //         ),
+          //       )
+          //     ],
+          //   )),
+          // ),
 
-          CarouselSlider(
-              items: [
-                _currentIndex == 0
-                    ? WinningTab()
-                    : LeaderboardTab(),
+         
+         TabBar(
+                isScrollable: true,
+                controller: _secondTabController,
+                indicatorColor: ColorConstant.primaryColor,
+                indicatorWeight: 3,
+                labelColor: ColorConstant.primaryBlackColor,
+                tabs: const [
+                  Tab(
+                    text: 'Winnings',
+                  ),
+                  Tab(text: "Leaderboard"),
+                 // Tab(text: 'Completed'),
+                ],
+              ),
+
+
+         Expanded(
+            child: TabBarView(
+              
+              controller: _secondTabController,
+              children: [
+               WinningTab() ,// Content for Tab 1
                LeaderboardTab()
+
               ],
-              options: CarouselOptions(
-                height: MediaQuery.of(context).size.height / 2.3,
-                aspectRatio: 16 / 9,
-                viewportFraction: 1.0,
-                initialPage: 0,
-                enableInfiniteScroll: false,
-                reverse: false,
-                autoPlay: false,
-                autoPlayInterval: Duration(seconds: 3),
-                autoPlayAnimationDuration: Duration(milliseconds: 800),
-                autoPlayCurve: Curves.fastOutSlowIn,
-                enlargeCenterPage: false,
-                enlargeFactor: 0.3,
-                onPageChanged: (index, reason) {
-                  changeIndex(index);
-                  //controller.updateHome2Slider(index);
-                },
-                scrollDirection: Axis.horizontal,
-              )),
+            ),
+          )
+
+     
+     
+          // CarouselSlider(
+          //     items: [
+          //       _currentIndex == 0
+          //           ? WinningTab()
+          //           : LeaderboardTab(),
+          //      LeaderboardTab()
+          //     ],
+          //     options: CarouselOptions(
+          //       height: MediaQuery.of(context).size.height / 2.3,
+          //       aspectRatio: 16 / 9,
+          //       viewportFraction: 1.0,
+          //       initialPage: 0,
+          //       enableInfiniteScroll: false,
+          //       reverse: false,
+          //       autoPlay: false,
+          //       autoPlayInterval: Duration(seconds: 3),
+          //       autoPlayAnimationDuration: Duration(milliseconds: 800),
+          //       autoPlayCurve: Curves.fastOutSlowIn,
+          //       enlargeCenterPage: false,
+          //       enlargeFactor: 0.3,
+          //       onPageChanged: (index, reason) {
+          //         changeIndex(index);
+          //         //controller.updateHome2Slider(index);
+          //       },
+          //       scrollDirection: Axis.horizontal,
+          //     )),
+      
+      
         ],
       ),
     );

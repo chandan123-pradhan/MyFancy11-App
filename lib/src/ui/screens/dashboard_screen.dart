@@ -7,6 +7,7 @@ import 'package:cricket_fantacy/src/ui/screens/notification_screens/Notification
 import 'package:cricket_fantacy/src/ui/screens/wallets/wallet_screen.dart';
 import 'package:cricket_fantacy/src/ui/screens/winners_tab/winners_tab.dart';
 import 'package:cricket_fantacy/src/ui/widgets/bottom_bar_item.dart';
+import 'package:cricket_fantacy/src/ui/widgets/drawer_widget.dart';
 import 'package:cricket_fantacy/src/utils/color_scheme.dart';
 import 'package:cricket_fantacy/src/utils/image_utils.dart';
 import 'package:cricket_fantacy/src/utils/local_storage/shared_prefrences.dart';
@@ -41,6 +42,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   void initState() {
     _body = _screens[widget.index];
+    _currentIndex=widget.index;
     controller.getUsersProfile();
     controller.getMatchesApiCall(context);
     callGetMyMatchApi();
@@ -49,7 +51,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   void callGetMyMatchApi() async {
-    await controller.getMyMatch(context, 'latest');
+    await controller.getMyMatch(context, 'fixture');
     // await controller.getMyMatch(context, 'live');
     // await controller.getMyMatch(context, 'completed');
   }
@@ -65,16 +67,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
           backgroundColor: ColorConstant.primaryColor,
           elevation: 0,
           leading: InkWell(
-            onTap: (){
-                 SharedPref sharedPref = new SharedPref();
-                                    sharedPref.logout();
-                                   // Get.deleteAll();
-                                    Navigator.pushAndRemoveUntil(context,
-                                        MaterialPageRoute(builder: (context) {
-                                      return AuthLandingPage();
-                                    }), (route) => false);
-                                  
-            //  _scaffoldKey.currentState!.openDrawer();
+            onTap: () {
+              _scaffoldKey.currentState!.openDrawer();
             },
             child: Icon(
               Icons.menu,
@@ -83,8 +77,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ),
           ),
           centerTitle: true,
-          title: Image.asset(ImageUitls.App_Logo,
-          height: 40,
+          title: Image.asset(
+            ImageUitls.App_Logo,
+            height: 40,
           ),
           actions: [
             InkWell(
@@ -120,21 +115,28 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 width: 20,
               ),
             ),
-             SizedBox(
+            SizedBox(
               width: 15,
             ),
           ],
-          
         ),
-        
       ),
-      drawer: Drawer(),
-      bottomSheet: SafeArea(
-        child: BottomAppBar(
-          height: 60,
-          color: ColorConstant.primaryColor,
+      drawer: DrawerWidget(),
+      bottomSheet: BottomAppBar(
+        elevation: 0,
+        height: 70,
+        color: Colors.transparent,
+        child: Container(
+          decoration: const BoxDecoration(
+            color: ColorConstant.primaryWhiteColor,
+            borderRadius: BorderRadius.only(
+                topRight: Radius.circular(30), topLeft: Radius.circular(30)),
+            boxShadow: [
+              BoxShadow(color: Colors.black38, spreadRadius: 0, blurRadius: 1),
+            ],
+          ),
           child: Padding(
-            padding: const EdgeInsets.only(top: 10, left: 30, right: 30),
+            padding: const EdgeInsets.only(top: 0, left: 20, right: 20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,

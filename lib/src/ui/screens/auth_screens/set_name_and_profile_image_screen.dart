@@ -184,11 +184,11 @@ decoration: BoxDecoration(
                   ),
                 ),
               ),
-              Text(
-                "Not Now? Skip",
-                style: TextStyle(
-                    color: Colors.black, fontSize: 12, fontWeight: FontWeight.w600),
-              ),
+              // Text(
+              //   "Not Now? Skip",
+              //   style: TextStyle(
+              //       color: Colors.black, fontSize: 12, fontWeight: FontWeight.w600),
+              // ),
             ]),
           );
         }

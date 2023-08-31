@@ -131,7 +131,7 @@ class HomeController extends GetxController {
     };
     var response = await apiProvider.postBeforeAuth(
         routeUrl: NetworkConstant.GET_MATCHES, bodyParams: parameter);
-   // debugger();
+    // debugger();
     // print(response);
     getMatchesApiResponse = GetMatchesApiResponse.fromJson(response);
     update();
@@ -395,7 +395,7 @@ class HomeController extends GetxController {
     var response = await apiProvider.postAfterAuth(
         routeUrl: NetworkConstant.Join_Contest, bodyParams: parameter);
     Navigator.pop(context);
-    debugger(); //
+    // debugger(); //
 
     if (response == null) {
       Messages().showErrorMsg(
@@ -456,18 +456,17 @@ class HomeController extends GetxController {
         Map parameter = {NetworkConstant.Status: status};
         var response = await apiProvider.postAfterAuth(
             routeUrl: NetworkConstant.MyMatchList_Url, bodyParams: parameter);
-     //   debugger();
-        print(response);
+        // debugger();
+        // print(response);
         if (status == 'fixture') {
-         // debugger();
+          // debugger();
           getUpcommingMyMatchResponse =
               GetMyMatchesApiResponse.fromJson(response);
         } else if (status == 'latest') {
-        
           getLatestMyMatchResponse = GetMyMatchesApiResponse.fromJson(response);
         } else if (status == 'live') {
           getLiveMyMatchReponse = GetMyMatchesApiResponse.fromJson(response);
-        } else if (status == 'completed') {
+        } else if (status == 'result') {
           getCompletedMyMatchResponse =
               GetMyMatchesApiResponse.fromJson(response);
         }

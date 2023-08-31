@@ -1,8 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cricket_fantacy/src/controllers/splash_controller.dart';
 import 'package:cricket_fantacy/src/global_variable.dart';
 import 'package:cricket_fantacy/src/ui/screens/auth_screens/login_screen.dart';
 import 'package:cricket_fantacy/src/ui/screens/home_tab/upcomming_matches_details.dart';
+import 'package:cricket_fantacy/src/ui/screens/live_contest_screens/live_contest_screen.dart';
 import 'package:cricket_fantacy/src/ui/widgets/current_match_card_widget.dart';
 import 'package:cricket_fantacy/src/ui/widgets/shimmer_effect_widget.dart';
 import 'package:cricket_fantacy/src/ui/widgets/upcomming_matches_card_widget.dart';
@@ -36,73 +38,114 @@ class _FantacyTabState extends State<FantacyTab> {
       physics: BouncingScrollPhysics(),
       child: Column(
         children: [
-          
           logInStatus == false
               ? Container()
-              : controller.getLatestMyMatchResponse == null
+              : controller.getUpcommingMyMatchResponse == null
                   ? Padding(
-                    padding: const EdgeInsets.only(top:15),
-                    child: shimerEffect(
-                      length: 3,context: context
-                    ),
-                  )
-
+                      padding: const EdgeInsets.only(top: 15),
+                      child: shimerEffect(length: 3, context: context),
+                    )
                   : Padding(
-                      padding: EdgeInsets.only(left: 15, right: 15),
+                      padding: EdgeInsets.only(left: 0, right: 0),
                       child: Column(
                         children: [
-                       
-              controller.getLatestMyMatchResponse!.data.isEmpty?Container():         
+                          controller.getUpcommingMyMatchResponse!.data.isEmpty
+                              ? Container()
+                              : Container(
+                                  width: MediaQuery.of(context).size.width / 1,
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(10, 10, 0, 0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        const Text(
+                                          "My Matches",
+                                          style: TextStyle(
+                                              color: ColorConstant
+                                                  .primaryBlackColor,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                        // Row(
+                                        //   mainAxisAlignment: MainAxisAlignment.end,
+                                        //   children: const [
+                                        //     InkWell(
+                                        //       onT
+                                        //       child: Text(
+                                        //         "View All",
+                                        //         style: TextStyle(
+                                        //             color: ColorConstant.disableColor,
+                                        //             fontSize: 13,
+                                        //             fontWeight: FontWeight.w500),
+                                        //       ),
+                                        //     ),
+                                        //     Icon(
+                                        //       Icons.navigate_next_rounded,
+                                        //       color: ColorConstant.disableColor,
+                                        //       size: 25,
+                                        //     )
+                                        //   ],
+                                        // )
+                                      ],
+                                    ),
+                                  ),
+                                ),
                           Container(
-                      width: MediaQuery.of(context).size.width / 1,
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text(
-                              "My Matches",
-                              style: TextStyle(
-                                  color: ColorConstant.primaryBlackColor,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                            // Row(
-                            //   mainAxisAlignment: MainAxisAlignment.end,
-                            //   children: const [
-                            //     InkWell(
-                            //       onT
-                            //       child: Text(
-                            //         "View All",
-                            //         style: TextStyle(
-                            //             color: ColorConstant.disableColor,
-                            //             fontSize: 13,
-                            //             fontWeight: FontWeight.w500),
-                            //       ),
-                            //     ),
-                            //     Icon(
-                            //       Icons.navigate_next_rounded,
-                            //       color: ColorConstant.disableColor,
-                            //       size: 25,
-                            //     )
-                            //   ],
-                            // )
-                          ],
-                        ),
-                      ),
-                    ),
-                          for (int i = 0;
-                              i <
-                                  controller
-                                      .getLatestMyMatchResponse!.data.length;
-                              i++)
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 15),
-                              child: CurrentMatchCardWidget(
-                                myMatchModel: controller
-                                    .getLatestMyMatchResponse!.data[i],
+                            alignment: Alignment.centerLeft,
+                            // width: MediaQuery.of(context).size.width/1,
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                children: [
+                                  //1st Image of Slider
+                                  for (int i = 0;
+                                      i <
+                                          controller.getUpcommingMyMatchResponse!
+                                              .data.length;
+                                      i++)
+                                    Padding(
+                                        padding: EdgeInsets.only(
+                                            left: i == 0 ? 0 : 5, right: 5),
+                                        child: InkWell(
+                                          onTap: (){
+                                             Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) {
+                                    return  LiveContestScreen(
+matchId:  controller.getUpcommingMyMatchResponse!
+                                              .data[i].matchId.toString(),
+                                    );
+                                  }));
+                                          },
+                                          child: CurrentMatchCardWidget(
+                                            myMatchModel: controller
+                                                .getUpcommingMyMatchResponse!.data[i],
+                                          ),
+                                        ))
+                                ],
+                            
+                                // //Slider Container properties
+                                // options: CarouselOptions(
+                                //   height: 160,
+                            
+                                //   enlargeCenterPage: false,
+                            
+                                //   // disableCenter: true,
+                                //   autoPlay: false,
+                                //   aspectRatio: 16 / 9,
+                                //   autoPlayCurve: Curves.fastOutSlowIn,
+                                //   enableInfiniteScroll: false,
+                                //   autoPlayAnimationDuration:
+                                //       Duration(milliseconds: 800),
+                                //   viewportFraction:0.8,
+                                //   onPageChanged: (index, reason) {
+                                //     // _changeIndex(index);
+                                //   },
+                                //),
                               ),
-                            )
+                            ),
+                          ),
                         ],
                       )),
           SizedBox(
@@ -116,23 +159,38 @@ class _FantacyTabState extends State<FantacyTab> {
                 for (int i = 0;
                     i < controller.splashDataApiResponse.homeBanner.length;
                     i++)
-                  Container(
-                    margin: EdgeInsets.fromLTRB(6.0, 0, 6, 0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8.0),
-                      image: DecorationImage(
-                        image: NetworkImage(
-                            controller.splashDataApiResponse.homeBanner[i].img),
-                        fit: BoxFit.fill,
-                      ),
+                  CachedNetworkImage(
+                    width: MediaQuery.of(context).size.width / 1,
+                    imageBuilder: (context, imageProvider) {
+                      return Padding(
+                        padding:
+                            const EdgeInsets.only(left: 5, right: 5, bottom: 5),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width / 1.2,
+                          child: Image.network(
+                            controller.splashDataApiResponse.homeBanner[i].img,
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      );
+                    },
+                    imageUrl:
+                        controller.splashDataApiResponse.homeBanner[i].img,
+                    progressIndicatorBuilder:
+                        (context, url, downloadProgress) => Image.asset(
+                      ImageUitls.Banner1,
+                      width: MediaQuery.of(context).size.width / 1.2,
+                      fit: BoxFit.fill,
                     ),
+                    errorWidget: (context, url, error) => Icon(Icons.error),
                   ),
               ],
 
               //Slider Container properties
               options: CarouselOptions(
-                height: 100.0,
+                height: 120.0,
                 enlargeCenterPage: false,
+
                 // disableCenter: true,
                 autoPlay: true,
                 aspectRatio: 16 / 9,
@@ -181,9 +239,7 @@ class _FantacyTabState extends State<FantacyTab> {
               init: HomeController(),
               builder: (controller) {
                 return controller.getMatchesApiResponse == null
-                    ? shimerEffect(
-                    length: 3,context: context
-                  )
+                    ? shimerEffect(length: 3, context: context)
                     : Column(
                         children: [
                           for (int index = 0;
@@ -193,7 +249,7 @@ class _FantacyTabState extends State<FantacyTab> {
                                       1;
                               index++)
                             Padding(
-                              padding: EdgeInsets.fromLTRB(15, 0, 15, 15),
+                              padding: EdgeInsets.fromLTRB(10, 0, 10, 15),
                               child: InkWell(
                                   onTap: () {
                                     if (logInStatus == true) {
@@ -219,9 +275,10 @@ class _FantacyTabState extends State<FantacyTab> {
                             )
                         ],
                       );
-              })
-      
-      ,SizedBox(height: 60,)
+              }),
+          SizedBox(
+            height: 60,
+          )
         ],
       ),
     );

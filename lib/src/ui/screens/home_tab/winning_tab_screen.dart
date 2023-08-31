@@ -112,7 +112,7 @@ Expanded(
                       
                       
                       ),
-                       Text("₹ ${controller.getWinningInfoApiResponse!.data[i].price}",
+                       Text("₹${controller.getWinningInfoApiResponse!.data[i].price}",
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,

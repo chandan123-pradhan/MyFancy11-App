@@ -7,6 +7,7 @@ import 'package:cricket_fantacy/src/models/PlayersModel.dart';
 import 'package:cricket_fantacy/src/models/get_squad_api_response.dart';
 import 'package:cricket_fantacy/src/ui/screens/home_tab/Leader_baord_tab.dart';
 import 'package:cricket_fantacy/src/ui/screens/home_tab/pick_caption_vice_caption_screen.dart';
+import 'package:cricket_fantacy/src/ui/screens/home_tab/team_preview_page.dart';
 import 'package:cricket_fantacy/src/ui/screens/home_tab/winning_tab_screen.dart';
 import 'package:cricket_fantacy/src/ui/screens/wallets/wallet_screen.dart';
 import 'package:cricket_fantacy/src/ui/widgets/mega_contest_widget.dart';
@@ -507,24 +508,31 @@ class _PickPlayerScreenState extends State<PickPlayerScreen>
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
-                          children: const [
-                            Icon(
-                              Icons.remove_red_eye,
-                              size: 20,
-                              color: ColorConstant.primaryWhiteColor,
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              "PREVIEW",
-                              style: TextStyle(
-                                  color: ColorConstant.primaryWhiteColor,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          ],
+                        InkWell(
+                          onTap: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context){
+                              return TeamPreviewPage();
+                            }));
+                          },
+                          child: Row(
+                            children: const [
+                              Icon(
+                                Icons.remove_red_eye,
+                                size: 20,
+                                color: ColorConstant.primaryWhiteColor,
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                "PREVIEW",
+                                style: TextStyle(
+                                    color: ColorConstant.primaryWhiteColor,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ],
+                          ),
                         ),
                         const SizedBox(
                           width: 10,

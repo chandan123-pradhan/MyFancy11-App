@@ -41,6 +41,29 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>LSApplicationCategoryType</key>
+		<string></string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>phonepe</string>
+		<string>tez</string>
+		<string>paytm</string>
+	</array>
+
+  	<key>LSApplicationQueriesSchemes</key>
+  	<array>
+    	<string>freecharge</string>
+    	<string>gpay</string>
+    	<string>in.fampay.app</string>
+    	<string>lotza</string>
+    	<string>mobikwik</string>
+    	<string>paytm</string>
+    	<string>phonepe</string>
+    	<string>upi</string>
+    	<string>upibillpay</string>
+    	<string>whatsapp</string>
+  	</array>
+
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 	<key>CADisableMinimumFrameDurationOnPhone</key>

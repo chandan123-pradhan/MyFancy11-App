@@ -48,6 +48,22 @@ Future<String?> getProfilePic() async {
     preferences.setString(profilePicUrl, profilePic);
   }
 
+   void setProfileDetails(profileName,emailId) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString(email, emailId);
+    preferences.setString(name, profileName);
+    getProfileData();
+  }
+
+
+  void getProfileData() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    userName=preferences.getString(name)!;
+    userEmail=preferences.getString(email)!;
+  }
+
+  
+
 
   void logout()async{
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -88,6 +104,7 @@ if(status==null || status==false){
   logInStatus=false;
 }else{
   logInStatus=true;
+  getProfileData();
 }
 print(logInStatus);
 }

@@ -20,6 +20,8 @@ class NetworkConstant{
   static const String Join_Contest='/fancy/app/join_contest';
   static const String Notification_url='/fancy/app/notification';
   static const String MyMatchList_Url='/fancy/app/my_match';
+  static const String Get_transaction_history_url='/fancy/app/tracker';
+  static const String Match_by_id='/fancy/app/match_by_id';
 
 
 

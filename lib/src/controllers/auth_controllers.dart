@@ -211,6 +211,9 @@ class AuthController extends GetxController {
   }
 
   updateProfile(context) async {
+    
+if(nameController.text.isNotEmpty){
+  if(emailController.text.isNotEmpty && emailController.text.isEmail){
     showLoaderDialog(context);
     Map data = {
       NetworkConstant.PHONE_PARAMS: phoneNumberController.text,
@@ -224,6 +227,7 @@ class AuthController extends GetxController {
       Navigator.pop(context);
       updateProfileApiReponse = UpdateProfileApiReponse.fromJson(response);
       sharedPref.setProfilepic(updateProfileApiReponse.updatedData.profile);
+      sharedPref.setProfileDetails(nameController.text, emailController.text);
       sharedPref.setLoginStatus();
       messages.showMsg(
           context: context, message: updateProfileApiReponse.message);
@@ -237,6 +241,15 @@ class AuthController extends GetxController {
     } catch (e) {
       //getAwatarList(context);
     }
+  }else{
+    messages.showErrorMsg(
+          context: context, message: 'Enter A valid Email');
+  }
+}else{
+   messages.showErrorMsg(
+          context: context, message: 'Enter Name first');
+}
+
   }
 
   void selectAwatar(String link) {

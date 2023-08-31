@@ -41,12 +41,17 @@ dependencies:
   flutter_otp_text_field: ^1.1.1
   device_info_plus: ^9.0.2
   shared_preferences:
-  image_picker:  
+  image_picker: ^1.0.2
   pinput: ^2.2.31
   intl: 
   flutter_countdown_timer:
   shimmer: ^3.0.0
   cached_network_image: ^3.2.3
+  easy_upi_payment: ^0.1.5
+  upi_india: ^3.0.1
+  get_upi:
+  permission_handler: 
+  cashfree_pg:
 
 dev_dependencies:
   flutter_test:

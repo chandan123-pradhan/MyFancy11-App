@@ -8,34 +8,59 @@ class BottomBarItem extends StatefulWidget {
   final String imageName;
   final title;
   bool isSelected;
-  BottomBarItem({required this.imageName,required this.title,required this.isSelected});
+  BottomBarItem(
+      {required this.imageName, required this.title, required this.isSelected});
 
   @override
   State<BottomBarItem> createState() => _BottomBarItemState();
 }
 
 class _BottomBarItemState extends State<BottomBarItem> {
-
-
-  
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Image.asset(
-          widget.imageName,
-          height:  widget.isSelected==true?23: 20,
-          width: widget.isSelected==true?23:20,
+    return Container(
+      //width: 130,
+
+      // width: 130,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle, color:
+                  
+                  
+              widget.isSelected?     Colors.redAccent[100]:Colors.transparent
+                   
+                   ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Image.asset(
+                  widget.imageName,
+                  height: 20,
+                  width: 20,
+                  color:  Colors.black,
+                ),
+              ),
+            ),
+            const SizedBox(
+              width: 6,
+            ),
+            Text(
+              widget.title,
+              style: TextStyle(
+                  color:  Colors.black,
+                  fontSize: 12,
+                  fontWeight: widget.isSelected == true
+                      ? FontWeight.w500
+                      : FontWeight.w400),
+            )
+          ],
         ),
-        const SizedBox(height: 6,),
-        Text(widget.title,
-        style:  TextStyle(
-          color: ColorConstant.primaryWhiteColor,
-          fontSize: widget.isSelected==true?15:14,
-          fontWeight: widget.isSelected==true?FontWeight.w500: FontWeight.w400
-        ),
-        )
-      ],
+      ),
     );
   }
 }

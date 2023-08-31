@@ -11,7 +11,7 @@ class ImageUitls{
   static const String Team_2_logo='assets/images/team2_logo.png';
   static const String Banner1='assets/images/banners1.jpeg';
   static const String Banner2='assets/images/banner2.jpeg';
-  static const String Splash_screen='assets/images/myfancy11_splash.png';
+  static const String Splash_screen='assets/images/splash_screen.jpeg';
   static const String App_Logo='assets/images/app_logo.png';
 
   static const String Slider1='assets/images/slider_sq1.png';
@@ -19,4 +19,6 @@ class ImageUitls{
   static const String Slider3='assets/images/slider_sq3.png';
   static const String Slider4='assets/images/slider_sq4.png';
   static const String working_image='assets/images/working_img.png';
+  static const String team_preview_image='assets/images/team_preview_bg.png';
+  static const String winner_band='assets/images/winner_band_img.png';
 }

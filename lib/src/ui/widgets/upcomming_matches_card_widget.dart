@@ -1,4 +1,5 @@
 import 'package:cricket_fantacy/src/models/GetMatchesApiResponse.dart';
+import 'package:cricket_fantacy/src/ui/screens/prediction_screens/prediction_home_screen.dart';
 import 'package:cricket_fantacy/src/utils/color_scheme.dart';
 import 'package:cricket_fantacy/src/utils/image_utils.dart';
 import 'package:flutter/material.dart';
@@ -41,200 +42,293 @@ class _UpcommingMatchCardWidgetState extends State<UpcommingMatchCardWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width / 1,
-      // height: 100,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: ColorConstant.primaryWhiteColor,
-          border: Border.all(width: 1, color: Colors.black26)),
-      child: Padding(
-        padding: const EdgeInsets.all(0.0),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      height: 180,
+      child: Stack(
+        children: [
+          Positioned(
+              top: 0,
+              right: 0,
+              child: InkWell(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context){
+                    return  PredictionHomePage(
+                      matches: widget.matches,
+                    );
+                  }));
+                },
+                child: Container(
+                  width: 130,
+                  height: 20,
+                  decoration: const BoxDecoration(
+                      color: ColorConstant.primaryColor,
+                      borderRadius:
+                          BorderRadius.only(topLeft: Radius.circular(15))),
+                  alignment: Alignment.center,
+                  child: const Text(
+                    "Prediction",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 13,
+                        fontWeight: FontWeight.w500),
+                  ),
+                ),
+              )),
+          Positioned(
+            top: 20,
+            left: 0,
+            right: 0,
+            child: Container(
+              width: MediaQuery.of(context).size.width / 1,
+              height: 160,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                 boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.3),
+                spreadRadius: 2,
+                blurRadius: 2,
+                offset: Offset(0, 1), // changes position of shadow
+              ),
+            ],
+            color: ColorConstant.primaryWhiteColor,
+                //  color: ColorConstant.primaryWhiteColor,
+                image: const DecorationImage(
+                    image: AssetImage("assets/images/upcoming_match_bg.png"),
+                    fit: BoxFit.fill),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(0.0),
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      left: 10, top: 5, right: 10, bottom: 0),
+                  child: Stack(
                     children: [
-                      Text(
-                        widget.matches.leagueName,
-                        style: TextStyle(
-                            color: ColorConstant.primaryBlackColor,
-                            fontSize: 13,
-                            fontWeight: FontWeight.w600),
-                      ),
-                      Row(
+                      Column(
                         children: [
-                          Icon(
-                            Icons.movie_filter_outlined,
-                            size: 18,
-                            color: ColorConstant.deviderColor,
+                          SizedBox(height: 0),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                widget.matches.leagueName,
+                                style: TextStyle(
+                                    color: ColorConstant.primaryBlackColor,
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.live_tv_sharp,
+                                    size: 18,
+                                    color: Colors.black38,
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  widget.matches.elevenOut == 0
+                                      ? Container()
+                                      : Row(
+                                          children: [
+                                            Icon(
+                                              Icons.person_outlined,
+                                              size: 15,
+                                              color: Colors.black38,
+                                            ),
+                                            SizedBox(
+                                              width: 5,
+                                            ),
+                                            Text(
+                                              'Linup out',
+                                              style: TextStyle(
+                                                  color:
+                                                      ColorConstant.greenColor,
+                                                  fontSize: 13,
+                                                  fontWeight: FontWeight.w500),
+                                            ),
+                                          ],
+                                        ),
+                                ],
+                              )
+                            ],
                           ),
                           SizedBox(
-                            width: 10,
+                            height: 15,
                           ),
-                          Text(
-                            widget.matches.elevenOut==0?'':'Linup out',
-                            style: TextStyle(
-                                color: ColorConstant.greenColor,
-                                fontSize: 13,
-                                fontWeight: FontWeight.w500),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  Container(
+                                    height: 35,
+                                    width: 35,
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        image: DecorationImage(
+                                            image: NetworkImage(
+                                                widget.matches.team1.teamImage),
+                                            fit: BoxFit.fill)),
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    widget.matches.team1.teamShortName,
+                                    style: TextStyle(
+                                        color: ColorConstant.primaryBlackColor,
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                  Container(
+                                      height: 25,
+                                      // width: 80,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          color: Colors.deepOrange[50]),
+                                      alignment: Alignment.center,
+                                      child: Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            10, 0, 10, 0),
+                                        child: CountdownTimer(
+                                          endWidget: Text("Live"),
+                                          endTime:
+                                              targetDate.millisecondsSinceEpoch,
+                                          textStyle: TextStyle(
+                                              fontSize: 12,
+                                              color: Colors.red,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                      )),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(
+                                    widget.matches.matchDateTime,
+                                    style: TextStyle(
+                                        color: Colors.black45,
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.w400),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    widget.matches.team2.teamShortName,
+                                    style: TextStyle(
+                                        color: ColorConstant.primaryBlackColor,
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Container(
+                                    height: 35,
+                                    width: 35,
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        image: DecorationImage(
+                                            image: NetworkImage(
+                                                widget.matches.team2.teamImage),
+                                            fit: BoxFit.fill)),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 5, 10, 0),
+                            child: Container(
+                              alignment: Alignment.centerLeft,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    widget.matches.team1.teamName,
+                                    style: TextStyle(
+                                        color: Colors.black54,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w400),
+                                  ),
+                                  Text(
+                                    widget.matches.team2.teamName,
+                                    style: TextStyle(
+                                        color: Colors.black54,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w400),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          )
                         ],
+                      ),
+                      Positioned(
+                        bottom: 0,
+                        left: 0,
+                        right: 0,
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 5, 0, 4),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    color: Colors.orange[50],
+                                    border: Border.all(
+                                        width: 1, color: Colors.orange)),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Text(
+                                    "Mega Rs.1.5 Lacks",
+                                    style: TextStyle(
+                                        color: Colors.black45,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                height: 25,
+                                width: 30,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Colors.white,
+                                    border: Border.all(
+                                        width: 1, color: Colors.black26)),
+                                child: Image.asset(
+                                  ImageUitls.Notification_icon,
+                                  height: 15,
+                                  width: 15,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       )
                     ],
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Image.network(
-                            widget.matches.team1.teamImage,
-                            height: 40,
-                            width: 40,
-                          ),
-                          Text(
-                            widget.matches.team1.teamShortName,
-                            style: TextStyle(
-                                color: ColorConstant.primaryBlackColor,
-                                fontSize: 13,
-                                fontWeight: FontWeight.w600),
-                          ),
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          Container(
-                              height: 30,
-                             // width: 80,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: Colors.black12),
-                              alignment: Alignment.center,
-                              child: Padding(
-                                padding: const EdgeInsets.fromLTRB(10,0,10,0),
-                                child: CountdownTimer(
-                                   endWidget: Text("Live"),
-                                  endTime: targetDate.millisecondsSinceEpoch,
-                                  textStyle: TextStyle(fontSize: 14),
-                                ),
-                              )),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            widget.matches.matchDateTime,
-                            style: TextStyle(
-                                color: Colors.black45,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            widget.matches.team2.teamShortName,
-                            style: TextStyle(
-                                color: ColorConstant.primaryBlackColor,
-                                fontSize: 13,
-                                fontWeight: FontWeight.w600),
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Image.network(
-                            widget.matches.team2.teamImage,
-                            height: 40,
-                            width: 40,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 5, 10, 0),
-                    child: Container(
-                      alignment: Alignment.centerLeft,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            widget.matches.team1.teamName,
-                            style: TextStyle(
-                                color: Colors.black45,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500),
-                          ),
-                          Text(
-                            widget.matches.team2.teamName,
-                            style: TextStyle(
-                                color: Colors.black45,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ],
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Divider(
-              height: 1,
-              color: ColorConstant.deviderColor,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Container(
-                width: MediaQuery.of(context).size.width / 1,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.orange[50],
-                          border: Border.all(width: 1, color: Colors.orange)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Text(
-                          "Mega Rs.1.5 Lacks",
-                          style: TextStyle(
-                              color: Colors.black45,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      height: 35,
-                      width: 35,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.white,
-                          border: Border.all(width: 1, color: Colors.black26)),
-                      child: Image.asset(
-                        ImageUitls.Notification_icon,
-                        height: 20,
-                        width: 20,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ],
                 ),
+                //  SizedBox(height: ,),
               ),
-            )
-          ],
-        ),
+            ),
+          ),
+        ],
       ),
     );
   }

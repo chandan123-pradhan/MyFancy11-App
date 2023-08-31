@@ -17,14 +17,15 @@ class MyUpcommingMatchCardWidget extends StatefulWidget {
       _MyUpcommingMatchCardWidgetState();
 }
 
-class _MyUpcommingMatchCardWidgetState extends State<MyUpcommingMatchCardWidget> {
+class _MyUpcommingMatchCardWidgetState
+    extends State<MyUpcommingMatchCardWidget> {
   var targetDate;
-   Duration? remainingDuration;
+  Duration? remainingDuration;
   _calculateTimeRemaining() {
     DateTime now = DateTime.now();
     targetDate =
         DateFormat("yyyy-MM-dd hh:mm:ss").parse(widget.matches.matchDateTime);
-     remainingDuration = targetDate.difference(now);
+    remainingDuration = targetDate.difference(now);
 
     int hours = remainingDuration!.inHours;
     int minutes = remainingDuration!.inMinutes.remainder(60);
@@ -44,19 +45,34 @@ class _MyUpcommingMatchCardWidgetState extends State<MyUpcommingMatchCardWidget>
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width / 1,
-      // height: 100,
+      height: 160,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: ColorConstant.primaryWhiteColor,
-          border: Border.all(width: 1, color: Colors.black26)),
+        borderRadius: BorderRadius.circular(10),
+                 boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.3),
+                spreadRadius: 2,
+                blurRadius: 2,
+                offset: Offset(0, 1), // changes position of shadow
+              ),
+            ],
+            color: ColorConstant.primaryWhiteColor,
+                
+        //  color: ColorConstant.primaryWhiteColor,
+        image: const DecorationImage(
+            image: AssetImage("assets/images/upcoming_match_bg.png"),
+            fit: BoxFit.fill),
+      ),
       child: Padding(
         padding: const EdgeInsets.all(0.0),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Column(
+        child: Padding(
+          padding:
+              const EdgeInsets.only(left: 10, top: 5, right: 10, bottom: 0),
+          child: Stack(
+            children: [
+              Column(
                 children: [
+                  SizedBox(height: 0),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -70,36 +86,58 @@ class _MyUpcommingMatchCardWidgetState extends State<MyUpcommingMatchCardWidget>
                       Row(
                         children: [
                           Icon(
-                            Icons.movie_filter_outlined,
+                            Icons.live_tv_sharp,
                             size: 18,
-                            color: ColorConstant.deviderColor,
+                            color: Colors.black38,
                           ),
                           SizedBox(
-                            width: 10,
+                            width: 5,
                           ),
-                          Text(
-                            widget.matches.elevenOut=='0'?'':'Linup out',
-                            style: TextStyle(
-                                color: ColorConstant.greenColor,
-                                fontSize: 13,
-                                fontWeight: FontWeight.w500),
-                          ),
+                          widget.matches.elevenOut == 0
+                              ? Container()
+                              : Row(
+                                  children: [
+                                    Icon(
+                                      Icons.person_outlined,
+                                      size: 15,
+                                      color: Colors.black38,
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(
+                                      'Linup out',
+                                      style: TextStyle(
+                                          color: ColorConstant.greenColor,
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w500),
+                                    ),
+                                  ],
+                                ),
                         ],
                       )
                     ],
                   ),
                   SizedBox(
-                    height: 10,
+                    height: 15,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
                         children: [
-                          Image.network(
-                            widget.matches.team1.teamImage,
-                            height: 40,
-                            width: 40,
+                          Container(
+                            height: 35,
+                            width: 35,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                    image: NetworkImage(
+                                        widget.matches.team1.teamImage),
+                                    fit: BoxFit.fill)),
+                          ),
+                          const SizedBox(
+                            width: 10,
                           ),
                           Text(
                             widget.matches.team1.teamShortName,
@@ -112,22 +150,28 @@ class _MyUpcommingMatchCardWidgetState extends State<MyUpcommingMatchCardWidget>
                       ),
                       Column(
                         children: [
+                          SizedBox(
+                            height: 15,
+                          ),
                           Container(
-                              height: 30,
-                             // width: 80,
+                              height: 25,
+                              // width: 80,
                               decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: Colors.black12),
+                                  borderRadius: BorderRadius.circular(5),
+                                  color: Colors.deepOrange[50]),
                               alignment: Alignment.center,
                               child: Padding(
-                                padding: const EdgeInsets.fromLTRB(10,0,10,0),
+                                padding:
+                                    const EdgeInsets.fromLTRB(10, 0, 10, 0),
                                 child: CountdownTimer(
-                                   endWidget: 
-                                   remainingDuration!.inHours<0?Text("Completed"):
-                                   
-                                   Text("Live"),
+                                  endWidget: remainingDuration!.inHours < 0
+                                      ? Text("Completed")
+                                      : Text("Live"),
                                   endTime: targetDate.millisecondsSinceEpoch,
-                                  textStyle: TextStyle(fontSize: 14),
+                                  textStyle: TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.red,
+                                      fontWeight: FontWeight.w600),
                                 ),
                               )),
                           SizedBox(
@@ -137,7 +181,7 @@ class _MyUpcommingMatchCardWidgetState extends State<MyUpcommingMatchCardWidget>
                             widget.matches.matchDateTime,
                             style: TextStyle(
                                 color: Colors.black45,
-                                fontSize: 12,
+                                fontSize: 11,
                                 fontWeight: FontWeight.w400),
                           ),
                         ],
@@ -152,12 +196,17 @@ class _MyUpcommingMatchCardWidgetState extends State<MyUpcommingMatchCardWidget>
                                 fontWeight: FontWeight.w600),
                           ),
                           SizedBox(
-                            width: 5,
+                            width: 10,
                           ),
-                          Image.network(
-                            widget.matches.team2.teamImage,
-                            height: 40,
-                            width: 40,
+                          Container(
+                            height: 35,
+                            width: 35,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                    image: NetworkImage(
+                                        widget.matches.team2.teamImage),
+                                    fit: BoxFit.fill)),
                           ),
                         ],
                       ),
@@ -173,16 +222,16 @@ class _MyUpcommingMatchCardWidgetState extends State<MyUpcommingMatchCardWidget>
                           Text(
                             widget.matches.team1.teamName,
                             style: TextStyle(
-                                color: Colors.black45,
+                                color: Colors.black54,
                                 fontSize: 12,
-                                fontWeight: FontWeight.w500),
+                                fontWeight: FontWeight.w400),
                           ),
                           Text(
                             widget.matches.team2.teamName,
                             style: TextStyle(
-                                color: Colors.black45,
+                                color: Colors.black54,
                                 fontSize: 12,
-                                fontWeight: FontWeight.w500),
+                                fontWeight: FontWeight.w400),
                           ),
                         ],
                       ),
@@ -190,57 +239,59 @@ class _MyUpcommingMatchCardWidgetState extends State<MyUpcommingMatchCardWidget>
                   )
                 ],
               ),
-            ),
-            Divider(
-              height: 1,
-              color: ColorConstant.deviderColor,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Container(
-                width: MediaQuery.of(context).size.width / 1,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.orange[50],
-                          border: Border.all(width: 1, color: Colors.orange)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Text(
-                          "Mega Rs.1.5 Lacks",
-                          style: TextStyle(
-                              color: Colors.black45,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500),
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 5, 0, 4),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: Colors.orange[50],
+                            border: Border.all(width: 1, color: Colors.orange)),
+                        child: Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Text(
+                            "Mega Rs.1.5 Lacks",
+                            style: TextStyle(
+                                color: Colors.black45,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500),
+                          ),
                         ),
                       ),
-                    ),
-                    Container(
-                      height: 35,
-                      width: 35,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.white,
-                          border: Border.all(width: 1, color: Colors.black26)),
-                      child: Image.asset(
-                        ImageUitls.Notification_icon,
-                        height: 20,
-                        width: 20,
-                        color: Colors.black,
+                      Container(
+                        height: 25,
+                        width: 30,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.white,
+                            border:
+                                Border.all(width: 1, color: Colors.black26)),
+                        child: Image.asset(
+                          ImageUitls.Notification_icon,
+                          height: 15,
+                          width: 15,
+                          color: Colors.black,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
+        //  SizedBox(height: ,),
       ),
     );
   }
 }
+
+    

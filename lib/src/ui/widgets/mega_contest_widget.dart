@@ -21,7 +21,7 @@ class _MegaContestWidgetState extends State<MegaContestWidget> {
       width: MediaQuery.of(context).size.width / 1,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(width: 2, color: ColorConstant.deviderColor),
+        border: Border.all(width: 1, color: ColorConstant.deviderColor),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,19 +74,19 @@ class _MegaContestWidgetState extends State<MegaContestWidget> {
                     Text(
                       "Price Pool",
                       style: TextStyle(
-                          color: ColorConstant.primaryBlackColor,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500),
+                          color: Colors.black54,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w400),
                     ),
                     SizedBox(
                       height: 8,
                     ),
                     Text(
-                      "₹ ${widget.contest.prizePool}",
+                      "₹${widget.contest.prizePool}",
                       style: TextStyle(
                           color: ColorConstant.primaryBlackColor,
                           fontSize: 20,
-                          fontWeight: FontWeight.bold),
+                          fontWeight: FontWeight.w600),
                     ),
                   ],
                 ),
@@ -94,29 +94,34 @@ class _MegaContestWidgetState extends State<MegaContestWidget> {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Text(
-                      "Entry",
-                      style: TextStyle(
-                          color: ColorConstant.primaryBlackColor,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500),
+                    Row(
+                      children: [
+                        Text(
+                          "Entry",
+                            style: TextStyle(
+                              color: Colors.black54,
+                              fontSize: 13,
+                              fontWeight: FontWeight.w400),
+                        ),
+                         
+                      ],
                     ),
                     SizedBox(
                       height: 8,
                     ),
                     Container(
                       height: 30,
-                      width: 100,
+                      width: 80,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                           color: ColorConstant.greenColor,
-                          borderRadius: BorderRadius.circular(10)),
+                          borderRadius: BorderRadius.circular(5)),
                       child: Text(
-                        "₹ ${widget.contest.entry}",
+                        "₹${widget.contest.entry}",
                         style: TextStyle(
                             color: ColorConstant.primaryWhiteColor,
                             fontSize: 14,
-                            fontWeight: FontWeight.bold),
+                            fontWeight: FontWeight.w600),
                       ),
                     )
                   ],
@@ -129,7 +134,7 @@ class _MegaContestWidgetState extends State<MegaContestWidget> {
             child: Container(
               width: MediaQuery.of(context).size.width / 1,
               child: LinearProgressIndicator(
-                minHeight: 7,
+                minHeight: 4,
                 value: 0.3, // Set the value here
                 backgroundColor: Colors.red[50],
                 valueColor:
@@ -147,14 +152,14 @@ class _MegaContestWidgetState extends State<MegaContestWidget> {
                   style: TextStyle(
                       color: ColorConstant.primaryColor,
                       fontSize: 14,
-                      fontWeight: FontWeight.bold),
+                      fontWeight: FontWeight.w500),
                 ),
                 Text(
                   "${int.parse(widget.contest.totalTeam)} spots",
                   style: TextStyle(
                       color: ColorConstant.disableColor,
                       fontSize: 14,
-                      fontWeight: FontWeight.bold),
+                      fontWeight: FontWeight.w400),
                 ),
               ],
             ),
@@ -163,13 +168,13 @@ class _MegaContestWidgetState extends State<MegaContestWidget> {
             height: 8,
           ),
           Container(
-            height: 40,
+            height: 35,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(10),
                   bottomRight: Radius.circular(10),
                 ),
-                color: Colors.grey[300]),
+                color: Colors.grey[200]),
             child: Padding(
               padding: const EdgeInsets.only(left: 15, right: 15),
               child: Row(
@@ -180,9 +185,14 @@ class _MegaContestWidgetState extends State<MegaContestWidget> {
                 children: [
                   Row(children: [
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
+                       Image.asset('assets/icons/first_winner.png',
+                       height: 25,
+                       width: 25,
+                       ),
                         Text(
-                          "₹ ${widget.contest.firstPrize}  ",
+                          "₹${widget.contest.firstPrize}  ",
                           style: TextStyle(
                               color: Colors.black45,
                               fontSize: 15,
@@ -194,11 +204,11 @@ class _MegaContestWidgetState extends State<MegaContestWidget> {
                       children: [
                         Icon(
                           Icons.wine_bar_rounded,
-                          size: 20,
+                          size: 15,
                           color: Colors.black45,
                         ),
                         Text(
-                          "${widget.contest.winPercent} % ",
+                          "${widget.contest.winPercent}% ",
                           style: TextStyle(
                               color: Colors.black45,
                               fontSize: 15,
@@ -211,8 +221,8 @@ class _MegaContestWidgetState extends State<MegaContestWidget> {
                   Row(
                     children: [
                       Icon(
-                        Icons.check_circle,
-                        size: 18,
+                        Icons.check_circle_outline,
+                        size: 15,
                         color: Colors.black45,
                       ),
                       Text(
@@ -220,7 +230,7 @@ class _MegaContestWidgetState extends State<MegaContestWidget> {
                         style: TextStyle(
                             color: Colors.black45,
                             fontSize: 15,
-                            fontWeight: FontWeight.w500),
+                            fontWeight: FontWeight.w400),
                       )
                     ],
                   ),

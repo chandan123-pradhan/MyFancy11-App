@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-    
+  //  backgroundColor: Colors.white60,
       body:  FantacyTab(),
       // Column(
       //   children: [
