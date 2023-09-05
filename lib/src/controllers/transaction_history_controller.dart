@@ -8,13 +8,20 @@ import 'package:get/get.dart';
 
 class TransactionHistoryController extends GetxController {
   GetTransactionHistoryApiResponse? getTransactionHistoryApiResponse;
+  bool isEmpty=false;
+  bool isDataFetching=true;
   ApiProvider apiProvider = ApiProvider();
   getTransactionHistory() async {
     Map parameter = {};
     var response = await apiProvider.postAfterAuth(
         routeUrl: NetworkConstant.Get_transaction_history_url, bodyParams: parameter);
-  // debugger();
+   debugger();
+   if(response['status']==404){
+isEmpty=true;
+   }else{
   getTransactionHistoryApiResponse=GetTransactionHistoryApiResponse.fromJson(response);
+   }
+   isDataFetching=false;
   update();
   }
 }

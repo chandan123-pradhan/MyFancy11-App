@@ -69,17 +69,23 @@ class _TransactionHistoryPageState extends State<TransactionHistoryPage> {
         body: GetBuilder<TransactionHistoryController>(
             init: TransactionHistoryController(),
             builder: (controller) {
-              return controller.getTransactionHistoryApiResponse == null
+              return 
+              
+              
+              controller.isDataFetching == true
                   ? Center(
                       child: CircularProgressIndicator(
                         color: ColorConstant.primaryColor,
                       ),
                     )
-                  : 
+                  :
+
+                  controller.isEmpty? 
+
                   
-                  controller.getTransactionHistoryApiResponse!.data.length==0?Center(
-                    child: Text("Not Found"),
-                  ):
+                  Center(
+                    child: Text("Data Not Found"),):
+                  
                   ListView.builder(
                       itemCount: controller
                           .getTransactionHistoryApiResponse!.data.length,

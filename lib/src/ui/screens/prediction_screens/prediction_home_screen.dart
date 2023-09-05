@@ -224,7 +224,9 @@ class _PredictionHomePageState extends State<PredictionHomePage> {
                   }),
             ),
             Expanded(
-              child: ListView.builder(itemBuilder: (context, index) {
+              child: ListView.builder(
+                itemCount: 5,
+                itemBuilder: (context, index) {
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 10.0),
                   child: Container(

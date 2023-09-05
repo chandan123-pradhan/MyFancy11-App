@@ -103,9 +103,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                InkWell(
                   onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context){
-                      return UpcommingFeatureScreen();
-                    }));
+                    controller.googleLogin(context);
+                    // Navigator.push(context, MaterialPageRoute(builder: (context){
+                    //   return UpcommingFeatureScreen();
+                    // }));
                   },
                   child: Container(
                     height: 40,

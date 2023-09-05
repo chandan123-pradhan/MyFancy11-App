@@ -12,7 +12,8 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ProfileSetupScreen extends StatefulWidget {
-  const ProfileSetupScreen({super.key});
+  String? email;
+  ProfileSetupScreen({this.email});
 
   @override
   State<ProfileSetupScreen> createState() => _ProfileSetupScreenState();
@@ -25,6 +26,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
 
 @override
   void initState() {
+    controller.updateEmail(widget.email!);
      controller.getAwatarList(context);
     // TODO: implement initState
     super.initState();
@@ -144,6 +146,7 @@ decoration: BoxDecoration(
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: TextFormField(
+                  enabled: widget.email!=null?false:true,
                   controller: controller.emailController,
                   onChanged: (val) {},
                   decoration: InputDecoration(filled: true, hintText: "Email"),

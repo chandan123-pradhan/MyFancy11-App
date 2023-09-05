@@ -143,6 +143,7 @@ class _TeamPreviewPageState extends State<TeamPreviewPage> {
               ),
               Expanded(
                 child: Container(
+                  
                   // height: MediaQuery.of(context).size.height/1,
                   width: MediaQuery.of(context).size.width / 1,
                   decoration: const BoxDecoration(

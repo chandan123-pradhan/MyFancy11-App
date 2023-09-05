@@ -578,6 +578,7 @@ class _PickPlayerScreenState extends State<PickPlayerScreen>
                     builder: (controller) {
                       return InkWell(
                         onTap: () {
+                          print(controller.choosedPlayerList.length);
                           if (controller.choosedPlayerList.length == 11) {
                             if(controller.choosedAllRounderList.isEmpty){
                               Messages().showErrorMsg(context: context, message: 'Minimum 1 Player Should be choose From Allrounders');

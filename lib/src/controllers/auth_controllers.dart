@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:cricket_fantacy/src/controllers/google_signing.dart';
 import 'package:cricket_fantacy/src/controllers/splash_controller.dart';
 import 'package:cricket_fantacy/src/dialogs/loadingDialog.dart';
 import 'package:cricket_fantacy/src/global_variable.dart';
@@ -58,8 +59,7 @@ class AuthController extends GetxController {
               context: context,
               message: "OTP has been sent on your mobile number.");
           _navigateToOtpPage(context);
-        }
-         else {
+        } else {
           messages.showErrorMsg(context: context, message: response['message']);
         }
       } catch (e) {
@@ -165,11 +165,11 @@ class AuthController extends GetxController {
       messages.showMsg(
           context: context, message: 'Registration Successfully Done.');
       sharedPref.saveAuthToken();
-       homeController.getSplashData(context, 0);
+      homeController.getSplashData(context, 0);
       Navigator.pop(context);
       Navigator.pushAndRemoveUntil(context,
           MaterialPageRoute(builder: (context) {
-        return const ProfileSetupScreen();
+        return  ProfileSetupScreen();
       }), (route) => false);
     } catch (e) {
       Navigator.pop(context);
@@ -211,49 +211,158 @@ class AuthController extends GetxController {
   }
 
   updateProfile(context) async {
-    
-if(nameController.text.isNotEmpty){
-  if(emailController.text.isNotEmpty && emailController.text.isEmail){
-    showLoaderDialog(context);
-    Map data = {
-      NetworkConstant.PHONE_PARAMS: phoneNumberController.text,
-      NetworkConstant.Email: emailController.text,
-      NetworkConstant.Profile: selectedAwatarLink,
-      NetworkConstant.Name: nameController.text
-    };
-    try {
-      var response = await apiProvider.postAfterAuth(
-          routeUrl: NetworkConstant.ACCOUNT_UPDATE_URL, bodyParams: data);
-      Navigator.pop(context);
-      updateProfileApiReponse = UpdateProfileApiReponse.fromJson(response);
-      sharedPref.setProfilepic(updateProfileApiReponse.updatedData.profile);
-      sharedPref.setProfileDetails(nameController.text, emailController.text);
-      sharedPref.setLoginStatus();
-      messages.showMsg(
-          context: context, message: updateProfileApiReponse.message);
+    if (nameController.text.isNotEmpty) {
+      if (emailController.text.isNotEmpty && emailController.text.isEmail) {
+        showLoaderDialog(context);
+        Map data = {
+          NetworkConstant.PHONE_PARAMS: phoneNumberController.text,
+          NetworkConstant.Email: emailController.text,
+          NetworkConstant.Profile: selectedAwatarLink,
+          NetworkConstant.Name: nameController.text
+        };
+        try {
+          var response = await apiProvider.postAfterAuth(
+              routeUrl: NetworkConstant.ACCOUNT_UPDATE_URL, bodyParams: data);
+          Navigator.pop(context);
+          updateProfileApiReponse = UpdateProfileApiReponse.fromJson(response);
+          sharedPref.setProfilepic(updateProfileApiReponse.updatedData.profile);
+          sharedPref.setProfileDetails(
+              nameController.text, emailController.text);
+          sharedPref.setLoginStatus();
+          messages.showMsg(
+              context: context, message: updateProfileApiReponse.message);
 
-      Navigator.pushAndRemoveUntil(context,
-          MaterialPageRoute(builder: (context) {
-        return DashboardScreen(
-          index: 0,
-        );
-      }), (route) => false);
-    } catch (e) {
-      //getAwatarList(context);
+          Navigator.pushAndRemoveUntil(context,
+              MaterialPageRoute(builder: (context) {
+            return DashboardScreen(
+              index: 0,
+            );
+          }), (route) => false);
+        } catch (e) {
+          //getAwatarList(context);
+        }
+      } else {
+        messages.showErrorMsg(context: context, message: 'Enter A valid Email');
+      }
+    } else {
+      messages.showErrorMsg(context: context, message: 'Enter Name first');
     }
-  }else{
-    messages.showErrorMsg(
-          context: context, message: 'Enter A valid Email');
-  }
-}else{
-   messages.showErrorMsg(
-          context: context, message: 'Enter Name first');
-}
-
   }
 
   void selectAwatar(String link) {
     selectedAwatarLink = link;
     update();
   }
+
+  void googleLogin(context) {
+         showLoaderDialog(context);
+    GoogleSignInService().signInWithGoogle().then((value) async {
+      //  debugger();
+      if (value != null) {
+
+        DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+        String modelName = '';
+        if (Platform.isAndroid) {
+          AndroidDeviceInfo mName = await deviceInfo.androidInfo;
+          modelName = mName.model;
+        } else if (Platform.isIOS) {
+          IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+          modelName = iosInfo.model;
+        }
+
+        Map parameter = {
+          NetworkConstant.Login_Method: 'google',
+          NetworkConstant.Login_Id: value.email,
+          NetworkConstant.Device_Name: modelName,
+          NetworkConstant.One_Signal: 'ssss'
+        };
+
+        var response = await apiProvider.postBeforeAuthWithAppToken(
+            routeUrl: NetworkConstant.LOGIN_ROUTE_URL, bodyParams: parameter);
+        //    debugger();
+        print(response);
+        if (response == null) {
+          messages.showErrorMsg(context: context, message: 'Account not found');
+          // account not found.
+        } else {
+          loginApiResponse = LoginApiResponse.fromJson(response);
+          sharedPref.setUserToken(loginApiResponse.data.userToken);
+          sharedPref.setProfilepic(loginApiResponse.data.profile);
+          sharedPref.saveAuthToken();
+          sharedPref.setLoginStatus();
+           homeController.getSplashData(context, 1);
+          // Navigator.pushAndRemoveUntil(context,
+          //     MaterialPageRoute(builder: (context) {
+          //   return DashboardScreen(
+          //     index: 0,
+          //   );
+          // }), (route) => false);
+        }
+      }
+    });
+  }
+
+
+void registerWithGoogle(context){
+    showLoaderDialog(context);
+   GoogleSignInService().signInWithGoogle().then((value) async {
+    if(value!=null){
+      DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    String modelName = '';
+    if (Platform.isAndroid) {
+      AndroidDeviceInfo mName = await deviceInfo.androidInfo;
+      modelName = mName.model;
+    } else if (Platform.isIOS) {
+      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+      modelName = iosInfo.model;
+    }
+    Map parameter = {
+      NetworkConstant.Login_Method: 'google',
+      NetworkConstant.Login_Id: value.email,
+      NetworkConstant.Reffer_By: referByController.text,
+      NetworkConstant.Device_Name: modelName,
+      NetworkConstant.One_Signal: 'ssss'
+    };
+    try {
+      var response = await apiProvider.postBeforeAuthWithAppToken(
+          routeUrl: NetworkConstant.REGISTER_ROUTE_URL, bodyParams: parameter);
+  debugger();
+if(response['status']==400){
+   Navigator.pop(context);
+      messages.showErrorMsg(
+          context: context, message: response['message']);
+}
+else{
+      loginApiResponse = LoginApiResponse.fromJson(response);
+    
+      sharedPref.setUserToken(loginApiResponse.data.userToken);
+      sharedPref.setProfilepic(loginApiResponse.data.profile);
+      messages.showMsg(
+          context: context, message: 'Registration Successfully Done.');
+      sharedPref.saveAuthToken();
+      homeController.getSplashData(context, 0);
+      Navigator.pop(context);
+      Navigator.pushAndRemoveUntil(context,
+          MaterialPageRoute(builder: (context) {
+        return  ProfileSetupScreen(
+          email: value.email,
+        );
+      }), (route) => false);
+   
+}
+    } catch (e) {
+      Navigator.pop(context);
+      messages.showErrorMsg(
+          context: context, message: 'Registration Failed Please Try Again.');
+    }
+    }
+   });
+}
+
+void updateEmail(value){
+emailController.text=value;
+update();
+}
+
+
 }

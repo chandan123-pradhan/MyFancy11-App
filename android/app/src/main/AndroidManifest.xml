@@ -2,7 +2,7 @@
     package="com.example.cricket_fantacy">
     <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="cricket_fantacy"
+        android:label="MYFANCY 11"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <meta-data android:name="com.google.android.gms.version"

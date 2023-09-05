@@ -113,8 +113,10 @@ class _FantacyTabState extends State<FantacyTab> {
                                              Navigator.push(context,
                                       MaterialPageRoute(builder: (context) {
                                     return  LiveContestScreen(
-matchId:  controller.getUpcommingMyMatchResponse!
-                                              .data[i].matchId.toString(),
+ matchId: '1',
+
+// matchId:  controller.getUpcommingMyMatchResponse!
+//                                               .data[i].matchId.toString(),
                                     );
                                   }));
                                           },

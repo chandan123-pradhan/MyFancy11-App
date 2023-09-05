@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1002465669748",
+    "project_id": "dream11clone-94a17",
+    "storage_bucket": "dream11clone-94a17.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1002465669748:android:abdf2ebb125963ff365721",
+        "android_client_info": {
+          "package_name": "com.example.cricket_fantacy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1002465669748-msl7h4qrms79vo16r4smkgs36ovmm8kd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.cricket_fantacy",
+            "certificate_hash": "3e46bf8df841a66f81324719fc4f2256560313e2"
+          }
+        },
+        {
+          "client_id": "1002465669748-ceulm07cgogtm59gj6ai69ojve9mck01.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGloAmCfKG0E9X5n-0YnxWi1VL9ZIBUcU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1002465669748-ceulm07cgogtm59gj6ai69ojve9mck01.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

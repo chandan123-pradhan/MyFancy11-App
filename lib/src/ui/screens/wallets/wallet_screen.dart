@@ -31,8 +31,8 @@ final UpiIndia _upiIndia = UpiIndia();
 
   @override
   void initState() {
-    _getUpiApp();
-   // getWallets();
+    //_getUpiApp();
+    getWallets();
 
     // TODO: implement initState
     super.initState();
