@@ -7,6 +7,7 @@ import 'package:cricket_fantacy/src/models/PlayersModel.dart';
 import 'package:cricket_fantacy/src/models/get_squad_api_response.dart';
 import 'package:cricket_fantacy/src/ui/screens/home_tab/Leader_baord_tab.dart';
 import 'package:cricket_fantacy/src/ui/screens/home_tab/pick_caption_vice_caption_screen.dart';
+import 'package:cricket_fantacy/src/ui/screens/home_tab/players_profile_page.dart';
 import 'package:cricket_fantacy/src/ui/screens/home_tab/team_preview_page.dart';
 import 'package:cricket_fantacy/src/ui/screens/home_tab/winning_tab_screen.dart';
 import 'package:cricket_fantacy/src/ui/screens/wallets/wallet_screen.dart';
@@ -226,11 +227,19 @@ class _PickPlayerScreenState extends State<PickPlayerScreen>
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.center,
                                             children: [
-                                              Image.network(
-                                                widget.matches.team1.teamImage,
-                                                height: 40,
-                                                width: 40,
+                                             Container(
+                                              height: 40,
+                                              width: 40,
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                image: DecorationImage(
+                                                  image: NetworkImage(
+                                                    widget.matches.team1.teamImage,
+                                                  ),
+                                                  fit: BoxFit.fill
+                                                )
                                               ),
+                                             ),
                                               SizedBox(
                                                 width: 10,
                                               ),
@@ -287,6 +296,7 @@ class _PickPlayerScreenState extends State<PickPlayerScreen>
                                                         fontWeight:
                                                             FontWeight.w600),
                                                   ),
+                                                   
                                                   // Text(
                                                   //   "0",
                                                   //   style: TextStyle(
@@ -296,6 +306,9 @@ class _PickPlayerScreenState extends State<PickPlayerScreen>
                                                   //       fontWeight: FontWeight.w600),
                                                   // ),
                                                 ],
+                                              ),
+                                               SizedBox(
+                                                width: 10,
                                               ),
                                               Image.network(
                                                 widget.matches.team2.teamImage,
@@ -816,23 +829,32 @@ class _PickPlayerScreenState extends State<PickPlayerScreen>
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
                                         children: [
-                                          Container(
-                                            height: 70,
-                                            width: 80,
-                                            child: Stack(children: [
-                                              Image.network(
-                                                players[index].image,
-                                                fit: BoxFit.fill,
-                                              ),
-                                              Positioned(
-                                                  left: 0,
-                                                  top: 0,
-                                                  child:                                               Image.network(
-                                               players[index].teamImage,
-                                                height: 20,
-                                                width: 20,
-                                              ),)
-                                            ]),
+                                          InkWell(
+                                            onTap: (){
+                                              Navigator.push(context, MaterialPageRoute(builder: (context){
+                                                return PlayerProfilePage(
+                                                  player:  players[index],
+                                                );
+                                              }));
+                                            },
+                                            child: Container(
+                                              height: 70,
+                                              width: 80,
+                                              child: Stack(children: [
+                                                Image.network(
+                                                  players[index].image,
+                                                  fit: BoxFit.fill,
+                                                ),
+                                                Positioned(
+                                                    left: 0,
+                                                    top: 0,
+                                                    child:                                               Image.network(
+                                                 players[index].teamImage,
+                                                  height: 20,
+                                                  width: 20,
+                                                ),)
+                                              ]),
+                                            ),
                                           ),
                                           Column(
                                             mainAxisAlignment:

@@ -7,11 +7,12 @@ import 'package:cricket_fantacy/src/models/get_my_team_api_response.dart';
 import 'package:cricket_fantacy/src/models/my_contest_api_response.dart';
 import 'package:cricket_fantacy/src/networking/api_provider.dart';
 import 'package:cricket_fantacy/src/networking/network_contant.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class LiveContestController extends GetxController {
   var liveMatchUpdateApiResponse;
-
+Timer? _timer;
   MyContestApiResponse? myContestApiResponse;
   GetMyTeamApiResponse? getMyTeamApiResponse;
 
@@ -33,7 +34,7 @@ class LiveContestController extends GetxController {
   }
 
   void upatedScroe(matchId) async {
-    Timer.periodic(Duration(seconds: 5), (timer) async {
+  _timer=  Timer.periodic(Duration(seconds: 5), (timer) async {
       Map parameter = {NetworkConstant.MatchId: matchId};
       var response = await apiProvider.postAfterAuth(
           routeUrl: NetworkConstant.Match_by_id, bodyParams: parameter);
@@ -66,5 +67,12 @@ class LiveContestController extends GetxController {
     update();
   }
 
+
+void closeTimer(context){
+  _timer!.cancel();
+  liveMatchUpdateApiResponse=null;
+  Navigator.pop(context);
+  update();
+}
 
 }

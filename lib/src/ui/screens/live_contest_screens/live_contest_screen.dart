@@ -39,7 +39,8 @@ class _LiveContestScreenState extends State<LiveContestScreen>
         backgroundColor: ColorConstant.primaryBlackColor,
         leading: InkWell(
           onTap: () {
-            Navigator.pop(context);
+            
+           controller.closeTimer(context);
           },
           child: Icon(
             Icons.navigate_before,

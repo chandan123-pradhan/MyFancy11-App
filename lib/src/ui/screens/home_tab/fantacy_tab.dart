@@ -110,15 +110,7 @@ class _FantacyTabState extends State<FantacyTab> {
                                             left: i == 0 ? 0 : 5, right: 5),
                                         child: InkWell(
                                           onTap: (){
-                                             Navigator.push(context,
-                                      MaterialPageRoute(builder: (context) {
-                                    return  LiveContestScreen(
- matchId: '1',
-
-// matchId:  controller.getUpcommingMyMatchResponse!
-//                                               .data[i].matchId.toString(),
-                                    );
-                                  }));
+//                                 
                                           },
                                           child: CurrentMatchCardWidget(
                                             myMatchModel: controller
@@ -224,7 +216,7 @@ class _FantacyTabState extends State<FantacyTab> {
                 )
             ],
           ),
-          Padding(
+      controller.getMatchesApiResponse==null?Container():    Padding(
             padding: const EdgeInsets.all(15.0),
             child: Container(
               alignment: Alignment.centerLeft,
@@ -240,9 +232,14 @@ class _FantacyTabState extends State<FantacyTab> {
           GetBuilder<HomeController>(
               init: HomeController(),
               builder: (controller) {
-                return controller.getMatchesApiResponse == null
+                return isFetchingData==true
                     ? shimerEffect(length: 3, context: context)
-                    : Column(
+                    : 
+                    
+                    controller.getMatchesApiResponse==null?Center(
+
+                    ):
+                    Column(
                         children: [
                           for (int index = 0;
                               index <=

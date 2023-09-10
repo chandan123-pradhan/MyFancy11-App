@@ -19,6 +19,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   bool _isActive = false;
   var controller=Get.put(AuthController());
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(

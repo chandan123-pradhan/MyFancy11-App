@@ -8,6 +8,7 @@ import 'package:cricket_fantacy/src/ui/screens/dashboard_screen.dart';
 import 'package:cricket_fantacy/src/ui/screens/my_matches_tab/my_matches_tab.dart';
 import 'package:cricket_fantacy/src/utils/color_scheme.dart';
 import 'package:cricket_fantacy/src/utils/image_utils.dart';
+import 'package:cricket_fantacy/src/utils/messages.dart';
 import 'package:upi_india/upi_india.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -21,17 +22,19 @@ class WalletScreen extends StatefulWidget {
 
 class _WalletScreenState extends State<WalletScreen> {
   bool _isActive = false;
+    Messages messages = Messages();
 
   var controller = Get.put(HomeController());
-List<UpiApp>? apps;
-final UpiIndia _upiIndia = UpiIndia();
+  List<UpiApp> apps = [];
+  final UpiIndia _upiIndia = UpiIndia();
+  TextEditingController amountController = new TextEditingController();
   void getWallets() {
     controller.getWalletApi(context);
   }
 
   @override
   void initState() {
-    //_getUpiApp();
+    // _getUpiApp();
     getWallets();
 
     // TODO: implement initState
@@ -39,15 +42,15 @@ final UpiIndia _upiIndia = UpiIndia();
   }
 
   void _getUpiApp() async {
-
-    CashfreePGSDK.getUPIApps().then((value)  {
-      debugger();
-      print(value);
-        // Value is a List of MAP<String, String>
-        // It consists of 3 keys "displayName", "id" and a base64 string "icon"
-        // You can convert the base64 string to image and display the app icon
-        });
-
+    _upiIndia.getAllUpiApps(mandatoryTransactionId: false).then((value) {
+      setState(() {
+        apps = value;
+      });
+      showUpiApps();
+      //getWallets();
+    }).catchError((e) {
+      apps = [];
+    });
   }
 
   @override
@@ -131,7 +134,8 @@ final UpiIndia _upiIndia = UpiIndia();
                                     )
                                   ]),
                                   Text(
-                                    "₹${controller.getWalletApiResponse!.data.depositWallet}",
+                                   // "0",
+                                     "₹${controller.getWalletApiResponse!.data.depositWallet}",
                                     style: TextStyle(
                                         color: ColorConstant.primaryBlackColor,
                                         fontSize: 14,
@@ -170,6 +174,7 @@ final UpiIndia _upiIndia = UpiIndia();
                                   height: 10,
                                 ),
                                 TextFormField(
+                                  controller: amountController,
                                   onChanged: (val) {
                                     if (val.isNotEmpty) {
                                       setState(() {
@@ -286,8 +291,9 @@ final UpiIndia _upiIndia = UpiIndia();
                         padding: const EdgeInsets.fromLTRB(15, 15, 15, 20),
                         child: InkWell(
                           onTap: () {
-                           // initiateTransaction();
-                           // _pay();
+                            _getUpiApp();
+                            // initiateTransaction();
+                            // _pay();
                             //           if (_isActive == true) {
                             //             final snackBar = SnackBar(
                             //       content: const Text('Fund Added Successfully Done.'),
@@ -333,17 +339,74 @@ final UpiIndia _upiIndia = UpiIndia();
     );
   }
 
-
-   Future<UpiResponse> initiateTransaction(UpiApp app) async {
+  Future<void> _doPayment(UpiApp app) async {
     // UpiApp app = UpiApp.googlePay;
-    print(app);
-    return _upiIndia.startTransaction(
-      app: app,
-      receiverUpiId: "9078600498@ybl",
-      receiverName: 'Md Azharuddin',
-      transactionRefId: 'TestingUpiIndiaPlugin',
-      transactionNote: 'Not actual. Just an example.',
-      amount: 1.00,
+
+    try {
+      print(app);
+      _upiIndia
+          .startTransaction(
+        app: app,
+        receiverUpiId: "lorhanspotearnpvtltd@rbl",
+        receiverName: 'MYFANCY11 INDIA PRIVATE LIMITED',
+        transactionRefId: DateTime.now().toString(),
+        transactionNote: 'Buying a team.',
+        amount: double.parse(amountController.text),
+      )
+          .then((value) {
+        debugger();
+        print(value);
+        if (value.status == 'success') {
+          _paymentSuccess(value, app.name.toLowerCase());
+        } else {
+          _paymentFailed(value);
+        }
+      });
+    } catch (e) {
+      debugger();
+      print(e);
+    }
+  }
+
+  void _paymentSuccess(UpiResponse upiResponse,mode) {
+    controller.recharge(
+      context: context,upiResponse: upiResponse,amount: amountController.text,mode: mode
+    );
+  }
+
+  void _paymentFailed(UpiResponse upiResponse) {
+          messages.showMsg(
+          context: context, message: 'Payment Couldnot compete, Please Try Again');
+  }
+
+  void showUpiApps() {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return apps.isEmpty
+            ? Center(
+                child: Text("You Don't Have UPI Apss, Please Install first!"),
+              )
+            : Wrap(
+                children: [
+                  for (int i = 0; i < apps.length; i++)
+                    InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                        _doPayment(apps[i]);
+                      },
+                      child: ListTile(
+                        leading: Image.memory(
+                          apps[i].icon,
+                          height: 60,
+                          width: 60,
+                        ),
+                        title: Text(apps![i].name),
+                      ),
+                    ),
+                ],
+              );
+      },
     );
   }
 }

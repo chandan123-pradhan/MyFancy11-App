@@ -27,6 +27,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:cricket_fantacy/src/ui/screens/home_tab/join_contest_confirmation_screen.dart';
+import 'package:upi_india/upi_india.dart';
 
 class HomeController extends GetxController {
   ApiProvider apiProvider = ApiProvider();
@@ -126,6 +127,7 @@ class HomeController extends GetxController {
   }
 
   void getMatchesApiCall(context) async {
+    isFetchingData = true;
     Map parameter = {
       NetworkConstant.Status: 'Fixture',
     };
@@ -133,7 +135,12 @@ class HomeController extends GetxController {
         routeUrl: NetworkConstant.GET_MATCHES, bodyParams: parameter);
     // debugger();
     // print(response);
-    getMatchesApiResponse = GetMatchesApiResponse.fromJson(response);
+    if (response != null) {
+      getMatchesApiResponse = GetMatchesApiResponse.fromJson(response);
+    } else {
+      getMatchesApiResponse = null;
+    }
+    isFetchingData = false;
     update();
   }
 
@@ -476,5 +483,28 @@ class HomeController extends GetxController {
         update();
       }
     }
+  }
+
+  void recharge(
+      {required context,
+      required UpiResponse upiResponse,
+      required String amount,
+      required String mode}) async {
+        showLoaderDialog(context);
+    Map parameter = {
+      NetworkConstant.amount: amount,
+      NetworkConstant.mode: mode,
+      NetworkConstant.transaction_details:
+          "Transaction id= ${upiResponse.transactionId}, Transaction Ref Id=${upiResponse.transactionRefId}",
+      NetworkConstant.status: 'TXN_SUCCESS'
+    };
+    var response = await apiProvider.postAfterAuth(
+        routeUrl: NetworkConstant.recharge, bodyParams: parameter);
+      Navigator.pop(context);
+    print(response);
+    debugger();
+   // getWalletApiResponse = GetWalletApiResponse.fromJson(response);
+
+    update();
   }
 }

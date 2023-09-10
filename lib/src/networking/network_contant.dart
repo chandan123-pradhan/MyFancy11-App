@@ -24,7 +24,10 @@ class NetworkConstant{
   static const String Match_by_id='/fancy/app/match_by_id';
   static const String My_Contest='/fancy/app/my_contest';
   static const String My_Team='/fancy/app/my_paid_team';
-
+  static const String player='/fancy/app/player';
+  static const String recharge='/fancy/app/recharge';
+  static const String getQuizCategory='/fancy/app/quiz_category';
+  static const String getQuizByCategory='/fancy/app/quiz_list';
 
 
   //parames.
@@ -50,5 +53,10 @@ class NetworkConstant{
   static const String CaptainId='captain_id';
   static const String Vice_Captain_Id='vice_captain_id';
   static const String PlayerId='PlayerId';
+  static const String playerid='playerid';
+  static const String amount='amount';
+  static const String mode='mode';
+  static const String transaction_details='transection_details';
+  static const String status='status';
 
 }
