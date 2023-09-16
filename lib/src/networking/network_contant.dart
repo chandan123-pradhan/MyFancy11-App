@@ -27,9 +27,15 @@ class NetworkConstant{
   static const String player='/fancy/app/player';
   static const String recharge='/fancy/app/recharge';
   static const String getQuizCategory='/fancy/app/quiz_category';
+  static const String getQuizById='/fancy/app/quiz_match_by_id';
   static const String getQuizByCategory='/fancy/app/quiz_list';
-
-
+  static const String quizDetails='/fancy/app/quiz_by_id';
+  static const String buyQuiz='/fancy/app/quiz_join';
+  static const String getMyPlayers='/fancy/app/my_player';
+  static const String quizByMatchId='/fancy/app/quiz_match_by_id';
+  static const String getMyQuizList='/fancy/app/quiz_my_list';
+ static const String sellQuiz='/fancy/app/quiz_sale';
+ static const String refferData='/fancy/app/my_refer';
   //parames.
 
   static const String PHONE_PARAMS='phone';

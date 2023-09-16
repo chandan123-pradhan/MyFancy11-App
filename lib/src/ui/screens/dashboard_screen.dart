@@ -4,6 +4,7 @@ import 'package:cricket_fantacy/src/ui/screens/auth_screens/auth_landing_page.da
 import 'package:cricket_fantacy/src/ui/screens/home_tab/home_screen.dart';
 import 'package:cricket_fantacy/src/ui/screens/my_matches_tab/my_matches_tab.dart';
 import 'package:cricket_fantacy/src/ui/screens/notification_screens/Notification_screen.dart';
+import 'package:cricket_fantacy/src/ui/screens/portfolio_screens/portfolio_screens.dart';
 import 'package:cricket_fantacy/src/ui/screens/wallets/wallet_screen.dart';
 import 'package:cricket_fantacy/src/ui/screens/winners_tab/winners_tab.dart';
 import 'package:cricket_fantacy/src/ui/widgets/bottom_bar_item.dart';
@@ -37,7 +38,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     setState(() {});
   }
 
-  List<Widget> _screens = [HomeScreen(), MyMatchesTab(), WinnersTab()];
+  List<Widget> _screens = [HomeScreen(), MyMatchesTab(), WinnersTab(),PortfolioScreen()];
 
   @override
   void initState() {
@@ -169,6 +170,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       imageName: ImageUitls.UnSelected_winners,
                       title: 'Winners',
                       isSelected: _currentIndex == 2 ? true : false,
+                    )),
+
+
+                     InkWell(
+                    onTap: () {
+                      _changeIndex(3);
+                    },
+                    child: BottomBarItem(
+                      imageName: ImageUitls.Profile_icon,
+                      title: 'Portfolio',
+                      isSelected: _currentIndex == 3 ? true : false,
                     ))
               ],
             ),

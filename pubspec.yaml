@@ -55,6 +55,7 @@ dependencies:
   firebase_core:
   firebase_auth:
   google_sign_in:
+  lottie:
 
 dev_dependencies:
   flutter_test:
@@ -87,6 +88,7 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    - assets/lotties/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

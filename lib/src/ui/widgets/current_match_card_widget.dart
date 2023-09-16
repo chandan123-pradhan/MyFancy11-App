@@ -53,7 +53,7 @@ class _CurrentMatchCardWidgetState extends State<CurrentMatchCardWidget> {
             return LiveContestScreen(
 //  matchId: '1',
 
-              matchId: widget.myMatchModel.matchId.toString(),
+              myMatchModel: widget.myMatchModel,
             );
           }));
           }

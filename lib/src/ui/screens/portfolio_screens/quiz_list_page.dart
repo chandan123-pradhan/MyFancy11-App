@@ -7,15 +7,13 @@ import 'package:cricket_fantacy/src/utils/color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class PredictionHomePage extends StatefulWidget {
-  final Matches matches;
-  PredictionHomePage({required this.matches});
-
+class QuizListPage extends StatefulWidget {
+  
   @override
-  State<PredictionHomePage> createState() => _PredictionHomePageState();
+  State<QuizListPage> createState() => _QuizListPageState();
 }
 
-class _PredictionHomePageState extends State<PredictionHomePage> {
+class _QuizListPageState extends State<QuizListPage> {
  
   
   int selectedCategory = 0;
@@ -23,7 +21,7 @@ class _PredictionHomePageState extends State<PredictionHomePage> {
   var controller = Get.put(QuizController());
   @override
   void initState() {
-    controller.getQuizListByMatchId(widget.matches.matchId.toString());
+    controller.getQuizCategory();
     // TODO: implement initState
     super.initState();
   }
@@ -32,167 +30,90 @@ class _PredictionHomePageState extends State<PredictionHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.grey[50],
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(0),
-          child: AppBar(
-            elevation: 0,
-            backgroundColor: ColorConstant.primaryBlackColor,
-            leading: InkWell(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Icon(
-                Icons.navigate_before,
-                size: 30,
-                color: ColorConstant.primaryWhiteColor,
-              ),
-            ),
-            centerTitle: false,
-            title: Text(
-              "Prediction",
-              style: TextStyle(
-                  color: ColorConstant.primaryWhiteColor,
-                  fontSize: 17,
-                  fontWeight: FontWeight.w600),
-            ),
-
-            // actions: [
-            //   Padding(
-            //     padding: const EdgeInsets.only(right: 20.0),
-            //     child: Image.asset(
-            //       ImageUitls.Wallet_icon,
-            //       height: 20,
-            //       width: 20,
-            //     ),
-            //   )
-            // ],
-          ),
-        ),
+       
         body: Column(
           children: [
-            Container(
-              color: ColorConstant.primaryBlackColor,
-              //height: 60,
-              width: MediaQuery.of(context).size.width / 1,
-              child: Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Column(
-                              children: [
-                                Container(
-                                  height: 25,
-                                  width: 45,
-                                  decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      image: DecorationImage(
-                                          image: NetworkImage(
-                                              widget.matches.team1.teamImage),
-                                          fit: BoxFit.fill)),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  widget.matches.team1.teamShortName,
-                                  style: TextStyle(
-                                      color: ColorConstant.primaryWhiteColor,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              ],
-                            ),
-                            // Column(
-                            //   crossAxisAlignment: CrossAxisAlignment.start,
-                            //   children: [
-                            //     Text(
-                            //       "187/3*",
-                            //       style: TextStyle(
-                            //           color: ColorConstant.primaryWhiteColor,
-                            //           fontSize: 20,
-                            //           fontWeight: FontWeight.w500),
-                            //     ),
-                            //     SizedBox(height: 8),
-                            //     Text(
-                            //       "16.4 OVRß",
-                            //       style: TextStyle(
-                            //           color: ColorConstant.primaryWhiteColor,
-                            //           fontSize: 10,
-                            //           fontWeight: FontWeight.w400),
-                            //     ),
-                            //   ],
-                            // )
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Column(
-                              children: [
-                                Container(
-                                  height: 25,
-                                  width: 45,
-                                  decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      image: DecorationImage(
-                                          image: NetworkImage(
-                                              widget.matches.team2.teamImage),
-                                          fit: BoxFit.fill)),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  widget.matches.team2.teamShortName,
-                                  style: TextStyle(
-                                      color: ColorConstant.primaryWhiteColor,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          "SCORECARD",
-                          style: TextStyle(
-                              color: Colors.yellow[200],
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500),
-                        ),
-                        SizedBox(height: 5),
-                        Text(
-                          "1 min left",
-                          style: TextStyle(
-                              color: ColorConstant.primaryWhiteColor,
-                              fontSize: 10,
-                              fontWeight: FontWeight.w400),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            GetBuilder<QuizController>(
+ GetBuilder<QuizController>(
                 init: QuizController(),
                 builder: (controller) {
-                  return isFetchingData == true
+                  return controller.getQuizCategoryApiResponse == null
                       ? shimerEffect(length: 5, context: context)
                       : Expanded(
                           child: Column(
                             children: [
-                            
+                              Container(
+                                height: 55,
+                                width: MediaQuery.of(context).size.width / 1,
+                                color: Colors.black12,
+                                child: ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: controller
+                                        .getQuizCategoryApiResponse!
+                                        .data
+                                        .length,
+                                    itemBuilder: (context, index) {
+                                      return Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 5,
+                                            right: 5,
+                                            top: 10,
+                                            bottom: 10),
+                                        child: InkWell(
+                                          onTap: () {
+                                            selectedCategory = index;
+                                            setState(() {});
+                                            controller.getQuizList(controller
+                                                .getQuizCategoryApiResponse!
+                                                .data[index]
+                                                .categoryId
+                                                .toString());
+                                          },
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Colors.grey
+                                                      .withOpacity(0.3),
+                                                  spreadRadius: 2,
+                                                  blurRadius: 2,
+                                                  offset: Offset(0,
+                                                      1), // changes position of shadow
+                                                ),
+                                              ],
+                                              color: selectedCategory == index
+                                                  ? ColorConstant
+                                                      .primaryBlackColor
+                                                  : ColorConstant
+                                                      .primaryWhiteColor,
+                                            ),
+                                            alignment: Alignment.center,
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      10, 5, 10, 5),
+                                              child: Text(
+                                                controller
+                                                    .getQuizCategoryApiResponse!
+                                                    .data[index]
+                                                    .title,
+                                                style: TextStyle(
+                                                    color: selectedCategory ==
+                                                            index
+                                                        ? ColorConstant
+                                                            .primaryWhiteColor
+                                                        : Colors.black,
+                                                    fontSize: 12,
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    }),
+                              ),
                               Expanded(
                                 child: GetBuilder<QuizController>(
                                     init: QuizController(),
@@ -207,7 +128,7 @@ class _PredictionHomePageState extends State<PredictionHomePage> {
                                                   0
                                               ? Center(
                                                   child:
-                                                      Text("There is No Any Quiz"),
+                                                      Text("No Data Available"),
                                                 )
                                               : ListView.builder(
                                                   itemCount: controller

@@ -345,18 +345,23 @@ class HomeController extends GetxController {
 
     try {
       for (int i = 0; i < choosedPlayerList.length; i++) {
-        selectedPlayer.add({NetworkConstant.PlayerId: choosedPlayerList[i].id});
+        selectedPlayer.add({NetworkConstant.PlayerId: choosedPlayerList[i].playerid});
       }
 
       Map parameter = {
         NetworkConstant.MatchId: maches.matchId.toString(),
         NetworkConstant.MyTeamId: '0',
         NetworkConstant.List: json.encode(selectedPlayer),
-        NetworkConstant.CaptainId: choosedCaptainId!.id,
-        NetworkConstant.Vice_Captain_Id: choosedViceCaptainId!.id,
+        NetworkConstant.CaptainId: choosedCaptainId!.playerid,
+        NetworkConstant.Vice_Captain_Id: choosedViceCaptainId!.playerid,
       };
+       
+      //  print(parameter);
+      //  debugger();
       var response = await apiProvider.postAfterAuth(
           routeUrl: NetworkConstant.Save_Team_URL, bodyParams: parameter);
+          debugger();
+
       print(response);
       Navigator.pop(context);
       if (response['status'] == 200) {
@@ -503,6 +508,7 @@ class HomeController extends GetxController {
       Navigator.pop(context);
     print(response);
     debugger();
+    getWalletApi(context);
    // getWalletApiResponse = GetWalletApiResponse.fromJson(response);
 
     update();

@@ -3,6 +3,7 @@ import 'package:cricket_fantacy/src/controllers/splash_controller.dart';
 import 'package:cricket_fantacy/src/global_variable.dart';
 import 'package:cricket_fantacy/src/ui/screens/auth_screens/auth_landing_page.dart';
 import 'package:cricket_fantacy/src/ui/screens/profile_screen.dart';
+import 'package:cricket_fantacy/src/ui/screens/refer_and_earn_screen.dart';
 import 'package:cricket_fantacy/src/ui/screens/transaction_history_screen.dart';
 import 'package:cricket_fantacy/src/ui/screens/upcomming_feature_screen.dart';
 import 'package:cricket_fantacy/src/utils/color_scheme.dart';
@@ -260,6 +261,48 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                           ),
                           Text(
                             "Profile",
+                            style: TextStyle(
+                                color: ColorConstant.primaryBlackColor,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w500),
+                          )
+                        ],
+                      ),
+                      Icon(
+                        Icons.navigate_next_sharp,
+                        size: 25,
+                        color: ColorConstant.primaryBlackColor,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+                 Divider(),
+           
+
+  InkWell(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return RefferAndEarnScreen();
+                  }));  
+                },
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(15, 0, 15, 5),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: const [
+                          Icon(
+                            Icons.shape_line_rounded,
+                            size: 17,
+                            color: ColorConstant.primaryBlackColor,
+                          ),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          Text(
+                             "  Refer & Earn",
                             style: TextStyle(
                                 color: ColorConstant.primaryBlackColor,
                                 fontSize: 15,

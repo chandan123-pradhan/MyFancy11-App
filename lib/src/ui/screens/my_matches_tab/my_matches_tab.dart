@@ -138,10 +138,12 @@ class _MyMatchesTabState extends State<MyMatchesTab>
                               padding: const EdgeInsets.fromLTRB(10, 15, 10, 0),
                               child: InkWell(
                                 onTap: () {
-                                  // Navigator.push(context,
-                                  //     MaterialPageRoute(builder: (context) {
-                                  //   return const LiveContestScreen();
-                                  // }));
+                                    Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) {
+                                    return  LiveContestScreen(
+myMatchModel: controller.getUpcommingMyMatchResponse!.data[index],
+                                    );
+                                  }));
                                 },
                                 child: MyUpcommingMatchCardWidget(
                                     matches: controller
@@ -180,7 +182,7 @@ class _MyMatchesTabState extends State<MyMatchesTab>
                                    Navigator.push(context,
                                       MaterialPageRoute(builder: (context) {
                                     return  LiveContestScreen(
-matchId: controller.getLiveMyMatchReponse!.data[index].matchId.toString(),
+myMatchModel: controller.getLiveMyMatchReponse!.data[index],
                                     );
                                   }));
                                 },
@@ -252,26 +254,26 @@ matchId: controller.getLiveMyMatchReponse!.data[index].matchId.toString(),
                                                   ),
                                                   Row(
                                                     children: [
-                                                      Icon(
-                                                        Icons
-                                                            .movie_filter_outlined,
-                                                        size: 18,
-                                                        color: ColorConstant
-                                                            .deviderColor,
-                                                      ),
-                                                      SizedBox(
-                                                        width: 10,
-                                                      ),
-                                                      Text(
-                                                        "Lineup Out",
-                                                        style: TextStyle(
-                                                            color: ColorConstant
-                                                                .greenColor,
-                                                            fontSize: 13,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w500),
-                                                      ),
+                                                      // Icon(
+                                                      //   Icons
+                                                      //       .movie_filter_outlined,
+                                                      //   size: 18,
+                                                      //   color: ColorConstant
+                                                      //       .deviderColor,
+                                                      // ),
+                                                      // SizedBox(
+                                                      //   width: 10,
+                                                      // ),
+                                                      // Text(
+                                                      //   "Lineup Out",
+                                                      //   style: TextStyle(
+                                                      //       color: ColorConstant
+                                                      //           .greenColor,
+                                                      //       fontSize: 13,
+                                                      //       fontWeight:
+                                                      //           FontWeight
+                                                      //               .w500),
+                                                      // ),
                                                     ],
                                                   )
                                                 ],
@@ -326,7 +328,7 @@ matchId: controller.getLiveMyMatchReponse!.data[index].matchId.toString(),
                                                         alignment:
                                                             Alignment.center,
                                                         child: Text(
-                                                          "02h 00m",
+                                                          "Completed",
                                                           style: TextStyle(
                                                               color: ColorConstant
                                                                   .primaryColor,

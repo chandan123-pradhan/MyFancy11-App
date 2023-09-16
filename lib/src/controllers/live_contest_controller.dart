@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:cricket_fantacy/src/models/LiveMatchUpdateApiResponse.dart';
+import 'package:cricket_fantacy/src/models/get_my_player_api_response.dart';
 import 'package:cricket_fantacy/src/models/get_my_team_api_response.dart';
 import 'package:cricket_fantacy/src/models/get_my_team_api_response.dart';
 import 'package:cricket_fantacy/src/models/my_contest_api_response.dart';
@@ -12,9 +13,15 @@ import 'package:get/get.dart';
 
 class LiveContestController extends GetxController {
   var liveMatchUpdateApiResponse;
-Timer? _timer;
+  Timer? _timer;
   MyContestApiResponse? myContestApiResponse;
   GetMyTeamApiResponse? getMyTeamApiResponse;
+  GetMyPlayerApiResponse? getMyPlayerApiResponse;
+
+  List<MyPlayerData> batsmanData = [];
+  List<MyPlayerData> bowlerList = [];
+  List<MyPlayerData> wicketKeeperList = [];
+  List<MyPlayerData> allrounderList = [];
 
   Timer? timer;
 
@@ -34,7 +41,7 @@ Timer? _timer;
   }
 
   void upatedScroe(matchId) async {
-  _timer=  Timer.periodic(Duration(seconds: 5), (timer) async {
+    _timer = Timer.periodic(Duration(seconds: 5), (timer) async {
       Map parameter = {NetworkConstant.MatchId: matchId};
       var response = await apiProvider.postAfterAuth(
           routeUrl: NetworkConstant.Match_by_id, bodyParams: parameter);
@@ -56,7 +63,6 @@ Timer? _timer;
     getMyTeam(matchId);
   }
 
-
   void getMyTeam(matchId) async {
     Map parameter = {NetworkConstant.MatchId: matchId};
     var response = await apiProvider.postAfterAuth(
@@ -67,12 +73,44 @@ Timer? _timer;
     update();
   }
 
+  void closeTimer(context) {
+    _timer!.cancel();
+    liveMatchUpdateApiResponse = null;
+    Navigator.pop(context);
+    update();
+  }
 
-void closeTimer(context){
-  _timer!.cancel();
-  liveMatchUpdateApiResponse=null;
-  Navigator.pop(context);
-  update();
-}
+  void getTeamPlayers(teamId) async {
+    Map parameter = {'team_id': teamId};
+    var response = await apiProvider.postAfterAuth(
+        routeUrl: NetworkConstant.getMyPlayers, bodyParams: parameter);
 
+    getMyPlayerApiResponse = GetMyPlayerApiResponse.fromJson(response);
+    calculatePlayerByDesignation();
+    //update();
+  }
+
+  void calculatePlayerByDesignation() {
+    batsmanData.clear();
+    bowlerList.clear();
+    allrounderList.clear();
+    wicketKeeperList.clear();
+    for (int i = 0; i < getMyPlayerApiResponse!.data.length; i++) {
+      switch (getMyPlayerApiResponse!.data[i].designationid) {
+        case '1':
+          batsmanData.add(getMyPlayerApiResponse!.data[i]);
+          break;
+        case '2':
+          bowlerList.add(getMyPlayerApiResponse!.data[i]);
+          break;
+        case '3':
+          allrounderList.add(getMyPlayerApiResponse!.data[i]);
+          break;
+        case '4':
+          wicketKeeperList.add(getMyPlayerApiResponse!.data[i]);
+      }
+
+    }
+    update();
+  }
 }

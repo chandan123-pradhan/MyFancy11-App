@@ -118,17 +118,15 @@ class _UpcommingMatchCardWidgetState extends State<UpcommingMatchCardWidget> {
                               ),
                               Row(
                                 children: [
-                                  Icon(
-                                    Icons.live_tv_sharp,
-                                    size: 18,
-                                    color: Colors.black38,
-                                  ),
+                                  // Icon(
+                                  //   Icons.live_tv_sharp,
+                                  //   size: 18,
+                                  //   color: Colors.black38,
+                                  // ),
                                   SizedBox(
                                     width: 5,
                                   ),
-                                  widget.matches.elevenOut == 0
-                                      ? Container()
-                                      : Row(
+                                  Row(
                                           children: [
                                             Icon(
                                               Icons.person_outlined,
@@ -142,7 +140,10 @@ class _UpcommingMatchCardWidgetState extends State<UpcommingMatchCardWidget> {
                                               'Linup out',
                                               style: TextStyle(
                                                   color:
-                                                      ColorConstant.greenColor,
+                                                  widget.matches.elevenOut==0?
+                                                  
+                                                   Colors.black38:
+                                                       ColorConstant.greenColor,
                                                   fontSize: 13,
                                                   fontWeight: FontWeight.w500),
                                             ),
