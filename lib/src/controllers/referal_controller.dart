@@ -8,17 +8,21 @@ import 'package:get/get.dart';
 
 class RefferalController extends GetxController {
   MyRefferalApiResponse? refferalApiResponse;
-
+  bool isError=false;
   ApiProvider apiProvider = ApiProvider();
 
   void getMyReffer() async {
     try {
       Map parameter = {};
-      // debugger();
       var response = await apiProvider.postAfterAuth(
           routeUrl: NetworkConstant.refferData, bodyParams: parameter);
-
-      refferalApiResponse = MyRefferalApiResponse.fromJson(response);
+debugger();
+      if(response['status']==404){
+        isError=true;
+      }else{
+        refferalApiResponse = MyRefferalApiResponse.fromJson(response);
+        isError=false;
+      }
 
       update();
     } catch (e) {

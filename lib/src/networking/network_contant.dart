@@ -36,6 +36,8 @@ class NetworkConstant{
   static const String getMyQuizList='/fancy/app/quiz_my_list';
  static const String sellQuiz='/fancy/app/quiz_sale';
  static const String refferData='/fancy/app/my_refer';
+ static const String checkEkyc='/fancy/app/check_kyc';
+ static const String requestEkyc='/fancy/app/kyc_request';
   //parames.
 
   static const String PHONE_PARAMS='phone';

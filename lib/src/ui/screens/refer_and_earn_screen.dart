@@ -57,9 +57,15 @@ class _RefferAndEarnScreenState extends State<RefferAndEarnScreen> {
       body: GetBuilder<RefferalController>(
           init: RefferalController(),
           builder: (controller) {
-            return controller.refferalApiResponse == null
+            return controller.refferalApiResponse == null && controller.isError==false
                 ? shimerEffect(length: 4, context: context)
-                : Padding(
+                : 
+                
+                controller.isError==true?Center(
+                  child: Text("Reffer & Earn not found"),
+                ):
+                
+                Padding(
                     padding: const EdgeInsets.all(0.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -149,7 +155,10 @@ class _RefferAndEarnScreenState extends State<RefferAndEarnScreen> {
                               children: [
                                 InkWell(
                                   onTap: () {
-                                    // switchToOtherTypeUser(false);
+                                   if(controller.refferalApiResponse!
+                                                    .setting.upgradeRequest!=0){
+                                     showUserInputModeBottomSheet('Normal Program');
+                                   }
                                   },
                                   child: Container(
                                     height: 40,
@@ -158,17 +167,16 @@ class _RefferAndEarnScreenState extends State<RefferAndEarnScreen> {
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(20),
                                         color: controller.refferalApiResponse!
-                                                    .refer.accountType ==
-                                                '1'
+                                                    .setting.upgradeRequest ==
+                                                0
                                             ? ColorConstant.greenColor
                                             : Colors.transparent),
                                     alignment: Alignment.center,
                                     child: Text(
                                       "Normal",
                                       style: TextStyle(
-                                          color: controller.refferalApiResponse!
-                                                      .refer.accountType ==
-                                                  '0'
+                                          color: controller.refferalApiResponse!.setting.upgradeRequest ==
+                                                  1
                                               ? ColorConstant.primaryBlackColor
                                               : ColorConstant.primaryWhiteColor,
                                           fontSize: 16,
@@ -178,7 +186,10 @@ class _RefferAndEarnScreenState extends State<RefferAndEarnScreen> {
                                 ),
                                 InkWell(
                                   onTap: () {
-                                    showUserInputModeBottomSheet();
+                                    if(controller.refferalApiResponse!
+                                                    .setting.upgradeRequest!=1){
+                                    showUserInputModeBottomSheet('Affiliate Program');
+                                                    }
                                   },
                                   child: Container(
                                     height: 40,
@@ -187,8 +198,8 @@ class _RefferAndEarnScreenState extends State<RefferAndEarnScreen> {
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(20),
                                         color: controller.refferalApiResponse!
-                                                    .refer.accountType !=
-                                                '1'
+                                                    .setting.upgradeRequest ==
+                                                1
                                             ? ColorConstant.greenColor
                                             : Colors.transparent),
                                     alignment: Alignment.center,
@@ -196,8 +207,8 @@ class _RefferAndEarnScreenState extends State<RefferAndEarnScreen> {
                                       "Affiliate Program",
                                       style: TextStyle(
                                           color: controller.refferalApiResponse!
-                                                      .refer.accountType !=
-                                                  '1'
+                                                      .setting.upgradeRequest ==
+                                                  1
                                               ? ColorConstant.primaryWhiteColor
                                               : ColorConstant.primaryBlackColor,
                                           fontSize: 16,
@@ -310,19 +321,20 @@ class _RefferAndEarnScreenState extends State<RefferAndEarnScreen> {
     );
   }
 
-  void showUserInputModeBottomSheet() {
+  void showUserInputModeBottomSheet(String title) {
     showModalBottomSheet(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(13)),
         isScrollControlled: true,
         context: context,
         builder: (context) {
-          return AffiliateProgramForm();
+          return AffiliateProgramForm(title: title,);
         });
   }
 }
 
 class AffiliateProgramForm extends StatefulWidget {
-  const AffiliateProgramForm({super.key});
+  String title;
+   AffiliateProgramForm({required this.title});
 
   @override
   State<AffiliateProgramForm> createState() => _AffiliateProgramFormState();
@@ -403,7 +415,7 @@ class _AffiliateProgramFormState extends State<AffiliateProgramForm> {
                     height: 10,
                   ),
                   Text(
-                    "Why You want to go in Affiliate Program?",
+                    "Why You want to go in ${widget.title}?",
                     style: TextStyle(
                         color: ColorConstant.primaryBlackColor,
                         fontSize: 16,
@@ -413,7 +425,7 @@ class _AffiliateProgramFormState extends State<AffiliateProgramForm> {
                     height: 10,
                   ),
                   Text(
-                    "Please Enter The Reason why you want to go Affiliate Program?",
+                    "Please Enter The Reason why you want to go ${widget.title}?",
                     style: TextStyle(
                         color: Colors.black54,
                         fontSize: 12,

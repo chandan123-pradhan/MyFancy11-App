@@ -98,6 +98,37 @@ class ApiProvider {
     }
   }
 
+
+  Future<dynamic> postAfterAuthCustom(
+      {required String routeUrl, required Map bodyParams}) async {
+    try {
+      isUnAuthenicated=false;
+      SharedPref sharedPref = SharedPref();
+      String? appToken = await sharedPref.getAuthToken();
+  //   debugger();
+    print(appToken);
+      var response = await http.post(
+          Uri.parse(NetworkConstant.BASE_URL + routeUrl),
+          headers: {'Token': appToken!},
+          body: bodyParams);
+    // debugger();
+    //  print(response);
+      if (response.statusCode == 200|| response.statusCode==404 || response.statusCode==300) {
+        return json.decode(response.body);
+      } else if (response.statusCode == 400) {
+        isUnAuthenicated=true;
+        return json.decode(response.body);
+      }if (response.statusCode == 500) {
+        return json.decode(response.body);
+      }  
+      else {
+        print("error");
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   Future<dynamic> postBeforeAuth(
       {required String routeUrl, required Map bodyParams}) async {
     try {

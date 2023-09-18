@@ -26,7 +26,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
 
 @override
   void initState() {
-    controller.updateEmail(widget.email!);
+    controller.updateEmail(widget.email);
      controller.getAwatarList(context);
     // TODO: implement initState
     super.initState();

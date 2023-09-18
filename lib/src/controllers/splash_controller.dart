@@ -9,6 +9,8 @@ import 'package:cricket_fantacy/src/global_variable.dart';
 import 'package:cricket_fantacy/src/models/GetContestListApiResponse.dart';
 import 'package:cricket_fantacy/src/models/GetMatchesApiResponse.dart';
 import 'package:cricket_fantacy/src/models/PlayersModel.dart';
+import 'package:cricket_fantacy/src/models/check_ekyc_api_response.dart';
+import 'package:cricket_fantacy/src/models/eKycRequestBody.dart';
 import 'package:cricket_fantacy/src/models/get_leaderboard_api_response.dart';
 import 'package:cricket_fantacy/src/models/get_my_mateches_api_response.dart';
 import 'package:cricket_fantacy/src/models/get_squad_api_response.dart';
@@ -63,8 +65,10 @@ class HomeController extends GetxController {
   List<int> dummybowlerlist = [];
   SquadPlayer? choosedCaptainId;
   SquadPlayer? choosedViceCaptainId;
+  CheckEkyApiResponse? checkEkyApiResponse;
 
   String mySavedTeamId = '';
+  int eKycStatus = 0;
 
   void getSplashData(context, flag) async {
     String? userToken = await sharedPref.getUserToken();
@@ -345,7 +349,8 @@ class HomeController extends GetxController {
 
     try {
       for (int i = 0; i < choosedPlayerList.length; i++) {
-        selectedPlayer.add({NetworkConstant.PlayerId: choosedPlayerList[i].playerid});
+        selectedPlayer
+            .add({NetworkConstant.PlayerId: choosedPlayerList[i].playerid});
       }
 
       Map parameter = {
@@ -355,12 +360,12 @@ class HomeController extends GetxController {
         NetworkConstant.CaptainId: choosedCaptainId!.playerid,
         NetworkConstant.Vice_Captain_Id: choosedViceCaptainId!.playerid,
       };
-       
+
       //  print(parameter);
       //  debugger();
       var response = await apiProvider.postAfterAuth(
           routeUrl: NetworkConstant.Save_Team_URL, bodyParams: parameter);
-          debugger();
+      debugger();
 
       print(response);
       Navigator.pop(context);
@@ -392,6 +397,7 @@ class HomeController extends GetxController {
     getWalletApiResponse = GetWalletApiResponse.fromJson(response);
 
     update();
+    checkKyc(context);
   }
 
   void joinContest({
@@ -495,7 +501,7 @@ class HomeController extends GetxController {
       required UpiResponse upiResponse,
       required String amount,
       required String mode}) async {
-        showLoaderDialog(context);
+    showLoaderDialog(context);
     Map parameter = {
       NetworkConstant.amount: amount,
       NetworkConstant.mode: mode,
@@ -505,11 +511,58 @@ class HomeController extends GetxController {
     };
     var response = await apiProvider.postAfterAuth(
         routeUrl: NetworkConstant.recharge, bodyParams: parameter);
-      Navigator.pop(context);
+    Navigator.pop(context);
     print(response);
     debugger();
     getWalletApi(context);
-   // getWalletApiResponse = GetWalletApiResponse.fromJson(response);
+    // getWalletApiResponse = GetWalletApiResponse.fromJson(response);
+
+    update();
+  }
+
+  void checkKyc(context) async {
+    eKycStatus = 0;
+    update();
+    Map parameter = {};
+    var response = await apiProvider.postAfterAuthCustom(
+        routeUrl: NetworkConstant.checkEkyc, bodyParams: parameter);
+    print(response);
+    if (response['status'] == 300) {
+      eKycStatus = 1;
+    } else if (response['status'] == 100) {
+      checkEkyApiResponse = CheckEkyApiResponse.fromJson(response);
+      eKycStatus = 2;
+    } else if (response['status'] == 100) {
+      eKycStatus = 3;
+    }
+
+    update();
+  }
+
+  void requestEky(
+      {required context, required EkycRequestBody ekycRequestBody}) async {
+    showLoaderDialog(context);
+    update();
+    Map parameter = {
+      'img': ekycRequestBody.adhaarPicUlr,
+      'bank_name': ekycRequestBody.bankName,
+      'ifsc_code': ekycRequestBody.ifscCode,
+      'account_number': ekycRequestBody.accountNumber,
+      'bank_holder': ekycRequestBody.bankHolderName,
+      'upi': ekycRequestBody.upi,
+      'default': '0'
+    };
+    var response = await apiProvider.postAfterAuth(
+        routeUrl: NetworkConstant.requestEkyc, bodyParams: parameter);
+    print(response);
+    Navigator.pop(context);
+    if (response['status'] == 200) {
+      
+     Messages().showErrorMsg(
+          context: context, message: 'EKyc Data is Successfully submited');
+          Navigator.pop(context);
+      checkKyc(context);
+    } else {}
 
     update();
   }

@@ -360,7 +360,9 @@ else{
 }
 
 void updateEmail(value){
-emailController.text=value;
+if(value!=null){
+  emailController.text=value;
+}
 update();
 }
 
