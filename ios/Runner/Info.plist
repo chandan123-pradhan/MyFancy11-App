@@ -74,5 +74,8 @@
     <string>Access to your camera is required to capture photos required for loan processing or your profile.</string>
     <key>NSLocationUsageDescription</key>
     <string>To show your location on the map.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We need access to your photo library to upload images.</string>
+
 </dict>
 </plist>
