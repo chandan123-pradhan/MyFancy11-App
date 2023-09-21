@@ -357,6 +357,7 @@ class _PredictionHomePageState extends State<PredictionHomePage> {
                                                                             controller.getQuizDetails(controller.getQuizByCategoryApiResponse!.data[index].quizId.toString(),
                                                                                'yes');
                                                                             showModalBottomSheet(
+
                                                                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(13)),
                                                                                 isScrollControlled: true,
                                                                                 context: context,
@@ -365,6 +366,8 @@ class _PredictionHomePageState extends State<PredictionHomePage> {
                                                                                     quizData: controller.getQuizByCategoryApiResponse!.data[index],
                                                                                      flag:    'yes'
                                                                                   );
+                                                                                }).then((value) {
+                                                                                  controller.quizDetailsTimer!.cancel();
                                                                                 });
                                                                           },
                                                                           child:

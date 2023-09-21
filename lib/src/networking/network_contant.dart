@@ -38,6 +38,9 @@ class NetworkConstant{
  static const String refferData='/fancy/app/my_refer';
  static const String checkEkyc='/fancy/app/check_kyc';
  static const String requestEkyc='/fancy/app/kyc_request';
+ static const String myPaidTeam='/fancy/app/my_paid_team';
+ static const String cloneTeam='/fancy/app/clone';
+ static const String upgrade_account='/fancy/app/refer_upgrade';
   //parames.
 
   static const String PHONE_PARAMS='phone';

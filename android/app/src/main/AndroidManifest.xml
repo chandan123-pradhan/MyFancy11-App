@@ -2,7 +2,9 @@
     package="com.example.cricket_fantacy">
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+<uses-permission android:name="android.permission.access_fine_location" />
+    <uses-permission android:name="android.permission.write_external_storage" />
+    <uses-permission android:name="android.permission.read_external_storage" />
    <application
         android:label="MYFANCY 11"
         android:name="${applicationName}"

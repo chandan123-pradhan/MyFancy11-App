@@ -28,7 +28,9 @@ import 'package:intl/intl.dart';
 class PickPlayerScreen extends StatefulWidget {
   final Matches matches;
   final Contest contest;
-  PickPlayerScreen({required this.matches, required this.contest});
+  final String myTeamId;
+
+  PickPlayerScreen({required this.matches, required this.contest,required this.myTeamId});
 
   @override
   State<PickPlayerScreen> createState() => _PickPlayerScreenState();
@@ -41,7 +43,14 @@ class _PickPlayerScreenState extends State<PickPlayerScreen>
   var controller = Get.put(HomeController());
 
   void callGetWinningInfo() {
+    if(widget.myTeamId==''){
     controller.getSquad(context, widget.contest.matchId);
+    }else{
+      controller.getMyTeamSquad(context, widget.contest.matchId, widget.myTeamId,
+      
+      widget.matches.teamid1,widget.matches.teamid2
+      );
+    }
   }
 
   @override
@@ -228,8 +237,8 @@ class _PickPlayerScreenState extends State<PickPlayerScreen>
                                                 CrossAxisAlignment.center,
                                             children: [
                                              Container(
-                                              height: 40,
-                                              width: 40,
+                                              height: 35,
+                                              width: 35,
                                               decoration: BoxDecoration(
                                                 shape: BoxShape.circle,
                                                 image: DecorationImage(
@@ -312,8 +321,8 @@ class _PickPlayerScreenState extends State<PickPlayerScreen>
                                               ),
                                               Image.network(
                                                 widget.matches.team2.teamImage,
-                                                height: 40,
-                                                width: 40,
+                                                height: 35,
+                                                width: 35,
                                               ),
                                             ],
                                           ),
@@ -592,7 +601,7 @@ class _PickPlayerScreenState extends State<PickPlayerScreen>
                       return InkWell(
                         onTap: () {
                           print(controller.choosedPlayerList.length);
-                          if (controller.choosedPlayerList.length == 11) {
+                          if (controller.choosedPlayerList.length >= 11) {
                             if(controller.choosedAllRounderList.isEmpty){
                               Messages().showErrorMsg(context: context, message: 'Minimum 1 Player Should be choose From Allrounders');
                             }
@@ -615,6 +624,8 @@ class _PickPlayerScreenState extends State<PickPlayerScreen>
                               return PickCaptionViceCaptionScreen(
                                 contest: widget.contest,
                                 matches: widget.matches,
+                                isForEdit: widget.myTeamId!=''?true:false,
+                                myTeamId: widget.myTeamId,
                               );
                             }));
                             }
@@ -626,7 +637,7 @@ class _PickPlayerScreenState extends State<PickPlayerScreen>
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(40),
-                            color: controller.choosedPlayerList.length == 11
+                            color: controller.choosedPlayerList.length >= 11
                                 ? ColorConstant.primaryBlackColor
                                 : Colors.black12,
                             boxShadow: [

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cricket_fantacy/src/controllers/splash_controller.dart';
 import 'package:cricket_fantacy/src/models/GetContestListApiResponse.dart';
 import 'package:cricket_fantacy/src/models/GetMatchesApiResponse.dart';
@@ -13,7 +15,12 @@ import 'package:intl/intl.dart';
 class PickCaptionViceCaptionScreen extends StatefulWidget {
   final Matches matches;
   final Contest contest;
-  PickCaptionViceCaptionScreen({required this.matches, required this.contest});
+  final bool isForEdit;
+  final String myTeamId;
+  PickCaptionViceCaptionScreen(
+      {required this.matches, required this.contest, required this.isForEdit,
+      required this.myTeamId
+      });
 
   @override
   State<PickCaptionViceCaptionScreen> createState() =>
@@ -26,15 +33,32 @@ class _PickCaptionViceCaptionScreenState
   int vcIndex = -1;
   var controller = Get.put(HomeController());
 
-@override
+  void calculateCaptianAndVc() {
+    for (int i = 0; i < controller.choosedPlayerList.length; i++) {
+      if (controller.choosedPlayerList[i].isCaptain == '1') {
+        controller.choosedCaption(controller.choosedPlayerList[i]);
+        captainIndex = i;
+// setState(() {});
+      }
+      if (controller.choosedPlayerList[i].isViceCaptain == '1') {
+        controller.choosedViceCaptin(controller.choosedPlayerList[i]);
+        vcIndex = i;
+       // setState(() {});
+      }
+    }
+  }
+
+  @override
   void initState() {
     _calculateTimeRemaining();
+    if (widget.isForEdit) {
+      calculateCaptianAndVc();
+    }
     // TODO: implement initState
     super.initState();
   }
 
-
-   var targetDate;
+  var targetDate;
 
   _calculateTimeRemaining() {
     DateTime now = DateTime.now();
@@ -48,6 +72,7 @@ class _PickCaptionViceCaptionScreenState
     //return '';
     setState(() {});
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,7 +101,7 @@ class _PickCaptionViceCaptionScreenState
                   fontSize: 17,
                   fontWeight: FontWeight.w600),
             ),
-          CountdownTimer(
+            CountdownTimer(
               endWidget: Text("Live"),
               endTime: targetDate.millisecondsSinceEpoch,
               textStyle: TextStyle(fontSize: 14),
@@ -87,10 +112,10 @@ class _PickCaptionViceCaptionScreenState
           Padding(
             padding: const EdgeInsets.only(right: 20.0),
             child: InkWell(
-              onTap: (){
-                                    Navigator.push(context, MaterialPageRoute(builder: (context){
-                                    return WalletScreen();
-                                  }));
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return WalletScreen();
+                }));
               },
               child: Image.asset(
                 ImageUitls.Wallet_icon,
@@ -295,7 +320,7 @@ class _PickCaptionViceCaptionScreenState
                                                       index]);
 
                                               setState(() {
-                                                captainIndex=index;
+                                                captainIndex = index;
                                               });
                                             },
                                             child: Container(
@@ -342,7 +367,7 @@ class _PickCaptionViceCaptionScreenState
                                                   controller.choosedPlayerList[
                                                       index]);
                                               setState(() {
-                                                vcIndex=index;
+                                                vcIndex = index;
                                               });
                                             },
                                             child: Container(
@@ -470,14 +495,26 @@ class _PickCaptionViceCaptionScreenState
                       right: 20,
                       child: InkWell(
                         onTap: () {
-                          if (vcIndex != -1 && captainIndex != -1) {
+                          if (widget.isForEdit == false &&
+                              vcIndex != -1 &&
+                              captainIndex != -1) {
                             controller.saveTeam(
-                              maches:
-                              widget.matches,
-                              contest: widget.contest,
-                           context:   
-                              context);
-                            
+                                maches: widget.matches,
+                                contest: widget.contest,
+                                context: context,
+                                myTeamID: widget.myTeamId
+                                );
+                          } else {
+                            print(widget.myTeamId);
+                            //debugger();
+                            controller.saveTeam(
+                                maches: widget.matches,
+                                contest: widget.contest,
+                                context: context,
+                                myTeamID: widget.myTeamId,
+
+                                
+                                );
                           }
                         },
                         child: Container(
@@ -486,9 +523,13 @@ class _PickCaptionViceCaptionScreenState
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(40),
-                            color: vcIndex != -1 && captainIndex != -1
+                            color: widget.isForEdit == false &&
+                                    vcIndex != -1 &&
+                                    captainIndex != -1
                                 ? ColorConstant.primaryBlackColor
-                                : Colors.black12,
+                                : widget.isForEdit
+                                    ? ColorConstant.primaryBlackColor
+                                    : Colors.black12,
                             boxShadow: [
                               BoxShadow(
                                 color: Colors.grey.withOpacity(0.5),

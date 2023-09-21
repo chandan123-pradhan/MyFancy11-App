@@ -445,6 +445,7 @@ class _EkycFormScreenState extends State<EkycFormScreen> {
     Navigator.pop(context);
     PermissionStatus status = await Permission.camera.status;
     if (status == PermissionStatus.granted) {
+       _uploadImage(ImageSource.camera);
       // Permission is already granted, proceed with using the camera
       // You can navigate to the camera screen or do whatever you need
     } else {
@@ -464,8 +465,12 @@ class _EkycFormScreenState extends State<EkycFormScreen> {
 
   Future<void> requestGalleryPermission() async {
     Navigator.pop(context);
+    if(Platform.isAndroid){
+              _uploadImage(ImageSource.gallery);
+    }else{
     try {
       PermissionStatus status = await Permission.photos.status;
+      // debugger();
       if (status == PermissionStatus.granted) {
         _uploadImage(ImageSource.gallery);
         // Permission is already granted, proceed with using the camera
@@ -473,18 +478,21 @@ class _EkycFormScreenState extends State<EkycFormScreen> {
       } else {
         // Permission is not granted, request it
         PermissionStatus newStatus = await Permission.photos.request();
+        debugger();
         if (newStatus == PermissionStatus.granted) {
           _uploadImage(ImageSource.gallery);
 
           // Permission granted, proceed with using the camera
         } else {
           // Permission denied, show a message or handle accordingly
-          print('Camera permission denied');
-          await Permission.camera.request();
+          print('galaery permission denied');
+          
+          //await Permission.camera.request();
         }
       }
     } catch (e) {
       print("error =$e");
+    }
     }
   }
 }

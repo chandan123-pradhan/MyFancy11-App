@@ -48,7 +48,7 @@ class _CurrentMatchCardWidgetState extends State<CurrentMatchCardWidget> {
       padding: const EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 0),
       child: InkWell(
         onTap: () {
-          if(remainingDuration!.inHours <=0){
+       
             Navigator.push(context, MaterialPageRoute(builder: (context) {
             return LiveContestScreen(
 //  matchId: '1',
@@ -56,7 +56,7 @@ class _CurrentMatchCardWidgetState extends State<CurrentMatchCardWidget> {
               myMatchModel: widget.myMatchModel,
             );
           }));
-          }
+          
         },
         child: Container(
           width: MediaQuery.of(context).size.width / 1.5,

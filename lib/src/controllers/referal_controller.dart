@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 
 class RefferalController extends GetxController {
   MyRefferalApiResponse? refferalApiResponse;
-  bool isError=false;
+  bool isError = false;
   ApiProvider apiProvider = ApiProvider();
 
   void getMyReffer() async {
@@ -16,12 +16,33 @@ class RefferalController extends GetxController {
       Map parameter = {};
       var response = await apiProvider.postAfterAuth(
           routeUrl: NetworkConstant.refferData, bodyParams: parameter);
-debugger();
-      if(response['status']==404){
-        isError=true;
-      }else{
+      debugger();
+      if (response['status'] == 404) {
+        isError = true;
+      } else {
         refferalApiResponse = MyRefferalApiResponse.fromJson(response);
-        isError=false;
+        isError = false;
+      }
+
+      update();
+    } catch (e) {
+      print(e);
+    }
+  }
+  void requestForUpgrade({required String reason, required type}) async {
+    try {
+      Map parameter = {
+        'msg':reason,
+        'type':type
+      };
+      var response = await apiProvider.postAfterAuth(
+          routeUrl: NetworkConstant.upgrade_account, bodyParams: parameter);
+      debugger();
+      if (response['status'] == 404) {
+       
+      } else {
+        
+      
       }
 
       update();

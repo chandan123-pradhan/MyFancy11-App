@@ -4,6 +4,7 @@ import 'package:cricket_fantacy/src/controllers/splash_controller.dart';
 import 'package:cricket_fantacy/src/models/GetContestListApiResponse.dart';
 import 'package:cricket_fantacy/src/models/GetMatchesApiResponse.dart';
 import 'package:cricket_fantacy/src/ui/screens/home_tab/Leader_baord_tab.dart';
+import 'package:cricket_fantacy/src/ui/screens/home_tab/choose_team_screen.dart';
 import 'package:cricket_fantacy/src/ui/screens/home_tab/pick_player_screen.dart';
 import 'package:cricket_fantacy/src/ui/screens/home_tab/winning_tab_screen.dart';
 import 'package:cricket_fantacy/src/ui/screens/wallets/wallet_screen.dart';
@@ -23,37 +24,37 @@ import 'package:intl/intl.dart';
 class JoinContest extends StatefulWidget {
   final Matches matches;
   final Contest contest;
-  JoinContest({required this.matches,required this.contest});
+  JoinContest({required this.matches, required this.contest});
 
   @override
   State<JoinContest> createState() => _UpcommingMatchesDetailsState();
 }
 
-class _UpcommingMatchesDetailsState extends State<JoinContest>  with SingleTickerProviderStateMixin{
+class _UpcommingMatchesDetailsState extends State<JoinContest>
+    with SingleTickerProviderStateMixin {
   int _currentIndex = 0;
- var controller=Get.put(HomeController());
- late TabController _secondTabController;
-void callGetWinningInfo(){
-  controller.getWinningInfo(context, widget.contest.contestId);
-  controller.getLeaderBoardResponse(context, widget.contest.contestId);
-}
-@override
+  var controller = Get.put(HomeController());
+  late TabController _secondTabController;
+  void callGetWinningInfo() {
+    //controller.getWinningInfo(context, widget.contest.contestId);
+    // controller.getLeaderBoardResponse(context, widget.contest.contestId);
+  }
+  @override
   void initState() {
-     _secondTabController = TabController(length: 2, vsync: this);
+    _secondTabController = TabController(length: 2, vsync: this);
     _calculateTimeRemaining();
     callGetWinningInfo();
     // TODO: implement initState
     super.initState();
   }
 
- @override
+  @override
   void dispose() {
     super.dispose();
     _secondTabController.dispose();
   }
 
- 
- var targetDate;
+  var targetDate;
 
   _calculateTimeRemaining() {
     DateTime now = DateTime.now();
@@ -68,10 +69,7 @@ void callGetWinningInfo(){
     setState(() {});
   }
 
-
-
   @override
-
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorConstant.bg_color,
@@ -98,7 +96,7 @@ void callGetWinningInfo(){
                   fontSize: 17,
                   fontWeight: FontWeight.w600),
             ),
-           CountdownTimer(
+            CountdownTimer(
               endWidget: Text("Live"),
               endTime: targetDate.millisecondsSinceEpoch,
               textStyle: TextStyle(fontSize: 14),
@@ -109,10 +107,10 @@ void callGetWinningInfo(){
           Padding(
             padding: const EdgeInsets.only(right: 20.0),
             child: InkWell(
-              onTap: (){
-                                    Navigator.push(context, MaterialPageRoute(builder: (context){
-                                    return WalletScreen();
-                                  }));
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return WalletScreen();
+                }));
               },
               child: Image.asset(
                 ImageUitls.Wallet_icon,
@@ -176,14 +174,14 @@ void callGetWinningInfo(){
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                "${int.parse(widget.contest.totalTeam)-int.parse(widget.contest.joinTeam)} spots left",
+                  "${int.parse(widget.contest.totalTeam) - int.parse(widget.contest.joinTeam)} spots left",
                   style: TextStyle(
                       color: ColorConstant.primaryColor,
                       fontSize: 13,
                       fontWeight: FontWeight.w500),
                 ),
                 Text(
-                "${int.parse(widget.contest.totalTeam)} spots",
+                  "${int.parse(widget.contest.totalTeam)} spots",
                   style: TextStyle(
                       color: ColorConstant.disableColor,
                       fontSize: 13,
@@ -196,13 +194,36 @@ void callGetWinningInfo(){
           Padding(
             padding: const EdgeInsets.all(15.0),
             child: InkWell(
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context){
-                  return  PickPlayerScreen(
-                    matches: widget.matches,
-                    contest: widget.contest,
-                  );
-                }));
+              onTap: () async {
+                controller
+                    .getMyPaidTeam(matchId: widget.matches.matchId.toString(),context: context)
+                    .then((value) {
+                  if (value != null) {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return ChooseTeamPage(
+                        matches: widget.matches,
+                        contest: widget.contest,
+                      );
+                    }));
+                  } else {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return PickPlayerScreen(
+                        matches: widget.matches,
+                        contest: widget.contest,
+                        myTeamId: '',
+                      );
+                    }));
+                  }
+                });
+
+                // Navigator.push(context, MaterialPageRoute(builder: (context){
+                //   return  PickPlayerScreen(
+                //     matches: widget.matches,
+                //     contest: widget.contest,
+                //   );
+                // }));
               },
               child: Container(
                 height: 35,
@@ -213,7 +234,7 @@ void callGetWinningInfo(){
                 alignment: Alignment.center,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children:  [
+                  children: [
                     Text(
                       "JOIN  ",
                       style: TextStyle(
@@ -246,7 +267,7 @@ void callGetWinningInfo(){
             height: 20,
           ),
           Container(
-           // height: 100,
+            // height: 100,
             child: Column(
               children: [
                 Container(
@@ -254,79 +275,72 @@ void callGetWinningInfo(){
                   decoration: BoxDecoration(color: Colors.grey[100]),
                   child: Padding(
                     padding: const EdgeInsets.only(left: 15, right: 15),
-                    child:  Row(
-
-
-
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(children: [
-                    Row(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-
-                        Image.asset('assets/icons/first_winner.png',
-                       height: 25,
-                       width: 25,
-                       ), 
-                        Text(
-                          "₹${widget.contest.firstPrize}  ",
-                          style: TextStyle(
+                        Row(children: [
+                          Row(
+                            children: [
+                              Image.asset(
+                                'assets/icons/first_winner.png',
+                                height: 25,
+                                width: 25,
+                              ),
+                              Text(
+                                "₹${widget.contest.firstPrize}  ",
+                                style: TextStyle(
+                                    color: Colors.black45,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500),
+                              )
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.wine_bar_rounded,
+                                size: 20,
+                                color: Colors.black45,
+                              ),
+                              Text(
+                                "${widget.contest.winPercent}% ",
+                                style: TextStyle(
+                                    color: Colors.black45,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500),
+                              )
+                            ],
+                          ),
+                        ]),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.check_circle_outline,
+                              size: 15,
                               color: Colors.black45,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w500),
-                        )
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.wine_bar_rounded,
-                          size: 20,
-                          color: Colors.black45,
+                            ),
+                            Text(
+                              " Guaranted",
+                              style: TextStyle(
+                                  color: Colors.black45,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w500),
+                            )
+                          ],
                         ),
-                        Text(
-                          "${widget.contest.winPercent}% ",
-                          style: TextStyle(
-                              color: Colors.black45,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w500),
-                        )
                       ],
                     ),
-                   
-                  ]),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.check_circle_outline,
-                        size: 15,
-                        color: Colors.black45,
-                      ),
-                      Text(
-                        " Guaranted",
-                        style: TextStyle(
-                            color: Colors.black45,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500),
-                      )
-                    ],
-                  ),
-                ],
-              ),
-          
-          
-                
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(0,0,0,0),
+                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                   child: Container(
                     //height: 40,
                     width: MediaQuery.of(context).size.width / 1,
                     decoration: BoxDecoration(color: Colors.red[100]),
                     alignment: Alignment.centerLeft,
-                    child:  Padding(
-                      padding: EdgeInsets.only(left: 15.0,bottom: 5,top: 5),
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 15.0, bottom: 5, top: 5),
                       child: Text(
                         widget.contest.contestDescription,
                         // "Earn ₹${widget.contest.firstPrize}   for every ₹${widget.contest.entry}   Spent on a contest entry",
@@ -408,37 +422,35 @@ void callGetWinningInfo(){
           //   )),
           // ),
 
-         
-         TabBar(
-                isScrollable: true,
-                controller: _secondTabController,
-                indicatorColor: ColorConstant.primaryColor,
-                indicatorWeight: 3,
-                labelColor: ColorConstant.primaryBlackColor,
-                tabs: const [
-                  Tab(
-                    text: 'Winnings',
-                  ),
-                  Tab(text: "Leaderboard"),
-                 // Tab(text: 'Completed'),
-                ],
+          TabBar(
+            isScrollable: true,
+            controller: _secondTabController,
+            indicatorColor: ColorConstant.primaryColor,
+            indicatorWeight: 3,
+            labelColor: ColorConstant.primaryBlackColor,
+            tabs: const [
+              Tab(
+                text: 'Winnings',
               ),
+              Tab(text: "Leaderboard"),
+              // Tab(text: 'Completed'),
+            ],
+          ),
 
-
-         Expanded(
+          Expanded(
             child: TabBarView(
-              
               controller: _secondTabController,
               children: [
-               WinningTab() ,// Content for Tab 1
-               LeaderboardTab()
-
+                WinningTab(
+                  contestId: widget.contest.contestId,
+                ), // Content for Tab 1
+                LeaderboardTab(
+                  contestId: widget.contest.contestId,
+                )
               ],
             ),
           )
 
-     
-     
           // CarouselSlider(
           //     items: [
           //       _currentIndex == 0
@@ -465,8 +477,6 @@ void callGetWinningInfo(){
           //       },
           //       scrollDirection: Axis.horizontal,
           //     )),
-      
-      
         ],
       ),
     );

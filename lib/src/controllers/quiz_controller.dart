@@ -19,6 +19,8 @@ class QuizController extends GetxController {
   GetQuizByCategoryApiResponse? getQuizByCategoryApiResponse;
   QuizDetailsApiResponse? quizDetailsApiResponse;
   ApiProvider apiProvider = ApiProvider();
+  List<MyQuizData>liveQuiz=[];
+  List<MyQuizData>completedQuiz=[];
   double priceValue = 7.6;
   double defaultInvenstmentAmount = 0.0;
   double defaultReturnAmount = 0.0;
@@ -28,6 +30,7 @@ class QuizController extends GetxController {
   int currentStockQty = 0;
   GetWalletApiResponse? getWalletApiResponse;
   GetQuizMyListApiResponse? getQuizMyListApiResponse;
+  Timer? _timer;
 
   Future<void> getWalletApi() async {
     Map parameter = {};
@@ -66,9 +69,25 @@ class QuizController extends GetxController {
           routeUrl: NetworkConstant.getQuizByCategory, bodyParams: paramter);
       getQuizByCategoryApiResponse =
           GetQuizByCategoryApiResponse.fromJson(response);
+         
       update();
+      _startCallingQuizList(catId);
     } catch (e) {
       print(e);
+    }
+  }
+
+  _startCallingQuizList(catId) {
+    print("_startCalling method called");
+    if (_timer != null && _timer!.isActive) {
+      _timer!.cancel();
+      _timer = Timer.periodic(Duration(seconds: 5), (timer) {
+        getQuizList(catId);
+      });
+    } else {
+      _timer = Timer.periodic(Duration(seconds: 5), (timer) {
+        getQuizList(catId);
+      });
     }
   }
 
@@ -82,6 +101,7 @@ class QuizController extends GetxController {
           routeUrl: NetworkConstant.quizByMatchId, bodyParams: paramter);
       getQuizByCategoryApiResponse =
           GetQuizByCategoryApiResponse.fromJson(response);
+       
       update();
     } catch (e) {
       print(e);
@@ -89,6 +109,7 @@ class QuizController extends GetxController {
   }
 
   void getQuizDetails(String quizId, flag) async {
+    
     try {
       Map paramter = {'quiz_id': quizId};
       update();
@@ -98,12 +119,19 @@ class QuizController extends GetxController {
       // debugger();
       update();
       calculateDefaultInvestmentAndReturns(flag);
+      _startQuizDetailsCallingApi(quizId,flag);
     } catch (e) {
       print(e);
     }
   }
 
- 
+  Timer? quizDetailsTimer;
+  _startQuizDetailsCallingApi(String quizId, flag) {
+    print("quiz details api calling");
+    quizDetailsTimer = Timer.periodic((Duration(seconds: 5)), (timer) {
+      getQuizDetails(quizId, flag);
+    });
+  }
 
   void increaseOrDecrease(flag) {
     if (flag == 0) {
@@ -123,7 +151,7 @@ class QuizController extends GetxController {
   void calculateDefaultInvestmentAndReturns(flag) async {
     await getWalletApi();
     if (flag == 'yes') {
-      overAllStockQty = (getWalletApiResponse!.data.depositWallet /
+      overAllStockQty = (double.parse(getWalletApiResponse!.data.depositWallet) /
           double.parse(quizDetailsApiResponse!.data.option1));
       defaultInvenstmentAmount =
           overAllStockQty * double.parse(quizDetailsApiResponse!.data.option1);
@@ -133,7 +161,7 @@ class QuizController extends GetxController {
 
       // debugger();
     } else if (flag == 'no') {
-      overAllStockQty = (getWalletApiResponse!.data.depositWallet /
+      overAllStockQty = (double.parse(getWalletApiResponse!.data.depositWallet) /
           double.parse(quizDetailsApiResponse!.data.option2));
       defaultInvenstmentAmount =
           overAllStockQty * double.parse(quizDetailsApiResponse!.data.option2);
@@ -169,13 +197,14 @@ class QuizController extends GetxController {
     showLoaderDialog(context);
     Map parameter = {
       'quiz_id': quizId,
-      'entry_free': defaultInvenstmentAmount.toString(),
+      'entry_fee': flag == 'yes'
+          ? quizDetailsApiResponse!.data.option1
+          : quizDetailsApiResponse!.data.option2,
       'qty': currentStockQty.toString(),
       'type': 'buy',
-      'option': flag == 'yes'
-          ? quizDetailsApiResponse!.data.option1
-          : quizDetailsApiResponse!.data.option2
+      'option': flag == 'yes' ? '1' : '2'
     };
+    debugger();
     var response = await apiProvider.postAfterAuth(
         routeUrl: NetworkConstant.buyQuiz, bodyParams: parameter);
     print(response);
@@ -196,17 +225,30 @@ class QuizController extends GetxController {
     try {
       Map paramter = {'status': '1'};
       //isFetchingData = true;
-
+completedQuiz.clear();
+liveQuiz.cast();
       var response = await apiProvider.postAfterAuth(
           routeUrl: NetworkConstant.getMyQuizList, bodyParams: paramter);
       //  debugger();
       getQuizMyListApiResponse = GetQuizMyListApiResponse.fromJson(response);
+      for(int i=0;i<getQuizMyListApiResponse!.data.length;i++){
+        if(getQuizMyListApiResponse!.data[i].status=='1'){
+          liveQuiz.add(getQuizMyListApiResponse!.data[i]);
+
+        }
+        if(getQuizMyListApiResponse!.data[i].status=='2')
+        {
+completedQuiz.add(getQuizMyListApiResponse!.data[i]);
+        }
+      }
       // debugger();
       update();
     } catch (e) {
       print(e);
     }
   }
+
+
 
   Future<void> sellQuiz(MyQuizData myQuizData, context) async {
     showLoaderDialog(context);

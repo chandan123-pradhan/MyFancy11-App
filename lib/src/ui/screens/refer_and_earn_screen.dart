@@ -1,9 +1,12 @@
 import 'package:cricket_fantacy/src/controllers/referal_controller.dart';
 import 'package:cricket_fantacy/src/ui/widgets/shimmer_effect_widget.dart';
 import 'package:cricket_fantacy/src/utils/color_scheme.dart';
+import 'package:cricket_fantacy/src/utils/messages.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:share_plus/share_plus.dart';
 
 class RefferAndEarnScreen extends StatefulWidget {
   const RefferAndEarnScreen({super.key});
@@ -57,226 +60,273 @@ class _RefferAndEarnScreenState extends State<RefferAndEarnScreen> {
       body: GetBuilder<RefferalController>(
           init: RefferalController(),
           builder: (controller) {
-            return controller.refferalApiResponse == null && controller.isError==false
+            return controller.refferalApiResponse == null &&
+                    controller.isError == false
                 ? shimerEffect(length: 4, context: context)
-                : 
-                
-                controller.isError==true?Center(
-                  child: Text("Reffer & Earn not found"),
-                ):
-                
-                Padding(
-                    padding: const EdgeInsets.all(0.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(20.0,20,20,0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
+                : controller.isError == true
+                    ? Center(
+                        child: Text("Reffer & Earn not found"),
+                      )
+                    : Padding(
+                        padding: const EdgeInsets.all(0.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.fromLTRB(20.0, 20, 20, 0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
-                                    "Your Refferal ID:",
-                                    style: TextStyle(
-                                        color: ColorConstant.primaryBlackColor,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w400),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        "Your Refferal ID:",
+                                        style: TextStyle(
+                                            color:
+                                                ColorConstant.primaryBlackColor,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w400),
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        controller.refferalApiResponse!.refer
+                                            .refercode,
+                                        style: TextStyle(
+                                            color:
+                                                ColorConstant.primaryBlackColor,
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w400),
+                                      ),
+                                    ],
                                   ),
-                                  SizedBox(
-                                    width: 10,
+                                  InkWell(
+                                    onTap: () async {
+                                      await Clipboard.setData(ClipboardData(
+                                          text:
+                                              '${controller.refferalApiResponse!.refer.refercode}'));
+                                      Messages().showMsg(
+                                          context: context,
+                                          message:
+                                              "${controller.refferalApiResponse!.refer.refercode} has been copied.");
+                                    },
+                                    child: Icon(
+                                      Icons.copy,
+                                      size: 20,
+                                      color: ColorConstant.greenColor,
+                                    ),
                                   ),
-                                  Text(
-                                    controller
-                                        .refferalApiResponse!.refer.refercode,
-                                    style: TextStyle(
-                                        color: ColorConstant.primaryBlackColor,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w400),
+                                  InkWell(
+                                    onTap: () {
+                                      Share.share(
+                                          '${controller.refferalApiResponse!.refer.refercode}');
+                                    },
+                                    child: Icon(
+                                      Icons.share,
+                                      size: 20,
+                                      color: ColorConstant.greenColor,
+                                    ),
                                   ),
                                 ],
                               ),
-                              Icon(
-                                Icons.copy,
-                                size: 20,
-                                color: ColorConstant.greenColor,
-                              ),
-                              Icon(
-                                Icons.share,
-                                size: 20,
-                                color: ColorConstant.greenColor,
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                         Padding(
-                         padding: const EdgeInsets.fromLTRB(20,0,20,0),
-                           child: Text(
-                                    "By Each Refferal You'll be earn Reffer amount and ${controller.refferalApiResponse!.setting.referPercent}% of Each contest match fee. ",
-                                    style: TextStyle(
-                                        color: Colors.black45,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w400),
-                                  ),
-                         ),
-                                 SizedBox(
-                          height: 10,
-                        ),
-                        Divider(),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(20,0,20,0),
-                          child: Text(
-                            "User Type",
-                            style: TextStyle(
-                                color: ColorConstant.primaryBlackColor,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Padding(
-                           padding: const EdgeInsets.fromLTRB(20,0,20,0),
-                          child: Container(
-                            height: 40,
-                            width: MediaQuery.of(context).size.width / 1,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                color: Colors.black12),
-                            child: Row(
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                   if(controller.refferalApiResponse!
-                                                    .setting.upgradeRequest!=0){
-                                     showUserInputModeBottomSheet('Normal Program');
-                                   }
-                                  },
-                                  child: Container(
-                                    height: 40,
-                                    width:
-                                        MediaQuery.of(context).size.width / 2.23,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(20),
-                                        color: controller.refferalApiResponse!
-                                                    .setting.upgradeRequest ==
-                                                0
-                                            ? ColorConstant.greenColor
-                                            : Colors.transparent),
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      "Normal",
-                                      style: TextStyle(
-                                          color: controller.refferalApiResponse!.setting.upgradeRequest ==
-                                                  1
-                                              ? ColorConstant.primaryBlackColor
-                                              : ColorConstant.primaryWhiteColor,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                  ),
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    if(controller.refferalApiResponse!
-                                                    .setting.upgradeRequest!=1){
-                                    showUserInputModeBottomSheet('Affiliate Program');
-                                                    }
-                                  },
-                                  child: Container(
-                                    height: 40,
-                                    width:
-                                        MediaQuery.of(context).size.width / 2.23,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(20),
-                                        color: controller.refferalApiResponse!
-                                                    .setting.upgradeRequest ==
-                                                1
-                                            ? ColorConstant.greenColor
-                                            : Colors.transparent),
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      "Affiliate Program",
-                                      style: TextStyle(
-                                          color: controller.refferalApiResponse!
-                                                      .setting.upgradeRequest ==
-                                                  1
-                                              ? ColorConstant.primaryWhiteColor
-                                              : ColorConstant.primaryBlackColor,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                  ),
-                                )
-                              ],
                             ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Divider(),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(20,0,20,0),
-                          child: Text(
-                            "Your All Refferals",
-                            style: TextStyle(
-                                color: ColorConstant.primaryBlackColor,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Divider(),
-                          SizedBox(
-                          height: 0,
-                        ),
-                        Padding(
- padding: const EdgeInsets.fromLTRB(20,0,20,0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "Name",
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                              child: Text(
+                                "By Each Refferal You'll be earn Reffer amount and ${controller.refferalApiResponse!.setting.referPercent}% of Each contest match fee. ",
+                                style: TextStyle(
+                                    color: Colors.black45,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Divider(),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                              child: Text(
+                                "User Type",
                                 style: TextStyle(
                                     color: ColorConstant.primaryBlackColor,
                                     fontSize: 16,
-                                    fontWeight: FontWeight.w500),
+                                    fontWeight: FontWeight.w600),
                               ),
-                              Text(
-                                "Refferal Amount",
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                              child: Container(
+                                height: 40,
+                                width: MediaQuery.of(context).size.width / 1,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: Colors.black12),
+                                child: Row(
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+                                        if (controller.refferalApiResponse!
+                                                .setting.upgradeRequest !=
+                                            0) {
+                                          showUserInputModeBottomSheet(
+                                              'Normal Program',
+                                              'downgrade'
+                                              );
+                                        }
+                                      },
+                                      child: Container(
+                                        height: 40,
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                2.23,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            color: controller
+                                                        .refferalApiResponse!
+                                                        .setting
+                                                        .upgradeRequest ==
+                                                    0
+                                                ? ColorConstant.greenColor
+                                                : Colors.transparent),
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          "Normal",
+                                          style: TextStyle(
+                                              color: controller
+                                                          .refferalApiResponse!
+                                                          .setting
+                                                          .upgradeRequest ==
+                                                      1
+                                                  ? ColorConstant
+                                                      .primaryBlackColor
+                                                  : ColorConstant
+                                                      .primaryWhiteColor,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                      ),
+                                    ),
+                                    InkWell(
+                                      onTap: () {
+                                        if (controller.refferalApiResponse!
+                                                .setting.upgradeRequest !=
+                                            1) {
+                                          showUserInputModeBottomSheet(
+                                              'Affiliate Program',
+                                              'upgrade'
+                                              );
+                                        }
+                                      },
+                                      child: Container(
+                                        height: 40,
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                2.23,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            color: controller
+                                                        .refferalApiResponse!
+                                                        .setting
+                                                        .upgradeRequest ==
+                                                    1
+                                                ? ColorConstant.greenColor
+                                                : Colors.transparent),
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          "Affiliate Program",
+                                          style: TextStyle(
+                                              color: controller
+                                                          .refferalApiResponse!
+                                                          .setting
+                                                          .upgradeRequest ==
+                                                      1
+                                                  ? ColorConstant
+                                                      .primaryWhiteColor
+                                                  : ColorConstant
+                                                      .primaryBlackColor,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Divider(),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                              child: Text(
+                                "Your All Refferals",
                                 style: TextStyle(
                                     color: ColorConstant.primaryBlackColor,
                                     fontSize: 16,
-                                    fontWeight: FontWeight.w500),
+                                    fontWeight: FontWeight.w400),
                               ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Expanded(
-                            child: Container(
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Divider(),
+                            SizedBox(
+                              height: 0,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Name",
+                                    style: TextStyle(
+                                        color: ColorConstant.primaryBlackColor,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                  Text(
+                                    "Refferal Amount",
+                                    style: TextStyle(
+                                        color: ColorConstant.primaryBlackColor,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Expanded(
+                                child: Container(
                               color: Colors.grey[100],
                               child: Padding(
-                                 padding: const EdgeInsets.fromLTRB(20,10,20,0),
+                                padding:
+                                    const EdgeInsets.fromLTRB(20, 10, 20, 0),
                                 child: ListView.builder(
-                                  
-                                    itemCount: controller.refferalApiResponse!.data.length,
+                                    itemCount: controller
+                                        .refferalApiResponse!.data.length,
                                     itemBuilder: (context, index) {
                                       return Column(
                                         children: [
@@ -285,12 +335,14 @@ class _RefferAndEarnScreenState extends State<RefferAndEarnScreen> {
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(
-                                               controller.refferalApiResponse!.data[index].name,
+                                                controller.refferalApiResponse!
+                                                    .data[index].name,
                                                 style: TextStyle(
                                                     color: ColorConstant
                                                         .primaryBlackColor,
                                                     fontSize: 16,
-                                                    fontWeight: FontWeight.w500),
+                                                    fontWeight:
+                                                        FontWeight.w500),
                                               ),
                                               Text(
                                                 "₹${controller.refferalApiResponse!.data[index].amount}",
@@ -298,7 +350,8 @@ class _RefferAndEarnScreenState extends State<RefferAndEarnScreen> {
                                                     color: ColorConstant
                                                         .primaryBlackColor,
                                                     fontSize: 16,
-                                                    fontWeight: FontWeight.w400),
+                                                    fontWeight:
+                                                        FontWeight.w400),
                                               ),
                                             ],
                                           ),
@@ -314,27 +367,31 @@ class _RefferAndEarnScreenState extends State<RefferAndEarnScreen> {
                                     }),
                               ),
                             ))
-                      ],
-                    ),
-                  );
+                          ],
+                        ),
+                      );
           }),
     );
   }
 
-  void showUserInputModeBottomSheet(String title) {
+  void showUserInputModeBottomSheet(String title,task) {
     showModalBottomSheet(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(13)),
         isScrollControlled: true,
         context: context,
         builder: (context) {
-          return AffiliateProgramForm(title: title,);
+          return AffiliateProgramForm(
+            title: title,
+            task: task,
+          );
         });
   }
 }
 
 class AffiliateProgramForm extends StatefulWidget {
   String title;
-   AffiliateProgramForm({required this.title});
+  String task;
+  AffiliateProgramForm({required this.title,required this.task});
 
   @override
   State<AffiliateProgramForm> createState() => _AffiliateProgramFormState();
@@ -343,7 +400,7 @@ class AffiliateProgramForm extends StatefulWidget {
 class _AffiliateProgramFormState extends State<AffiliateProgramForm> {
   bool isFormSubmited = false;
   TextEditingController _textFieldController = new TextEditingController();
-
+var controller=Get.put(RefferalController());
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -449,6 +506,7 @@ class _AffiliateProgramFormState extends State<AffiliateProgramForm> {
                   InkWell(
                     onTap: () {
                       if (_textFieldController.text.isNotEmpty) {
+                        controller.requestForUpgrade(reason: _textFieldController.text, type: widget.task);
                         setState(() {
                           isFormSubmited = true;
                         });

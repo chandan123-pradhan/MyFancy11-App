@@ -1,6 +1,7 @@
 import 'package:cricket_fantacy/src/controllers/quiz_controller.dart';
 import 'package:cricket_fantacy/src/global_variable.dart';
 import 'package:cricket_fantacy/src/models/GetMatchesApiResponse.dart';
+import 'package:cricket_fantacy/src/ui/screens/portfolio_screens/completed_trade_screen.dart';
 import 'package:cricket_fantacy/src/ui/screens/prediction_screens/quiz_details_bottom_sheet.dart';
 import 'package:cricket_fantacy/src/ui/widgets/shimmer_effect_widget.dart';
 import 'package:cricket_fantacy/src/utils/color_scheme.dart';
@@ -57,7 +58,7 @@ class _PortfolioTabState extends State<PortfolioTab> {
                                                 fontWeight: FontWeight.w500),
                                           ),
                                           Text(
-                                            "${controller.getQuizMyListApiResponse!.trad.amount}",
+                                            "₹${controller.getQuizMyListApiResponse!.trad.amount}",
                                             style: TextStyle(
                                                 color: ColorConstant
                                                     .primaryBlackColor,
@@ -86,7 +87,7 @@ class _PortfolioTabState extends State<PortfolioTab> {
                                                 fontWeight: FontWeight.w500),
                                           ),
                                           Text(
-                                            "${controller.getQuizMyListApiResponse!.trad.win}",
+                                            "₹${controller.getQuizMyListApiResponse!.trad.win}",
                                             style: TextStyle(
                                                 color: ColorConstant
                                                     .primaryBlackColor,
@@ -135,6 +136,34 @@ class _PortfolioTabState extends State<PortfolioTab> {
                                 ),
                               ),
                               Divider(),
+                              SizedBox(
+                                height: 0,
+                              ),
+                              InkWell(
+                                onTap: (){
+                                  Navigator.push(context, (MaterialPageRoute(builder: (context){
+                                    return CompletedTradePage();
+                                  })));
+                                },
+                                child: Container(
+                                  height: 40,
+                                  width: MediaQuery.of(context).size.width / 1.1,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      color: ColorConstant.primaryBlackColor),
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    "Completed",
+                                    style: TextStyle(
+                                        color: ColorConstant.primaryWhiteColor,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
                               Expanded(
                                 child: GetBuilder<QuizController>(
                                     init: QuizController(),
@@ -144,8 +173,8 @@ class _PortfolioTabState extends State<PortfolioTab> {
                                               null
                                           ? shimerEffect(
                                               length: 5, context: context)
-                                          : controller.getQuizByCategoryApiResponse!
-                                                      .data.length ==
+                                          : controller.liveQuiz
+                                                      .length ==
                                                   0
                                               ? Center(
                                                   child:
@@ -153,24 +182,31 @@ class _PortfolioTabState extends State<PortfolioTab> {
                                                 )
                                               : ListView.builder(
                                                   itemCount: controller
-                                                      .getQuizMyListApiResponse!
-                                                      .data
+                                                      .liveQuiz
+                                                      
                                                       .length,
                                                   itemBuilder:
                                                       (context, index) {
-                                                    return Padding(
-                                                      padding:
-                                                           EdgeInsets.only(
-                                                              bottom:
-                                                              index==controller.getQuizMyListApiResponse!.data.length-1?30:
-                                                               5.0,
-                                                              top: 10),
+                                                    return 
+                                                    
+                                                  
+                                                    Padding(
+                                                      padding: EdgeInsets.only(
+                                                          bottom: index ==
+                                                                  controller
+                                                                          .liveQuiz
+                                                                          
+                                                                          .length -
+                                                                      1
+                                                              ? 30
+                                                              : 5.0,
+                                                          top: 10),
                                                       child: InkWell(
                                                         onTap: () {
                                                           print(double.parse(
                                                               controller
-                                                                  .getQuizMyListApiResponse!
-                                                                  .data[index]
+                                                .liveQuiz
+                                                [index]
                                                                   .pl));
                                                         },
                                                         child: Container(
@@ -206,14 +242,18 @@ class _PortfolioTabState extends State<PortfolioTab> {
                                                                               crossAxisAlignment: CrossAxisAlignment.start,
                                                                               children: [
                                                                                 Text(
-                                                                                  "Q: " + controller.getQuizMyListApiResponse!.data[index].question,
+                                                                                  "Q: " +  controller
+                                                .liveQuiz
+                                                [index].question,
                                                                                   style: TextStyle(color: ColorConstant.primaryBlackColor, fontSize: 15, fontWeight: FontWeight.w500),
                                                                                 ),
                                                                                 SizedBox(
                                                                                   height: 10,
                                                                                 ),
                                                                                 Text(
-                                                                                  controller.getQuizMyListApiResponse!.data[index].myOption == 1 ? 'My Answer: Yes' : 'My Answer: No',
+                                                                                  controller
+                                                .liveQuiz
+                                                [index].myOption == 1 ? 'My Answer: Yes' : 'My Answer: No',
                                                                                   style: TextStyle(color: ColorConstant.greenColor, fontSize: 15, fontWeight: FontWeight.w500),
                                                                                 ),
                                                                                 SizedBox(
@@ -230,7 +270,11 @@ class _PortfolioTabState extends State<PortfolioTab> {
                                                                                           style: TextStyle(color: ColorConstant.primaryBlackColor, fontSize: 15, fontWeight: FontWeight.w500),
                                                                                         ),
                                                                                         Text(
-                                                                                          "₹" + controller.getQuizMyListApiResponse!.data[index].amount.toString(),
+                                                                                          "₹ ${double.parse( controller
+                                                .liveQuiz
+                                                [index].amount) * int.parse( controller
+                                                .liveQuiz
+                                                [index].qty)}",
                                                                                           style: TextStyle(color: ColorConstant.primaryBlackColor, fontSize: 15, fontWeight: FontWeight.w500),
                                                                                         ),
                                                                                       ],
@@ -242,7 +286,9 @@ class _PortfolioTabState extends State<PortfolioTab> {
                                                                                           style: TextStyle(color: ColorConstant.primaryBlackColor, fontSize: 15, fontWeight: FontWeight.w500),
                                                                                         ),
                                                                                         Text(
-                                                                                          "₹" + controller.getQuizMyListApiResponse!.data[index].win.toString(),
+                                                                                          "₹" +  controller
+                                                .liveQuiz
+                                                [index].win.toString(),
                                                                                           style: TextStyle(color: double.parse(controller.getQuizMyListApiResponse!.data[index].win) <= double.parse(controller.getQuizMyListApiResponse!.data[index].pl) ? ColorConstant.primaryColor : ColorConstant.primaryBlackColor, fontSize: 15, fontWeight: FontWeight.w500),
                                                                                         ),
                                                                                       ],
@@ -262,14 +308,18 @@ class _PortfolioTabState extends State<PortfolioTab> {
                                                                                           style: TextStyle(color: ColorConstant.primaryBlackColor, fontSize: 15, fontWeight: FontWeight.w500),
                                                                                         ),
                                                                                         Text(
-                                                                                          controller.getQuizMyListApiResponse!.data[index].pl.toString() + "%",
+                                                                                           controller
+                                                .liveQuiz
+                                                [index].pl.toString() + "%",
                                                                                           style: TextStyle(color: double.parse(controller.getQuizMyListApiResponse!.data[index].pl) <= 0 ? ColorConstant.primaryColor : ColorConstant.primaryBlackColor, fontSize: 15, fontWeight: FontWeight.w500),
                                                                                         ),
                                                                                       ],
                                                                                     ),
                                                                                     InkWell(
                                                                                       onTap: () {
-                                                                                        controller.sellQuiz(controller.getQuizMyListApiResponse!.data[index], context);
+                                                                                        controller.sellQuiz( controller
+                                                .liveQuiz
+                                                [index], context);
                                                                                       },
                                                                                       child: Container(
                                                                                         height: 35,
@@ -294,6 +344,9 @@ class _PortfolioTabState extends State<PortfolioTab> {
                                                         ),
                                                       ),
                                                     );
+                                               
+                                           
+                                               
                                                   });
                                     }),
                               )
@@ -301,6 +354,8 @@ class _PortfolioTabState extends State<PortfolioTab> {
                           ),
                         );
                 })
+        
+        
           ],
         ));
 

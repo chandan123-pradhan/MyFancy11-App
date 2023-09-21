@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
+// import 'dart:js';
 
 import 'package:cricket_fantacy/src/models/LiveMatchUpdateApiResponse.dart';
 import 'package:cricket_fantacy/src/models/get_my_player_api_response.dart';
@@ -17,11 +18,13 @@ class LiveContestController extends GetxController {
   MyContestApiResponse? myContestApiResponse;
   GetMyTeamApiResponse? getMyTeamApiResponse;
   GetMyPlayerApiResponse? getMyPlayerApiResponse;
+  bool isMyContestDetailsPageEnable=false;
 
   List<MyPlayerData> batsmanData = [];
   List<MyPlayerData> bowlerList = [];
   List<MyPlayerData> wicketKeeperList = [];
   List<MyPlayerData> allrounderList = [];
+  String tappedContestId='';
 
   Timer? timer;
 
@@ -47,8 +50,11 @@ class LiveContestController extends GetxController {
           routeUrl: NetworkConstant.Match_by_id, bodyParams: parameter);
       // debugger();
       liveMatchUpdateApiResponse = response;
+      
       print("score udpated");
       update();
+      getMyTeam(matchId);
+      getMyTeam(matchId);
     });
   }
 
@@ -76,8 +82,9 @@ class LiveContestController extends GetxController {
   void closeTimer(context) {
     _timer!.cancel();
     liveMatchUpdateApiResponse = null;
-    Navigator.pop(context);
     update();
+    Navigator.pop(context);
+    
   }
 
   void getTeamPlayers(teamId) async {
@@ -113,4 +120,14 @@ class LiveContestController extends GetxController {
     }
     update();
   }
+
+
+
+void updateMycontestScreen(contestId){
+  isMyContestDetailsPageEnable=!isMyContestDetailsPageEnable;
+  tappedContestId=contestId;
+  update();
+}
+
+
 }

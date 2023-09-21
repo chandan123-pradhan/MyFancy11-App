@@ -181,7 +181,7 @@ var controller =Get.put(HomeController());
                 height: 10,
               ),
       
-      int.parse(widget.contest.entry)>controller.getWalletApiResponse!.data.depositWallet?
+      int.parse(widget.contest.entry)>double.parse(controller.getWalletApiResponse!.data.depositWallet)?
               Column(
                 children: [
                   Padding(
@@ -306,6 +306,9 @@ var controller =Get.put(HomeController());
                 child: InkWell(
                   onTap: () {
 controller.joinContest(context: context, contest: widget.contest);
+          
+          
+          
           //           if (_isActive == true) {
           //             final snackBar = SnackBar(
           //       content: const Text('Fund Added Successfully Done.'),
@@ -333,7 +336,7 @@ controller.joinContest(context: context, contest: widget.contest);
                     width: MediaQuery.of(context).size.width / 1,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
-                        color:int.parse(widget.contest.entry)<controller.getWalletApiResponse!.data.depositWallet?
+                        color:int.parse(widget.contest.entry)<double.parse(controller.getWalletApiResponse!.data.depositWallet)?
                              ColorConstant.primaryBlackColor
                             : Colors.grey[400]),
                     alignment: Alignment.center,

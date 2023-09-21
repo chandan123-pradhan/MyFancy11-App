@@ -24,7 +24,9 @@ class _MyTeamWidgetTabState extends State<MyTeamWidgetTab> {
         builder: (controller) {
           return controller.getMyTeamApiResponse == null
               ? shimerEffect(length: 3, context: context)
-              : ListView.builder(
+              : 
+              
+              ListView.builder(
                   itemCount: controller.getMyTeamApiResponse!.data.length,
                   itemBuilder: (context, index) {
                     return Padding(
@@ -406,6 +408,9 @@ class _MyTeamWidgetTabState extends State<MyTeamWidgetTab> {
                     );
                   },
                 );
+       
+       
+       
         });
   }
 }

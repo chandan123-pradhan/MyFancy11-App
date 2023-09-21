@@ -16,11 +16,13 @@ import 'package:cricket_fantacy/src/models/get_my_mateches_api_response.dart';
 import 'package:cricket_fantacy/src/models/get_squad_api_response.dart';
 import 'package:cricket_fantacy/src/models/get_wallet_api_response.dart';
 import 'package:cricket_fantacy/src/models/get_winning_info_api_response.dart';
+import 'package:cricket_fantacy/src/models/my_paid_team_api_response.dart';
 import 'package:cricket_fantacy/src/models/splahs_api_response.dart';
 import 'package:cricket_fantacy/src/networking/api_provider.dart';
 import 'package:cricket_fantacy/src/networking/network_contant.dart';
 import 'package:cricket_fantacy/src/ui/screens/auth_screens/auth_landing_page.dart';
 import 'package:cricket_fantacy/src/ui/screens/dashboard_screen.dart';
+import 'package:cricket_fantacy/src/ui/screens/home_tab/pick_player_screen.dart';
 import 'package:cricket_fantacy/src/utils/app_constant.dart';
 import 'package:cricket_fantacy/src/utils/local_storage/shared_prefrences.dart';
 import 'package:cricket_fantacy/src/utils/messages.dart';
@@ -66,6 +68,7 @@ class HomeController extends GetxController {
   SquadPlayer? choosedCaptainId;
   SquadPlayer? choosedViceCaptainId;
   CheckEkyApiResponse? checkEkyApiResponse;
+  MyPaidTeamApiResponse? myPaidTeamApiResponse;
 
   String mySavedTeamId = '';
   int eKycStatus = 0;
@@ -180,7 +183,7 @@ class HomeController extends GetxController {
         routeUrl: NetworkConstant.GET_LEADERBOARD_URL, bodyParams: parameter);
     print(response);
     getLeaderboardApiResponse = GetLeaderboardApiResponse.fromJson(response);
-// debugger();
+//  debugger();
     update();
   }
 
@@ -193,14 +196,14 @@ class HomeController extends GetxController {
     };
     var response = await apiProvider.postAfterAuth(
         routeUrl: NetworkConstant.Get_Squad, bodyParams: parameter);
-
+debugger();
     getSquadApiResponse = GetSquadApiResponse.fromJson(response);
 
     devidePlayersAccordingToTitle();
     update();
   }
 
-  void devidePlayersAccordingToTitle() {
+  Future<void> devidePlayersAccordingToTitle() async {
     batsManList.clear();
     allRounderList.clear();
     wiketKeeperList.clear();
@@ -245,6 +248,41 @@ class HomeController extends GetxController {
       }
     }
     update();
+  }
+
+  void clasifyChoosedPlayer(t1Id, t2Id) {
+    for (int i = 0; i < getSquadApiResponse!.data.length; i++) {
+        //debugger();
+      if (getSquadApiResponse!.data[i].isSelect == '1') {
+        print(getSquadApiResponse!.data.length);
+        //debugger();
+        switch (getSquadApiResponse!.data[i].playerDesigination) {
+          
+          case AppConstant.wicketKeeper: 
+            choosedWiketKeeperList.add(getSquadApiResponse!.data[i]);
+            dummywiketKeeperList[choosedWiketKeeperList.length-1] = 1;
+            //debugger();
+
+            break;
+          case AppConstant.batsMan:
+            choosedBatsManList.add(getSquadApiResponse!.data[i]);
+            dummyBatsManList[choosedBatsManList.length-1] = 1;
+            break;
+          case AppConstant.bowler:
+            choosedBowlerlist.add(getSquadApiResponse!.data[i]);
+            dummybowlerlist[choosedBowlerlist.length-1] = 1;
+            break;
+          case AppConstant.allRownder:
+            choosedAllRounderList.add(getSquadApiResponse!.data[i]);
+            dummyallRounderList[choosedAllRounderList.length-1] = 1;
+            break;
+          default:
+            break;
+        }
+      }
+      choosedPlayerList.add(getSquadApiResponse!.data[i]);
+      devideTeam(t1Id, t2Id, getSquadApiResponse!.data[i], 1);
+    }
   }
 
   void chosedPlayer(
@@ -332,40 +370,46 @@ class HomeController extends GetxController {
     update();
   }
 
-  void choosedCaption(SquadPlayer player) {
+  void choosedCaption(SquadPlayer player,) {
     choosedCaptainId = player;
-    update();
+    // update();
   }
 
   void choosedViceCaptin(SquadPlayer player) {
     choosedViceCaptainId = player;
-    update();
+    // update();
   }
 
   void saveTeam(
-      {required Matches maches, required Contest contest, context}) async {
+      {required Matches maches, required Contest contest, context,
+      required String myTeamID
+      
+      }) async {
     List<Map> selectedPlayer = [];
     showLoaderDialog(context);
-
+print(choosedPlayerList);
+// debugger();
     try {
       for (int i = 0; i < choosedPlayerList.length; i++) {
         selectedPlayer
             .add({NetworkConstant.PlayerId: choosedPlayerList[i].playerid});
       }
 
+      debugger();
+
       Map parameter = {
         NetworkConstant.MatchId: maches.matchId.toString(),
-        NetworkConstant.MyTeamId: '0',
+        NetworkConstant.MyTeamId: myTeamID==''?'0':myTeamID,
         NetworkConstant.List: json.encode(selectedPlayer),
         NetworkConstant.CaptainId: choosedCaptainId!.playerid,
         NetworkConstant.Vice_Captain_Id: choosedViceCaptainId!.playerid,
       };
 
-      //  print(parameter);
+       print(parameter);
       //  debugger();
       var response = await apiProvider.postAfterAuth(
           routeUrl: NetworkConstant.Save_Team_URL, bodyParams: parameter);
-      debugger();
+      // debugger();
 
       print(response);
       Navigator.pop(context);
@@ -384,6 +428,7 @@ class HomeController extends GetxController {
       }
       update();
     } catch (e) {
+      debugger();
       Messages().showMsg(
           context: context, message: 'Something Went Wrong, Please Try Again');
     }
@@ -412,10 +457,11 @@ class HomeController extends GetxController {
     };
     var response = await apiProvider.postAfterAuth(
         routeUrl: NetworkConstant.Join_Contest, bodyParams: parameter);
+        //  debugger(); //
     Navigator.pop(context);
-    // debugger(); //
+    
 
-    if (response == null) {
+    if (response['status']==200) {
       Messages().showErrorMsg(
           context: context, message: 'Match created successfully done.');
       choosedCaptainId = null;
@@ -557,13 +603,76 @@ class HomeController extends GetxController {
     print(response);
     Navigator.pop(context);
     if (response['status'] == 200) {
-      
-     Messages().showErrorMsg(
+      Messages().showErrorMsg(
           context: context, message: 'EKyc Data is Successfully submited');
-          Navigator.pop(context);
+      Navigator.pop(context);
       checkKyc(context);
     } else {}
 
+    update();
+  }
+
+  Future<MyPaidTeamApiResponse?> getMyPaidTeam(
+      {required matchId, required context}) async {
+    showLoaderDialog(context);
+    Map parameter = {'match_id': matchId};
+    var response = await apiProvider.postAfterAuth(
+        routeUrl: NetworkConstant.myPaidTeam, bodyParams: parameter);
+    print(response);
+    //  debugger();
+    Navigator.pop(context);
+    if (response['status'] == 200) {
+      myPaidTeamApiResponse = MyPaidTeamApiResponse.fromJson(response);
+      update();
+      return myPaidTeamApiResponse;
+    } else {
+      return null;
+    }
+  }
+
+  void cloneTeam(
+      {required context,
+      required teamId,
+      required Matches matches,
+      required Contest contest}) async {
+    showLoaderDialog(context);
+    update();
+    Map parameter = {'team_id': teamId};
+    var response = await apiProvider.postAfterAuth(
+        routeUrl: NetworkConstant.cloneTeam, bodyParams: parameter);
+    print(response);
+    Navigator.pop(context);
+    if (response['status'] == 200) {
+      // debugger();
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return PickPlayerScreen(
+          matches: matches,
+          contest: contest,
+          myTeamId: response['data']['id'].toString(),
+        );
+      }));
+      // getMyTeamSquad(context,response['data']['match_id'].toString(),response['data']['id'].toString());
+    } else {
+      // Navigator.pop(context);
+    }
+
+    update();
+  }
+
+  void getMyTeamSquad(context, matchId, teamId, t1Id, t2Id) async {
+    Map parameter = {
+      NetworkConstant.MatchId: matchId,
+      NetworkConstant.Designationid: '0',
+      NetworkConstant.MyTeam: '1',
+      NetworkConstant.MyTeamId: teamId
+    };
+    var response = await apiProvider.postAfterAuth(
+        routeUrl: NetworkConstant.Get_Squad, bodyParams: parameter);
+    // debugger();
+    getSquadApiResponse = GetSquadApiResponse.fromJson(response);
+    // Navigator.pop(context);
+    await devidePlayersAccordingToTitle();
+clasifyChoosedPlayer(t1Id, t2Id);
     update();
   }
 }

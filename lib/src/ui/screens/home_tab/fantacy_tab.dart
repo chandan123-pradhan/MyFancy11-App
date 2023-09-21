@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cricket_fantacy/src/controllers/splash_controller.dart';
@@ -102,29 +104,33 @@ class _FantacyTabState extends State<FantacyTab> {
                                   //1st Image of Slider
                                   for (int i = 0;
                                       i <
-                                          controller.getUpcommingMyMatchResponse!
-                                              .data.length;
+                                          controller
+                                              .getUpcommingMyMatchResponse!
+                                              .data
+                                              .length;
                                       i++)
                                     Padding(
                                         padding: EdgeInsets.only(
                                             left: i == 0 ? 0 : 5, right: 5),
                                         child: InkWell(
-                                          onTap: (){
-//                                 
+                                          onTap: () {
+                                          print("sdfs");
+                                           
                                           },
                                           child: CurrentMatchCardWidget(
                                             myMatchModel: controller
-                                                .getUpcommingMyMatchResponse!.data[i],
+                                                .getUpcommingMyMatchResponse!
+                                                .data[i],
                                           ),
                                         ))
                                 ],
-                            
+
                                 // //Slider Container properties
                                 // options: CarouselOptions(
                                 //   height: 160,
-                            
+
                                 //   enlargeCenterPage: false,
-                            
+
                                 //   // disableCenter: true,
                                 //   autoPlay: false,
                                 //   aspectRatio: 16 / 9,
@@ -216,64 +222,65 @@ class _FantacyTabState extends State<FantacyTab> {
                 )
             ],
           ),
-      controller.getMatchesApiResponse==null?Container():    Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Container(
-              alignment: Alignment.centerLeft,
-              child: const Text(
-                "Upcomming Matches",
-                style: TextStyle(
-                    color: ColorConstant.primaryBlackColor,
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600),
-              ),
-            ),
-          ),
+          controller.getMatchesApiResponse == null
+              ? Container()
+              : Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Container(
+                    alignment: Alignment.centerLeft,
+                    child: const Text(
+                      "Upcomming Matches",
+                      style: TextStyle(
+                          color: ColorConstant.primaryBlackColor,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                ),
           GetBuilder<HomeController>(
               init: HomeController(),
               builder: (controller) {
-                return isFetchingData==true
+                return isFetchingData == true
                     ? shimerEffect(length: 3, context: context)
-                    : 
-                    
-                    controller.getMatchesApiResponse==null?Center(
-
-                    ):
-                    Column(
-                        children: [
-                          for (int index = 0;
-                              index <=
-                                  controller
-                                          .getMatchesApiResponse!.data.length -
-                                      1;
-                              index++)
-                            Padding(
-                              padding: EdgeInsets.fromLTRB(10, 0, 10, 15),
-                              child: InkWell(
-                                  onTap: () {
-                                    if (logInStatus == true) {
-                                      Navigator.push(context,
-                                          MaterialPageRoute(builder: (context) {
-                                        return UpcommingMatchesDetails(
-                                          matches: controller
-                                              .getMatchesApiResponse!
-                                              .data[index],
-                                        );
-                                      }));
-                                    } else {
-                                      Navigator.pushReplacement(context,
-                                          MaterialPageRoute(builder: (context) {
-                                        return LoginScreen();
-                                      }));
-                                    }
-                                  },
-                                  child: UpcommingMatchCardWidget(
-                                    matches: controller
-                                        .getMatchesApiResponse!.data[index],
-                                  )),
-                            )
-                        ],
-                      );
+                    : controller.getMatchesApiResponse == null
+                        ? Center()
+                        : Column(
+                            children: [
+                              for (int index = 0;
+                                  index <=
+                                      controller.getMatchesApiResponse!.data
+                                              .length -
+                                          1;
+                                  index++)
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(10, 0, 10, 15),
+                                  child: InkWell(
+                                      onTap: () {
+                                        if (logInStatus == true) {
+                                          Navigator.push(context,
+                                              MaterialPageRoute(
+                                                  builder: (context) {
+                                            return UpcommingMatchesDetails(
+                                              matches: controller
+                                                  .getMatchesApiResponse!
+                                                  .data[index],
+                                            );
+                                          }));
+                                        } else {
+                                          Navigator.pushReplacement(context,
+                                              MaterialPageRoute(
+                                                  builder: (context) {
+                                            return LoginScreen();
+                                          }));
+                                        }
+                                      },
+                                      child: UpcommingMatchCardWidget(
+                                        matches: controller
+                                            .getMatchesApiResponse!.data[index],
+                                      )),
+                                )
+                            ],
+                          );
               }),
           SizedBox(
             height: 60,

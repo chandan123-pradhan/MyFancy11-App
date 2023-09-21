@@ -58,6 +58,8 @@ class SquadPlayer {
   late final String teamName;
   late final String teamImage;
   late final String teamShortName;
+  late final String isViceCaptain;
+  late final String isCaptain;
   late final String creditPoints;
   late final String name;
   late final String image;
@@ -74,23 +76,25 @@ class SquadPlayer {
     id = json['id'];
     playerPoints = json['player_points'];
     selectionPercent = json['selection_percent'];
-    matchid = json['matchid'];
+    matchid = json['matchid'].toString();
     teamid = json['teamid'];
-    playerid = json['playerid'];
+    playerid = json['playerid'].toString();
     isSelect = json['is_select'];
-    teamName = json['team_name'];
-    teamImage = json['team_image'];
-    teamShortName = json['team_short_name'];
-    creditPoints = json['credit_points'];
-    name = json['name'];
-    image = json['image'];
-    title = json['title'];
-    shortTerm = json['short_term'];
-    designationid = json['designationid'];
-    playingStatus = json['playing_status'];
-    teamNumber = json['team_number'];
-    playerShortname = json['player_shortname'];
-    playerDesigination = json['player_desigination'];
+    teamName = json['team_name'].toString();
+    teamImage = json['team_image'].toString();
+    teamShortName = json['team_short_name'].toString();
+    isCaptain=json['is_captain'].toString();
+    isViceCaptain=json['is_vicecaptain'].toString();
+    creditPoints = json['credit_points'].toString();
+    name = json['name'].toString();
+    image = json['image'].toString();
+    title = json['title'].toString();
+    shortTerm = json['short_term'].toString();
+    designationid = json['designationid'].toString();
+    playingStatus = json['playing_status'].toString();
+    teamNumber = json['team_number'].toString();
+    playerShortname = json['player_shortname'].toString();
+    playerDesigination = json['player_desigination'].toString();
   }
 
   Map<String, dynamic> toJson() {

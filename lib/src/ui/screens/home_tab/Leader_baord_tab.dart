@@ -1,4 +1,5 @@
 import 'package:cricket_fantacy/src/controllers/splash_controller.dart';
+import 'package:cricket_fantacy/src/ui/widgets/shimmer_effect_widget.dart';
 import 'package:cricket_fantacy/src/utils/color_scheme.dart';
 import 'package:cricket_fantacy/src/utils/image_utils.dart';
 import 'package:flutter/material.dart';
@@ -7,24 +8,36 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 
 class LeaderboardTab extends StatefulWidget {
-  const LeaderboardTab({super.key});
+  String contestId;
+  LeaderboardTab({required this.contestId});
 
   @override
   State<LeaderboardTab> createState() => _LeaderboardTabState();
 }
 
 class _LeaderboardTabState extends State<LeaderboardTab> {
+
+var controller =Get.put(HomeController());
+
+@override
+  void initState() {
+    controller.getLeaderBoardResponse(context, widget.contestId);
+    // TODO: implement initState
+    super.initState();
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(
       init: HomeController(),
       builder: (controller) {
         return 
-        controller.getLeaderboardApiResponse==null?const Center(
-          child: CircularProgressIndicator(
-            color: ColorConstant.primaryColor,
-          ),
-        ):
+        controller.getLeaderboardApiResponse==null?
+        
+        shimerEffect(length: 3,context: context)
+        :
         Column(
           children: [
             SizedBox(height: 10,),

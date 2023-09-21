@@ -31,6 +31,7 @@ class MyContestData {
     required this.winners,
     required this.prizePool,
     required this.totalTeam,
+    required this.rank,
     required this.joinTeam,
     required this.entry,
     required this.contestDescription,
@@ -54,6 +55,7 @@ class MyContestData {
   late final String winners;
   late final String prizePool;
   late final int totalTeam;
+  late final String rank;
   late final String joinTeam;
   late final String entry;
   late final String contestDescription;
@@ -78,6 +80,7 @@ class MyContestData {
     winners = json['winners'];
     prizePool = json['prize_pool'];
     totalTeam = json['total_team'];
+    rank=json['rank'].toString();
     joinTeam = json['join_team'];
     entry = json['entry'];
     contestDescription = json['contest_description'];

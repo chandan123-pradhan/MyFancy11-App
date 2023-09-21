@@ -1,4 +1,5 @@
 import 'package:cricket_fantacy/src/controllers/splash_controller.dart';
+import 'package:cricket_fantacy/src/ui/widgets/shimmer_effect_widget.dart';
 import 'package:cricket_fantacy/src/utils/color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -6,19 +7,35 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 
 class WinningTab extends StatefulWidget {
-  const WinningTab({super.key});
+  String contestId;
+  WinningTab({required this.contestId});
 
   @override
   State<WinningTab> createState() => _WinningTabState();
 }
 
 class _WinningTabState extends State<WinningTab> {
+  var controller =Get.put(HomeController());
+@override
+  void initState() {
+    controller.getWinningInfo(context, widget.contestId);
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(
       init: HomeController(),
       builder: (controller) {
         return 
+
+
+controller.getWinningInfoApiResponse==null?
+        
+        shimerEffect(length: 3,context: context)
+        :
+
         Column(
           children: [
             SizedBox(height: 10,),

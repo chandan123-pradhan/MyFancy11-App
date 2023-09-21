@@ -57,6 +57,7 @@ dependencies:
   google_sign_in:
   lottie:
   firebase_storage:
+  share_plus: ^7.1.0
 
 dev_dependencies:
   flutter_test:
