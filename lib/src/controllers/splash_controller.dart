@@ -73,6 +73,14 @@ class HomeController extends GetxController {
   String mySavedTeamId = '';
   int eKycStatus = 0;
 
+
+
+  List<ContestList>contestList=[];
+
+
+
+
+
   void getSplashData(context, flag) async {
     String? userToken = await sharedPref.getUserToken();
     sharedPref.getLoginStatus();
@@ -94,8 +102,8 @@ class HomeController extends GetxController {
     var response = await apiProvider.postBeforeAuthStaticToken(
         routeUrl: NetworkConstant.CUSTOMER_DATE_ROUTE_URL,
         bodyParams: parameter);
-    // debugger();
-    print(response);
+     debugger();
+    //print(response);
     splashDataApiResponse = SplashDataApiResponse.fromJson(response);
     sharedPref.setAppToken(splashDataApiResponse.data.appToken);
     update();
@@ -151,9 +159,11 @@ class HomeController extends GetxController {
     update();
   }
 
-  void getContestList(context, matchId) async {
+  void getContestList(context, matchId,entry,pricePool) async {
     Map parameter = {
       NetworkConstant.MatchId: matchId,
+      'entry':entry,
+      'price_pool':pricePool
     };
     var response = await apiProvider.postAfterAuth(
         routeUrl: NetworkConstant.GET_CONTEST, bodyParams: parameter);

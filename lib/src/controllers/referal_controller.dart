@@ -16,7 +16,7 @@ class RefferalController extends GetxController {
       Map parameter = {};
       var response = await apiProvider.postAfterAuth(
           routeUrl: NetworkConstant.refferData, bodyParams: parameter);
-      debugger();
+      // debugger();
       if (response['status'] == 404) {
         isError = true;
       } else {

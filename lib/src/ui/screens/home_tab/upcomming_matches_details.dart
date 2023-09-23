@@ -26,15 +26,16 @@ class UpcommingMatchesDetails extends StatefulWidget {
 
 class _UpcommingMatchesDetailsState extends State<UpcommingMatchesDetails> {
   var controller = Get.put(HomeController());
-  
+  int filterType = 0;
   @override
   void initState() {
     _calculateTimeRemaining();
-    controller.getContestList(context, widget.matches.matchId.toString());
+    controller.getContestList(context, widget.matches.matchId.toString(),'0','0');
 
     // TODO: implement initState
     super.initState();
   }
+
   var targetDate;
 
   _calculateTimeRemaining() {
@@ -88,10 +89,10 @@ class _UpcommingMatchesDetailsState extends State<UpcommingMatchesDetails> {
           Padding(
             padding: const EdgeInsets.only(right: 20.0),
             child: InkWell(
-              onTap: (){
-                                    Navigator.push(context, MaterialPageRoute(builder: (context){
-                                    return WalletScreen();
-                                  }));
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return WalletScreen();
+                }));
               },
               child: Image.asset(
                 ImageUitls.Wallet_icon,
@@ -128,48 +129,47 @@ class _UpcommingMatchesDetailsState extends State<UpcommingMatchesDetails> {
                       height: 40,
                       width: MediaQuery.of(context).size.width / 1.4,
                       alignment: Alignment.centerLeft,
-                      child: ListView(
-                        padding: EdgeInsets.only(top: 10),
-                        scrollDirection: Axis.horizontal,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(left: 8, right: 8),
-                            child: Text(
-                              "Entry",
-                              style: TextStyle(
-                                  color: ColorConstant.disableColor,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400),
+                            child: InkWell(
+onTap: (){
+  setState(() {
+    filterType=1;
+  });
+ controller.getContestList(context, widget.matches.matchId.toString(),'1','0');
+},
+                              child: Text(
+                                "Entry",
+                                style: TextStyle(
+                                    color: filterType == 1
+                                        ? ColorConstant.primaryBlackColor
+                                        : ColorConstant.disableColor,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400),
+                              ),
                             ),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(left: 8, right: 8),
-                            child: Text(
-                              "Spots",
-                              style: TextStyle(
-                                  color: ColorConstant.disableColor,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8, right: 8),
-                            child: Text(
-                              "Price Pool",
-                              style: TextStyle(
-                                  color: ColorConstant.disableColor,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 8, right: 8),
-                            child: Text(
-                              "% Winners",
-                              style: TextStyle(
-                                  color: ColorConstant.disableColor,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400),
+                            child: InkWell(
+                              onTap: (){
+                                setState(() {
+                                  filterType=2;
+                                });
+                                controller.getContestList(context, widget.matches.matchId.toString(),'0','1');
+                              },
+                              child: Text(
+                                "Price Pool",
+                                style: TextStyle(
+                                    color: filterType == 2
+                                        ? ColorConstant.primaryBlackColor
+                                        : ColorConstant.disableColor,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400),
+                              ),
                             ),
                           ),
                         ],

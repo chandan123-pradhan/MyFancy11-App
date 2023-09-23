@@ -138,10 +138,12 @@ class _MyMatchesTabState extends State<MyMatchesTab>
                               padding: const EdgeInsets.fromLTRB(10, 15, 10, 0),
                               child: InkWell(
                                 onTap: () {
-                                    Navigator.push(context,
+                                  Navigator.push(context,
                                       MaterialPageRoute(builder: (context) {
-                                    return  LiveContestScreen(
-myMatchModel: controller.getUpcommingMyMatchResponse!.data[index],
+                                    return LiveContestScreen(
+                                      myMatchModel: controller
+                                          .getUpcommingMyMatchResponse!
+                                          .data[index],
                                     );
                                   }));
                                 },
@@ -175,14 +177,23 @@ myMatchModel: controller.getUpcommingMyMatchResponse!.data[index],
                               controller.getLiveMyMatchReponse!.data.length,
                           itemBuilder: (context, index) {
                             return Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 15, right: 15, top: 8, bottom: 8),
+                              padding: EdgeInsets.only(
+                                  left: 15,
+                                  right: 15,
+                                  top: 8,
+                                  bottom: index ==
+                                          controller.getLiveMyMatchReponse!.data
+                                                  .length -
+                                              1
+                                      ? 50
+                                      : 8),
                               child: InkWell(
-                                onTap: (){
-                                   Navigator.push(context,
+                                onTap: () {
+                                  Navigator.push(context,
                                       MaterialPageRoute(builder: (context) {
-                                    return  LiveContestScreen(
-myMatchModel: controller.getLiveMyMatchReponse!.data[index],
+                                    return LiveContestScreen(
+                                      myMatchModel: controller
+                                          .getLiveMyMatchReponse!.data[index],
                                     );
                                   }));
                                 },
@@ -217,19 +228,30 @@ myMatchModel: controller.getLiveMyMatchReponse!.data[index],
                               .getCompletedMyMatchResponse!.data.length,
                           itemBuilder: (context, index) {
                             return Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 15, right: 15, top: 8, bottom: 8),
+                              padding: EdgeInsets.only(
+                                  left: 15,
+                                  right: 15,
+                                  top: 8,
+                                  bottom: index ==
+                                          controller.getCompletedMyMatchResponse!.data
+                                                  .length -
+                                              1
+                                      ? 50
+                                      : 8),
                                 child: InkWell(
-                                  onTap: (){
-                                     Navigator.push(context,
-                                      MaterialPageRoute(builder: (context) {
-                                    return  LiveContestScreen(
-myMatchModel: controller.getCompletedMyMatchResponse!.data[index],
-                                    );
-                                  }));
+                                  onTap: () {
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                      return LiveContestScreen(
+                                        myMatchModel: controller
+                                            .getCompletedMyMatchResponse!
+                                            .data[index],
+                                      );
+                                    }));
                                   },
                                   child: Container(
-                                    width: MediaQuery.of(context).size.width / 1,
+                                    width:
+                                        MediaQuery.of(context).size.width / 1,
                                     // height: 100,
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(10),
@@ -332,8 +354,8 @@ myMatchModel: controller.getCompletedMyMatchResponse!.data[index],
                                                                   BorderRadius
                                                                       .circular(
                                                                           10),
-                                                              color:
-                                                                  Colors.black12),
+                                                              color: Colors
+                                                                  .black12),
                                                           alignment:
                                                               Alignment.center,
                                                           child: Text(
@@ -356,8 +378,8 @@ myMatchModel: controller.getCompletedMyMatchResponse!.data[index],
                                                               .data[index]
                                                               .matchDateTime,
                                                           style: TextStyle(
-                                                              color:
-                                                                  Colors.black45,
+                                                              color: Colors
+                                                                  .black45,
                                                               fontSize: 12,
                                                               fontWeight:
                                                                   FontWeight
@@ -416,8 +438,8 @@ myMatchModel: controller.getCompletedMyMatchResponse!.data[index],
                                                               .team1
                                                               .teamName,
                                                           style: const TextStyle(
-                                                              color:
-                                                                  Colors.black45,
+                                                              color: Colors
+                                                                  .black45,
                                                               fontSize: 12,
                                                               fontWeight:
                                                                   FontWeight
@@ -430,8 +452,8 @@ myMatchModel: controller.getCompletedMyMatchResponse!.data[index],
                                                               .team2
                                                               .teamName,
                                                           style: const TextStyle(
-                                                              color:
-                                                                  Colors.black45,
+                                                              color: Colors
+                                                                  .black45,
                                                               fontSize: 12,
                                                               fontWeight:
                                                                   FontWeight
@@ -462,7 +484,8 @@ myMatchModel: controller.getCompletedMyMatchResponse!.data[index],
                                                 children: [
                                                   Padding(
                                                     padding:
-                                                        const EdgeInsets.all(0.0),
+                                                        const EdgeInsets.all(
+                                                            0.0),
                                                     child: Text(
                                                       "1 Team    1 Contest",
                                                       style: TextStyle(
@@ -473,7 +496,8 @@ myMatchModel: controller.getCompletedMyMatchResponse!.data[index],
                                                     ),
                                                   ),
                                                   Image.asset(
-                                                    ImageUitls.Notification_icon,
+                                                    ImageUitls
+                                                        .Notification_icon,
                                                     height: 20,
                                                     width: 20,
                                                     color: Colors.black,
