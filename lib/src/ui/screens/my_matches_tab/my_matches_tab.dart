@@ -138,19 +138,27 @@ class _MyMatchesTabState extends State<MyMatchesTab>
                               padding: const EdgeInsets.fromLTRB(10, 15, 10, 0),
                               child: InkWell(
                                 onTap: () {
+                                  print(controller
+                                          .getUpcommingMyMatchResponse!
+                                          .data[index].matchId);
                                   Navigator.push(context,
                                       MaterialPageRoute(builder: (context) {
                                     return LiveContestScreen(
                                       myMatchModel: controller
                                           .getUpcommingMyMatchResponse!
                                           .data[index],
+                                          flag: 'Upcoming Match',
                                     );
                                   }));
                                 },
                                 child: MyUpcommingMatchCardWidget(
                                     matches: controller
                                         .getUpcommingMyMatchResponse!
-                                        .data[index]),
+                                        .data[index],
+                                        machesmodel: 
+                                        controller.getMatchesApiResponse!.data[index]
+                                        ,
+                                        ),
                               ),
                             );
                           });
@@ -189,11 +197,15 @@ class _MyMatchesTabState extends State<MyMatchesTab>
                                       : 8),
                               child: InkWell(
                                 onTap: () {
+                                  // print(controller
+                                  //         .getLiveMyMatchReponse!
+                                  //         .data[index].matchId);
                                   Navigator.push(context,
                                       MaterialPageRoute(builder: (context) {
                                     return LiveContestScreen(
                                       myMatchModel: controller
                                           .getLiveMyMatchReponse!.data[index],
+                                          flag: 'Live Match',
                                     );
                                   }));
                                 },
@@ -246,6 +258,7 @@ class _MyMatchesTabState extends State<MyMatchesTab>
                                         myMatchModel: controller
                                             .getCompletedMyMatchResponse!
                                             .data[index],
+                                            flag: 'Completed Match',
                                       );
                                     }));
                                   },
@@ -319,15 +332,24 @@ class _MyMatchesTabState extends State<MyMatchesTab>
                                                   children: [
                                                     Row(
                                                       children: [
-                                                        Image.network(
-                                                          controller
+                                                      
+                                                       Container(
+                            height: 35,
+                            width: 35,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                    image: NetworkImage(
+                                        controller
                                                               .getCompletedMyMatchResponse!
                                                               .data[index]
                                                               .team1
-                                                              .teamImage,
-                                                          height: 40,
-                                                          width: 40,
-                                                        ),
+                                                              .teamImage),
+                                    fit: BoxFit.fill)),
+                          ),
+                          SizedBox(width: 5,),
+                                                      
+                                                     
                                                         Text(
                                                           controller
                                                               .getCompletedMyMatchResponse!
@@ -406,15 +428,20 @@ class _MyMatchesTabState extends State<MyMatchesTab>
                                                         SizedBox(
                                                           width: 5,
                                                         ),
-                                                        Image.network(
-                                                          controller
+                                                                  Container(
+                            height: 35,
+                            width: 35,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                    image: NetworkImage(
+                                        controller
                                                               .getCompletedMyMatchResponse!
                                                               .data[index]
                                                               .team2
-                                                              .teamImage,
-                                                          height: 40,
-                                                          width: 40,
-                                                        ),
+                                                              .teamImage),
+                                    fit: BoxFit.fill)),
+                          ),
                                                       ],
                                                     ),
                                                   ],
@@ -495,13 +522,7 @@ class _MyMatchesTabState extends State<MyMatchesTab>
                                                               FontWeight.w500),
                                                     ),
                                                   ),
-                                                  Image.asset(
-                                                    ImageUitls
-                                                        .Notification_icon,
-                                                    height: 20,
-                                                    width: 20,
-                                                    color: Colors.black,
-                                                  ),
+                                                
                                                 ],
                                               ),
                                             ),

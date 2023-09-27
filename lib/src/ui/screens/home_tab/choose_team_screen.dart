@@ -110,10 +110,17 @@ class _ChooseTeamPageState extends State<ChooseTeamPage>
                   return WalletScreen();
                 }));
               },
-              child: Image.asset(
-                ImageUitls.Wallet_icon,
-                height: 20,
-                width: 20,
+              child: Container(
+width: 30,
+                height: 40,
+                child: Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Image.asset(
+                    ImageUitls.Wallet_icon,
+                    height: 20,
+                    width: 20,
+                  ),
+                ),
               ),
             ),
           )
@@ -579,7 +586,7 @@ class _ChooseTeamPageState extends State<ChooseTeamPage>
                                           borderRadius: BorderRadius.only(
                                               bottomLeft: Radius.circular(10),
                                               bottomRight: Radius.circular(10)),
-                                          color: Colors.deepOrange),
+                                          color: ColorConstant.primaryColor),
                                       child: Padding(
                                         padding: const EdgeInsets.fromLTRB(
                                             10, 0, 10, 0),
@@ -620,8 +627,11 @@ class _ChooseTeamPageState extends State<ChooseTeamPage>
                                                       decoration: BoxDecoration(
                                                           shape:
                                                               BoxShape.circle,
-                                                          color: Colors
-                                                              .deepOrange),
+                                                         ),
+                                                  alignment: Alignment.center,
+                                                  child: Image.asset("assets/new_icons/edit.png"
+                                                   ,  height: 12,
+                                                  )
                                                     ),
                                                     SizedBox(
                                                       width: 5,
@@ -673,8 +683,11 @@ class _ChooseTeamPageState extends State<ChooseTeamPage>
                                                       decoration: BoxDecoration(
                                                           shape:
                                                               BoxShape.circle,
-                                                          color: Colors
-                                                              .deepOrange),
+                                                          ),
+                                                              alignment: Alignment.center,
+                                                  child: Image.asset("assets/new_icons/view.png",
+                                                   height: 19,
+                                                  ),
                                                     ),
                                                     SizedBox(
                                                       width: 5,
@@ -720,8 +733,11 @@ class _ChooseTeamPageState extends State<ChooseTeamPage>
                                                       decoration: BoxDecoration(
                                                           shape:
                                                               BoxShape.circle,
-                                                          color: Colors
-                                                              .deepOrange),
+                                                         ),
+                                                         alignment: Alignment.center,
+                                                  child: Image.asset("assets/new_icons/clone.png",
+                                                  height: 12,
+                                                  ),
                                                     ),
                                                     SizedBox(
                                                       width: 5,

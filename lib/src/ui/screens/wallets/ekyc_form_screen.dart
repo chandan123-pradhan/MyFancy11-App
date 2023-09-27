@@ -29,23 +29,34 @@ class _EkycFormScreenState extends State<EkycFormScreen> {
   TextEditingController _bankHolderNameController = new TextEditingController();
   TextEditingController _upiIdController = new TextEditingController();
   var _addhaar_front_pic;
+  var _aadhar_back_pic;
+  var _pan_pic;
   String aadhaar_front_pic_url = '';
+  String aadhar_back_pic_url = '';
+  String pan_pic_url = '';
   bool imageUploading = false;
   var homeController = Get.put(HomeController());
 
   @override
   void initState() {
-   if(widget.isItForEdit){
-     _bankNameController.text =
-        homeController.checkEkyApiResponse!.data.bankName;
-    _ifscController.text = homeController.checkEkyApiResponse!.data.ifscCode;
-    _accountNumberController.text =
-        homeController.checkEkyApiResponse!.data.accountNumber;
-    _bankHolderNameController.text =
-        homeController.checkEkyApiResponse!.data.bankHolder;
-    _upiIdController.text = homeController.checkEkyApiResponse!.data.upi;
-    aadhaar_front_pic_url = homeController.checkEkyApiResponse!.data.img;
-   }
+    if (widget.isItForEdit) {
+      print(homeController.checkEkyApiResponse!.data);
+      // debugger();
+      _bankNameController.text =
+          homeController.checkEkyApiResponse!.data.bankName;
+      _ifscController.text = homeController.checkEkyApiResponse!.data.ifscCode;
+      _accountNumberController.text =
+          homeController.checkEkyApiResponse!.data.accountNumber;
+      _bankHolderNameController.text =
+          homeController.checkEkyApiResponse!.data.bankHolder;
+      _upiIdController.text = homeController.checkEkyApiResponse!.data.upi;
+      List l=homeController.checkEkyApiResponse!.data.img.split(',');
+      debugger();
+      aadhaar_front_pic_url = homeController.checkEkyApiResponse!.data.img.split(',').first.toString();
+    // aadhar_back_pic_url=homeController.checkEkyApiResponse!.data.img.split(',')[1];
+    pan_pic_url=homeController.checkEkyApiResponse!.data.img.split(',').last.toString();
+    
+    }
     // TODO: implement initState
     super.initState();
   }
@@ -134,9 +145,10 @@ class _EkycFormScreenState extends State<EkycFormScreen> {
                                 InkWell(
                                   onTap: () {
                                     // requestCameraPermission();
-                                    choosedGalaryOrCamera();
+                                    choosedGalaryOrCamera(0);
                                   },
-                                  child: widget.isItForEdit && _addhaar_front_pic ==null
+                                  child: widget.isItForEdit &&
+                                          _addhaar_front_pic == null
                                       ? Container(
                                           height: 120,
                                           width: MediaQuery.of(context)
@@ -144,22 +156,21 @@ class _EkycFormScreenState extends State<EkycFormScreen> {
                                                   .width /
                                               1,
                                           decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                  border: Border.all(
-                                                      width: 1,
-                                                      color: Colors.black38),
-                                                  image: _addhaar_front_pic ==
-                                                          null
-                                                      ? DecorationImage(
-                                                          image: NetworkImage(
-                                                              aadhaar_front_pic_url),
-                                                          fit: BoxFit.fill)
-                                                      : DecorationImage(
-                                                          image: FileImage(File(
-                                                              _addhaar_front_pic
-                                                                  .path)),
-                                                          fit: BoxFit.fill)),
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              border: Border.all(
+                                                  width: 1,
+                                                  color: Colors.black38),
+                                              image: _addhaar_front_pic == null
+                                                  ? DecorationImage(
+                                                      image: NetworkImage(
+                                                          aadhaar_front_pic_url),
+                                                      fit: BoxFit.fill)
+                                                  : DecorationImage(
+                                                      image: FileImage(File(
+                                                          _addhaar_front_pic
+                                                              .path)),
+                                                      fit: BoxFit.fill)),
                                           alignment: Alignment.center,
                                         )
                                       : Container(
@@ -194,7 +205,182 @@ class _EkycFormScreenState extends State<EkycFormScreen> {
                                                   size: 60,
                                                   color: Colors.black38,
                                                 )
-                                              : imageUploading == true
+                                              : imageUploading == true &&
+                                                      aadhaar_front_pic_url ==
+                                                          ''
+                                                  ? CircularProgressIndicator(
+                                                      color: Colors.white,
+                                                    )
+                                                  : Container(),
+                                        ),
+                                ),
+                              ]),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Upload Aadhaar Back Pic',
+                                  style: TextStyle(
+                                      color: ColorConstant.primaryBlackColor,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    // requestCameraPermission();
+                                    choosedGalaryOrCamera(1);
+                                  },
+                                  child: widget.isItForEdit &&
+                                          _addhaar_front_pic == null
+                                      ? Container(
+                                          height: 120,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              1,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              border: Border.all(
+                                                  width: 1,
+                                                  color: Colors.black38),
+                                              image: _aadhar_back_pic == null
+                                                  ? DecorationImage(
+                                                      image: NetworkImage(
+                                                          _aadhar_back_pic),
+                                                      fit: BoxFit.fill)
+                                                  : DecorationImage(
+                                                      image: FileImage(File(
+                                                          _aadhar_back_pic
+                                                              .path)),
+                                                      fit: BoxFit.fill)),
+                                          alignment: Alignment.center,
+                                        )
+                                      : Container(
+                                          height: 120,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              1,
+                                          decoration: _aadhar_back_pic == null
+                                              ? BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  border: Border.all(
+                                                      width: 1,
+                                                      color: Colors.black38),
+                                                )
+                                              : BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  border: Border.all(
+                                                      width: 1,
+                                                      color: Colors.black38),
+                                                  image: DecorationImage(
+                                                      image: FileImage(File(
+                                                          _aadhar_back_pic
+                                                              .path)),
+                                                      fit: BoxFit.fill)),
+                                          alignment: Alignment.center,
+                                          child: _aadhar_back_pic == null
+                                              ? Icon(
+                                                  Icons.image,
+                                                  size: 60,
+                                                  color: Colors.black38,
+                                                )
+                                              : imageUploading == true &&
+                                                      aadhar_back_pic_url == ''
+                                                  ? CircularProgressIndicator(
+                                                      color: Colors.white,
+                                                    )
+                                                  : Container(),
+                                        ),
+                                ),
+                              ]),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'PAN Pic',
+                                  style: TextStyle(
+                                      color: ColorConstant.primaryBlackColor,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    // requestCameraPermission();
+                                    choosedGalaryOrCamera(2);
+                                  },
+                                  child: widget.isItForEdit && _pan_pic == null
+                                      ? Container(
+                                          height: 120,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              1,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              border: Border.all(
+                                                  width: 1,
+                                                  color: Colors.black38),
+                                              image: _pan_pic == null
+                                                  ? DecorationImage(
+                                                      image: NetworkImage(
+                                                          _pan_pic),
+                                                      fit: BoxFit.fill)
+                                                  : DecorationImage(
+                                                      image: FileImage(
+                                                          File(_pan_pic.path)),
+                                                      fit: BoxFit.fill)),
+                                          alignment: Alignment.center,
+                                        )
+                                      : Container(
+                                          height: 120,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              1,
+                                          decoration: _pan_pic == null
+                                              ? BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  border: Border.all(
+                                                      width: 1,
+                                                      color: Colors.black38),
+                                                )
+                                              : BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  border: Border.all(
+                                                      width: 1,
+                                                      color: Colors.black38),
+                                                  image: DecorationImage(
+                                                      image: FileImage(
+                                                          File(_pan_pic.path)),
+                                                      fit: BoxFit.fill)),
+                                          alignment: Alignment.center,
+                                          child: _pan_pic == null
+                                              ? Icon(
+                                                  Icons.image,
+                                                  size: 60,
+                                                  color: Colors.black38,
+                                                )
+                                              : imageUploading == true &&
+                                                      pan_pic_url == ''
                                                   ? CircularProgressIndicator(
                                                       color: Colors.white,
                                                     )
@@ -215,8 +401,9 @@ class _EkycFormScreenState extends State<EkycFormScreen> {
                                         .text.isNotEmpty) {
                                       if (_upiIdController.text.isNotEmpty) {
                                         if (aadhaar_front_pic_url != '') {
-                                          EkycRequestBody body =
-                                              EkycRequestBody(
+                                          if (_aadhar_back_pic != '') {
+                                            if (pan_pic_url != '') {
+                                              EkycRequestBody body = EkycRequestBody(
                                                   bankName:
                                                       _bankNameController.text,
                                                   ifscCode:
@@ -229,10 +416,27 @@ class _EkycFormScreenState extends State<EkycFormScreen> {
                                                           .text,
                                                   upi: _upiIdController.text,
                                                   adhaarPicUlr:
-                                                      aadhaar_front_pic_url);
-                                          homeController.requestEky(
-                                              context: context,
-                                              ekycRequestBody: body);
+                                                      aadhaar_front_pic_url,
+                                                      adhaarBackPicUrl: aadhar_back_pic_url,
+                                                      panPicUrl: pan_pic_url
+                                                      
+                                                      
+                                                      );
+                                              homeController.requestEky(
+                                                  context: context,
+                                                  ekycRequestBody: body);
+                                            } else {
+                                              Messages().showErrorMsg(
+                                                  context: context,
+                                                  message:
+                                                      'PAN Photo is Required');
+                                            }
+                                          } else {
+                                            Messages().showErrorMsg(
+                                                context: context,
+                                                message:
+                                                    'Aadhaar Back Photo is Required');
+                                          }
                                         } else {
                                           Messages().showErrorMsg(
                                               context: context,
@@ -274,7 +478,7 @@ class _EkycFormScreenState extends State<EkycFormScreen> {
                                   color: ColorConstant.primaryBlackColor),
                               alignment: Alignment.center,
                               child: Text(
-                             widget.isItForEdit==true?"Edit":   "Submit",
+                                widget.isItForEdit == true ? "Edit" : "Submit",
                                 style: TextStyle(
                                     color: ColorConstant.primaryWhiteColor,
                                     fontSize: 16,
@@ -317,7 +521,7 @@ class _EkycFormScreenState extends State<EkycFormScreen> {
     );
   }
 
-  void choosedGalaryOrCamera() {
+  void choosedGalaryOrCamera(flag) {
     showModalBottomSheet(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(13)),
         isScrollControlled: true,
@@ -342,7 +546,7 @@ class _EkycFormScreenState extends State<EkycFormScreen> {
                   ),
                   InkWell(
                     onTap: () async {
-                      requestCameraPermission();
+                      requestCameraPermission(flag);
                     },
                     child: Container(
                       color: Colors.transparent,
@@ -372,7 +576,7 @@ class _EkycFormScreenState extends State<EkycFormScreen> {
                   ),
                   InkWell(
                       onTap: () async {
-                        requestGalleryPermission();
+                        requestGalleryPermission(flag);
                       },
                       child: Container(
                         color: Colors.transparent,
@@ -403,19 +607,46 @@ class _EkycFormScreenState extends State<EkycFormScreen> {
         });
   }
 
-  Future<File?> _pickImageFromGallery(ImageSource src) async {
+  Future<File?> _pickImageFromGallery(ImageSource src, flag) async {
     final picker = ImagePicker();
-    _addhaar_front_pic = await picker.pickImage(source: src);
-    setState(() {});
-    if (_addhaar_front_pic != null) {
-      return File(_addhaar_front_pic.path);
-      // TODO: Upload the picked image to Firebase Storage
-    } else {
-      print('No image selected.');
+    switch (flag) {
+      case 0:
+        _addhaar_front_pic = await picker.pickImage(source: src);
+        setState(() {});
+        if (_addhaar_front_pic != null) {
+          debugger();
+          return File(_addhaar_front_pic.path);
+          // TODO: Upload the picked image to Firebase Storage
+        } else {
+          print('No image selected.');
+        }
+        break;
+      case 1:
+        _aadhar_back_pic = await picker.pickImage(source: src);
+        setState(() {});
+        if (_aadhar_back_pic != null) {
+          // debugger();
+          return File(_aadhar_back_pic.path);
+          // TODO: Upload the picked image to Firebase Storage
+        } else {
+          print('No image selected.');
+        }
+        break;
+      case 2:
+        _pan_pic = await picker.pickImage(source: src);
+        setState(() {});
+        if (_pan_pic != null) {
+          // debugger();
+          return File(_pan_pic.path);
+          // TODO: Upload the picked image to Firebase Storage
+        } else {
+          print('No image selected.');
+        }
+        break;
     }
   }
 
-  Future<void> _uploadImageToFirebase(File imageFile) async {
+  Future<void> _uploadImageToFirebase(File imageFile, flag) async {
     imageUploading = true;
     setState(() {});
     Reference storageReference =
@@ -424,35 +655,48 @@ class _EkycFormScreenState extends State<EkycFormScreen> {
     UploadTask uploadTask = storageReference.putFile(imageFile);
 
     await uploadTask.whenComplete(() => print('Image uploaded to Firebase'));
-
+// debugger();
     // Retrieve the download URL
     String downloadURL = await storageReference.getDownloadURL();
+// debugger();
 
-    setState(() {
-      imageUploading = false;
-      aadhaar_front_pic_url = downloadURL;
-    });
-  }
-
-  void _uploadImage(ImageSource src) async {
-    File? imageFile = await _pickImageFromGallery(src);
-    if (imageFile != null) {
-      await _uploadImageToFirebase(imageFile);
+    if (flag == 0) {
+      setState(() {
+        imageUploading = false;
+        aadhaar_front_pic_url = downloadURL;
+      });
+    } else if (flag == 1) {
+      setState(() {
+        imageUploading = false;
+        aadhar_back_pic_url = downloadURL;
+      });
+    } else {
+      setState(() {
+        imageUploading = false;
+        pan_pic_url = downloadURL;
+      });
     }
   }
 
-  Future<void> requestCameraPermission() async {
+  void _uploadImage(ImageSource src, flag) async {
+    File? imageFile = await _pickImageFromGallery(src, flag);
+    if (imageFile != null) {
+      await _uploadImageToFirebase(imageFile, flag);
+    }
+  }
+
+  Future<void> requestCameraPermission(storePicVariable) async {
     Navigator.pop(context);
     PermissionStatus status = await Permission.camera.status;
     if (status == PermissionStatus.granted) {
-       _uploadImage(ImageSource.camera);
+      _uploadImage(ImageSource.camera, storePicVariable);
       // Permission is already granted, proceed with using the camera
       // You can navigate to the camera screen or do whatever you need
     } else {
       // Permission is not granted, request it
       PermissionStatus newStatus = await Permission.camera.request();
       if (newStatus == PermissionStatus.granted) {
-        _uploadImage(ImageSource.camera);
+        _uploadImage(ImageSource.camera, storePicVariable);
 
         // Permission granted, proceed with using the camera
       } else {
@@ -463,36 +707,36 @@ class _EkycFormScreenState extends State<EkycFormScreen> {
     }
   }
 
-  Future<void> requestGalleryPermission() async {
+  Future<void> requestGalleryPermission(flag) async {
     Navigator.pop(context);
-    if(Platform.isAndroid){
-              _uploadImage(ImageSource.gallery);
-    }else{
-    try {
-      PermissionStatus status = await Permission.photos.status;
-      // debugger();
-      if (status == PermissionStatus.granted) {
-        _uploadImage(ImageSource.gallery);
-        // Permission is already granted, proceed with using the camera
-        // You can navigate to the camera screen or do whatever you need
-      } else {
-        // Permission is not granted, request it
-        PermissionStatus newStatus = await Permission.photos.request();
-        debugger();
-        if (newStatus == PermissionStatus.granted) {
-          _uploadImage(ImageSource.gallery);
-
-          // Permission granted, proceed with using the camera
+    if (Platform.isAndroid) {
+      _uploadImage(ImageSource.gallery, flag);
+    } else {
+      try {
+        PermissionStatus status = await Permission.photos.status;
+        // debugger();
+        if (status == PermissionStatus.granted) {
+          _uploadImage(ImageSource.gallery, flag);
+          // Permission is already granted, proceed with using the camera
+          // You can navigate to the camera screen or do whatever you need
         } else {
-          // Permission denied, show a message or handle accordingly
-          print('galaery permission denied');
-          
-          //await Permission.camera.request();
+          // Permission is not granted, request it
+          PermissionStatus newStatus = await Permission.photos.request();
+          debugger();
+          if (newStatus == PermissionStatus.granted) {
+            _uploadImage(ImageSource.gallery, flag);
+
+            // Permission granted, proceed with using the camera
+          } else {
+            // Permission denied, show a message or handle accordingly
+            print('galaery permission denied');
+
+            //await Permission.camera.request();
+          }
         }
+      } catch (e) {
+        print("error =$e");
       }
-    } catch (e) {
-      print("error =$e");
-    }
     }
   }
 }

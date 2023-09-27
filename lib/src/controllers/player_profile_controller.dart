@@ -13,6 +13,7 @@ class PlayerProfileController extends GetxController{
 
 void getPlayerProfile(playerId)async{
    try{
+    playerProfileApiResponse=null;
     Map parameter = {NetworkConstant.playerid: playerId};
    // debugger();
     var response = await apiProvider.postAfterAuth(

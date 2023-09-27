@@ -30,7 +30,7 @@ class QuizController extends GetxController {
   int currentStockQty = 0;
   GetWalletApiResponse? getWalletApiResponse;
   GetQuizMyListApiResponse? getQuizMyListApiResponse;
-  Timer? _timer;
+  Timer? timer;
 
   Future<void> getWalletApi() async {
     Map parameter = {};
@@ -79,29 +79,29 @@ class QuizController extends GetxController {
 
   _startCallingQuizList(catId) {
     print("_startCalling method called");
-    if (_timer != null && _timer!.isActive) {
-      _timer!.cancel();
-      _timer = Timer.periodic(Duration(seconds: 5), (timer) {
+    if (timer != null && timer!.isActive) {
+      timer!.cancel();
+      timer = Timer.periodic(Duration(seconds: 5), (timer) {
         getQuizList(catId);
       });
     } else {
-      _timer = Timer.periodic(Duration(seconds: 5), (timer) {
+      timer = Timer.periodic(Duration(seconds: 5), (timer) {
         getQuizList(catId);
       });
     }
   }
-
+GetQuizByCategoryApiResponse? getQuizByMatchId;
   void getQuizListByMatchId(String matchId) async {
     try {
       Map paramter = {'match_id': matchId};
       //isFetchingData = true;
-      getQuizByCategoryApiResponse = null;
+      getQuizByMatchId = null;
       update();
       var response = await apiProvider.postAfterAuth(
           routeUrl: NetworkConstant.quizByMatchId, bodyParams: paramter);
-      getQuizByCategoryApiResponse =
+      getQuizByMatchId =
           GetQuizByCategoryApiResponse.fromJson(response);
-       
+       debugger();
       update();
     } catch (e) {
       print(e);
@@ -119,16 +119,17 @@ class QuizController extends GetxController {
       // debugger();
       update();
       calculateDefaultInvestmentAndReturns(flag);
-      _startQuizDetailsCallingApi(quizId,flag);
+     
     } catch (e) {
       print(e);
     }
   }
 
   Timer? quizDetailsTimer;
-  _startQuizDetailsCallingApi(String quizId, flag) {
-    print("quiz details api calling");
+  startQuizDetailsCallingApi(String quizId, flag) {
+  //quizDetailsTimer!.cancel();
     quizDetailsTimer = Timer.periodic((Duration(seconds: 5)), (timer) {
+       print("quiz details api calling");
       getQuizDetails(quizId, flag);
     });
   }

@@ -7,5 +7,11 @@ class EkycRequestBody{
   String bankHolderName;
   String upi;
   String adhaarPicUlr;
-  EkycRequestBody({required this.bankName,required this.ifscCode,required this.accountNumber,required this.bankHolderName,required this.upi,required this.adhaarPicUlr});
+  String adhaarBackPicUrl;
+  String panPicUrl;
+  EkycRequestBody({required this.bankName,required this.ifscCode,required this.accountNumber,required this.bankHolderName,required this.upi,required this.adhaarPicUlr,
+  required this.adhaarBackPicUrl,
+  required this.panPicUrl
+  
+  });
 }

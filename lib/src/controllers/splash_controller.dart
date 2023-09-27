@@ -13,6 +13,7 @@ import 'package:cricket_fantacy/src/models/check_ekyc_api_response.dart';
 import 'package:cricket_fantacy/src/models/eKycRequestBody.dart';
 import 'package:cricket_fantacy/src/models/get_leaderboard_api_response.dart';
 import 'package:cricket_fantacy/src/models/get_my_mateches_api_response.dart';
+import 'package:cricket_fantacy/src/models/get_promocode_api_response.dart';
 import 'package:cricket_fantacy/src/models/get_squad_api_response.dart';
 import 'package:cricket_fantacy/src/models/get_wallet_api_response.dart';
 import 'package:cricket_fantacy/src/models/get_winning_info_api_response.dart';
@@ -39,6 +40,7 @@ class HomeController extends GetxController {
   String profilePicUrl = 'https://www.computerhope.com/jargon/g/guest-user.png';
   late SplashDataApiResponse splashDataApiResponse;
   String userToken = '';
+  int totalCreditPoint = 100;
   GetMatchesApiResponse? getMatchesApiResponse;
   GetContestListApiResponse? getContestListApiResponse;
   GetWinningInfoApiResponse? getWinningInfoApiResponse;
@@ -73,13 +75,7 @@ class HomeController extends GetxController {
   String mySavedTeamId = '';
   int eKycStatus = 0;
 
-
-
-  List<ContestList>contestList=[];
-
-
-
-
+  List<ContestList> contestList = [];
 
   void getSplashData(context, flag) async {
     String? userToken = await sharedPref.getUserToken();
@@ -102,7 +98,7 @@ class HomeController extends GetxController {
     var response = await apiProvider.postBeforeAuthStaticToken(
         routeUrl: NetworkConstant.CUSTOMER_DATE_ROUTE_URL,
         bodyParams: parameter);
-     debugger();
+    //  debugger();
     //print(response);
     splashDataApiResponse = SplashDataApiResponse.fromJson(response);
     sharedPref.setAppToken(splashDataApiResponse.data.appToken);
@@ -146,24 +142,33 @@ class HomeController extends GetxController {
     Map parameter = {
       NetworkConstant.Status: 'Fixture',
     };
-    var response = await apiProvider.postBeforeAuth(
+    var response ;
+    
+    if(logInStatus){
+      
+     response= await apiProvider.postAfterAuth(
         routeUrl: NetworkConstant.GET_MATCHES, bodyParams: parameter);
+    }else{
+    response=  await apiProvider.postBeforeAuth(
+        routeUrl: NetworkConstant.GET_MATCHES, bodyParams: parameter);
+    }
     // debugger();
-    // print(response);
+    print(response);
     if (response != null) {
       getMatchesApiResponse = GetMatchesApiResponse.fromJson(response);
     } else {
       getMatchesApiResponse = null;
     }
     isFetchingData = false;
+    getWalletApi(context);
     update();
   }
 
-  void getContestList(context, matchId,entry,pricePool) async {
+  void getContestList(context, matchId, entry, pricePool) async {
     Map parameter = {
       NetworkConstant.MatchId: matchId,
-      'entry':entry,
-      'price_pool':pricePool
+      'entry': entry,
+      'price_pool': pricePool
     };
     var response = await apiProvider.postAfterAuth(
         routeUrl: NetworkConstant.GET_CONTEST, bodyParams: parameter);
@@ -206,7 +211,7 @@ class HomeController extends GetxController {
     };
     var response = await apiProvider.postAfterAuth(
         routeUrl: NetworkConstant.Get_Squad, bodyParams: parameter);
-debugger();
+// debugger();
     getSquadApiResponse = GetSquadApiResponse.fromJson(response);
 
     devidePlayersAccordingToTitle();
@@ -232,6 +237,7 @@ debugger();
     team1ChoosedPlayers.clear();
     team2ChoosedPlayers.clear();
     choosedPlayerList.clear();
+    // totalCreditPoint=100;
 
     update();
 
@@ -262,36 +268,35 @@ debugger();
 
   void clasifyChoosedPlayer(t1Id, t2Id) {
     for (int i = 0; i < getSquadApiResponse!.data.length; i++) {
-        //debugger();
+      //debugger();
       if (getSquadApiResponse!.data[i].isSelect == '1') {
         print(getSquadApiResponse!.data.length);
         //debugger();
         switch (getSquadApiResponse!.data[i].playerDesigination) {
-          
-          case AppConstant.wicketKeeper: 
+          case AppConstant.wicketKeeper:
             choosedWiketKeeperList.add(getSquadApiResponse!.data[i]);
-            dummywiketKeeperList[choosedWiketKeeperList.length-1] = 1;
+            dummywiketKeeperList[choosedWiketKeeperList.length - 1] = 1;
             //debugger();
 
             break;
           case AppConstant.batsMan:
             choosedBatsManList.add(getSquadApiResponse!.data[i]);
-            dummyBatsManList[choosedBatsManList.length-1] = 1;
+            dummyBatsManList[choosedBatsManList.length - 1] = 1;
             break;
           case AppConstant.bowler:
             choosedBowlerlist.add(getSquadApiResponse!.data[i]);
-            dummybowlerlist[choosedBowlerlist.length-1] = 1;
+            dummybowlerlist[choosedBowlerlist.length - 1] = 1;
             break;
           case AppConstant.allRownder:
             choosedAllRounderList.add(getSquadApiResponse!.data[i]);
-            dummyallRounderList[choosedAllRounderList.length-1] = 1;
+            dummyallRounderList[choosedAllRounderList.length - 1] = 1;
             break;
           default:
             break;
         }
+        choosedPlayerList.add(getSquadApiResponse!.data[i]);
+        devideTeam(t1Id, t2Id, getSquadApiResponse!.data[i], 1);
       }
-      choosedPlayerList.add(getSquadApiResponse!.data[i]);
-      devideTeam(t1Id, t2Id, getSquadApiResponse!.data[i], 1);
     }
   }
 
@@ -327,6 +332,7 @@ debugger();
         default:
           break;
       }
+      totalCreditPoint = totalCreditPoint - int.parse(player.creditPoints);
       choosedPlayerList.add(player);
       devideTeam(team1Id, team2Id, player, 1);
     }
@@ -374,13 +380,16 @@ debugger();
       default:
         break;
     }
+    totalCreditPoint = totalCreditPoint + int.parse(player.creditPoints);
     choosedPlayerList.remove(player);
     print(choosedPlayerList.length);
     devideTeam(team1Id, team2Id, player, 0);
     update();
   }
 
-  void choosedCaption(SquadPlayer player,) {
+  void choosedCaption(
+    SquadPlayer player,
+  ) {
     choosedCaptainId = player;
     // update();
   }
@@ -391,13 +400,13 @@ debugger();
   }
 
   void saveTeam(
-      {required Matches maches, required Contest contest, context,
-      required String myTeamID
-      
-      }) async {
+      {required Matches maches,
+      required Contest contest,
+      context,
+      required String myTeamID}) async {
     List<Map> selectedPlayer = [];
     showLoaderDialog(context);
-print(choosedPlayerList);
+    print(choosedPlayerList);
 // debugger();
     try {
       for (int i = 0; i < choosedPlayerList.length; i++) {
@@ -409,13 +418,13 @@ print(choosedPlayerList);
 
       Map parameter = {
         NetworkConstant.MatchId: maches.matchId.toString(),
-        NetworkConstant.MyTeamId: myTeamID==''?'0':myTeamID,
+        NetworkConstant.MyTeamId: myTeamID == '' ? '0' : myTeamID,
         NetworkConstant.List: json.encode(selectedPlayer),
         NetworkConstant.CaptainId: choosedCaptainId!.playerid,
         NetworkConstant.Vice_Captain_Id: choosedViceCaptainId!.playerid,
       };
 
-       print(parameter);
+      print(parameter);
       //  debugger();
       var response = await apiProvider.postAfterAuth(
           routeUrl: NetworkConstant.Save_Team_URL, bodyParams: parameter);
@@ -453,6 +462,7 @@ print(choosedPlayerList);
 
     update();
     checkKyc(context);
+    getPromoCode();
   }
 
   void joinContest({
@@ -467,17 +477,17 @@ print(choosedPlayerList);
     };
     var response = await apiProvider.postAfterAuth(
         routeUrl: NetworkConstant.Join_Contest, bodyParams: parameter);
-        //  debugger(); //
+    //  debugger(); //
     Navigator.pop(context);
-    
 
-    if (response['status']==200) {
+    if (response['status'] == 200) {
       Messages().showErrorMsg(
           context: context, message: 'Match created successfully done.');
       choosedCaptainId = null;
       choosedViceCaptainId = null;
       mySavedTeamId = '';
       choosedPlayerList.clear();
+      // totalCreditPoint=100;
       allRounderList.clear();
       batsManList.clear();
       wiketKeeperList.cast();
@@ -505,6 +515,7 @@ print(choosedPlayerList);
         bowlerlist.cast();
         mySavedTeamId = '';
         choosedPlayerList.clear();
+        // totalCreditPoint=100;
         dummyBatsManList.clear();
         dummyallRounderList.clear();
         dummybowlerlist.clear();
@@ -530,8 +541,8 @@ print(choosedPlayerList);
         Map parameter = {NetworkConstant.Status: status};
         var response = await apiProvider.postAfterAuth(
             routeUrl: NetworkConstant.MyMatchList_Url, bodyParams: parameter);
-        // debugger();
-        // print(response);
+
+        print(response);
         if (status == 'fixture') {
           // debugger();
           getUpcommingMyMatchResponse =
@@ -563,7 +574,8 @@ print(choosedPlayerList);
       NetworkConstant.mode: mode,
       NetworkConstant.transaction_details:
           "Transaction id= ${upiResponse.transactionId}, Transaction Ref Id=${upiResponse.transactionRefId}",
-      NetworkConstant.status: 'TXN_SUCCESS'
+      NetworkConstant.status: 'TXN_SUCCESS',
+      'promo_code':appliedPromoCode
     };
     var response = await apiProvider.postAfterAuth(
         routeUrl: NetworkConstant.recharge, bodyParams: parameter);
@@ -582,13 +594,14 @@ print(choosedPlayerList);
     Map parameter = {};
     var response = await apiProvider.postAfterAuthCustom(
         routeUrl: NetworkConstant.checkEkyc, bodyParams: parameter);
+        // debugger();
     print(response);
     if (response['status'] == 300) {
       eKycStatus = 1;
     } else if (response['status'] == 100) {
       checkEkyApiResponse = CheckEkyApiResponse.fromJson(response);
       eKycStatus = 2;
-    } else if (response['status'] == 100) {
+    } else if (response['status'] == 200) {
       eKycStatus = 3;
     }
 
@@ -600,7 +613,11 @@ print(choosedPlayerList);
     showLoaderDialog(context);
     update();
     Map parameter = {
-      'img': ekycRequestBody.adhaarPicUlr,
+      'img': ekycRequestBody.adhaarPicUlr +
+          ',' +
+          ekycRequestBody.adhaarBackPicUrl +
+          ',' +
+          ekycRequestBody.panPicUrl,
       'bank_name': ekycRequestBody.bankName,
       'ifsc_code': ekycRequestBody.ifscCode,
       'account_number': ekycRequestBody.accountNumber,
@@ -608,6 +625,7 @@ print(choosedPlayerList);
       'upi': ekycRequestBody.upi,
       'default': '0'
     };
+    debugger();
     var response = await apiProvider.postAfterAuth(
         routeUrl: NetworkConstant.requestEkyc, bodyParams: parameter);
     print(response);
@@ -647,10 +665,12 @@ print(choosedPlayerList);
       required Contest contest}) async {
     showLoaderDialog(context);
     update();
+    debugger();
     Map parameter = {'team_id': teamId};
     var response = await apiProvider.postAfterAuth(
         routeUrl: NetworkConstant.cloneTeam, bodyParams: parameter);
     print(response);
+    debugger();
     Navigator.pop(context);
     if (response['status'] == 200) {
       // debugger();
@@ -682,7 +702,65 @@ print(choosedPlayerList);
     getSquadApiResponse = GetSquadApiResponse.fromJson(response);
     // Navigator.pop(context);
     await devidePlayersAccordingToTitle();
-clasifyChoosedPlayer(t1Id, t2Id);
+    clasifyChoosedPlayer(t1Id, t2Id);
     update();
+  }
+
+  void setReminder(String matchId) async {
+    Map parameter = {
+      NetworkConstant.MatchId: matchId,
+    };
+    debugger();
+    var response = await apiProvider.postAfterAuth(
+        routeUrl: NetworkConstant.set_reminder, bodyParams: parameter);
+    debugger();
+    print(response);
+  }
+
+  GetPromoCode? getPromoCodeApiResponse;
+  TextEditingController promocodeController = new TextEditingController();
+  void getPromoCode() async {
+    var response = await apiProvider.postAfterAuth(
+        routeUrl: NetworkConstant.applyPromoCode, bodyParams: {});
+    if (response['status'] == 200) {
+      getPromoCodeApiResponse = GetPromoCode.fromJson(response);
+      promocodeController.text = getPromoCodeApiResponse!.data[0].code;
+    }
+    update();
+  }
+
+String appliedPromoCode='';
+  void applyPromoCode(String code,context) async {
+     showLoaderDialog(context);
+    Map parameter = {
+      'code':code
+    };
+    var response = await apiProvider.postAfterAuth(
+        routeUrl: NetworkConstant.validatePromoCode, bodyParams: parameter);
+    
+    Navigator.pop(context);
+   if(response['status']==200){
+     appliedPromoCode=code;
+    Messages().showMsg(context: context, message: 'Promocode successfully applied.');
+   }
+   update();
+  }
+
+   void requestForWithdrawal(String amount,context) async {
+     showLoaderDialog(context);
+    Map parameter = {
+      'amount':amount
+    };
+    var response = await apiProvider.postAfterAuth(
+        routeUrl: NetworkConstant.requestForWithdrawal, bodyParams: parameter);
+    // debugger();
+    Navigator.pop(context);
+   if(response['status']==200){
+     Messages().showErrorMsg(context: context, message: response['message']);
+     getWalletApi(context);
+   }else{
+    Messages().showErrorMsg(context: context, message: response['message']);
+   }
+   update();
   }
 }

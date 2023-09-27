@@ -112,10 +112,17 @@ class _UpcommingMatchesDetailsState extends State<JoinContest>
                   return WalletScreen();
                 }));
               },
-              child: Image.asset(
-                ImageUitls.Wallet_icon,
-                height: 20,
-                width: 20,
+              child: Container(
+width: 30,
+                height: 40,
+                child: Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Image.asset(
+                    ImageUitls.Wallet_icon,
+                    height: 20,
+                    width: 20,
+                  ),
+                ),
               ),
             ),
           )
@@ -160,7 +167,7 @@ class _UpcommingMatchesDetailsState extends State<JoinContest>
               width: MediaQuery.of(context).size.width / 1,
               child: LinearProgressIndicator(
                 minHeight: 4,
-                value: 0.3, // Set the value here
+                value:  ((int.parse(widget.contest.joinTeam)/int.parse(widget.contest.totalTeam))*100)/100,
                 backgroundColor: Colors.red[50],
                 valueColor:
                     AlwaysStoppedAnimation<Color>(ColorConstant.primaryColor),
@@ -281,13 +288,12 @@ class _UpcommingMatchesDetailsState extends State<JoinContest>
                         Row(children: [
                           Row(
                             children: [
-                              Image.asset(
-                                'assets/icons/first_winner.png',
-                                height: 25,
-                                width: 25,
-                              ),
+                                                    Image.asset('assets/new_icons/winner_not.png',
+                       height: 14,
+                       width: 14,
+                       ),
                               Text(
-                                "₹${widget.contest.firstPrize}  ",
+                                " ₹${widget.contest.firstPrize}  ",
                                 style: TextStyle(
                                     color: Colors.black45,
                                     fontSize: 15,
@@ -297,13 +303,12 @@ class _UpcommingMatchesDetailsState extends State<JoinContest>
                           ),
                           Row(
                             children: [
-                              Icon(
-                                Icons.wine_bar_rounded,
-                                size: 20,
-                                color: Colors.black45,
-                              ),
+                             Image.asset('assets/new_icons/trophy.png',
+                       height: 11,
+                       width: 11,
+                       ),
                               Text(
-                                "${widget.contest.winPercent}% ",
+                                " ${widget.contest.winPercent}% ",
                                 style: TextStyle(
                                     color: Colors.black45,
                                     fontSize: 15,

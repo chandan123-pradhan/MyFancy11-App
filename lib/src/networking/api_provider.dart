@@ -81,7 +81,7 @@ class ApiProvider {
           headers: {'Token': appToken!},
           body: bodyParams);
     // debugger();
-    //  print(response);
+     print(response);
       if (response.statusCode == 200|| response.statusCode==404) {
         return json.decode(response.body);
       } else if (response.statusCode == 400) {
@@ -143,6 +143,7 @@ class ApiProvider {
           body: bodyParams);
       // debugger();
       if (response.statusCode == 200) {
+        //debugger();
         return json.decode(response.body);
       } else if (response.statusCode == 400) {
         isUnAuthenicated=true;

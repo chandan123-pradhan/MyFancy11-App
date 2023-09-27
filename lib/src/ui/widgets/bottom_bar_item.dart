@@ -40,8 +40,11 @@ class _BottomBarItemState extends State<BottomBarItem> {
                 padding: const EdgeInsets.all(8.0),
                 child: Image.asset(
                   widget.imageName,
-                  height: 20,
-                  width: 20,
+                  height:
+                  widget.isSelected?20:
+                   18,
+                  width: widget.isSelected?20:
+                   18,
                   color:  Colors.black,
                 ),
               ),

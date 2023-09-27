@@ -114,8 +114,7 @@ class _FantacyTabState extends State<FantacyTab> {
                                             left: i == 0 ? 0 : 5, right: 5),
                                         child: InkWell(
                                           onTap: () {
-                                          print("sdfs");
-                                           
+                                            print("sdfs");
                                           },
                                           child: CurrentMatchCardWidget(
                                             myMatchModel: controller
@@ -177,11 +176,7 @@ class _FantacyTabState extends State<FantacyTab> {
                     imageUrl:
                         controller.splashDataApiResponse.homeBanner[i].img,
                     progressIndicatorBuilder:
-                        (context, url, downloadProgress) => Image.asset(
-                      ImageUitls.Banner1,
-                      width: MediaQuery.of(context).size.width / 1.2,
-                      fit: BoxFit.fill,
-                    ),
+                        (context, url, downloadProgress) => Container(),
                     errorWidget: (context, url, error) => Icon(Icons.error),
                   ),
               ],
@@ -207,7 +202,9 @@ class _FantacyTabState extends State<FantacyTab> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              for (int i = 0; i < 5; i++)
+              for (int i = 0;
+                  i < controller.splashDataApiResponse.homeBanner.length;
+                  i++)
                 Padding(
                   padding: const EdgeInsets.all(3.0),
                   child: Container(
@@ -267,7 +264,7 @@ class _FantacyTabState extends State<FantacyTab> {
                                             );
                                           }));
                                         } else {
-                                          Navigator.pushReplacement(context,
+                                          Navigator.push(context,
                                               MaterialPageRoute(
                                                   builder: (context) {
                                             return LoginScreen();

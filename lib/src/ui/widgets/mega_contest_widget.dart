@@ -135,7 +135,9 @@ class _MegaContestWidgetState extends State<MegaContestWidget> {
               width: MediaQuery.of(context).size.width / 1,
               child: LinearProgressIndicator(
                 minHeight: 4,
-                value: 0.3, // Set the value here
+                value: 
+                //((3/50)*100)/100,
+                ((int.parse(widget.contest.joinTeam)/int.parse(widget.contest.totalTeam))*100)/100, // Set the value here
                 backgroundColor: Colors.red[50],
                 valueColor:
                     AlwaysStoppedAnimation<Color>(ColorConstant.primaryColor),
@@ -187,12 +189,12 @@ class _MegaContestWidgetState extends State<MegaContestWidget> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                       Image.asset('assets/icons/first_winner.png',
-                       height: 25,
-                       width: 25,
+                       Image.asset('assets/new_icons/winner_not.png',
+                       height: 14,
+                       width: 14,
                        ),
                         Text(
-                          "₹${widget.contest.firstPrize}  ",
+                          " ₹${widget.contest.firstPrize}  ",
                           style: TextStyle(
                               color: Colors.black45,
                               fontSize: 15,
@@ -202,13 +204,12 @@ class _MegaContestWidgetState extends State<MegaContestWidget> {
                     ),
                     Row(
                       children: [
-                        Icon(
-                          Icons.wine_bar_rounded,
-                          size: 15,
-                          color: Colors.black45,
-                        ),
+                        Image.asset('assets/new_icons/trophy.png',
+                       height: 11,
+                       width: 11,
+                       ),
                         Text(
-                          "${widget.contest.winPercent}% ",
+                          " ${widget.contest.winPercent}% ",
                           style: TextStyle(
                               color: Colors.black45,
                               fontSize: 15,

@@ -58,6 +58,7 @@ class MyMatchModel {
     required this.mega,
     required this.team1,
     required this.team2,
+    required this.is_subscribe,
     required this.myteamCount,
     required this.contestCount,
   });
@@ -94,6 +95,7 @@ class MyMatchModel {
   late final String mega;
   late final Team1 team1;
   late final Team2 team2;
+  late final String is_subscribe;
   late final int myteamCount;
   late final String contestCount;
   
@@ -131,6 +133,7 @@ class MyMatchModel {
     mega = json['mega'];
     team1 = Team1.fromJson(json['team1']);
     team2 = Team2.fromJson(json['team2']);
+    is_subscribe=json['is_subscribe'].toString();
     myteamCount = json['myteam_count'];
     contestCount = json['contest_count'];
   }
@@ -170,6 +173,7 @@ class MyMatchModel {
     _data['mega'] = mega;
     _data['team1'] = team1.toJson();
     _data['team2'] = team2.toJson();
+    _data['is_subscribe']=is_subscribe;
     _data['myteam_count'] = myteamCount;
     _data['contest_count'] = contestCount;
     return _data;

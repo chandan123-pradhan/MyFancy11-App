@@ -1,6 +1,8 @@
+import 'package:cricket_fantacy/src/controllers/quiz_controller.dart';
 import 'package:cricket_fantacy/src/controllers/splash_controller.dart';
 import 'package:cricket_fantacy/src/global_variable.dart';
 import 'package:cricket_fantacy/src/ui/screens/auth_screens/auth_landing_page.dart';
+import 'package:cricket_fantacy/src/ui/screens/auth_screens/login_screen.dart';
 import 'package:cricket_fantacy/src/ui/screens/home_tab/home_screen.dart';
 import 'package:cricket_fantacy/src/ui/screens/my_matches_tab/my_matches_tab.dart';
 import 'package:cricket_fantacy/src/ui/screens/notification_screens/Notification_screen.dart';
@@ -32,18 +34,24 @@ class _DashboardScreenState extends State<DashboardScreen> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   Widget _body = Container();
   var controller = Get.put(HomeController());
+  var quizController = Get.put(QuizController());
   void _changeIndex(int value) {
     _currentIndex = value;
     _body = _screens[_currentIndex];
     setState(() {});
   }
 
-  List<Widget> _screens = [HomeScreen(), MyMatchesTab(), WinnersTab(),PortfolioScreen()];
+  List<Widget> _screens = [
+    HomeScreen(),
+    MyMatchesTab(),
+    WinnersTab(),
+    PortfolioScreen()
+  ];
 
   @override
   void initState() {
     _body = _screens[widget.index];
-    _currentIndex=widget.index;
+    _currentIndex = widget.index;
     controller.getUsersProfile();
     controller.getMatchesApiCall(context);
     callGetMyMatchApi();
@@ -85,14 +93,29 @@ class _DashboardScreenState extends State<DashboardScreen> {
           actions: [
             InkWell(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return NotificationScreen();
-                }));
+                if (logInStatus) {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return NotificationScreen();
+                  }));
+                } else {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return LoginScreen();
+                  }));
+                }
               },
-              child: Image.asset(
-                ImageUitls.Notification_icon,
-                height: 20,
-                width: 20,
+              child: Container(
+                width: 30,
+                height: 40,
+                child: Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Container(
+                    child: Image.asset(
+                      ImageUitls.Notification_icon,
+                      height: 20,
+                      width: 20,
+                    ),
+                  ),
+                ),
               ),
             ),
             SizedBox(
@@ -105,15 +128,22 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     return WalletScreen();
                   }));
                 } else {
-                  Messages().showErrorMsg(
-                      context: context,
-                      message: 'You are a Guest, Please Login First');
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return LoginScreen();
+                  }));
                 }
               },
-              child: Image.asset(
-                ImageUitls.Wallet_icon,
-                height: 20,
-                width: 20,
+              child: Container(
+width: 30,
+                height: 40,
+                child: Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Image.asset(
+                    ImageUitls.Wallet_icon,
+                    height: 20,
+                    width: 20,
+                  ),
+                ),
               ),
             ),
             SizedBox(
@@ -123,7 +153,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
       ),
       drawer: DrawerWidget(),
-      bottomSheet: BottomAppBar(
+      bottomSheet: 
+      logInStatus?
+      
+      BottomAppBar(
         elevation: 0,
         height: 70,
         color: Colors.transparent,
@@ -145,19 +178,23 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 InkWell(
                   onTap: () {
                     _changeIndex(0);
+                    quizController.timer!.cancel();
+                    //quizController.quizDetailsTimer!.cancel();
                   },
                   child: BottomBarItem(
                     imageName: ImageUitls.UnSelected_home,
-                    title: 'Home',
+                    title: 'Home', 
                     isSelected: _currentIndex == 0 ? true : false,
                   ),
                 ),
                 InkWell(
                   onTap: () {
                     _changeIndex(1);
+                    quizController.timer!.cancel();
+                    // quizController.quizDetailsTimer!.cancel();
                   },
                   child: BottomBarItem(
-                    imageName: ImageUitls.UnSelected_mymaches,
+                    imageName: 'assets/new_icons/match_not.png',
                     title: 'My Matches',
                     isSelected: _currentIndex == 1 ? true : false,
                   ),
@@ -165,15 +202,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 InkWell(
                     onTap: () {
                       _changeIndex(2);
+                      quizController.timer!.cancel();
+                      //   quizController.quizDetailsTimer!.cancel();
                     },
                     child: BottomBarItem(
                       imageName: ImageUitls.UnSelected_winners,
                       title: 'Winners',
                       isSelected: _currentIndex == 2 ? true : false,
                     )),
-
-
-                     InkWell(
+                InkWell(
                     onTap: () {
                       _changeIndex(3);
                     },
@@ -186,7 +223,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ),
           ),
         ),
-      ),
+      )
+   
+   :Container(
+    height: 0,
+   )
+   
     );
   }
 }

@@ -1,12 +1,15 @@
 import 'package:cricket_fantacy/src/controllers/auth_controllers.dart';
+import 'package:cricket_fantacy/src/ui/screens/auth_screens/login_screen.dart';
 import 'package:cricket_fantacy/src/ui/screens/auth_screens/otp_screen.dart';
 import 'package:cricket_fantacy/src/ui/screens/upcomming_feature_screen.dart';
 import 'package:cricket_fantacy/src/utils/color_scheme.dart';
 import 'package:cricket_fantacy/src/utils/image_utils.dart';
+import 'package:cricket_fantacy/src/utils/messages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -17,7 +20,8 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   bool _isActive = true;
-var controller=Get.put(AuthController());
+  var controller = Get.put(AuthController());
+  bool isCheckBottonTrue=false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,15 +54,15 @@ var controller=Get.put(AuthController());
       ),
       body: SingleChildScrollView(
         child: Column(children: [
-
-    Padding(
+          Padding(
             padding: const EdgeInsets.all(15.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 InkWell(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context){
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
                       return UpcommingFeatureScreen();
                     }));
                   },
@@ -101,9 +105,15 @@ var controller=Get.put(AuthController());
                     ),
                   ),
                 ),
-               InkWell(
-                  onTap: (){
-                    controller.registerWithGoogle(context);
+                InkWell(
+                  onTap: () {
+
+                     if(isCheckBottonTrue){
+                      controller.registerWithGoogle(context);
+                    }else{
+                      Messages().showErrorMsg(context: context, message: 'Please check Terms & Conditions and Privacy Policy Firtst');
+                    }
+                   
                     // Navigator.push(context, MaterialPageRoute(builder: (context){
                     //   return UpcommingFeatureScreen();
                     // }));
@@ -152,31 +162,27 @@ var controller=Get.put(AuthController());
               ],
             ),
           ),
-      
-        
-
-           Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: TextFormField(
-            controller: controller.referByController,
-              onChanged: (val){
-                
-              },
-              decoration: InputDecoration(
-                suffixIcon: Icon(Icons.paste,size:20,color: ColorConstant.primaryBlackColor,),
-                  filled: true, hintText: "Enter invited code"),
-            ),
-          ),
-        
-         
           Padding(
             padding: const EdgeInsets.all(15.0),
             child: TextFormField(
-              controller:controller.phoneNumberController ,
+              controller: controller.referByController,
+              onChanged: (val) {},
+              decoration: InputDecoration(
+                  suffixIcon: Icon(
+                    Icons.paste,
+                    size: 20,
+                    color: ColorConstant.primaryBlackColor,
+                  ),
+                  filled: true,
+                  hintText: "Enter invited code"),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: TextFormField(
+              controller: controller.phoneNumberController,
               enabled: true,
-              onChanged: (val){
-               
-              },
+              onChanged: (val) {},
               decoration: InputDecoration(
                   filled: true, hintText: "Email or Mobile No."),
             ),
@@ -185,7 +191,7 @@ var controller=Get.put(AuthController());
             padding: const EdgeInsets.fromLTRB(15, 15, 15, 20),
             child: InkWell(
               onTap: () {
-                if (_isActive == true) {
+                if (isCheckBottonTrue &&  _isActive == true) {
                   controller.verifyRefferalCode(context);
                   // Navigator.push(
                   //   context,
@@ -202,7 +208,7 @@ var controller=Get.put(AuthController());
                 width: MediaQuery.of(context).size.width / 1,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
-                    color: _isActive == true
+                    color: isCheckBottonTrue == true
                         ? ColorConstant.primaryBlackColor
                         : Colors.grey[400]),
                 alignment: Alignment.center,
@@ -217,19 +223,104 @@ var controller=Get.put(AuthController());
             ),
           ),
           InkWell(
-            onTap: (){
-
-              Navigator.pop(context);
-                         controller.phoneNumberController.clear();
+            onTap: () {
+              controller.phoneNumberController.clear();
+              Get.deleteAll();
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return const LoginScreen();
+              }));
             },
-            child: Text(
+            child:
+            
+             Text(
               "Already have an account? Login",
               style: TextStyle(
-                  color: Colors.black, fontSize: 12, fontWeight: FontWeight.w600),
+                  color: Colors.black,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600),
             ),
           ),
+          
+         Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                InkWell(
+                  onTap: () {
+                    setState(() {
+                      isCheckBottonTrue = !isCheckBottonTrue;
+                    });
+                  },
+                  child: Icon(
+                    isCheckBottonTrue == false
+                        ? Icons.check_box_outline_blank_outlined
+                        : Icons.check_box,
+                    size: 20,
+                    color: ColorConstant.primaryColor,
+                  ),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Row(
+                  children: [
+                    Text(
+                      "I Agree all ",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600),
+                    ),
+                    InkWell(
+                      onTap: () async {
+                       openWeb('https://myfancy11.com/terms.html');
+                      },
+                      child: Text(
+                        "Terms & Conditions",
+                        style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            color: Colors.black,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                    Text(
+                      " and ",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600),
+                    ),
+                    InkWell(
+                      onTap: (){
+                        openWeb('https://myfancy11.com/privacy.html');
+                      },
+                      child: Text(
+                        "Privacy Policy",
+                        style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            color: Colors.black,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          )
+      
         ]),
       ),
     );
+  }
+
+
+
+    void openWeb(String url){
+ launchUrl(Uri.parse(url),
+ mode: LaunchMode.inAppWebView,
+ );
   }
 }

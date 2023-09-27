@@ -256,7 +256,8 @@ class AuthController extends GetxController {
 
   void googleLogin(context) {
          showLoaderDialog(context);
-    GoogleSignInService().signInWithGoogle().then((value) async {
+   try{
+     GoogleSignInService().signInWithGoogle().then((value) async {
       //  debugger();
       if (value != null) {
 
@@ -300,6 +301,12 @@ class AuthController extends GetxController {
         }
       }
     });
+  
+  
+   }catch(e){
+    Navigator.pop(context);
+   }
+  
   }
 
 

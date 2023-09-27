@@ -12,10 +12,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LiveContestScreen extends StatefulWidget {
   final MyMatchModel myMatchModel;
-  LiveContestScreen({required this.myMatchModel});
+  final String flag;
+  LiveContestScreen({required this.myMatchModel,required this.flag});
 
   @override
   State<LiveContestScreen> createState() => _LiveContestScreenState();
@@ -88,36 +90,19 @@ class _LiveContestScreenState extends State<LiveContestScreen>
           ),
           centerTitle: false,
           title: Text(
-            "Live Match",
+          widget.flag,
             style: TextStyle(
                 color: ColorConstant.primaryWhiteColor,
                 fontSize: 17,
                 fontWeight: FontWeight.w600),
           ),
           actions: [
-            Padding(
-              padding: const EdgeInsets.only(right: 10.0),
-              child: InkWell(
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return WalletScreen();
-                  }));
-                },
-                child: Icon(
-                  Icons.help_outline_outlined,
-                  size: 27,
-                  color: ColorConstant.primaryWhiteColor,
-                ),
-              ),
-            ),
+           
             Padding(
               padding: const EdgeInsets.only(right: 20.0),
               child: InkWell(
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return WalletScreen();
-                    }));
+                 openWeb('https://myfancy11.com/points-table.html');
                   },
                   child: Container(
                     height: 22,
@@ -778,5 +763,12 @@ class _LiveContestScreenState extends State<LiveContestScreen>
         ),
       ),
     );
+  }
+
+
+  void openWeb(String url){
+ launchUrl(Uri.parse(url),
+ mode: LaunchMode.inAppWebView,
+ );
   }
 }

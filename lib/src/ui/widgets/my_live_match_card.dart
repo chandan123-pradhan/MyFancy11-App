@@ -81,39 +81,7 @@ class _MyLiveMatchCardState extends State<MyLiveMatchCard> {
                             fontSize: 13,
                             fontWeight: FontWeight.w600),
                       ),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.live_tv_sharp,
-                            size: 18,
-                            color: Colors.black38,
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          widget.matches.elevenOut == 0
-                              ? Container()
-                              : Row(
-                                  children: [
-                                    Icon(
-                                      Icons.person_outlined,
-                                      size: 15,
-                                      color: Colors.black38,
-                                    ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Text(
-                                      'Linup out',
-                                      style: TextStyle(
-                                          color: ColorConstant.greenColor,
-                                          fontSize: 13,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ],
-                                ),
-                        ],
-                      )
+                     
                     ],
                   ),
                   SizedBox(
@@ -263,22 +231,22 @@ class _MyLiveMatchCardState extends State<MyLiveMatchCard> {
                           ),
                         ),
                       ),
-                      Container(
-                        height: 25,
-                        width: 30,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.white,
-                            border:
-                                Border.all(width: 1, color: Colors.black26)),
-                        child: Image.asset(
-                          ImageUitls.Notification_icon,
-                          height: 15,
-                          width: 15,
-                          color: Colors.black,
-                        ),
-                      ),
+                      // Container(
+                      //   height: 25,
+                      //   width: 30,
+                      //   alignment: Alignment.center,
+                      //   decoration: BoxDecoration(
+                      //       borderRadius: BorderRadius.circular(10),
+                      //       color: Colors.white,
+                      //       border:
+                      //           Border.all(width: 1, color: Colors.black26)),
+                      //   child: Image.asset(
+                      //     ImageUitls.Notification_icon,
+                      //     height: 15,
+                      //     width: 15,
+                      //     color: Colors.black,
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),

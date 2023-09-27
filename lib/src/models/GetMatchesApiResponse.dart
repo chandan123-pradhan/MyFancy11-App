@@ -58,6 +58,8 @@ class Matches {
     required this.mega,
     required this.team1,
     required this.team2,
+    required this.is_subscribe,
+    required this.vanue
   });
   late final int matchId;
   late final int uniqueId;
@@ -92,6 +94,8 @@ class Matches {
   late final int mega;
   late final Team1 team1;
   late final Team2 team2;
+  late final String is_subscribe;
+  late final String vanue;
   
   Matches.fromJson(Map<String, dynamic> json){
     matchId = json['match_id'];
@@ -127,6 +131,8 @@ class Matches {
     mega = json['mega'];
     team1 = Team1.fromJson(json['team1']);
     team2 = Team2.fromJson(json['team2']);
+    is_subscribe=json['is_subscribe'].toString();
+    vanue=json['vanue'].toString();
   }
 
   Map<String, dynamic> toJson() {
@@ -164,6 +170,8 @@ class Matches {
     _data['mega'] = mega;
     _data['team1'] = team1.toJson();
     _data['team2'] = team2.toJson();
+    _data['is_subscribe']=is_subscribe;
+    _data['vanue']=vanue;
     return _data;
   }
 }

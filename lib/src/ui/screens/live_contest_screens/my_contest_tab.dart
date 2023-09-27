@@ -9,8 +9,6 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 
 class MyContestTab extends StatefulWidget {
-  
-
   @override
   State<MyContestTab> createState() => _MyContestTabState();
 }
@@ -29,11 +27,10 @@ class _MyContestTabState extends State<MyContestTab> {
                     return Padding(
                       padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
                       child: InkWell(
-                        onTap: (){
-                          controller.updateMycontestScreen(
-                            controller.myContestApiResponse!.data[index].contestId.toString()
-                          );
-
+                        onTap: () {
+                          controller.updateMycontestScreen(controller
+                              .myContestApiResponse!.data[index].contestId
+                              .toString());
                         },
                         child: Container(
                           height: 120,
@@ -56,15 +53,15 @@ class _MyContestTabState extends State<MyContestTab> {
                                 height: 40,
                                 width: MediaQuery.of(context).size.width / 1,
                                 child: Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 15, right: 15),
+                                  padding: const EdgeInsets.only(
+                                      left: 15, right: 15),
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        controller.myContestApiResponse!.data[index]
-                                            .contestName,
+                                        controller.myContestApiResponse!
+                                            .data[index].contestName,
                                         style: TextStyle(
                                             color:
                                                 ColorConstant.primaryBlackColor,
@@ -88,8 +85,8 @@ class _MyContestTabState extends State<MyContestTab> {
                                 color: Colors.black12,
                                 width: MediaQuery.of(context).size.width / 1,
                                 child: Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 15, right: 15),
+                                  padding: const EdgeInsets.only(
+                                      left: 15, right: 15),
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
@@ -103,18 +100,28 @@ class _MyContestTabState extends State<MyContestTab> {
                                                 MainAxisAlignment.start,
                                             children: [
                                               Image.asset(
-                                                "assets/icons/first_winner.png",
-                                                height: 32,
-                                                width: 32,
+                                                "assets/new_icons/winner_not.png",
+                                                height: 15,
+                                                width: 15,
                                               ),
-                      // Icon(Icons.first)
+                                              // Icon(Icons.first)
+
+                                              SizedBox(
+                                                width: 5,
+                                              ),
+
                                               Text(
-                                                "Glory awaits!",
+                                                "₹" +
+                                                    controller
+                                                        .myContestApiResponse!
+                                                        .data[index]
+                                                        .firstPrize,
                                                 style: TextStyle(
                                                     color: ColorConstant
                                                         .primaryBlackColor,
                                                     fontSize: 13,
-                                                    fontWeight: FontWeight.w400),
+                                                    fontWeight:
+                                                        FontWeight.w400),
                                               )
                                             ],
                                           ),
@@ -125,35 +132,27 @@ class _MyContestTabState extends State<MyContestTab> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.start,
                                             children: [
-                                              Container(
-                                                height: 15,
-                                                width: 15,
-                                                decoration: BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    border: Border.all(
-                                                        width: 1,
-                                                        color: Colors.black54)),
-                                                alignment: Alignment.center,
-                                                child: Text(
-                                                  "S",
-                                                  style: TextStyle(
-                                                      color: Colors.black54,
-                                                      fontSize: 10,
-                                                      fontWeight:
-                                                          FontWeight.w600),
-                                                ),
+                                              Image.asset(
+                                                'assets/new_icons/trophy.png',
+                                                height: 11,
+                                                width: 11,
                                               ),
                                               SizedBox(
                                                 width: 5,
                                               ),
-                      // Icon(Icons.first)
+                                              // Icon(Icons.first)
                                               Text(
-                                                "Single",
+                                                controller
+                                                        .myContestApiResponse!
+                                                        .data[index]
+                                                        .winPercent +
+                                                    "%",
                                                 style: TextStyle(
                                                     color: ColorConstant
                                                         .primaryBlackColor,
                                                     fontSize: 13,
-                                                    fontWeight: FontWeight.w400),
+                                                    fontWeight:
+                                                        FontWeight.w400),
                                               )
                                             ],
                                           ),
@@ -168,7 +167,7 @@ class _MyContestTabState extends State<MyContestTab> {
                                             size: 18,
                                             color: Colors.black54,
                                           ),
-                      // Icon(Icons.first)
+                                          // Icon(Icons.first)
                                           SizedBox(
                                             width: 5,
                                           ),
@@ -245,8 +244,12 @@ class _MyContestTabState extends State<MyContestTab> {
                                         ],
                                       ),
                                       Text(
-                                      controller.myContestApiResponse!
-                                                  .data[index].rank  ,
+                                        controller.myContestApiResponse!
+                                                    .data[index].rank ==
+                                                'null'
+                                            ? ''
+                                            : controller.myContestApiResponse!
+                                                .data[index].rank,
                                         style: TextStyle(
                                             color: Colors.black, fontSize: 15),
                                       )

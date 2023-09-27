@@ -23,9 +23,13 @@ class _TeamPreviewPageState extends State<TeamPreviewPage> {
           return Column(
             children: [
               Container(
+                height: 40,
+color: ColorConstant.primaryBlackColor,
+              ),
+              Container(
                 height: 70,
                 width: MediaQuery.of(context).size.width / 1,
-                color: Colors.black87,
+                color: ColorConstant.primaryBlackColor,
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(15, 20, 15, 0),
                   child: Row(
@@ -44,7 +48,7 @@ class _TeamPreviewPageState extends State<TeamPreviewPage> {
                                 fontWeight: FontWeight.w500),
                           ),
                           Text(
-                            "${controller.choosedPlayerList.length}",
+                            "${controller.choosedPlayerList.length+1}",
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 13,
@@ -129,7 +133,7 @@ class _TeamPreviewPageState extends State<TeamPreviewPage> {
                                 fontWeight: FontWeight.w500),
                           ),
                           Text(
-                            "2.0",
+                            controller.totalCreditPoint.toString(),
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 13,

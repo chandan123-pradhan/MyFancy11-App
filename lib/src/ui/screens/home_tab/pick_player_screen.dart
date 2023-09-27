@@ -30,7 +30,8 @@ class PickPlayerScreen extends StatefulWidget {
   final Contest contest;
   final String myTeamId;
 
-  PickPlayerScreen({required this.matches, required this.contest,required this.myTeamId});
+  PickPlayerScreen(
+      {required this.matches, required this.contest, required this.myTeamId});
 
   @override
   State<PickPlayerScreen> createState() => _PickPlayerScreenState();
@@ -43,13 +44,13 @@ class _PickPlayerScreenState extends State<PickPlayerScreen>
   var controller = Get.put(HomeController());
 
   void callGetWinningInfo() {
-    if(widget.myTeamId==''){
-    controller.getSquad(context, widget.contest.matchId);
-    }else{
-      controller.getMyTeamSquad(context, widget.contest.matchId, widget.myTeamId,
-      
-      widget.matches.teamid1,widget.matches.teamid2
-      );
+    if (widget.myTeamId == '') {
+       controller.totalCreditPoint=100;
+      controller.getSquad(context, widget.contest.matchId);
+    } else {
+      controller.totalCreditPoint=0;
+      controller.getMyTeamSquad(context, widget.contest.matchId,
+          widget.myTeamId, widget.matches.teamid1, widget.matches.teamid2);
     }
   }
 
@@ -59,11 +60,9 @@ class _PickPlayerScreenState extends State<PickPlayerScreen>
     _tabController = TabController(
         length: 4,
         vsync: this); // Change the length to match the number of tabs
-   _calculateTimeRemaining();
+    _calculateTimeRemaining();
     callGetWinningInfo();
   }
-
-
 
   var targetDate;
 
@@ -79,7 +78,6 @@ class _PickPlayerScreenState extends State<PickPlayerScreen>
     //return '';
     setState(() {});
   }
-
 
   void _pickPlayer(player) {
     playersList.add(player);
@@ -138,17 +136,23 @@ class _PickPlayerScreenState extends State<PickPlayerScreen>
           Padding(
             padding: const EdgeInsets.only(right: 20.0),
             child: InkWell(
-              onTap: (){
-                                    Navigator.push(context, MaterialPageRoute(builder: (context){
-                                    return WalletScreen();
-                                  }));
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return WalletScreen();
+                }));
               },
-              child: Image.asset(
-                ImageUitls.Wallet_icon,
-                height: 20,
-                width: 20,
-              ),
-            ),
+              child: Container(
+width: 30,
+                height: 40,
+                child: Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Image.asset(
+                    ImageUitls.Wallet_icon,
+                    height: 20,
+                    width: 20,
+                  ),
+                ),
+              ),            ),
           )
         ],
       ),
@@ -206,7 +210,7 @@ class _PickPlayerScreenState extends State<PickPlayerScreen>
                                           child: Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
-                                            children:  [
+                                            children: [
                                               Text(
                                                 "Players",
                                                 style: TextStyle(
@@ -236,19 +240,18 @@ class _PickPlayerScreenState extends State<PickPlayerScreen>
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.center,
                                             children: [
-                                             Container(
-                                              height: 35,
-                                              width: 35,
-                                              decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                image: DecorationImage(
-                                                  image: NetworkImage(
-                                                    widget.matches.team1.teamImage,
-                                                  ),
-                                                  fit: BoxFit.fill
-                                                )
+                                              Container(
+                                                height: 35,
+                                                width: 35,
+                                                decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    image: DecorationImage(
+                                                        image: NetworkImage(
+                                                          widget.matches.team1
+                                                              .teamImage,
+                                                        ),
+                                                        fit: BoxFit.fill)),
                                               ),
-                                             ),
                                               SizedBox(
                                                 width: 10,
                                               ),
@@ -305,7 +308,7 @@ class _PickPlayerScreenState extends State<PickPlayerScreen>
                                                         fontWeight:
                                                             FontWeight.w600),
                                                   ),
-                                                   
+
                                                   // Text(
                                                   //   "0",
                                                   //   style: TextStyle(
@@ -316,7 +319,7 @@ class _PickPlayerScreenState extends State<PickPlayerScreen>
                                                   // ),
                                                 ],
                                               ),
-                                               SizedBox(
+                                              SizedBox(
                                                 width: 10,
                                               ),
                                               Image.network(
@@ -335,7 +338,7 @@ class _PickPlayerScreenState extends State<PickPlayerScreen>
                                                 CrossAxisAlignment.end,
                                             children: [
                                               Text(
-                                                "Players",
+                                                "Credit Left",
                                                 style: TextStyle(
                                                     color: Colors.white54,
                                                     fontSize: 13,
@@ -343,7 +346,7 @@ class _PickPlayerScreenState extends State<PickPlayerScreen>
                                                         FontWeight.w500),
                                               ),
                                               Text(
-                                                 "${controller.team2ChoosedPlayers.length}/11",
+                                                "${controller.totalCreditPoint}",
                                                 style: TextStyle(
                                                     color: Colors.white,
                                                     fontSize: 13,
@@ -405,52 +408,24 @@ class _PickPlayerScreenState extends State<PickPlayerScreen>
                                         left: 15, right: 15),
                                     child: Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                          MainAxisAlignment.center,
                                       children: [
                                         Text(
-                                          "Pitch Balanced",
+                                          "Vanue:-",
                                           style: TextStyle(
                                               color: Colors.white,
                                               fontSize: 10,
                                               fontWeight: FontWeight.w400),
                                         ),
-                                        Icon(
-                                          Icons.circle,
-                                          size: 6,
-                                          color: Colors.white,
-                                        ),
-                                        Text(
-                                          "Good for Pace",
+                                         Text(
+                                          widget.matches.vanue,
                                           style: TextStyle(
                                               color: Colors.white,
                                               fontSize: 10,
                                               fontWeight: FontWeight.w400),
                                         ),
-                                        Icon(
-                                          Icons.circle,
-                                          size: 6,
-                                          color: Colors.white,
-                                        ),
-                                        Text(
-                                          "Avg Score 129",
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.w400),
-                                        ),
-                                        Icon(
-                                          Icons.circle,
-                                          size: 6,
-                                          color: Colors.white,
-                                        ),
-                                        Text(
-                                          "Venue Salem",
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.w400),
-                                        ),
-                                      ],
+                                       
+                                          ],
                                     ),
                                   ),
                                   SizedBox(
@@ -471,7 +446,7 @@ class _PickPlayerScreenState extends State<PickPlayerScreen>
                                   tabs: [
                                     Tab(
                                       text:
-                                          'Vkt(${controller.choosedWiketKeeperList.length})',
+                                          'Wk(${controller.choosedWiketKeeperList.length})',
                                     ),
                                     Tab(
                                         text:
@@ -512,10 +487,10 @@ class _PickPlayerScreenState extends State<PickPlayerScreen>
                 bottom: 10,
                 left: 20,
                 child: Container(
-                  height: 45,
+                  height: 40,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(40),
-                    color: Colors.black87,
+                    color: Colors.black54,
                     boxShadow: [
                       BoxShadow(
                         color: Colors.grey.withOpacity(0.5),
@@ -526,13 +501,14 @@ class _PickPlayerScreenState extends State<PickPlayerScreen>
                     ],
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 15.0, right: 15),
+                    padding: const EdgeInsets.only(left: 10.0, right: 10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         InkWell(
-                          onTap: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context){
+                          onTap: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
                               return TeamPreviewPage();
                             }));
                           },
@@ -540,17 +516,17 @@ class _PickPlayerScreenState extends State<PickPlayerScreen>
                             children: const [
                               Icon(
                                 Icons.remove_red_eye,
-                                size: 20,
+                                size: 15,
                                 color: ColorConstant.primaryWhiteColor,
                               ),
                               SizedBox(
-                                width: 10,
+                                width: 5,
                               ),
                               Text(
                                 "PREVIEW",
                                 style: TextStyle(
                                     color: ColorConstant.primaryWhiteColor,
-                                    fontSize: 15,
+                                    fontSize: 12,
                                     fontWeight: FontWeight.w500),
                               ),
                             ],
@@ -559,31 +535,36 @@ class _PickPlayerScreenState extends State<PickPlayerScreen>
                         const SizedBox(
                           width: 10,
                         ),
-                        const Text(
+                  widget.matches.elevenOut==0?Container():        const Text(
                           "/",
                           style: TextStyle(
                               color: Colors.white38,
                               fontSize: 15,
                               fontWeight: FontWeight.w500),
                         ),
-                        const SizedBox(
+                       widget.matches.elevenOut==0?Container():   const SizedBox(
                           width: 10,
                         ),
+                   
+                   widget.matches.elevenOut==0?Container():
+                   
                         Row(
-                          children: const [
+                          children:  [
                             Icon(
                               Icons.remove_red_eye,
-                              size: 20,
+                              size: 15,
                               color: ColorConstant.primaryWhiteColor,
                             ),
                             SizedBox(
-                              width: 10,
+                              width: 5,
                             ),
                             Text(
-                              "LINEUP",
+                          
+                          
+                           "LINEUP",
                               style: TextStyle(
                                   color: ColorConstant.primaryWhiteColor,
-                                  fontSize: 15,
+                                  fontSize: 12,
                                   fontWeight: FontWeight.w500),
                             ),
                           ],
@@ -601,44 +582,57 @@ class _PickPlayerScreenState extends State<PickPlayerScreen>
                       return InkWell(
                         onTap: () {
                           print(controller.choosedPlayerList.length);
+
                           if (controller.choosedPlayerList.length >= 11) {
-                            if(controller.choosedAllRounderList.isEmpty){
-                              Messages().showErrorMsg(context: context, message: 'Minimum 1 Player Should be choose From Allrounders');
-                            }
-                            else if(controller.choosedBatsManList.isEmpty){
-                              Messages().showErrorMsg(context: context, message: 'Minimum 1 Player should be choose from Batsmans');
-                            }else 
-                            if(controller.choosedBowlerlist.isEmpty ){
-                              Messages().showErrorMsg(context: context, message: 'Minimum 1 Player should be choose from Bowllers');
-                            }else 
-                            if(controller.choosedWiketKeeperList.isEmpty){
-                              Messages().showErrorMsg(context: context, message: 'Minimum 1 Player should be choose from Wicketkeepers');
-                            }
-                            else if(controller.team1ChoosedPlayers.isEmpty || controller.team2ChoosedPlayers.isEmpty){
-                              Messages().showErrorMsg(context: context, message: 'Minimum 1 Player should be choose from each team');
-                            }
-                            
-                            else{
+                            if (controller.choosedAllRounderList.isEmpty) {
+                              Messages().showErrorMsg(
+                                  context: context,
+                                  message:
+                                      'Minimum 1 Player Should be choose From Allrounders');
+                            } else if (controller.choosedBatsManList.isEmpty) {
+                              Messages().showErrorMsg(
+                                  context: context,
+                                  message:
+                                      'Minimum 1 Player should be choose from Batsmans');
+                            } else if (controller.choosedBowlerlist.isEmpty) {
+                              Messages().showErrorMsg(
+                                  context: context,
+                                  message:
+                                      'Minimum 1 Player should be choose from Bowllers');
+                            } else if (controller
+                                .choosedWiketKeeperList.isEmpty) {
+                              Messages().showErrorMsg(
+                                  context: context,
+                                  message:
+                                      'Minimum 1 Player should be choose from Wicketkeepers');
+                            } else if (controller.team1ChoosedPlayers.isEmpty ||
+                                controller.team2ChoosedPlayers.isEmpty) {
+                              Messages().showErrorMsg(
+                                  context: context,
+                                  message:
+                                      'Minimum 1 Player should be choose from each team');
+                            } else {
                               Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                              return PickCaptionViceCaptionScreen(
-                                contest: widget.contest,
-                                matches: widget.matches,
-                                isForEdit: widget.myTeamId!=''?true:false,
-                                myTeamId: widget.myTeamId,
-                              );
-                            }));
+                                  MaterialPageRoute(builder: (context) {
+                                return PickCaptionViceCaptionScreen(
+                                  contest: widget.contest,
+                                  matches: widget.matches,
+                                  isForEdit:
+                                      widget.myTeamId != '' ? true : false,
+                                  myTeamId: widget.myTeamId,
+                                );
+                              }));
                             }
                           }
                         },
                         child: Container(
-                          height: 45,
-                          width: 100,
+                          height: 40,
+                          width: 70,
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(40),
                             color: controller.choosedPlayerList.length >= 11
-                                ? ColorConstant.primaryBlackColor
+                                ? Colors.black54
                                 : Colors.black12,
                             boxShadow: [
                               BoxShadow(
@@ -652,12 +646,12 @@ class _PickPlayerScreenState extends State<PickPlayerScreen>
                           ),
                           child: Padding(
                             padding:
-                                const EdgeInsets.only(left: 15.0, right: 15),
+                                const EdgeInsets.only(left: 0.0, right: 0),
                             child: Text(
                               "NEXT",
                               style: TextStyle(
                                   color: ColorConstant.primaryWhiteColor,
-                                  fontSize: 15,
+                                  fontSize: 12,
                                   fontWeight: FontWeight.w500),
                             ),
                           ),
@@ -711,17 +705,13 @@ class _PickPlayerScreenState extends State<PickPlayerScreen>
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Select 1 - 8 Wicket- Keepers",
+                        "Select 1 - 8 ${designation}",
                         style: TextStyle(
                             color: ColorConstant.primaryBlackColor,
                             fontSize: 15,
                             fontWeight: FontWeight.w600),
                       ),
-                      Icon(
-                        Icons.filter_alt_rounded,
-                        size: 30,
-                        color: Colors.black45,
-                      )
+                     
                     ],
                   ),
                 ),
@@ -746,14 +736,7 @@ class _PickPlayerScreenState extends State<PickPlayerScreen>
                         children: [
                           Row(
                             children: [
-                              Icon(
-                                Icons.edit,
-                                size: 15,
-                                color: Colors.blue[200],
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
+                             
                               Text(
                                 "POINTS",
                                 style: TextStyle(
@@ -776,7 +759,7 @@ class _PickPlayerScreenState extends State<PickPlayerScreen>
                                     fontWeight: FontWeight.w400),
                               ),
                               SizedBox(
-                                width: 5,
+                                width: 10,
                               ),
                               Icon(
                                 Icons.download_sharp,
@@ -801,22 +784,34 @@ class _PickPlayerScreenState extends State<PickPlayerScreen>
                             onTap: () {
                               if (dummyPlayer[index] == 0) {
                                 if (controller.choosedPlayerList.length < 11) {
-                                  controller.chosedPlayer(
-                                      players[index], index,
-                                      
-                                      widget.matches.team1.teamId,
-                                      widget.matches.team2.teamId,
-                                      context
-                                      );
+                                  
+                                  if (controller.totalCreditPoint <
+                                      int.parse(players[index].creditPoints)) {
+                                    Messages().showErrorMsg(
+                                        context: context,
+                                        message: 'Credit point is less');
+                                  } else {
+
+                                  
+                                  
+                                  
+                                  
+                                    controller.chosedPlayer(
+                                        players[index],
+                                        index,
+                                        widget.matches.team1.teamId,
+                                        widget.matches.team2.teamId,
+                                        context);
+                                  }  
                                 } else {
                                   print("player full");
                                 }
                               } else {
                                 controller.removeChosedPlayer(
-                                    players[index], index,
-                                     widget.matches.team1.teamId,
-                                      widget.matches.team2.teamId
-                                    );
+                                    players[index],
+                                    index,
+                                    widget.matches.team1.teamId,
+                                    widget.matches.team2.teamId);
                                 //for remove
                               }
                             },
@@ -841,10 +836,12 @@ class _PickPlayerScreenState extends State<PickPlayerScreen>
                                             MainAxisAlignment.start,
                                         children: [
                                           InkWell(
-                                            onTap: (){
-                                              Navigator.push(context, MaterialPageRoute(builder: (context){
+                                            onTap: () {
+                                              Navigator.push(context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) {
                                                 return PlayerProfilePage(
-                                                  player:  players[index],
+                                                  player: players[index],
                                                 );
                                               }));
                                             },
@@ -857,13 +854,14 @@ class _PickPlayerScreenState extends State<PickPlayerScreen>
                                                   fit: BoxFit.fill,
                                                 ),
                                                 Positioned(
-                                                    left: 0,
-                                                    top: 0,
-                                                    child:                                               Image.network(
-                                                 players[index].teamImage,
-                                                  height: 20,
-                                                  width: 20,
-                                                ),)
+                                                  left: 0,
+                                                  top: 0,
+                                                  child: Image.network(
+                                                    players[index].teamImage,
+                                                    height: 20,
+                                                    width: 20,
+                                                  ),
+                                                )
                                               ]),
                                             ),
                                           ),
@@ -885,7 +883,7 @@ class _PickPlayerScreenState extends State<PickPlayerScreen>
                                                 height: 5,
                                               ),
                                               Text(
-                                                "Sell by 15.70%",
+                                                "Sell by ${players[index].selectionPercent}%",
                                                 style: TextStyle(
                                                     color: Colors.black45,
                                                     fontSize: 13,
@@ -908,7 +906,7 @@ class _PickPlayerScreenState extends State<PickPlayerScreen>
                                                   ),
                                                   Text(
                                                     //players[index].
-                                                                
+
                                                     players[index]
                                                                 .lastMachPlayed ==
                                                             '0'
@@ -970,8 +968,7 @@ class _PickPlayerScreenState extends State<PickPlayerScreen>
                                                   Icons
                                                       .remove_circle_outline_outlined,
                                                   size: 20,
-                                                  color: ColorConstant
-                                                      .disableColor,
+                                                  color: Colors.red,
                                                 ),
 
                                           // SizedBox(

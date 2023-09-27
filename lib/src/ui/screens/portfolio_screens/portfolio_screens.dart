@@ -43,6 +43,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>with SingleTickerProvi
             child: Padding(
               padding: const EdgeInsets.only(left: 15, right: 15),
               child: TabBar(
+                
                 controller: _secondTabController,
                 indicatorColor: ColorConstant.primaryColor,
                 indicatorWeight: 5,

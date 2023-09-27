@@ -52,6 +52,7 @@ class _CurrentMatchCardWidgetState extends State<CurrentMatchCardWidget> {
             Navigator.push(context, MaterialPageRoute(builder: (context) {
             return LiveContestScreen(
 //  matchId: '1',
+flag: 'Upcoming Match',
 
               myMatchModel: widget.myMatchModel,
             );

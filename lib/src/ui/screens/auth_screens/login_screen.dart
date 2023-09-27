@@ -1,13 +1,18 @@
+import 'dart:developer';
+
 import 'package:cricket_fantacy/src/controllers/auth_controllers.dart';
+import 'package:cricket_fantacy/src/controllers/facebool_auth_controller.dart';
 import 'package:cricket_fantacy/src/ui/screens/auth_screens/otp_screen.dart';
 import 'package:cricket_fantacy/src/ui/screens/auth_screens/register_screen.dart';
 import 'package:cricket_fantacy/src/ui/screens/upcomming_feature_screen.dart';
 import 'package:cricket_fantacy/src/utils/color_scheme.dart';
 import 'package:cricket_fantacy/src/utils/image_utils.dart';
+import 'package:cricket_fantacy/src/utils/messages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/instance_manager.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -18,8 +23,9 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool _isActive = false;
-  var controller=Get.put(AuthController());
-  
+  var controller = Get.put(AuthController());
+  bool isCheckBottonTrue = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,10 +64,14 @@ class _LoginScreenState extends State<LoginScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 InkWell(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context){
-                      return UpcommingFeatureScreen();
-                    }));
+                  onTap: () {
+                    signInWithFacebook().then((value) {
+                      debugger();
+                    });
+                    // Navigator.push(context,
+                    //     MaterialPageRoute(builder: (context) {
+                    //   return UpcommingFeatureScreen();
+                    // }));
                   },
                   child: Container(
                     height: 40,
@@ -102,9 +112,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ),
-               InkWell(
-                  onTap: (){
-                    controller.googleLogin(context);
+                InkWell(
+                  onTap: () {
+                    if(isCheckBottonTrue){
+                      controller.googleLogin(context);
+                    }else{
+                      Messages().showErrorMsg(context: context, message: 'Please check Terms & Conditions and Privacy Policy Firtst');
+                    }
                     // Navigator.push(context, MaterialPageRoute(builder: (context){
                     //   return UpcommingFeatureScreen();
                     // }));
@@ -164,14 +178,14 @@ class _LoginScreenState extends State<LoginScreen> {
             padding: const EdgeInsets.all(15.0),
             child: TextFormField(
               controller: controller.phoneNumberController,
-              onChanged: (val){
-                if(val.isNotEmpty){
+              onChanged: (val) {
+                if (val.isNotEmpty) {
                   setState(() {
-                    _isActive=true;
+                    _isActive = true;
                   });
-                }else{
+                } else {
                   setState(() {
-                    _isActive=false;
+                    _isActive = false;
                   });
                 }
               },
@@ -183,9 +197,8 @@ class _LoginScreenState extends State<LoginScreen> {
             padding: const EdgeInsets.fromLTRB(15, 15, 15, 20),
             child: InkWell(
               onTap: () {
-                if (_isActive == true) {
+                if (_isActive == true && isCheckBottonTrue) {
                   controller.callValidatePhoneApi(context);
-                 
                 }
               },
               child: Container(
@@ -193,7 +206,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 width: MediaQuery.of(context).size.width / 1,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
-                    color: _isActive == true
+                    color: isCheckBottonTrue && _isActive == true
                         ? ColorConstant.primaryBlackColor
                         : Colors.grey[400]),
                 alignment: Alignment.center,
@@ -208,25 +221,102 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
           InkWell(
-            onTap: (){
-               controller.phoneNumberController.clear();
+            onTap: () {
+              controller.phoneNumberController.clear();
               Navigator.push(
-                    context,
-                    (MaterialPageRoute(
-                      builder: (context) {
-                        return const RegisterScreen();
-                      },
-                    )),
-                  );
+                context,
+                (MaterialPageRoute(
+                  builder: (context) {
+                    return const RegisterScreen();
+                  },
+                )),
+              );
             },
             child: Text(
               "No a member? Register",
               style: TextStyle(
-                  color: Colors.black, fontSize: 12, fontWeight: FontWeight.w600),
+                  color: Colors.black,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600),
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                InkWell(
+                  onTap: () {
+                    setState(() {
+                      isCheckBottonTrue = !isCheckBottonTrue;
+                    });
+                  },
+                  child: Icon(
+                    isCheckBottonTrue == false
+                        ? Icons.check_box_outline_blank_outlined
+                        : Icons.check_box,
+                    size: 20,
+                    color: ColorConstant.primaryColor,
+                  ),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                Row(
+                  children: [
+                    Text(
+                      "I Agree all ",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600),
+                    ),
+                    InkWell(
+                      onTap: () async {
+                       openWeb('https://myfancy11.com/terms.html');
+                      },
+                      child: Text(
+                        "Terms & Conditions",
+                        style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            color: Colors.black,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                    Text(
+                      " and ",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600),
+                    ),
+                    InkWell(
+                      onTap: (){
+                        openWeb('https://myfancy11.com/privacy.html');
+                      },
+                      child: Text(
+                        "Privacy Policy",
+                        style: TextStyle(
+                            decoration: TextDecoration.underline,
+                            color: Colors.black,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          )
         ]),
       ),
     );
+  }
+
+    void openWeb(String url){
+ launchUrl(Uri.parse(url),
+ mode: LaunchMode.inAppWebView,
+ );
   }
 }

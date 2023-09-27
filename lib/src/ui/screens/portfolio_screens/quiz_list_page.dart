@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cricket_fantacy/src/controllers/quiz_controller.dart';
 import 'package:cricket_fantacy/src/global_variable.dart';
 import 'package:cricket_fantacy/src/models/GetMatchesApiResponse.dart';
@@ -8,14 +10,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class QuizListPage extends StatefulWidget {
-  
   @override
   State<QuizListPage> createState() => _QuizListPageState();
 }
 
 class _QuizListPageState extends State<QuizListPage> {
- 
-  
   int selectedCategory = 0;
 
   var controller = Get.put(QuizController());
@@ -30,10 +29,9 @@ class _QuizListPageState extends State<QuizListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.grey[50],
-       
         body: Column(
           children: [
- GetBuilder<QuizController>(
+            GetBuilder<QuizController>(
                 init: QuizController(),
                 builder: (controller) {
                   return controller.getQuizCategoryApiResponse == null
@@ -276,17 +274,17 @@ class _QuizListPageState extends State<QuizListPage> {
                                                                           onTap:
                                                                               () {
                                                                             controller.getQuizDetails(controller.getQuizByCategoryApiResponse!.data[index].quizId.toString(),
-                                                                               'yes');
+                                                                                'yes');
+                                                                            controller.timer!.cancel();
                                                                             showModalBottomSheet(
                                                                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(13)),
                                                                                 isScrollControlled: true,
                                                                                 context: context,
                                                                                 builder: (context) {
-                                                                                  return QuizDetailsBottomSheet(
-                                                                                    quizData: controller.getQuizByCategoryApiResponse!.data[index],
-                                                                                     flag:    'yes'
-                                                                                  );
-                                                                                });
+                                                                                  return QuizDetailsBottomSheet(quizData: controller.getQuizByCategoryApiResponse!.data[index], flag: 'yes');
+                                                                                }).then((value) {
+                                                                              controller.getQuizList(controller.getQuizByCategoryApiResponse!.data[index].categoryId.toString());
+                                                                            });
                                                                           },
                                                                           child:
                                                                               Container(
@@ -308,19 +306,14 @@ class _QuizListPageState extends State<QuizListPage> {
                                                                         InkWell(
                                                                           onTap:
                                                                               () {
-                                                                            controller.getQuizDetails(
-                                                                                controller.getQuizByCategoryApiResponse!.data[index].quizId.toString(),
-                                                                                
+                                                                            controller.getQuizDetails(controller.getQuizByCategoryApiResponse!.data[index].quizId.toString(),
                                                                                 'no');
                                                                             showModalBottomSheet(
                                                                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(13)),
                                                                                 isScrollControlled: true,
                                                                                 context: context,
                                                                                 builder: (context) {
-                                                                                  return QuizDetailsBottomSheet(
-                                                                                    quizData: controller.getQuizByCategoryApiResponse!.data[index],
-                                                                                flag:    'no'
-                                                                                  );
+                                                                                  return QuizDetailsBottomSheet(quizData: controller.getQuizByCategoryApiResponse!.data[index], flag: 'no');
                                                                                 });
                                                                           },
                                                                           child:

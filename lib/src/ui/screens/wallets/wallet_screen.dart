@@ -11,10 +11,12 @@ import 'package:cricket_fantacy/src/ui/widgets/shimmer_effect_widget.dart';
 import 'package:cricket_fantacy/src/utils/color_scheme.dart';
 import 'package:cricket_fantacy/src/utils/image_utils.dart';
 import 'package:cricket_fantacy/src/utils/messages.dart';
+import 'package:lottie/lottie.dart';
 import 'package:upi_india/upi_india.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart';
+import 'package:url_launcher/url_launcher.dart';
 // import 'package:upi_pay/upi_pay.dart';
 
 class WalletScreen extends StatefulWidget {
@@ -31,11 +33,13 @@ class _WalletScreenState extends State<WalletScreen>
   List<UpiApp> apps = [];
   final UpiIndia _upiIndia = UpiIndia();
   TextEditingController amountController = new TextEditingController();
+    TextEditingController withdrawAmountController = new TextEditingController();
   late TabController _tablController;
   void getWallets() {
     controller.getWalletApi(context);
   }
 
+  // TextEditingController promoCodeController = new TextEditingController();
   @override
   void initState() {
     _tablController = TabController(length: 2, vsync: this);
@@ -114,10 +118,7 @@ class _WalletScreenState extends State<WalletScreen>
             Expanded(
               child: TabBarView(
                 controller: _tablController,
-                children: [
-                  _walletTab(),
-                  _withDrawTab()
-                ],
+                children: [_walletTab(), _withDrawTab()],
               ),
             )
           ],
@@ -165,6 +166,44 @@ class _WalletScreenState extends State<WalletScreen>
                                 Text(
                                   // "0",
                                   "₹${controller.getWalletApiResponse!.data.depositWallet}",
+                                  style: TextStyle(
+                                      color: ColorConstant.primaryBlackColor,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400),
+                                )
+                              ],
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Divider(),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(children: [
+                                  Image.asset(
+                                    ImageUitls.Wallet_icon,
+                                    height: 20,
+                                    width: 20,
+                                    color: ColorConstant.primaryBlackColor,
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    "Bonus Balance",
+                                    style: TextStyle(
+                                        color: ColorConstant.primaryBlackColor,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400),
+                                  )
+                                ]),
+                                Text(
+                                  // "0",
+                                  "₹${controller.getWalletApiResponse!.data.bonusWallet}",
                                   style: TextStyle(
                                       color: ColorConstant.primaryBlackColor,
                                       fontSize: 14,
@@ -386,6 +425,133 @@ class _WalletScreenState extends State<WalletScreen>
                         ),
                       ),
                     ),
+                    controller.getPromoCodeApiResponse == null
+                        ? Container()
+                        : SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                for (int i = 0;
+                                    i <
+                                        controller.getPromoCodeApiResponse!.data
+                                            .length;
+                                    i++)
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        left: i == 0 ? 15 : 10,
+                                        right: i == 4 ? 10 : 0),
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width /
+                                          1.3,
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          color: controller.appliedPromoCode ==
+                                                  controller
+                                                      .getPromoCodeApiResponse!
+                                                      .data[i]
+                                                      .code
+                                              ? ColorConstant.disableColor
+                                              : ColorConstant.primaryColor,
+                                          border: Border.all(
+                                              width: 1,
+                                              color:
+                                                  ColorConstant.deviderColor)),
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10),
+                                        child: Row(
+                                          children: [
+                                            Lottie.asset(
+                                                'assets/lotties/promo_code.json',
+                                                width: 25,
+                                                height: 25),
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Container(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  2,
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    controller
+                                                        .getPromoCodeApiResponse!
+                                                        .data[i]
+                                                        .code,
+                                                    style: TextStyle(
+                                                        color: ColorConstant
+                                                            .primaryWhiteColor,
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w500),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 5,
+                                                  ),
+                                                  Text(
+                                                    controller
+                                                        .getPromoCodeApiResponse!
+                                                        .data[i]
+                                                        .name,
+                                                    style: TextStyle(
+                                                        color: ColorConstant
+                                                            .primaryWhiteColor,
+                                                        fontSize: 10,
+                                                        fontWeight:
+                                                            FontWeight.w500),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            InkWell(
+                                              onTap: () {
+                                                controller.applyPromoCode(
+                                                    controller
+                                                        .getPromoCodeApiResponse!
+                                                        .data[i]
+                                                        .code,
+                                                    context);
+                                              },
+                                              child: Text(
+                                                controller.appliedPromoCode ==
+                                                        controller
+                                                            .getPromoCodeApiResponse!
+                                                            .data[i]
+                                                            .code
+                                                    ? 'Applied'
+                                                    : "Apply",
+                                                style: TextStyle(
+                                                    color: controller
+                                                                .appliedPromoCode ==
+                                                            controller
+                                                                .getPromoCodeApiResponse!
+                                                                .data[i]
+                                                                .code
+                                                        ? Colors.white
+                                                        : ColorConstant
+                                                            .greenColor,
+                                                    fontSize: 14,
+                                                    fontWeight:
+                                                        FontWeight.w800),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                              ],
+                            ),
+                          )
                   ],
                 );
         });
@@ -398,96 +564,465 @@ class _WalletScreenState extends State<WalletScreen>
           return controller.eKycStatus == 0
               ? shimerEffect(length: 5, context: context)
               : controller.eKycStatus == 1
-                  ? Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Your Ekyc is not Completed\nPlease Complete Your EKyc First.",
-                          textAlign: TextAlign.center,
-                          
-                            style: TextStyle(
-                                color: ColorConstant.primaryBlackColor,
-                                fontSize: 13,
-                                fontWeight: FontWeight.w500),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          InkWell(
-                            onTap: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context){
-                                return EkycFormScreen(
-                                  isItForEdit: false,
-                                );
-                              }));
-                            },
-                            child: Container(
-                              height: 40,
-                              width: MediaQuery.of(context).size.width / 2.6,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  color: ColorConstant.primaryBlackColor
+                  ? 
+                  
+                  Column(
+                      children: [
+                        Container(
+                          //height: 45,
+                          width: MediaQuery.of(context).size.width / 1,
+                          alignment: Alignment.center,
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: 15, right: 15, top: 10, bottom: 10),
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(children: [
+                                      Image.asset(
+                                        ImageUitls.Wallet_icon,
+                                        height: 20,
+                                        width: 20,
+                                        color: ColorConstant.primaryBlackColor,
                                       ),
-                              alignment: Alignment.center,
-                              child: Text(
-                                "Start EKyc",
-                                style: TextStyle(
-                                    color: ColorConstant.primaryWhiteColor,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600),
-                              ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        "Current Balance",
+                                        style: TextStyle(
+                                            color:
+                                                ColorConstant.primaryBlackColor,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w400),
+                                      )
+                                    ]),
+                                    Text(
+                                      // "0",
+                                      "₹${controller.getWalletApiResponse!.data.depositWallet}",
+                                      style: TextStyle(
+                                          color:
+                                              ColorConstant.primaryBlackColor,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400),
+                                    )
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Divider(),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(children: [
+                                      Image.asset(
+                                        ImageUitls.Wallet_icon,
+                                        height: 20,
+                                        width: 20,
+                                        color: ColorConstant.primaryBlackColor,
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        "Bonus Balance",
+                                        style: TextStyle(
+                                            color:
+                                                ColorConstant.primaryBlackColor,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w400),
+                                      )
+                                    ]),
+                                    Text(
+                                      // "0",
+                                      "₹${controller.getWalletApiResponse!.data.bonusWallet}",
+                                      style: TextStyle(
+                                          color:
+                                              ColorConstant.primaryBlackColor,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400),
+                                    )
+                                  ],
+                                ),
+                              ],
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                        Divider(),
+                        SizedBox(
+                          height: 30,
+                        ),
+                        Column(
+                          children: [
+                            Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Your Ekyc is not Completed\nPlease Complete Your EKyc First.",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: ColorConstant.primaryBlackColor,
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      Navigator.push(context,
+                                          MaterialPageRoute(builder: (context) {
+                                        return EkycFormScreen(
+                                          isItForEdit: false,
+                                        );
+                                      }));
+                                    },
+                                    child: Container(
+                                      height: 40,
+                                      width: MediaQuery.of(context).size.width /
+                                          2.6,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          color:
+                                              ColorConstant.primaryBlackColor),
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        "Start EKyc",
+                                        style: TextStyle(
+                                            color:
+                                                ColorConstant.primaryWhiteColor,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     )
-                  : controller.eKycStatus==2?Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Your Ekyc is Under Review",
-                          textAlign: TextAlign.center,
-                          
-                            style: TextStyle(
-                                color: ColorConstant.primaryBlackColor,
-                                fontSize: 13,
-                                fontWeight: FontWeight.w500),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          InkWell(
-                            onTap: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context){
-                                return EkycFormScreen(
-                                  isItForEdit: true,
-                                );
-                              }));
-                            },
-                            child: Container(
-                              height: 40,
-                              width: MediaQuery.of(context).size.width / 2.6,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  color: ColorConstant.primaryBlackColor
-                                      ),
+                  : controller.eKycStatus == 2
+                      ? 
+                      Column(
+                          children: [
+                            Container(
+                              //height: 45,
+                              width: MediaQuery.of(context).size.width / 1,
                               alignment: Alignment.center,
-                              child: Text(
-                                "Check Detatails",
-                                style: TextStyle(
-                                    color: ColorConstant.primaryWhiteColor,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600),
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 15, right: 15, top: 10, bottom: 10),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(children: [
+                                          Image.asset(
+                                            ImageUitls.Wallet_icon,
+                                            height: 20,
+                                            width: 20,
+                                            color:
+                                                ColorConstant.primaryBlackColor,
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text(
+                                            "Current Balance",
+                                            style: TextStyle(
+                                                color: ColorConstant
+                                                    .primaryBlackColor,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w400),
+                                          )
+                                        ]),
+                                        Text(
+                                          // "0",
+                                          "₹${controller.getWalletApiResponse!.data.depositWallet}",
+                                          style: TextStyle(
+                                              color: ColorConstant
+                                                  .primaryBlackColor,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w400),
+                                        )
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Divider(),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(children: [
+                                          Image.asset(
+                                            ImageUitls.Wallet_icon,
+                                            height: 20,
+                                            width: 20,
+                                            color:
+                                                ColorConstant.primaryBlackColor,
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text(
+                                            "Bonus Balance",
+                                            style: TextStyle(
+                                                color: ColorConstant
+                                                    .primaryBlackColor,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w400),
+                                          )
+                                        ]),
+                                        Text(
+                                          // "0",
+                                          "₹${controller.getWalletApiResponse!.data.bonusWallet}",
+                                          style: TextStyle(
+                                              color: ColorConstant
+                                                  .primaryBlackColor,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w400),
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ):Container();
+                            Divider(),
+                            SizedBox(
+                              height: 30,
+                            ),
+                            Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Your Ekyc is Under Review",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: ColorConstant.primaryBlackColor,
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  // InkWell(
+                                  //   onTap: () {
+                                  //     Navigator.push(context,
+                                  //         MaterialPageRoute(builder: (context) {
+                                  //       return EkycFormScreen(
+                                  //         isItForEdit: false,
+                                  //       );
+                                  //     }));
+                                  //   },
+                                  //   child: Container(
+                                  //     height: 40,
+                                  //     width:
+                                  //         MediaQuery.of(context).size.width / 2.6,
+                                  //     decoration: BoxDecoration(
+                                  //         borderRadius: BorderRadius.circular(5),
+                                  //         color: ColorConstant.primaryBlackColor),
+                                  //     alignment: Alignment.center,
+                                  //     child: Text(
+                                  //       "Check Detatails",
+                                  //       style: TextStyle(
+                                  //           color: ColorConstant.primaryWhiteColor,
+                                  //           fontSize: 16,
+                                  //           fontWeight: FontWeight.w600),
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        )
+                     :
+
+
+                     controller.eKycStatus==3?Column(
+                          children: [
+                            Container(
+                              //height: 45,
+                              width: MediaQuery.of(context).size.width / 1,
+                              alignment: Alignment.center,
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 15, right: 15, top: 10, bottom: 10),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(children: [
+                                          Image.asset(
+                                            ImageUitls.Wallet_icon,
+                                            height: 20,
+                                            width: 20,
+                                            color:
+                                                ColorConstant.primaryBlackColor,
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text(
+                                            "Current Balance",
+                                            style: TextStyle(
+                                                color: ColorConstant
+                                                    .primaryBlackColor,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w400),
+                                          )
+                                        ]),
+                                        Text(
+                                          // "0",
+                                          "₹${controller.getWalletApiResponse!.data.depositWallet}",
+                                          style: TextStyle(
+                                              color: ColorConstant
+                                                  .primaryBlackColor,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w400),
+                                        )
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Divider(),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(children: [
+                                          Image.asset(
+                                            ImageUitls.Wallet_icon,
+                                            height: 20,
+                                            width: 20,
+                                            color:
+                                                ColorConstant.primaryBlackColor,
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text(
+                                            "Bonus Balance",
+                                            style: TextStyle(
+                                                color: ColorConstant
+                                                    .primaryBlackColor,
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.w400),
+                                          )
+                                        ]),
+                                        Text(
+                                          // "0",
+                                          "₹${controller.getWalletApiResponse!.data.bonusWallet}",
+                                          style: TextStyle(
+                                              color: ColorConstant
+                                                  .primaryBlackColor,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w400),
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Divider(),
+                            SizedBox(
+                              height: 30,
+                            ),
+                           Padding(
+                             padding: const EdgeInsets.symmetric(horizontal: 20),
+                             child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Add Withdrawal Amount",
+                                  style: TextStyle(
+                                      color: ColorConstant.primaryBlackColor,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                TextFormField(
+                                  controller: withdrawAmountController,
+                                  keyboardType: TextInputType.number,
+                                  onChanged: (val) {
+                                   
+                                  },
+                                  decoration: InputDecoration(
+                                      filled: true, hintText: "Amount to add"),
+                                ),
+                           SizedBox(height: 20,),
+                           InkWell(
+                            onTap: (){
+                              if(withdrawAmountController.text.isNotEmpty){
+                                controller.requestForWithdrawal(withdrawAmountController.text, context);
+                              }
+                            },
+                             child: Container(
+                                                     height: 40,
+                                                     width: MediaQuery.of(context).size.width / 1,
+                                                     decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: ColorConstant.primaryBlackColor),
+                                                     alignment: Alignment.center,
+                                                     child: Text(
+                              "Withdraw",
+                              style: TextStyle(
+                                  color: ColorConstant.primaryWhiteColor,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600),
+                                                     ),
+                                                   ),
+                           ),
+                           
+                              ],
+                                                     ),
+                           ),
+                            
+                        
+                        
+                          ],
+                        )
+                     
+                     
+                     
+                      : 
+                      
+                      
+                      
+                      
+                      Container();
         });
   }
 
@@ -539,29 +1074,96 @@ class _WalletScreenState extends State<WalletScreen>
       context: context,
       builder: (context) {
         return apps.isEmpty
-            ? Center(
-                child: Text("You Don't Have UPI Apss, Please Install first!"),
-              )
-            : Wrap(
+            ? Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  for (int i = 0; i < apps.length; i++)
-                    InkWell(
-                      onTap: () {
-                        Navigator.pop(context);
-                        _doPayment(apps[i]);
-                      },
-                      child: ListTile(
-                        leading: Image.memory(
-                          apps[i].icon,
-                          height: 60,
-                          width: 60,
-                        ),
-                        title: Text(apps![i].name),
-                      ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Image.asset(
+                    'assets/images/webgradle.png',
+                    height: 100,
+                    width: 100,
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      openWeb('https://webgradle.com/');
+                    },
+                    child: Text(
+                      "Developed By: WEBGRADLE",
+                      style: TextStyle(
+                          color: ColorConstant.primaryBlackColor,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500),
                     ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Center(
+                    child:
+                        Text("You Don't Have UPI Apss, Please Install first!"),
+                  ),
+                ],
+              )
+            : Column(
+                children: [
+                  Image.asset(
+                    'assets/images/webgradle.png',
+                    height: 100,
+                    width: 100,
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      openWeb('https://webgradle.com/');
+                    },
+                    child: Text(
+                      "Developed By: WEBGRADLE",
+                      style: TextStyle(
+                          color: ColorConstant.primaryBlackColor,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Wrap(
+                    children: [
+                      for (int i = 0; i < apps.length; i++)
+                        InkWell(
+                          onTap: () {
+                            Navigator.pop(context);
+                            _doPayment(apps[i]);
+                          },
+                          child: ListTile(
+                            leading: Image.memory(
+                              apps[i].icon,
+                              height: 60,
+                              width: 60,
+                            ),
+                            title: Text(apps![i].name),
+                          ),
+                        ),
+                    ],
+                  ),
                 ],
               );
       },
+    );
+  }
+
+  void openWeb(String url) {
+    launchUrl(
+      Uri.parse(url),
+      mode: LaunchMode.inAppWebView,
     );
   }
 }

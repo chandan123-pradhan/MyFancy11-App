@@ -41,6 +41,10 @@ class NetworkConstant{
  static const String myPaidTeam='/app/my_paid_team';
  static const String cloneTeam='/app/clone';
  static const String upgrade_account='/app/refer_upgrade';
+ static const String set_reminder='/app/set_reminder';
+ static const String applyPromoCode='/app/promo';
+ static const String validatePromoCode='/app/promo_valided';
+ static const String requestForWithdrawal='/app/payment_request';
   //parames.
 
   static const String PHONE_PARAMS='phone';

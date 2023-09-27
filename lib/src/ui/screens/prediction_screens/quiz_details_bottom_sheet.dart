@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:cricket_fantacy/src/controllers/quiz_controller.dart';
 import 'package:cricket_fantacy/src/models/get_quiz_by_category_api_response.dart';
 import 'package:cricket_fantacy/src/ui/screens/wallets/wallet_screen.dart';
 import 'package:cricket_fantacy/src/ui/widgets/shimmer_effect_widget.dart';
 import 'package:cricket_fantacy/src/utils/color_scheme.dart';
+import 'package:cricket_fantacy/src/utils/messages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -20,6 +23,7 @@ class _QuizDetailsBottomSheetState extends State<QuizDetailsBottomSheet> {
 
   @override
   void initState() {
+    controller.startQuizDetailsCallingApi(widget.quizData.quizId, widget.flag);
     // TODO: implement initState
     super.initState();
   }
@@ -30,7 +34,7 @@ class _QuizDetailsBottomSheetState extends State<QuizDetailsBottomSheet> {
         init: QuizController(),
         builder: (controller) {
           return WillPopScope(
-            onWillPop: (){
+            onWillPop: () {
               controller.quizDetailsTimer!.cancel();
               print("quiz details api calling closed");
               return Future.value(true);
@@ -70,9 +74,10 @@ class _QuizDetailsBottomSheetState extends State<QuizDetailsBottomSheet> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Container(
-                                          width:
-                                              MediaQuery.of(context).size.width /
-                                                  1.8,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              1.8,
                                           child: Text(
                                             controller.quizDetailsApiResponse!
                                                 .data.question,
@@ -107,7 +112,8 @@ class _QuizDetailsBottomSheetState extends State<QuizDetailsBottomSheet> {
                                       height: 20,
                                     ),
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       children: [
@@ -150,7 +156,8 @@ class _QuizDetailsBottomSheetState extends State<QuizDetailsBottomSheet> {
                                     width:
                                         MediaQuery.of(context).size.width / 2.1,
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Text(
                                           'Investment',
@@ -161,29 +168,31 @@ class _QuizDetailsBottomSheetState extends State<QuizDetailsBottomSheet> {
                                         ),
                                         Text(
                                           '₹' +
-                                              controller.defaultInvenstmentAmount
+                                              controller
+                                                  .defaultInvenstmentAmount
                                                   .toStringAsFixed(2),
                                           style: TextStyle(
-                                              color:
-                                                  ColorConstant.primaryBlackColor,
+                                              color: ColorConstant
+                                                  .primaryBlackColor,
                                               fontSize: 15,
                                               fontWeight: FontWeight.w600),
                                         ),
                                       ],
                                     ),
                                   ),
-          
+
                                   Container(
                                     height: 60,
                                     width: 1,
                                     color: Colors.black26,
                                   ),
-          
+
                                   Container(
                                     width:
                                         MediaQuery.of(context).size.width / 2.1,
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Text(
                                           'Returns',
@@ -197,15 +206,15 @@ class _QuizDetailsBottomSheetState extends State<QuizDetailsBottomSheet> {
                                               controller.defaultReturnAmount
                                                   .toStringAsFixed(2),
                                           style: TextStyle(
-                                              color:
-                                                  ColorConstant.primaryBlackColor,
+                                              color: ColorConstant
+                                                  .primaryBlackColor,
                                               fontSize: 15,
                                               fontWeight: FontWeight.w600),
                                         ),
                                       ],
                                     ),
                                   ),
-          
+
                                   //  Container(
                                   //   width: MediaQuery.of(context).size.width/2,
                                   // )
@@ -216,7 +225,8 @@ class _QuizDetailsBottomSheetState extends State<QuizDetailsBottomSheet> {
                               height: 10,
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(left: 20, right: 20),
+                              padding:
+                                  const EdgeInsets.only(left: 20, right: 20),
                               child: Container(
                                 height: 45,
                                 decoration: BoxDecoration(
@@ -227,101 +237,118 @@ class _QuizDetailsBottomSheetState extends State<QuizDetailsBottomSheet> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Container(
-                                      height: 40,
-                                      width: MediaQuery.of(context).size.width /
-                                          2.24,
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(15),
-                                          color: widget.flag == 'yes'
-                                              ? ColorConstant.greenColor
-                                              : Colors.transparent),
-                                      //alignment: Alignment.center,
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 10, right: 10),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              "True ₹${controller.quizDetailsApiResponse!.data.option1}",
-                                              style: TextStyle(
-                                                  color: widget.flag == 'yes'
-                                                      ? ColorConstant
-                                                          .primaryWhiteColor
-                                                      : Colors.black,
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w600),
-                                            ),
-                                            Container(
-                                              height: 30,
-                                              width: 50,
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(25),
-                                                  color: ColorConstant
-                                                      .primaryWhiteColor),
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                "${((double.parse(controller.quizDetailsApiResponse!.data.option1)) * 10).toInt()}%",
+                                    InkWell(
+                                      onTap: () {},
+                                      child: Container(
+                                        height: 40,
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                2.24,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                            color: widget.flag == 'yes'
+                                                ? ColorConstant.greenColor
+                                                : Colors.transparent),
+                                        //alignment: Alignment.center,
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 10, right: 10),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                "True ₹${controller.quizDetailsApiResponse!.data.option1}",
                                                 style: TextStyle(
-                                                    color: ColorConstant
-                                                        .primaryBlackColor,
+                                                    color: widget.flag == 'yes'
+                                                        ? ColorConstant
+                                                            .primaryWhiteColor
+                                                        : Colors.black,
                                                     fontSize: 12,
-                                                    fontWeight: FontWeight.w600),
+                                                    fontWeight:
+                                                        FontWeight.w600),
                                               ),
-                                            )
-                                          ],
+                                              Container(
+                                                height: 30,
+                                                width: 50,
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            25),
+                                                    color: ColorConstant
+                                                        .primaryWhiteColor),
+                                                alignment: Alignment.center,
+                                                child: Text(
+                                                  "${((double.parse(controller.quizDetailsApiResponse!.data.option1)) * 10).toInt()}%",
+                                                  style: TextStyle(
+                                                      color: ColorConstant
+                                                          .primaryBlackColor,
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.w600),
+                                                ),
+                                              )
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),
-                                    Container(
-                                      height: 40,
-                                      width: MediaQuery.of(context).size.width /
-                                          2.3,
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(15),
-                                          color: widget.flag == 'no'
-                                              ? ColorConstant.greenColor
-                                              : Colors.transparent),
-                                      //alignment: Alignment.center,
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 10, right: 10),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                            " False ₹${controller.quizDetailsApiResponse!.data.option2}",
-                                              style: TextStyle(
-                                                  color: widget.flag == 'no'
-                                                      ? Colors.white
-                                                      : Colors.black87,
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w500),
-                                            ),
-                                            Container(
-                                              height: 30,
-                                              width: 50,
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(25),
-                                                  color: ColorConstant
-                                                      .primaryWhiteColor),
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                               
-                                               "${((double.parse(controller.quizDetailsApiResponse!.data.option2)) * 10).toInt()}%",
+                                    InkWell(
+                                      onTap: () {
+                                        // controller.startQuizDetailsCallingApi(widget.quizData.quizId,'no');
+                                      },
+                                      child: Container(
+                                        height: 40,
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                2.3,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                            color: widget.flag == 'no'
+                                                ? ColorConstant.greenColor
+                                                : Colors.transparent),
+                                        //alignment: Alignment.center,
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 10, right: 10),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                " False ₹${controller.quizDetailsApiResponse!.data.option2}",
                                                 style: TextStyle(
-                                                    color: ColorConstant
-                                                        .primaryBlackColor,
+                                                    color: widget.flag == 'no'
+                                                        ? Colors.white
+                                                        : Colors.black87,
                                                     fontSize: 12,
-                                                    fontWeight: FontWeight.w600),
+                                                    fontWeight:
+                                                        FontWeight.w500),
                                               ),
-                                            )
-                                          ],
+                                              Container(
+                                                height: 30,
+                                                width: 50,
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            25),
+                                                    color: ColorConstant
+                                                        .primaryWhiteColor),
+                                                alignment: Alignment.center,
+                                                child: Text(
+                                                  "${((double.parse(controller.quizDetailsApiResponse!.data.option2)) * 10).toInt()}%",
+                                                  style: TextStyle(
+                                                      color: ColorConstant
+                                                          .primaryBlackColor,
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.w600),
+                                                ),
+                                              )
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -341,8 +368,8 @@ class _QuizDetailsBottomSheetState extends State<QuizDetailsBottomSheet> {
                                 child: Row(
                                   children: [
                                     SizedBox(
-                                      width:
-                                          MediaQuery.of(context).size.width / 2.1,
+                                      width: MediaQuery.of(context).size.width /
+                                          2.1,
                                       child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
@@ -410,7 +437,8 @@ class _QuizDetailsBottomSheetState extends State<QuizDetailsBottomSheet> {
                                     ),
                                     Expanded(
                                       child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
                                         children: [
                                           // Container(
                                           //   height: 19,
@@ -430,7 +458,7 @@ class _QuizDetailsBottomSheetState extends State<QuizDetailsBottomSheet> {
                                           //     ),
                                           //   ),
                                           // ),
-          
+
                                           widget.flag == 'yes'
                                               ? Text(
                                                   "₹${controller.quizDetailsApiResponse!.data.option1}",
@@ -472,21 +500,22 @@ class _QuizDetailsBottomSheetState extends State<QuizDetailsBottomSheet> {
                               height: 10,
                             ),
                             Divider(),
-          //  SizedBox(
-          //                             height: 10,
-          //                           ),
+                            //  SizedBox(
+                            //                             height: 10,
+                            //                           ),
                             SizedBox(
                               child: Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 20.0, right: 20),
+                                padding: const EdgeInsets.only(
+                                    left: 20.0, right: 20),
                                 child: Column(
                                   children: [
                                     Row(
                                       children: [
                                         Container(
-                                          width:
-                                              MediaQuery.of(context).size.width /
-                                                  1.5,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              1.5,
                                           child: Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
@@ -497,7 +526,8 @@ class _QuizDetailsBottomSheetState extends State<QuizDetailsBottomSheet> {
                                                     color: ColorConstant
                                                         .primaryBlackColor,
                                                     fontSize: 14,
-                                                    fontWeight: FontWeight.w600),
+                                                    fontWeight:
+                                                        FontWeight.w600),
                                               ),
                                               SizedBox(
                                                 height: 5,
@@ -507,7 +537,8 @@ class _QuizDetailsBottomSheetState extends State<QuizDetailsBottomSheet> {
                                                 style: TextStyle(
                                                     color: Colors.black45,
                                                     fontSize: 12,
-                                                    fontWeight: FontWeight.w600),
+                                                    fontWeight:
+                                                        FontWeight.w600),
                                               )
                                             ],
                                           ),
@@ -530,7 +561,8 @@ class _QuizDetailsBottomSheetState extends State<QuizDetailsBottomSheet> {
                                                     color: ColorConstant
                                                         .primaryBlackColor,
                                                     fontSize: 12,
-                                                    fontWeight: FontWeight.w500),
+                                                    fontWeight:
+                                                        FontWeight.w500),
                                               ),
                                               Icon(
                                                 Icons.edit_square,
@@ -551,7 +583,7 @@ class _QuizDetailsBottomSheetState extends State<QuizDetailsBottomSheet> {
                                     //     //divisions: 10,
                                     //     activeColor: ColorConstant.greenColor,
                                     //     inactiveColor: Colors.black12,
-          
+
                                     //     min: 0.0,
                                     //     max: 100.0,
                                     //     value: _value,
@@ -562,13 +594,14 @@ class _QuizDetailsBottomSheetState extends State<QuizDetailsBottomSheet> {
                                     //     },
                                     //   ),
                                     // ),
-          
+
                                     SliderTheme(
                                       data: SliderTheme.of(context).copyWith(
                                         activeTrackColor:
                                             ColorConstant.greenColor,
                                         inactiveTrackColor: Colors.black26,
-                                        trackShape: RectangularSliderTrackShape(),
+                                        trackShape:
+                                            RectangularSliderTrackShape(),
                                         trackHeight: 7.0,
                                         thumbColor: ColorConstant.greenColor,
                                         thumbShape: RoundSliderThumbShape(
@@ -592,21 +625,32 @@ class _QuizDetailsBottomSheetState extends State<QuizDetailsBottomSheet> {
                                         ),
                                       ),
                                     ),
-          
+
                                     SizedBox(
                                       height: 20,
                                     ),
                                     InkWell(
                                       onTap: () {
-                                        controller.buyQuiz(
-                                            widget.quizData.quizId.toString(),
-                                            widget.flag,
-                                            context);
+                                        //  debugger();
+                                        if (controller.getWalletApiResponse!
+                                                .data.depositWallet ==
+                                            '0') {
+                                          Messages().showErrorMsg(
+                                              context: context,
+                                              message:
+                                                  "You Don't have money, add some money first.");
+                                        } else {
+                                          controller.buyQuiz(
+                                              widget.quizData.quizId.toString(),
+                                              widget.flag,
+                                              context);
+                                        }
                                       },
                                       child: Container(
                                         height: 40,
                                         width:
-                                            MediaQuery.of(context).size.width / 1,
+                                            MediaQuery.of(context).size.width /
+                                                1,
                                         decoration: BoxDecoration(
                                             color:
                                                 ColorConstant.primaryBlackColor,
@@ -616,8 +660,8 @@ class _QuizDetailsBottomSheetState extends State<QuizDetailsBottomSheet> {
                                         child: Text(
                                           "Entry Fee ₹${controller.defaultInvenstmentAmount}",
                                           style: TextStyle(
-                                              color:
-                                                  ColorConstant.primaryWhiteColor,
+                                              color: ColorConstant
+                                                  .primaryWhiteColor,
                                               fontSize: 16,
                                               fontWeight: FontWeight.w500),
                                         ),
@@ -637,11 +681,11 @@ class _QuizDetailsBottomSheetState extends State<QuizDetailsBottomSheet> {
                                 ),
                               ),
                             ),
-          
+
                             SizedBox(
                               height: 6,
                             ),
-          
+
                             Container(
                               height: 60,
                               width: MediaQuery.of(context).size.width / 1,
@@ -728,7 +772,7 @@ class _QuizDetailsBottomSheetState extends State<QuizDetailsBottomSheet> {
                                       ),
                               ),
                             ),
-          
+
                             SizedBox(
                               height: 20,
                             ),
