@@ -1,11 +1,17 @@
+import 'dart:developer';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cricket_fantacy/src/ui/screens/home_tab/fantacy_tab.dart';
+import 'package:cricket_fantacy/src/ui/screens/winners_tab/contest_screen.dart';
+import 'package:cricket_fantacy/src/ui/screens/winners_tab/winner_controller.dart';
+import 'package:cricket_fantacy/src/ui/widgets/shimmer_effect_widget.dart';
 import 'package:cricket_fantacy/src/ui/widgets/upcomming_matches_card_widget.dart';
 import 'package:cricket_fantacy/src/utils/color_scheme.dart';
 import 'package:cricket_fantacy/src/utils/image_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:get/get.dart';
 
 class WinnersTab extends StatefulWidget {
   const WinnersTab({super.key});
@@ -17,26 +23,17 @@ class WinnersTab extends StatefulWidget {
 class _WinnersTabState extends State<WinnersTab>
     with SingleTickerProviderStateMixin {
   int _tabController = 0;
-  late TabController _secondTabController;
 
+  var winnerController = Get.put(WinnerController());
   @override
   void initState() {
     super.initState();
-    _secondTabController = TabController(
-        length: 3,
-        vsync: this); // Change the length to match the number of tabs
+    winnerController.getWinnerData();
   }
 
   @override
   void dispose() {
     super.dispose();
-    _secondTabController.dispose();
-  }
-
-  void _changeTopTab(index) {
-    setState(() {
-      _tabController = index;
-    });
   }
 
   @override
@@ -48,421 +45,321 @@ class _WinnersTabState extends State<WinnersTab>
             backgroundColor: ColorConstant.primaryColor,
             elevation: 0,
           )),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-         
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children:  [
-                Text(
-                  "Mega Contest Winners",
-                  style: TextStyle(
-                      color: ColorConstant.primaryBlackColor,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500),
-                ),
-          
-          Row(
-              children: const [
-                Text(
-                  "Fillter by Series",
-                  style: TextStyle(
-                      color: Colors.black54,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500),
-                ),
-                SizedBox(width: 5,),
-                Icon(Icons.filter_list,size: 25,color: Colors.black54,)
-                
-          
-              ],
-            )
-              ],
-            ),
-          ),
- Padding(
-   padding: const EdgeInsets.only(left:15.0,),
-   child: Text(
-                    "Recent Matches",
-                    style: TextStyle(
-                        color: Colors.black54,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500),
-                  ),
- ),
- Expanded(
-  child: ListView.builder(
-    itemCount: 2,
-    itemBuilder: (context,index){
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(15,5,15,5),
-      child: Container(
-       // height: MediaQuery.of(context).size.height/3,
-        width: MediaQuery.of(context).size.width/1,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5),
-          border: Border.all(width: 1,color: Colors.black26
-        )
-        ),
-
-child: Padding(
-  padding: const EdgeInsets.all(0.0),
-  child:   Column(
-    mainAxisAlignment: MainAxisAlignment.start,
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Padding(
-        padding: const EdgeInsets.fromLTRB(10,10,10,0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-                      "FanCode ECS Romania T10",
-                      style: TextStyle(
-                          color: Colors.black54,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500),
-                    ),
-              Text(
-                      "30 June 2023",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500),
-                    ),
-      
-          ],
-        ),
-      ),
-      SizedBox(height: 10,),
-     Container(
-  height: 1,
-  width: MediaQuery.of(context).size.width/1,
-    color: Colors.grey[200]
-  ,
- ),
-     // SizedBox(height: 10,),
-      Padding(
-        padding: const EdgeInsets.fromLTRB(10,5,10,10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-      Row(
-        children: [
-          Image.asset(ImageUitls.Team_2_logo,height: 30,width: 30,),
-          SizedBox(width: 10,),
-          Text("CSK",
-          style: TextStyle(
-            color: ColorConstant.primaryBlackColor,
-            fontSize: 14,
-            fontWeight: FontWeight.w500
-          ),
-          )
-        ],
-      ),
-      Text("VS",
-          style: TextStyle(
-            color: ColorConstant.primaryBlackColor,
-            fontSize: 14,
-            fontWeight: FontWeight.w500
-          ),
-          ),
-
- Row(
-        children: [
-          Image.asset(ImageUitls.Team_2_logo,height: 30,width: 30,),
-          SizedBox(width: 10,),
-          Text("CSK",
-          style: TextStyle(
-            color: ColorConstant.primaryBlackColor,
-            fontSize: 14,
-            fontWeight: FontWeight.w500
-          ),
-          )
-        ],
-      )
-
-          ],
-        ),
-      )
-  
-  
- , 
- Container(
-  height: 1,
-  width: MediaQuery.of(context).size.width/1,
-  color: Colors.grey[200]
-  ,
- ),
-
-SizedBox(height: 10,),
-  Padding(
-    padding: const EdgeInsets.only(left:15,right: 15),
-    child: Row(
-      children: [
-        Icon(Icons.wine_bar_outlined,size:30,color: ColorConstant.primaryBlackColor,),
-        SizedBox(width: 10,),
-        Text("86 lakhs",
-                style: TextStyle(
-                  color: ColorConstant.primaryBlackColor,
-                  fontSize: 15,
-                  fontWeight: FontWeight.w600
-                ),
-                ),
-      ],
-    ),
-  ),
-
-
-  Padding(
-    padding: const EdgeInsets.fromLTRB(15,10,15,10),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Container(
-        //  height: 100,
-          width: MediaQuery.of(context).size.width/4,
-          decoration: BoxDecoration(
-            border: Border.all(width: 1,color: ColorConstant.deviderColor),
-            borderRadius: BorderRadius.circular(5)
-          ),
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(0,6,0,0),
-            child: Column(
-              crossAxisAlignment:CrossAxisAlignment.start,
-              children: [
-                 Padding(
-                   padding: const EdgeInsets.only(left:6,right: 6),
-                   child: Text("Rank #1",
-                                 style: TextStyle(
-                    color: ColorConstant.primaryBlackColor,
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600
-                                 ),
-                                 ),
-                 ),
-               Padding(
-                   padding: const EdgeInsets.only(left:6,right: 6),
-                   child:    Text("Super star P",
-                style: TextStyle(
-                  color: Colors.black45,
-                  fontSize: 10,
-                  fontWeight: FontWeight.w600
-                ),
-                ),),
-                SizedBox(height: 10,),
-                Container(
-                  alignment: Alignment.center,
-                  child: Container(
-                    height: 60,
-                    width: 60,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(image: NetworkImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT57f8aco5dcp2ifXE_D35P2RrvpZGMePmpEg&usqp=CAU"),
-                      
-                      fit: BoxFit.fill
-                      )
-                    ),
-                 
-                  ),
-
-                ),
-                 SizedBox(height: 6,),
-                 Container(
-                  height: 20,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(5),
-                      bottomRight: Radius.circular(5)
-                    ),
-                    color: Colors.blue[100]
-                  ),
-                  alignment: Alignment.centerLeft,
-                  child: Text(" Won ₹5.5 Lakhs",
-                  style: TextStyle(
-                    color: ColorConstant.primaryBlackColor,
-                    fontSize: 10,
-                    fontWeight: FontWeight.w600
-                  ),
-                  ),
-                 )
-              ],
-            ),
-          ),
-        ),
-      
-     
-      Container(
-        //  height: 100,
-          width: MediaQuery.of(context).size.width/4,
-          decoration: BoxDecoration(
-            border: Border.all(width: 1,color: ColorConstant.deviderColor),
-            borderRadius: BorderRadius.circular(5)
-          ),
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(0,6,0,0),
-            child: Column(
-              crossAxisAlignment:CrossAxisAlignment.start,
-              children: [
-                 Padding(
-                   padding: const EdgeInsets.only(left:6,right: 6),
-                   child: Text("Rank #1",
-                                 style: TextStyle(
-                    color: ColorConstant.primaryBlackColor,
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600
-                                 ),
-                                 ),
-                 ),
-               Padding(
-                   padding: const EdgeInsets.only(left:6,right: 6),
-                   child:    Text("Super star P",
-                style: TextStyle(
-                  color: Colors.black45,
-                  fontSize: 10,
-                  fontWeight: FontWeight.w600
-                ),
-                ),),
-                SizedBox(height: 10,),
-                Container(
-                  alignment: Alignment.center,
-                  child: Container(
-                    height: 60,
-                    width: 60,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(image: NetworkImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT57f8aco5dcp2ifXE_D35P2RrvpZGMePmpEg&usqp=CAU"),
-                      
-                      fit: BoxFit.fill
-                      )
-                    ),
-                 
-                  ),
-
-                ),
-                 SizedBox(height: 6,),
-                 Container(
-                  height: 20,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(5),
-                      bottomRight: Radius.circular(5)
-                    ),
-                    color: Colors.blue[100]
-                  ),
-                  alignment: Alignment.centerLeft,
-                  child: Text(" Won ₹5.5 Lakhs",
-                  style: TextStyle(
-                    color: ColorConstant.primaryBlackColor,
-                    fontSize: 10,
-                    fontWeight: FontWeight.w600
-                  ),
-                  ),
-                 )
-              ],
-            ),
-          ),
-        ),
-      Container(
-        //  height: 100,
-          width: MediaQuery.of(context).size.width/4,
-          decoration: BoxDecoration(
-            border: Border.all(width: 1,color: ColorConstant.deviderColor),
-            borderRadius: BorderRadius.circular(5)
-          ),
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(0,6,0,0),
-            child: Column(
-              crossAxisAlignment:CrossAxisAlignment.start,
-              children: [
-                 Padding(
-                   padding: const EdgeInsets.only(left:6,right: 6),
-                   child: Text("Rank #1",
-                                 style: TextStyle(
-                    color: ColorConstant.primaryBlackColor,
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600
-                                 ),
-                                 ),
-                 ),
-               Padding(
-                   padding: const EdgeInsets.only(left:6,right: 6),
-                   child:    Text("Super star P",
-                style: TextStyle(
-                  color: Colors.black45,
-                  fontSize: 10,
-                  fontWeight: FontWeight.w600
-                ),
-                ),),
-                SizedBox(height: 10,),
-                Container(
-                  alignment: Alignment.center,
-                  child: Container(
-                    height: 60,
-                    width: 60,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(image: NetworkImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT57f8aco5dcp2ifXE_D35P2RrvpZGMePmpEg&usqp=CAU"),
-                      
-                      fit: BoxFit.fill
-                      )
-                    ),
-                 
-                  ),
-
-                ),
-                 SizedBox(height: 6,),
-                 Container(
-                  height: 20,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(5),
-                      bottomRight: Radius.circular(5)
-                    ),
-                    color: Colors.blue[100]
-                  ),
-                  alignment: Alignment.centerLeft,
-                  child: Text(" Won ₹5.5 Lakhs",
-                  style: TextStyle(
-                    color: ColorConstant.primaryBlackColor,
-                    fontSize: 10,
-                    fontWeight: FontWeight.w600
-                  ),
-                  ),
-                 )
-              ],
-            ),
-          ),
-        ),
-     
-     
-     
-     
-      ],
-    ),
-  )
-
-
-    ],
-  ),
-),
-
-
-      ),
-    );
-  }), 
- 
- 
- 
- )
-
-
-
-        ],
-      ),
+      body: GetBuilder<WinnerController>(
+          init: WinnerController(),
+          builder: (controller) {
+            return controller.winnerApiResponse == null
+                ? shimerEffect(length: 4, context: context)
+                : ListView.builder(
+                    itemCount:
+                        winnerController.winnerApiResponse['data'].length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                          padding: EdgeInsets.only(
+                              left: 15, right: 15, top: 8, bottom: 8),
+                          child: InkWell(
+                            onTap: () {
+                          
+                              Navigator.push(context, MaterialPageRoute(builder: (context){
+                                return ContestScreen(
+                                  matchData: winnerController.winnerApiResponse['data'][index],
+                                );
+                              }));
+                            },
+                            child: Container(
+                              width: MediaQuery.of(context).size.width / 1,
+                              // height: 100,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: ColorConstant.primaryWhiteColor,
+                                  border: Border.all(
+                                      width: 1, color: Colors.black26)),
+                              child: Padding(
+                                padding: const EdgeInsets.all(0.0),
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                winnerController
+                                                            .winnerApiResponse[
+                                                        'data'][index]['match']
+                                                    ['league_name'],
+                                                style: TextStyle(
+                                                    color: ColorConstant
+                                                        .primaryBlackColor,
+                                                    fontSize: 13,
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                              ),
+                                              Row(
+                                                children: [
+                                                  // Icon(
+                                                  //   Icons
+                                                  //       .movie_filter_outlined,
+                                                  //   size: 18,
+                                                  //   color: ColorConstant
+                                                  //       .deviderColor,
+                                                  // ),
+                                                  // SizedBox(
+                                                  //   width: 10,
+                                                  // ),
+                                                  // Text(
+                                                  //   "Lineup Out",
+                                                  //   style: TextStyle(
+                                                  //       color: ColorConstant
+                                                  //           .greenColor,
+                                                  //       fontSize: 13,
+                                                  //       fontWeight:
+                                                  //           FontWeight
+                                                  //               .w500),
+                                                  // ),
+                                                ],
+                                              )
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  Container(
+                                                    height: 50,
+                                                    width: 40,
+                                                    child: Stack(
+                                                      children: [
+                                                        Visibility(
+                                                          visible: winnerController
+                                                                              .winnerApiResponse[
+                                                                          'data']
+                                                                      [
+                                                                      index]['match']
+                                                                  [
+                                                                  'winner_team'] ==
+                                                              winnerController
+                                                                          .winnerApiResponse[
+                                                                      'data'][index]
+                                                                  [
+                                                                  'match']['teamid1'],
+                                                          child: Positioned(
+                                                            top: -10,
+                                                            left: 0,
+                                                            right: 5,
+                                                            child: Image.asset(
+                                                              'assets/icons/crown.png',
+                                                              height: 30,
+                                                              width: 20,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Positioned(
+                                                          top: 10,
+                                                          child: Container(
+                                                            height: 35,
+                                                            width: 35,
+                                                            decoration: BoxDecoration(
+                                                                shape: BoxShape
+                                                                    .circle,
+                                                                image: DecorationImage(
+                                                                    image: NetworkImage(winnerController.winnerApiResponse['data'][index]['match']['team1']
+                                                                            [
+                                                                            'team_image'] ??
+                                                                        'https://upload.wikimedia.org/wikipedia/commons/e/ef/Virat_Kohli_during_the_India_vs_Aus_4th_Test_match_at_Narendra_Modi_Stadium_on_09_March_2023.jpg'),
+                                                                    fit: BoxFit
+                                                                        .fill)),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                   Text(
+                                                winnerController
+                                                            .winnerApiResponse[
+                                                        'data'][index]['match']['team2']
+                                                    ['team_short_name'],
+                                                style: TextStyle(
+                                                    color: ColorConstant
+                                                        .primaryBlackColor,
+                                                    fontSize: 13,
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                              ),
+                                                ],
+                                              ),
+                                              Column(
+                                                children: [
+                                                  Text(
+                                                    winnerController
+                                                                .winnerApiResponse[
+                                                            'data'][index]['match']
+                                                        ['match_date_time'],
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 13,
+                                                        fontWeight:
+                                                            FontWeight.w400),
+                                                  ),
+                                                ],
+                                              ),
+                                              Row(
+                                                children: [
+                                                    Text(
+                                                winnerController
+                                                            .winnerApiResponse[
+                                                        'data'][index]['match']['team2']
+                                                    ['team_short_name'],
+                                                style: TextStyle(
+                                                    color: ColorConstant
+                                                        .primaryBlackColor,
+                                                    fontSize: 12,
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                              ),
+                                                  Container(
+                                                    height: 50,
+                                                    width: 40,
+                                                    child: Stack(
+                                                      children: [
+                                                        Visibility(
+                                                          visible: winnerController
+                                                                              .winnerApiResponse[
+                                                                          'data']
+                                                                      [
+                                                                      index]['match']
+                                                                  [
+                                                                  'winner_team'] ==
+                                                              winnerController
+                                                                          .winnerApiResponse[
+                                                                      'data'][index]
+                                                                  [
+                                                                  'match']['teamid2'],
+                                                          child: Positioned(
+                                                            top: -10,
+                                                            left: 0,
+                                                            right: 5,
+                                                            child: Image.asset(
+                                                              'assets/icons/crown.png',
+                                                              height: 30,
+                                                              width: 20,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Positioned(
+                                                          top: 10,
+                                                          child: Container(
+                                                            height: 35,
+                                                            width: 35,
+                                                            decoration: BoxDecoration(
+                                                                shape: BoxShape
+                                                                    .circle,
+                                                                image: DecorationImage(
+                                                                    image: NetworkImage(winnerController.winnerApiResponse['data'][index]['match']['team2']
+                                                                            [
+                                                                            'team_image'] ??
+                                                                        'https://upload.wikimedia.org/wikipedia/commons/e/ef/Virat_Kohli_during_the_India_vs_Aus_4th_Test_match_at_Narendra_Modi_Stadium_on_09_March_2023.jpg'),
+                                                                    fit: BoxFit
+                                                                        .fill)),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  
+                                                ],
+                                              ),
+                                              
+                                            ],
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                0, 5, 10, 0),
+                                            child: Container(
+                                              alignment: Alignment.centerLeft,
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    winnerController
+                                                        .winnerApiResponse[
+                                                            'data'][index]
+                                                            ['match']['title']
+                                                        .split(' vs ')
+                                                        .first,
+                                                    style: const TextStyle(
+                                                        color: Colors.black45,
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.w500),
+                                                  ),
+                                                  Text(
+                                                    winnerController
+                                                        .winnerApiResponse[
+                                                            'data'][index]
+                                                            ['match']['title']
+                                                        .split(' vs ')
+                                                        .last,
+                                                    style: const TextStyle(
+                                                        color: Colors.black45,
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.w500),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    Divider(
+                                      height: 1,
+                                      color: ColorConstant.deviderColor,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: Container(
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                1,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(0.0),
+                                              child: Text(
+                                                "Team:- ${index + 1}    ${winnerController.winnerApiResponse['data'][index]['contest_data'].length} Contest",
+                                                style: TextStyle(
+                                                    color: Colors.black45,
+                                                    fontSize: 12,
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ));
+                    });
+          }),
     );
   }
 }

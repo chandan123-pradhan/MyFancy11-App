@@ -142,15 +142,14 @@ class HomeController extends GetxController {
     Map parameter = {
       NetworkConstant.Status: 'Fixture',
     };
-    var response ;
-    
-    if(logInStatus){
-      
-     response= await apiProvider.postAfterAuth(
-        routeUrl: NetworkConstant.GET_MATCHES, bodyParams: parameter);
-    }else{
-    response=  await apiProvider.postBeforeAuth(
-        routeUrl: NetworkConstant.GET_MATCHES, bodyParams: parameter);
+    var response;
+
+    if (logInStatus) {
+      response = await apiProvider.postAfterAuth(
+          routeUrl: NetworkConstant.GET_MATCHES, bodyParams: parameter);
+    } else {
+      response = await apiProvider.postBeforeAuth(
+          routeUrl: NetworkConstant.GET_MATCHES, bodyParams: parameter);
     }
     // debugger();
     print(response);
@@ -541,7 +540,7 @@ class HomeController extends GetxController {
         Map parameter = {NetworkConstant.Status: status};
         var response = await apiProvider.postAfterAuth(
             routeUrl: NetworkConstant.MyMatchList_Url, bodyParams: parameter);
-
+// debugger();
         print(response);
         if (status == 'fixture') {
           // debugger();
@@ -575,7 +574,7 @@ class HomeController extends GetxController {
       NetworkConstant.transaction_details:
           "Transaction id= ${upiResponse.transactionId}, Transaction Ref Id=${upiResponse.transactionRefId}",
       NetworkConstant.status: 'TXN_SUCCESS',
-      'promo_code':appliedPromoCode
+      'promo_code': appliedPromoCode
     };
     var response = await apiProvider.postAfterAuth(
         routeUrl: NetworkConstant.recharge, bodyParams: parameter);
@@ -587,21 +586,25 @@ class HomeController extends GetxController {
 
     update();
   }
-
+  String selectedPaymentGateway='';
   void checkKyc(context) async {
     eKycStatus = 0;
     update();
     Map parameter = {};
     var response = await apiProvider.postAfterAuthCustom(
         routeUrl: NetworkConstant.checkEkyc, bodyParams: parameter);
-        // debugger();
+    // debugger();
     print(response);
     if (response['status'] == 300) {
       eKycStatus = 1;
     } else if (response['status'] == 100) {
       checkEkyApiResponse = CheckEkyApiResponse.fromJson(response);
+      selectedPaymentGateway=checkEkyApiResponse!.data.isDefault;
       eKycStatus = 2;
     } else if (response['status'] == 200) {
+      checkEkyApiResponse = CheckEkyApiResponse.fromJson(response);
+      selectedPaymentGateway=checkEkyApiResponse!.data.isDefault;
+
       eKycStatus = 3;
     }
 
@@ -706,15 +709,16 @@ class HomeController extends GetxController {
     update();
   }
 
-  void setReminder(String matchId) async {
+  void setReminder(String matchId, context) async {
     Map parameter = {
       NetworkConstant.MatchId: matchId,
     };
-    debugger();
+    // debugger();
     var response = await apiProvider.postAfterAuth(
         routeUrl: NetworkConstant.set_reminder, bodyParams: parameter);
-    debugger();
+    // debugger();
     print(response);
+    Messages().showMsg(context: context, message: response['message']);
   }
 
   GetPromoCode? getPromoCodeApiResponse;
@@ -729,38 +733,37 @@ class HomeController extends GetxController {
     update();
   }
 
-String appliedPromoCode='';
-  void applyPromoCode(String code,context) async {
-     showLoaderDialog(context);
-    Map parameter = {
-      'code':code
-    };
+  String appliedPromoCode = '';
+  void applyPromoCode(String code, context) async {
+    showLoaderDialog(context);
+    Map parameter = {'code': code};
     var response = await apiProvider.postAfterAuth(
         routeUrl: NetworkConstant.validatePromoCode, bodyParams: parameter);
-    
+
     Navigator.pop(context);
-   if(response['status']==200){
-     appliedPromoCode=code;
-    Messages().showMsg(context: context, message: 'Promocode successfully applied.');
-   }
-   update();
+    if (response['status'] == 200) {
+      appliedPromoCode = code;
+      Messages().showMsg(
+          context: context, message: 'Promocode successfully applied.');
+    }
+    update();
   }
 
-   void requestForWithdrawal(String amount,context) async {
-     showLoaderDialog(context);
-    Map parameter = {
-      'amount':amount
+  void requestForWithdrawal(String amount, context,selectedPaymentMethod) async {
+    showLoaderDialog(context);
+    Map parameter = {'amount': amount,
+    'is_default':selectedPaymentMethod
     };
     var response = await apiProvider.postAfterAuth(
         routeUrl: NetworkConstant.requestForWithdrawal, bodyParams: parameter);
     // debugger();
     Navigator.pop(context);
-   if(response['status']==200){
-     Messages().showErrorMsg(context: context, message: response['message']);
-     getWalletApi(context);
-   }else{
-    Messages().showErrorMsg(context: context, message: response['message']);
-   }
-   update();
+    if (response['status'] == 200) {
+      Messages().showErrorMsg(context: context, message: response['message']);
+      getWalletApi(context);
+    } else {
+      Messages().showErrorMsg(context: context, message: response['message']);
+    }
+    update();
   }
 }

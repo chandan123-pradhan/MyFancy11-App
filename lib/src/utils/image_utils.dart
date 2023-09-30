@@ -4,7 +4,7 @@ class ImageUitls{
   static const String UnSelected_home='assets/new_icons/home_not.png';
   static const String UnSelected_winners='assets/new_icons/winner_not.png';
   static const String UnSelected_mymaches='assets/icons/unselected_mymaches.png';
-  static const String Profile_icon='assets/new_icons/quiz.png';
+  static const String Profile_icon='assets/new_icons/quiz_not.png';
   static const String Notification_icon='assets/icons/notification_icon.png';
   static const String Wallet_icon='assets/icons/wallet_icon.png';
   static const String Team_1_logo='assets/images/team1_logo.png';

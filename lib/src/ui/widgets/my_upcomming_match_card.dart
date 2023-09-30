@@ -387,7 +387,8 @@ class _MyUpcommingMatchCardWidgetState
                                         onTap: () {
                                           controller.setReminder(widget
                                               .matches.matchId
-                                              .toString());
+                                              .toString(),
+                                              context);
                                           setState(() {
                                             isSetReminder = true;
                                           });
@@ -399,7 +400,7 @@ class _MyUpcommingMatchCardWidgetState
                                           decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(10),
-                                              color: widget.matches
+                                              color:  widget.matches
                                                               .is_subscribe ==
                                                           '1' ||
                                                       isSetReminder == true

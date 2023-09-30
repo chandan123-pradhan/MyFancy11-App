@@ -8,8 +8,9 @@ class BottomBarItem extends StatefulWidget {
   final String imageName;
   final title;
   bool isSelected;
+  String selectedImage;
   BottomBarItem(
-      {required this.imageName, required this.title, required this.isSelected});
+      {required this.imageName, required this.title, required this.isSelected,required this.selectedImage});
 
   @override
   State<BottomBarItem> createState() => _BottomBarItemState();
@@ -30,15 +31,17 @@ class _BottomBarItemState extends State<BottomBarItem> {
           children: [
             Container(
               decoration: BoxDecoration(
-                  shape: BoxShape.circle, color:
+                  shape: BoxShape.circle, 
                   
                   
-              widget.isSelected?     Colors.redAccent[100]:Colors.transparent
+             
                    
                    ),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Image.asset(
+               widget.isSelected?widget.selectedImage:
+               
                   widget.imageName,
                   height:
                   widget.isSelected?20:

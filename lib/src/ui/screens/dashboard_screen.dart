@@ -36,9 +36,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
   var controller = Get.put(HomeController());
   var quizController = Get.put(QuizController());
   void _changeIndex(int value) {
+         
     _currentIndex = value;
     _body = _screens[_currentIndex];
     setState(() {});
+     quizController.timer!.cancel();
+     if(quizController.quizDetailsTimer!.isActive){
+      quizController.quizDetailsTimer!.cancel();
+     }
   }
 
   List<Widget> _screens = [
@@ -185,6 +190,7 @@ width: 30,
                     imageName: ImageUitls.UnSelected_home,
                     title: 'Home', 
                     isSelected: _currentIndex == 0 ? true : false,
+                    selectedImage: ImageUitls.Selected_home,
                   ),
                 ),
                 InkWell(
@@ -197,6 +203,7 @@ width: 30,
                     imageName: 'assets/new_icons/match_not.png',
                     title: 'My Matches',
                     isSelected: _currentIndex == 1 ? true : false,
+                     selectedImage: 'assets/new_icons/lineup.png'
                   ),
                 ),
                 InkWell(
@@ -209,6 +216,7 @@ width: 30,
                       imageName: ImageUitls.UnSelected_winners,
                       title: 'Winners',
                       isSelected: _currentIndex == 2 ? true : false,
+                        selectedImage: 'assets/new_icons/winner.png'
                     )),
                 InkWell(
                     onTap: () {
@@ -218,6 +226,7 @@ width: 30,
                       imageName: ImageUitls.Profile_icon,
                       title: 'Portfolio',
                       isSelected: _currentIndex == 3 ? true : false,
+                      selectedImage: 'assets/new_icons/quiz.png'
                     ))
               ],
             ),

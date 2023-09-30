@@ -101,7 +101,7 @@ GetQuizByCategoryApiResponse? getQuizByMatchId;
           routeUrl: NetworkConstant.quizByMatchId, bodyParams: paramter);
       getQuizByMatchId =
           GetQuizByCategoryApiResponse.fromJson(response);
-       debugger();
+      //  debugger();
       update();
     } catch (e) {
       print(e);

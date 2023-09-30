@@ -514,6 +514,7 @@ width: 30,
                           },
                           child: Row(
                             children: const [
+
                               Icon(
                                 Icons.remove_red_eye,
                                 size: 15,
@@ -524,6 +525,15 @@ width: 30,
                               ),
                               Text(
                                 "PREVIEW",
+                                style: TextStyle(
+                                    color: ColorConstant.primaryWhiteColor,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                              
+                             
+                              Text(
+                                " / LINEUP",
                                 style: TextStyle(
                                     color: ColorConstant.primaryWhiteColor,
                                     fontSize: 12,
@@ -819,10 +829,14 @@ width: 30,
                               height: 100,
                               width: MediaQuery.of(context).size.width / 1,
                               decoration: BoxDecoration(
+                                color:  dummyPlayer[index] == 0?Colors.white:Colors.yellow[50],
                                   border: Border(
                                 top: BorderSide(
                                     width: 1,
                                     color: ColorConstant.deviderColor),
+
+
+
                               )),
                               child: Padding(
                                 padding:

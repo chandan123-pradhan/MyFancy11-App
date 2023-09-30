@@ -210,7 +210,7 @@ class AuthController extends GetxController {
     }
   }
 
-  updateProfile(context) async {
+  updateProfile(context,) async {
     if (nameController.text.isNotEmpty) {
       if (emailController.text.isNotEmpty && emailController.text.isEmail) {
         showLoaderDialog(context);
@@ -224,6 +224,7 @@ class AuthController extends GetxController {
           var response = await apiProvider.postAfterAuth(
               routeUrl: NetworkConstant.ACCOUNT_UPDATE_URL, bodyParams: data);
           Navigator.pop(context);
+        //  debugger();
           updateProfileApiReponse = UpdateProfileApiReponse.fromJson(response);
           sharedPref.setProfilepic(updateProfileApiReponse.updatedData.profile);
           sharedPref.setProfileDetails(

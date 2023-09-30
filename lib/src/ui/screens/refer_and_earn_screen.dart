@@ -199,7 +199,7 @@ class _RefferAndEarnScreenState extends State<RefferAndEarnScreen> {
                                                         .refferalApiResponse!
                                                         .setting
                                                         .upgradeRequest ==
-                                                    0
+                                                    1
                                                 ? ColorConstant.greenColor
                                                 : Colors.transparent),
                                         alignment: Alignment.center,
@@ -210,7 +210,7 @@ class _RefferAndEarnScreenState extends State<RefferAndEarnScreen> {
                                                           .refferalApiResponse!
                                                           .setting
                                                           .upgradeRequest ==
-                                                      1
+                                                      2
                                                   ? ColorConstant
                                                       .primaryBlackColor
                                                   : ColorConstant
@@ -243,7 +243,7 @@ class _RefferAndEarnScreenState extends State<RefferAndEarnScreen> {
                                                         .refferalApiResponse!
                                                         .setting
                                                         .upgradeRequest ==
-                                                    1
+                                                    2
                                                 ? ColorConstant.greenColor
                                                 : Colors.transparent),
                                         alignment: Alignment.center,
@@ -254,7 +254,7 @@ class _RefferAndEarnScreenState extends State<RefferAndEarnScreen> {
                                                           .refferalApiResponse!
                                                           .setting
                                                           .upgradeRequest ==
-                                                      1
+                                                      2
                                                   ? ColorConstant
                                                       .primaryWhiteColor
                                                   : ColorConstant

@@ -52,7 +52,7 @@ class MyPlayerData {
     designationid = json['designationid'];
     isCaptain = json['is_captain'];
     isVicecaptain = json['is_vicecaptain'];
-    totalPoints = json['total_points'];
+    totalPoints = json['total_points'].toString();
     playingStatus = json['playing_status'];
     name = json['name'];
     image = json['image'];

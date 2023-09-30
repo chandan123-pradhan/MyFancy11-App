@@ -2,8 +2,10 @@ import 'package:cricket_fantacy/src/controllers/live_contest_controller.dart';
 import 'package:cricket_fantacy/src/models/get_my_mateches_api_response.dart';
 import 'package:cricket_fantacy/src/ui/screens/home_tab/Leader_baord_tab.dart';
 import 'package:cricket_fantacy/src/ui/screens/home_tab/winning_tab_screen.dart';
+import 'package:cricket_fantacy/src/ui/screens/live_contest_screens/commentry_screen.dart';
 import 'package:cricket_fantacy/src/ui/screens/live_contest_screens/my_contest_tab.dart';
 import 'package:cricket_fantacy/src/ui/screens/live_contest_screens/my_team_widget_tab.dart';
+import 'package:cricket_fantacy/src/ui/screens/live_contest_screens/scorecard_screen.dart';
 import 'package:cricket_fantacy/src/ui/screens/wallets/wallet_screen.dart';
 import 'package:cricket_fantacy/src/ui/widgets/shimmer_effect_widget.dart';
 import 'package:cricket_fantacy/src/utils/color_scheme.dart';
@@ -17,7 +19,7 @@ import 'package:url_launcher/url_launcher.dart';
 class LiveContestScreen extends StatefulWidget {
   final MyMatchModel myMatchModel;
   final String flag;
-  LiveContestScreen({required this.myMatchModel,required this.flag});
+  LiveContestScreen({required this.myMatchModel, required this.flag});
 
   @override
   State<LiveContestScreen> createState() => _LiveContestScreenState();
@@ -62,10 +64,7 @@ class _LiveContestScreenState extends State<LiveContestScreen>
           controller.closeTimer(context);
           return Future.value(true);
         } else {
-          controller.updateMycontestScreen(
-            ''
-
-          );
+          controller.updateMycontestScreen('');
           return Future.value(false);
         }
       },
@@ -90,19 +89,18 @@ class _LiveContestScreenState extends State<LiveContestScreen>
           ),
           centerTitle: false,
           title: Text(
-          widget.flag,
+            widget.flag,
             style: TextStyle(
                 color: ColorConstant.primaryWhiteColor,
                 fontSize: 17,
                 fontWeight: FontWeight.w600),
           ),
           actions: [
-           
             Padding(
               padding: const EdgeInsets.only(right: 20.0),
               child: InkWell(
                   onTap: () {
-                 openWeb('https://myfancy11.com/points-table.html');
+                    openWeb('https://myfancy11.com/points-table.html');
                   },
                   child: Container(
                     height: 22,
@@ -134,10 +132,9 @@ class _LiveContestScreenState extends State<LiveContestScreen>
                           color: ColorConstant.primaryBlackColor,
                           child: Padding(
                             padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                            child: controller
-                                            .liveMatchUpdateApiResponse!['data']
-                                        [0]['match_status'] ==
-                                    'Fixture'
+                            child: controller.liveMatchUpdateApiResponse[
+                                        'my_status'] !=
+                                    'live'
                                 ? Column(
                                     children: [
                                       Row(
@@ -236,25 +233,17 @@ class _LiveContestScreenState extends State<LiveContestScreen>
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          Text(
-                                            "Match Start Will be : ",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 14),
-                                          ),
                                           CountdownTimer(
-                                            endWidget:
-                                                remainingDuration!.inHours < 0
-                                                    ? const Text(
-                                                        "Completed",
-                                                        style: TextStyle(
-                                                            color: Colors.red),
-                                                      )
-                                                    : const Text(
-                                                        "Live",
-                                                        style: TextStyle(
-                                                            color: Colors.red),
-                                                      ),
+                                            endWidget: Text(
+                                              controller.liveMatchUpdateApiResponse![
+                                                      'data'][0]
+                                                  ['match_status_note']??'',
+                                              style: TextStyle(
+                                                  color: ColorConstant
+                                                      .primaryWhiteColor,
+                                                  fontSize: 13,
+                                                  fontWeight: FontWeight.w500),
+                                            ),
                                             endTime: targetDate
                                                 .millisecondsSinceEpoch,
                                             textStyle: TextStyle(
@@ -313,47 +302,31 @@ class _LiveContestScreenState extends State<LiveContestScreen>
                                                   SizedBox(
                                                     width: 10,
                                                   ),
-                                                  controller.liveMatchUpdateApiResponse![
-                                                                  'data'][0][
-                                                              'match_status'] ==
-                                                          'Fixture'
-                                                      ? Container()
-                                                      : Text(
-                                                          controller.liveMatchUpdateApiResponse![
-                                                                      'data'][0]
-                                                                  [
-                                                                  'team1Score'] ??
-                                                              '',
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: 16,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
-                                                        ),
+                                                  Text(
+                                                    controller.liveMatchUpdateApiResponse![
+                                                                'data'][0]
+                                                            ['team1Score'] ??
+                                                        '',
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
                                                   SizedBox(
                                                     width: 10,
                                                   ),
-                                                  controller.liveMatchUpdateApiResponse![
-                                                                  'data'][0][
-                                                              'match_status'] ==
-                                                          'Fixture'
-                                                      ? Container()
-                                                      : Text(
-                                                          controller.liveMatchUpdateApiResponse![
-                                                                      'data'][0]
-                                                                  [
-                                                                  'team1Over'] ??
-                                                              '',
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: 16,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500),
-                                                        ),
+                                                  Text(
+                                                    controller.liveMatchUpdateApiResponse![
+                                                                'data'][0]
+                                                            ['team1Over'] ??
+                                                        '',
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.w500),
+                                                  ),
                                                 ],
                                               )
                                             ],
@@ -377,52 +350,31 @@ class _LiveContestScreenState extends State<LiveContestScreen>
                                               ),
                                               Row(
                                                 children: [
-                                                  controller.liveMatchUpdateApiResponse![
-                                                                  'data'][0][
-                                                              'match_status'] ==
-                                                          'Fixture'
-                                                      ? Container()
-                                                      : Text(
-                                                          controller.liveMatchUpdateApiResponse![
-                                                                      'data'][0]
-                                                                  [
-                                                                  'team2Score'] ??
-                                                              '',
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: 16,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400),
-                                                        ),
-                                                  controller.liveMatchUpdateApiResponse![
-                                                                  'data'][0][
-                                                              'match_status'] ==
-                                                          'Fixture'
-                                                      ? Container()
-                                                      : SizedBox(
-                                                          width: 10,
-                                                        ),
-                                                  controller.liveMatchUpdateApiResponse![
-                                                                  'data'][0][
-                                                              'match_status'] ==
-                                                          'Fixture'
-                                                      ? Container()
-                                                      : Text(
-                                                          controller.liveMatchUpdateApiResponse![
-                                                                      'data'][0]
-                                                                  [
-                                                                  'team2Over'] ??
-                                                              '',
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: 16,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500),
-                                                        ),
+                                                  Text(
+                                                    controller.liveMatchUpdateApiResponse![
+                                                                'data'][0]
+                                                            ['team2Score'] ??
+                                                        '',
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.w400),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 10,
+                                                  ),
+                                                  Text(
+                                                    controller.liveMatchUpdateApiResponse![
+                                                                'data'][0]
+                                                            ['team2Over'] ??
+                                                        '',
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.w500),
+                                                  ),
                                                   SizedBox(
                                                     width: 10,
                                                   ),
@@ -483,211 +435,193 @@ class _LiveContestScreenState extends State<LiveContestScreen>
                                                           .spaceBetween,
                                                   children: [
                                                     Text(
-                                                            controller.liveMatchUpdateApiResponse![
-                                                                        'current']['c_data']
-                                                                    [0]['strik']
-                                                                ['name'],
+                                                      controller.liveMatchUpdateApiResponse![
+                                                                  'current']
+                                                              ['c_data'][0]
+                                                          ['strik']['name'],
 
-                                                            //"Virat Kohali",
-                                                            style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: 12,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                            ),
-                                                          ),
-                                                    controller.liveMatchUpdateApiResponse![
-                                                                    'data'][0][
-                                                                'match_status'] ==
-                                                            'Fixture'
-                                                        ? Container()
-                                                        : Text(
-                                                            "${controller.liveMatchUpdateApiResponse!['current']['c_data'][0]['strik']['strik_data']['score']} (${controller.liveMatchUpdateApiResponse!['current']['c_data'][0]['strik']['strik_data']['ball']})",
+                                                      //"Virat Kohali",
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      "${controller.liveMatchUpdateApiResponse!['current']['c_data'][0]['strik']['strik_data']['score']} (${controller.liveMatchUpdateApiResponse!['current']['c_data'][0]['strik']['strik_data']['ball']})",
 
-                                                            //    "10 (10)",
-                                                            style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: 12,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                            ),
-                                                          )
+                                                      //    "10 (10)",
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
+                                                    )
                                                   ],
                                                 ),
                                                 SizedBox(
                                                   height: 10,
                                                 ),
-                                                controller.liveMatchUpdateApiResponse![
-                                                                'data'][0]
-                                                            ['match_status'] ==
-                                                        'Fixture'
-                                                    ? Container()
-                                                    : Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          Text(
-                                                            controller.liveMatchUpdateApiResponse![
-                                                                        'current']['c_data']
-                                                                    [
-                                                                    0]['batsman']
-                                                                ['fullname'],
-                                                            style: TextStyle(
-                                                              color: Colors
-                                                                  .white70,
-                                                              fontSize: 12,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                            ),
-                                                          ),
-                                                          Text(
-                                                            "${controller.liveMatchUpdateApiResponse!['current']['c_data'][0]['batsman']['batsman_data']['score']} (${controller.liveMatchUpdateApiResponse!['current']['c_data'][0]['batsman']['batsman_data']['ball']})",
-                                                            style: TextStyle(
-                                                              color: Colors
-                                                                  .white70,
-                                                              fontSize: 12,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                            ),
-                                                          )
-                                                        ],
-                                                      )
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                      controller.liveMatchUpdateApiResponse![
+                                                                      'current']
+                                                                  ['c_data'][0]
+                                                              ['batsman']
+                                                          ['fullname'],
+                                                      style: TextStyle(
+                                                        color: Colors.white70,
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      "${controller.liveMatchUpdateApiResponse!['current']['c_data'][0]['batsman']['batsman_data']['score']} (${controller.liveMatchUpdateApiResponse!['current']['c_data'][0]['batsman']['batsman_data']['ball']})",
+                                                      style: TextStyle(
+                                                        color: Colors.white70,
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
+                                                    )
+                                                  ],
+                                                )
                                               ],
                                             ),
                                           ),
-                                           Container(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width /
-                                                      2.5,
-                                                  child: Column(
+                                          Container(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width /
+                                                2.5,
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                SizedBox(
+                                                  height: 20,
+                                                ),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Container(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width /
+                                                              4,
+                                                      child: Text(
+                                                        controller.liveMatchUpdateApiResponse![
+                                                                        'current']
+                                                                    ['c_data']
+                                                                [0]['bowler']
+                                                            ['fullname'],
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 12,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      "${controller.liveMatchUpdateApiResponse!['current']['c_data'][0]['bowler']['bowler_data']['wickets']}/${controller.liveMatchUpdateApiResponse!['current']['c_data'][0]['bowler']['bowler_data']['runs']} (${controller.liveMatchUpdateApiResponse!['current']['c_data'][0]['bowler']['bowler_data']['overs']})",
+
+                                                      //  "0/11 (1.0)",
+
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                  height: 10,
+                                                ),
+                                                SingleChildScrollView(
+                                                  scrollDirection:
+                                                      Axis.horizontal,
+                                                  reverse: true,
+                                                  child: Row(
                                                     crossAxisAlignment:
                                                         CrossAxisAlignment
                                                             .center,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
                                                     children: [
-                                                      SizedBox(
-                                                        height: 20,
-                                                      ),
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          Container(
-                                                            width: MediaQuery.of(context).size.width/4,
+                                                      for (int i = (controller
+                                                                  .liveMatchUpdateApiResponse![
+                                                                      'current']
+                                                                      ['list']
+                                                                  .length) -
+                                                              1;
+                                                          i >= 0;
+                                                          i--)
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .fromLTRB(
+                                                                  4, 0, 4, 0),
+                                                          child: Container(
+                                                            height: 22,
+                                                            width: 22,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              shape: BoxShape
+                                                                  .circle,
+                                                              border: Border.all(
+                                                                  width: 1,
+                                                                  color: Colors
+                                                                      .white),
+                                                            ),
+                                                            alignment: Alignment
+                                                                .center,
                                                             child: Text(
-                                                              controller.liveMatchUpdateApiResponse![
-                                                                          'current']['c_data']
-                                                                      [
-                                                                      0]['bowler']
-                                                                  ['fullname'],
-                                                                  overflow: TextOverflow.ellipsis,
+                                                              controller.liveMatchUpdateApiResponse!['current']['list']
+                                                                              [
+                                                                              i]
+                                                                          [
+                                                                          'is_wicket'] ==
+                                                                      true
+                                                                  ? 'W'
+                                                                  : controller
+                                                                      .liveMatchUpdateApiResponse![
+                                                                          'current']
+                                                                          [
+                                                                          'list']
+                                                                          [i][
+                                                                          'runs']
+                                                                      .toString(),
                                                               style: TextStyle(
-                                                                color:
-                                                                    Colors.white,
-                                                                fontSize: 12,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                              ),
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontSize: 9),
                                                             ),
                                                           ),
-                                                          Text(
-                                                            "${controller.liveMatchUpdateApiResponse!['current']['c_data'][0]['bowler']['bowler_data']['wickets']}/${controller.liveMatchUpdateApiResponse!['current']['c_data'][0]['bowler']['bowler_data']['runs']} (${controller.liveMatchUpdateApiResponse!['current']['c_data'][0]['bowler']['bowler_data']['overs']})",
-
-                                                            //  "0/11 (1.0)",
-                                                            
-                                                            style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: 12,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                            ),
-                                                          )
-                                                        ],
-                                                      ),
-                                                      SizedBox(
-                                                        height: 10,
-                                                      ),
-                                                      controller.liveMatchUpdateApiResponse![
-                                                                      'data'][0]
-                                                                  [
-                                                                  'match_status'] ==
-                                                              'Fixture'
-                                                          ? Container()
-                                                          : SingleChildScrollView(
-                                                              scrollDirection:
-                                                                  Axis.horizontal,
-                                                              reverse: true,
-                                                              child: Row(
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .center,
-                                                                children: [
-                                                                  for (int i =
-                                                                          (controller.liveMatchUpdateApiResponse![
-                                                                        'current']['list'].length)-1;
-                                                                      i >=0
-                                                                          
-                                                                              ;
-                                                                      i--)
-                                                                    Padding(
-                                                                      padding:
-                                                                          const EdgeInsets.fromLTRB(
-                                                                              4,
-                                                                              0,
-                                                                              4,
-                                                                              0),
-                                                                      child:
-                                                                          Container(
-                                                                        height:
-                                                                            22,
-                                                                        width:
-                                                                            22,
-                                                                        decoration:
-                                                                            BoxDecoration(
-                                                                          shape:
-                                                                              BoxShape.circle,
-                                                                          border: Border.all(
-                                                                              width: 1,
-                                                                              color: Colors.white),
-                                                                        ),
-                                                                        alignment:
-                                                                            Alignment.center,
-                                                                        child:
-                                                                            Text(
-                                                                          controller.liveMatchUpdateApiResponse![
-                                                                        'current']['list'][i]['is_wicket'] == true
-                                                                              ? 'W'
-                                                                              : controller.liveMatchUpdateApiResponse![
-                                                                        'current']['list'][i]['runs'].toString(),
-                                                                          style: TextStyle(
-                                                                              color: Colors.white,
-                                                                              fontSize: 9),
-                                                                        ),
-                                                                      ),
-                                                                    )
-                                                                ],
-                                                              ),
-                                                            ),
-                                                      SizedBox(
-                                                        height: 20,
-                                                      ),
+                                                        )
                                                     ],
                                                   ),
                                                 ),
+                                                SizedBox(
+                                                  height: 20,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
                                         ],
                                       )
                                     ],
@@ -701,7 +635,38 @@ class _LiveContestScreenState extends State<LiveContestScreen>
                 child: GetBuilder<LiveContestController>(
                     init: LiveContestController(),
                     builder: (controller) {
-                      return TabBar(
+                      return  controller.liveMatchUpdateApiResponse==null?Container():
+                       controller.liveMatchUpdateApiResponse[
+                                        'my_status'] !=
+                                    'live'?
+                      
+                      TabBar(
+                        isScrollable: true,
+                        controller: _tabController,
+                        indicatorColor: ColorConstant.primaryColor,
+                        indicatorWeight: 3,
+                        labelColor: ColorConstant.primaryBlackColor,
+                        tabs: [
+                          controller.isMyContestDetailsPageEnable == false
+                              ? Tab(
+                                  text:
+                                      'My Contest (${controller.myContestApiResponse == null ? '' : controller.myContestApiResponse!.data.length})',
+                                )
+                              : Tab(
+                                  text: 'Leaderboard',
+                                ),
+                          controller.isMyContestDetailsPageEnable == false
+                              ? Tab(
+                                  text:
+                                      "My Team (${controller.getMyTeamApiResponse == null ? '' : controller.getMyTeamApiResponse!.data.length})")
+                              : Tab(
+                                  text: 'Winnings',
+                                ),
+                          
+                        ],
+                      ):
+                      
+                      TabBar(
                         isScrollable: true,
                         controller: _tabController,
                         indicatorColor: ColorConstant.primaryColor,
@@ -725,7 +690,6 @@ class _LiveContestScreenState extends State<LiveContestScreen>
                                 ),
                           Tab(text: 'Commentary'),
                           Tab(text: "Scorecard"),
-                         
                         ],
                       );
                     }),
@@ -733,31 +697,66 @@ class _LiveContestScreenState extends State<LiveContestScreen>
             ),
             Expanded(
               child: GetBuilder<LiveContestController>(
-                init: LiveContestController(),
-                builder: (controller) {
-                  return TabBarView(
-                    controller: _tabController,
-                    children: [
-                      controller.isMyContestDetailsPageEnable
-                          ? LeaderboardTab(
-                            contestId:
-                            controller.tappedContestId
-                          )
-                          : MyContestTab(),
-                      controller.isMyContestDetailsPageEnable
-                          ? WinningTab(
-                            contestId:
-                            controller.tappedContestId
-                          )
-                          : MyTeamWidgetTab(),
-
-                          Container(),
-                          Container(),
+                  init: LiveContestController(),
+                  builder: (controller) {
+                    return controller.liveMatchUpdateApiResponse == null
+                        ? shimerEffect(length: 2, context: context)
+                        : 
                         
-                    ],
-                  );
-                }
-              ),
+                         controller.liveMatchUpdateApiResponse[
+                                        'my_status'] !=
+                                    'live'?
+                      
+                        TabBarView(
+                            controller: _tabController,
+                            children: [
+                              controller.isMyContestDetailsPageEnable
+                                  ? LeaderboardTab(
+                                      contestId: controller.tappedContestId)
+                                  : MyContestTab(),
+                              controller.isMyContestDetailsPageEnable
+                                  ? WinningTab(
+                                      contestId: controller.tappedContestId)
+                                  : MyTeamWidgetTab(),
+                           
+                            ],
+                          ):   
+                        
+                        
+                        TabBarView(
+                            controller: _tabController,
+                            children: [
+                              controller.isMyContestDetailsPageEnable
+                                  ? LeaderboardTab(
+                                      contestId: controller.tappedContestId)
+                                  : MyContestTab(),
+                              controller.isMyContestDetailsPageEnable
+                                  ? WinningTab(
+                                      contestId: controller.tappedContestId)
+                                  : MyTeamWidgetTab(),
+                              CommentryScreen(
+                                commentry:
+                                    controller.liveMatchUpdateApiResponse![
+                                            'commentry'] ??
+                                        [],
+                              ),
+                              ScoreCardScreen(
+                                scorecard:
+                                    controller.liveMatchUpdateApiResponse![
+                                            'scoreboard'] ??
+                                        {},
+                                team1Name: controller
+                                        .liveMatchUpdateApiResponse!['data'][0]
+                                    ['team1']['team_short_name'],
+                                team2Name: controller
+                                        .liveMatchUpdateApiResponse!['data'][0]
+                                    ['team2']['team_short_name'],
+                                liveMatchData:
+                                    controller.liveMatchUpdateApiResponse,
+                              ),
+                            ],
+                          );
+                  }),
             )
           ],
         ),
@@ -765,10 +764,10 @@ class _LiveContestScreenState extends State<LiveContestScreen>
     );
   }
 
-
-  void openWeb(String url){
- launchUrl(Uri.parse(url),
- mode: LaunchMode.inAppWebView,
- );
+  void openWeb(String url) {
+    launchUrl(
+      Uri.parse(url),
+      mode: LaunchMode.inAppWebView,
+    );
   }
 }

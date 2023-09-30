@@ -197,9 +197,9 @@ class _MyMatchesTabState extends State<MyMatchesTab>
                                       : 8),
                               child: InkWell(
                                 onTap: () {
-                                  // print(controller
-                                  //         .getLiveMyMatchReponse!
-                                  //         .data[index].matchId);
+                                  print(controller
+                                          .getLiveMyMatchReponse!
+                                          .data[index].matchId);
                                   Navigator.push(context,
                                       MaterialPageRoute(builder: (context) {
                                     return LiveContestScreen(
@@ -239,7 +239,9 @@ class _MyMatchesTabState extends State<MyMatchesTab>
                           itemCount: controller
                               .getCompletedMyMatchResponse!.data.length,
                           itemBuilder: (context, index) {
-                            return Padding(
+                            return 
+                            
+                            Padding(
                               padding: EdgeInsets.only(
                                   left: 15,
                                   right: 15,
@@ -262,7 +264,10 @@ class _MyMatchesTabState extends State<MyMatchesTab>
                                       );
                                     }));
                                   },
-                                  child: Container(
+                                  child: 
+                                  
+                                  
+                                  Container(
                                     width:
                                         MediaQuery.of(context).size.width / 1,
                                     // height: 100,
@@ -370,25 +375,33 @@ class _MyMatchesTabState extends State<MyMatchesTab>
                                                       children: [
                                                         Container(
                                                           height: 30,
-                                                          width: 80,
+                                                         // width: 80,
                                                           decoration: BoxDecoration(
                                                               borderRadius:
                                                                   BorderRadius
                                                                       .circular(
                                                                           10),
-                                                              color: Colors
-                                                                  .black12),
+                                                             ),
                                                           alignment:
                                                               Alignment.center,
-                                                          child: Text(
-                                                            "Completed",
-                                                            style: TextStyle(
-                                                                color: ColorConstant
-                                                                    .primaryColor,
-                                                                fontSize: 13,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600),
+                                                          child: Row(
+                                                            children: [
+                                                              Icon(
+                                                                Icons.check_circle_outline,size:13,
+                                                                color: ColorConstant.greenColor,
+                                                              ),
+                                                              SizedBox(width: 5,),
+                                                              Text(
+                                                                "Completed",
+                                                                style: TextStyle(
+                                                                    color: ColorConstant
+                                                                        .greenColor,
+                                                                    fontSize: 12,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600),
+                                                              ),
+                                                            ],
                                                           ),
                                                         ),
                                                         SizedBox(
@@ -531,7 +544,12 @@ class _MyMatchesTabState extends State<MyMatchesTab>
                                       ),
                                     ),
                                   ),
+                             
+                             
+                             
                                 ));
+                       
+                       
                           });
         });
   }

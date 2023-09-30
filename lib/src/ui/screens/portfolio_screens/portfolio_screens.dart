@@ -50,7 +50,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>with SingleTickerProvi
                 labelColor: ColorConstant.primaryBlackColor,
                 tabs: const [
                   Tab(
-                    text: 'Quiz',
+                    text: 'Portfolio',
                   ),
                   Tab(text: "My Portfolio"),
                 
@@ -58,7 +58,7 @@ class _PortfolioScreenState extends State<PortfolioScreen>with SingleTickerProvi
               ),
             ),
           ),
-          Expanded(
+        Expanded(
             child: TabBarView(
               controller: _secondTabController,
               children: [

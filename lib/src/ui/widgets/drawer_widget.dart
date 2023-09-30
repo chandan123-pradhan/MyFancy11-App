@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cricket_fantacy/src/controllers/splash_controller.dart';
 import 'package:cricket_fantacy/src/global_variable.dart';
 import 'package:cricket_fantacy/src/ui/screens/auth_screens/auth_landing_page.dart';
+import 'package:cricket_fantacy/src/ui/screens/home_tab/profile_page.dart';
 import 'package:cricket_fantacy/src/ui/screens/profile_screen.dart';
 import 'package:cricket_fantacy/src/ui/screens/refer_and_earn_screen.dart';
 import 'package:cricket_fantacy/src/ui/screens/transaction_history_screen.dart';
@@ -238,7 +239,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
   InkWell(
                         onTap: () {
                           Navigator.push(context, MaterialPageRoute(builder: (context) {
-                            return ProfileScreen();
+                            return ProfilePage();
                           }));
                         },
                         child: Padding(

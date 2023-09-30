@@ -155,12 +155,7 @@ class _UpcommingMatchCardWidgetState extends State<UpcommingMatchCardWidget> {
                                       ),
                                       Expanded(
                                           
-                                              child: Material(
-                                                color: Colors.white,
-                                                //shape: CircleBorder(),
-                                                elevation: 0.0,
-
-                                                child: Row(
+                                              child: Row(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.end,
                                                   children: [
@@ -218,7 +213,7 @@ class _UpcommingMatchCardWidgetState extends State<UpcommingMatchCardWidget> {
                                                     )
                                                   ],
                                                 ),
-                                              ))
+                                              )
                                     ],
                                   ),
                                   SizedBox(
@@ -388,7 +383,7 @@ class _UpcommingMatchCardWidgetState extends State<UpcommingMatchCardWidget> {
                                         onTap: () {
                                           controller.setReminder(widget
                                               .matches.matchId
-                                              .toString());
+                                              .toString(),context);
                                           setState(() {
                                             isSetReminder = true;
                                           });

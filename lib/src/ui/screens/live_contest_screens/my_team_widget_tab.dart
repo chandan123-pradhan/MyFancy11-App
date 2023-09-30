@@ -107,16 +107,16 @@ class _MyTeamWidgetTabState extends State<MyTeamWidgetTab> {
                                             ),
                                           ],
                                         ),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(right: 10.0),
-                                          child: Icon(
-                                            Icons.share,
-                                            size: 20,
-                                            color:
-                                                ColorConstant.primaryWhiteColor,
-                                          ),
-                                        )
+                                        // Padding(
+                                        //   padding:
+                                        //       const EdgeInsets.only(right: 10.0),
+                                        //   child: Icon(
+                                        //     Icons.share,
+                                        //     size: 20,
+                                        //     color:
+                                        //         ColorConstant.primaryWhiteColor,
+                                        //   ),
+                                        // )
                                       ],
                                     ),
                                   ),

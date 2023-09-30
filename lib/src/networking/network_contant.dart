@@ -45,6 +45,7 @@ class NetworkConstant{
  static const String applyPromoCode='/app/promo';
  static const String validatePromoCode='/app/promo_valided';
  static const String requestForWithdrawal='/app/payment_request';
+ static const String winner_api='/app/winner';
   //parames.
 
   static const String PHONE_PARAMS='phone';
