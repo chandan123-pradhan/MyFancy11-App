@@ -251,14 +251,15 @@ completedQuiz.add(getQuizMyListApiResponse!.data[i]);
 
 
 
-  Future<void> sellQuiz(MyQuizData myQuizData, context) async {
+  Future<void> sellQuiz(MyQuizData myQuizData, context,index) async {
     showLoaderDialog(context);
     Map parameter = {
       'quiz_id': myQuizData.quizId,
       'amount': myQuizData.price,
       'qty': myQuizData.qty,
       'type': 'sell',
-      'option': myQuizData.myOption
+      'option': myQuizData.myOption,
+       'join_id':myQuizData.joinId.toString()
     };
     //  debugger();
     var response = await apiProvider.postAfterAuth(
@@ -267,6 +268,7 @@ completedQuiz.add(getQuizMyListApiResponse!.data[i]);
     Navigator.pop(context);
     if (response['status'] == 200) {
       messages.showMsg(context: context, message: response['message']);
+      liveQuiz.removeAt(index);
       getMyPortfolioList();
     } else {
       messages.showMsg(

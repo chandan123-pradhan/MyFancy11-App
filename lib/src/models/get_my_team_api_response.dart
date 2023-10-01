@@ -34,6 +34,7 @@ class TeamData {
     required this.captain,
     required this.viceCaptain,
   });
+  late final String userId;
   late final String teamid;
   late final String name;
   late final int bat;
@@ -44,6 +45,7 @@ class TeamData {
   late final ViceCaptain viceCaptain;
   
   TeamData.fromJson(Map<String, dynamic> json){
+userId=json['user_id'];
     teamid = json['teamid'];
     name = json['name'];
     bat = json['bat'];
@@ -56,6 +58,7 @@ class TeamData {
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
+    _data['user_id']=userId;
     _data['teamid'] = teamid;
     _data['name'] = name;
     _data['bat'] = bat;

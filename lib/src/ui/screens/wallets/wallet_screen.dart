@@ -1179,7 +1179,7 @@ class _WalletScreenState extends State<WalletScreen>
       _upiIndia
           .startTransaction(
         app: app,
-        receiverUpiId: "lorhanspotearnpvtltd@rbl",
+        receiverUpiId: controller.splashDataApiResponse.data.upi,
         receiverName: 'MYFANCY11 INDIA PRIVATE LIMITED',
         transactionRefId: DateTime.now().toString(),
         transactionNote: 'Buying a team.',

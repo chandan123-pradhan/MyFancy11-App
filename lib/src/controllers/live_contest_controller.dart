@@ -88,15 +88,32 @@ class LiveContestController extends GetxController {
     
   }
 
-  void getTeamPlayers(teamId) async {
-    Map parameter = {'team_id': teamId};
+  void getTeamPlayers(teamId,userId) async {
+    Map parameter = {'team_id': teamId,
+    'user_id':userId
+    
+    };
     var response = await apiProvider.postAfterAuth(
         routeUrl: NetworkConstant.getMyPlayers, bodyParams: parameter);
-
+//  debugger();
     getMyPlayerApiResponse = GetMyPlayerApiResponse.fromJson(response);
     calculatePlayerByDesignation();
     //update();
   }
+
+void getMyTeamPlayers(teamId,userId) async {
+    Map parameter = {'team_id': teamId,
+    'user_id':userId
+    };
+    var response = await apiProvider.postAfterAuth(
+        routeUrl: NetworkConstant.getMyPlayers, bodyParams: parameter);
+ debugger();
+    getMyPlayerApiResponse = GetMyPlayerApiResponse.fromJson(response);
+    calculatePlayerByDesignation();
+    //update();
+  }
+
+
 
   void calculatePlayerByDesignation() {
     batsmanData.clear();

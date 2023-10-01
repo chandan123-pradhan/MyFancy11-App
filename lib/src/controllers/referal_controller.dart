@@ -16,7 +16,7 @@ class RefferalController extends GetxController {
       Map parameter = {};
       var response = await apiProvider.postAfterAuth(
           routeUrl: NetworkConstant.refferData, bodyParams: parameter);
-      //  debugger();
+      // debugger();
       if (response['status'] == 404) {
         isError = true;
       } else {
@@ -51,3 +51,9 @@ class RefferalController extends GetxController {
     }
   }
 }
+
+
+/**
+ * 1- reverse commentry list.
+ * 2- when user can see only there own team if match is not live.
+ */

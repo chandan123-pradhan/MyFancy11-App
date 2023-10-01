@@ -56,71 +56,73 @@ color: ColorConstant.primaryBlackColor,
                           ),
                         ],
                       ),
-                      Row(
-                        children: [
-                          Container(
-                            height: 25,
-                            decoration: BoxDecoration(
-                                color: ColorConstant.primaryWhiteColor,
-                                borderRadius: BorderRadius.circular(5)),
-                            alignment: Alignment.center,
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 10, right: 10),
-                              child: Text(
-                                "PBKS",
-                                style: TextStyle(
-                                    color: ColorConstant.primaryBlackColor,
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            "6",
-                            style: TextStyle(
-                                color: ColorConstant.primaryWhiteColor,
-                                fontSize: 18,
-                                fontWeight: FontWeight.w500),
-                          ),
-                          Text(
-                            " : ",
-                            style: TextStyle(
-                                color: ColorConstant.primaryWhiteColor,
-                                fontSize: 18,
-                                fontWeight: FontWeight.w500),
-                          ),
-                          Text(
-                            "5",
-                            style: TextStyle(
-                                color: ColorConstant.primaryWhiteColor,
-                                fontSize: 18,
-                                fontWeight: FontWeight.w500),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Container(
-                            height: 25,
-                            decoration: BoxDecoration(
-                                color: ColorConstant.primaryBlackColor,
-                                borderRadius: BorderRadius.circular(5)),
-                            alignment: Alignment.center,
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 10, right: 10),
-                              child: Text(
-                                "RR",
-                                style: TextStyle(
-                                    color: ColorConstant.primaryWhiteColor,
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
+                      // Row(
+                      //   children: [
+                      //     Container(
+                      //       height: 25,
+                      //       decoration: BoxDecoration(
+                      //           color: ColorConstant.primaryWhiteColor,
+                      //           borderRadius: BorderRadius.circular(5)),
+                      //       alignment: Alignment.center,
+                      //       child: Padding(
+                      //         padding: const EdgeInsets.only(left: 10, right: 10),
+                      //         child: Text(
+                      //           "",
+                      //           style: TextStyle(
+                      //               color: ColorConstant.primaryBlackColor,
+                      //               fontSize: 11,
+                      //               fontWeight: FontWeight.w500),
+                      //         ),
+                      //       ),
+                      //     ),
+                      //     SizedBox(
+                      //       width: 10,
+                      //     ),
+                      //     Text(
+                      //       "6",
+                      //       style: TextStyle(
+                      //           color: ColorConstant.primaryWhiteColor,
+                      //           fontSize: 18,
+                      //           fontWeight: FontWeight.w500),
+                      //     ),
+                      //     Text(
+                      //       " : ",
+                      //       style: TextStyle(
+                      //           color: ColorConstant.primaryWhiteColor,
+                      //           fontSize: 18,
+                      //           fontWeight: FontWeight.w500),
+                      //     ),
+                      //     Text(
+                      //       "5",
+                      //       style: TextStyle(
+                      //           color: ColorConstant.primaryWhiteColor,
+                      //           fontSize: 18,
+                      //           fontWeight: FontWeight.w500),
+                      //     ),
+                      //     SizedBox(
+                      //       width: 10,
+                      //     ),
+                      //     Container(
+                      //       height: 25,
+                      //       decoration: BoxDecoration(
+                      //           color: ColorConstant.primaryBlackColor,
+                      //           borderRadius: BorderRadius.circular(5)),
+                      //       alignment: Alignment.center,
+                      //       child: Padding(
+                      //         padding: const EdgeInsets.only(left: 10, right: 10),
+                      //         child: Text(
+                      //           "RR",
+                      //           style: TextStyle(
+                      //               color: ColorConstant.primaryWhiteColor,
+                      //               fontSize: 11,
+                      //               fontWeight: FontWeight.w500),
+                      //         ),
+                      //       ),
+                      //     )
+                      //   ],
+                      // ),
+                  
+                  
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         mainAxisAlignment: MainAxisAlignment.center,

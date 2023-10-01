@@ -36,7 +36,11 @@ class _MyTeamWidgetTabState extends State<MyTeamWidgetTab> {
                         var id=controller.getMyTeamApiResponse!.data[index].teamid;
                         //debugger();
                           Navigator.push(context, MaterialPageRoute(builder: (context){
-                            return LiveTeamPreview(teamID: controller.getMyTeamApiResponse!.data[index].teamid);
+                            return LiveTeamPreview(teamID: controller.getMyTeamApiResponse!.data[index].teamid,
+                            
+                            flag: false,
+                            userId: controller.getMyTeamApiResponse!.data[index].userId,
+                            );
                           }));
                         },
                         child: Container(

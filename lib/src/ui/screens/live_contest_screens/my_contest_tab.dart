@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cricket_fantacy/src/controllers/live_contest_controller.dart';
 import 'package:cricket_fantacy/src/models/my_contest_api_response.dart';
 import 'package:cricket_fantacy/src/ui/widgets/shimmer_effect_widget.dart';
@@ -28,6 +30,10 @@ class _MyContestTabState extends State<MyContestTab> {
                       padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
                       child: InkWell(
                         onTap: () {
+                          var v=controller
+                              .myContestApiResponse!.data[index].contestId;
+                              print(v);
+                          //    debugger();
                           controller.updateMycontestScreen(controller
                               .myContestApiResponse!.data[index].contestId
                               .toString());

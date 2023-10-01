@@ -57,6 +57,7 @@ class MyQuizData {
     required this.quizId,
     required this.question,
     required this.myOption,
+    required this.joinId,
     required this.pl,
     required this.amount,
     required this.qty,
@@ -67,6 +68,7 @@ class MyQuizData {
   late final String quizId;
   late final String question;
   late final String myOption;
+  late final String joinId;
   late final String pl;
   late final String amount;
   late final String qty;
@@ -78,6 +80,7 @@ class MyQuizData {
     quizId = json['quiz_id'];
     question = json['question'];
     myOption = json['my_option'];
+    joinId=json['join_id'].toString();
     pl = json['pl'].toStringAsFixed(2);
     amount = json['amount'];
     qty = json['qty'];
@@ -91,6 +94,7 @@ class MyQuizData {
     _data['quiz_id'] = quizId;
     _data['question'] = question;
     _data['my_option'] = myOption;
+    _data['join_id']=joinId;
     _data['pl'] = pl;
     _data['amount'] = amount;
     _data['qty'] = qty;

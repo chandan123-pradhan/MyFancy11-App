@@ -662,7 +662,14 @@ width: 30,
                                                       teamID: controller
                                                           .myPaidTeamApiResponse!
                                                           .data[index]
-                                                          .teamid);
+                                                          .teamid,
+                                                          flag: false,
+                                                          userId: controller
+                                                          .myPaidTeamApiResponse!
+                                                          .data[index]
+                                                          .userId,
+                                                          
+                                                          );
                                                 }));
                                               },
                                               child: Container(

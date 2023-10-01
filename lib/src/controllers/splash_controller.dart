@@ -5,6 +5,7 @@ import 'dart:io';
 
 import 'package:cricket_fantacy/src/dialogs/AlertDialog.dart';
 import 'package:cricket_fantacy/src/dialogs/loadingDialog.dart';
+import 'package:cricket_fantacy/src/dialogs/update_dialog.dart';
 import 'package:cricket_fantacy/src/global_variable.dart';
 import 'package:cricket_fantacy/src/models/GetContestListApiResponse.dart';
 import 'package:cricket_fantacy/src/models/GetMatchesApiResponse.dart';
@@ -32,6 +33,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:cricket_fantacy/src/ui/screens/home_tab/join_contest_confirmation_screen.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:upi_india/upi_india.dart';
 
 class HomeController extends GetxController {
@@ -52,6 +54,7 @@ class HomeController extends GetxController {
   GetMyMatchesApiResponse? getLiveMyMatchReponse;
   GetMyMatchesApiResponse? getCompletedMyMatchResponse;
   List<SquadPlayer> batsManList = [];
+  bool isLineupPressed = false;
   List<SquadPlayer> wiketKeeperList = [];
   List<SquadPlayer> allRounderList = [];
   List<SquadPlayer> bowlerlist = [];
@@ -76,6 +79,11 @@ class HomeController extends GetxController {
   int eKycStatus = 0;
 
   List<ContestList> contestList = [];
+
+  void lineupBottonPressed() {
+    isLineupPressed = true;
+    update();
+  }
 
   void getSplashData(context, flag) async {
     String? userToken = await sharedPref.getUserToken();
@@ -103,9 +111,11 @@ class HomeController extends GetxController {
     splashDataApiResponse = SplashDataApiResponse.fromJson(response);
     sharedPref.setAppToken(splashDataApiResponse.data.appToken);
     update();
+
     if (flag != 0) {
       _navigateFromThisPage(context, splashDataApiResponse.islogin);
     }
+    
   }
 
   void _navigateFromThisPage(BuildContext context, bool islogin) async {
@@ -161,6 +171,7 @@ class HomeController extends GetxController {
     isFetchingData = false;
     getWalletApi(context);
     update();
+    callUpdateDialog(context);
   }
 
   void getContestList(context, matchId, entry, pricePool) async {
@@ -413,7 +424,7 @@ class HomeController extends GetxController {
             .add({NetworkConstant.PlayerId: choosedPlayerList[i].playerid});
       }
 
-      debugger();
+      // debugger();
 
       Map parameter = {
         NetworkConstant.MatchId: maches.matchId.toString(),
@@ -560,6 +571,7 @@ class HomeController extends GetxController {
         update();
       }
     }
+    
   }
 
   void recharge(
@@ -586,7 +598,8 @@ class HomeController extends GetxController {
 
     update();
   }
-  String selectedPaymentGateway='';
+
+  String selectedPaymentGateway = '';
   void checkKyc(context) async {
     eKycStatus = 0;
     update();
@@ -599,11 +612,11 @@ class HomeController extends GetxController {
       eKycStatus = 1;
     } else if (response['status'] == 100) {
       checkEkyApiResponse = CheckEkyApiResponse.fromJson(response);
-      selectedPaymentGateway=checkEkyApiResponse!.data.isDefault;
+      selectedPaymentGateway = checkEkyApiResponse!.data.isDefault;
       eKycStatus = 2;
     } else if (response['status'] == 200) {
       checkEkyApiResponse = CheckEkyApiResponse.fromJson(response);
-      selectedPaymentGateway=checkEkyApiResponse!.data.isDefault;
+      selectedPaymentGateway = checkEkyApiResponse!.data.isDefault;
 
       eKycStatus = 3;
     }
@@ -749,11 +762,10 @@ class HomeController extends GetxController {
     update();
   }
 
-  void requestForWithdrawal(String amount, context,selectedPaymentMethod) async {
+  void requestForWithdrawal(
+      String amount, context, selectedPaymentMethod) async {
     showLoaderDialog(context);
-    Map parameter = {'amount': amount,
-    'is_default':selectedPaymentMethod
-    };
+    Map parameter = {'amount': amount, 'is_default': selectedPaymentMethod};
     var response = await apiProvider.postAfterAuth(
         routeUrl: NetworkConstant.requestForWithdrawal, bodyParams: parameter);
     // debugger();
@@ -766,4 +778,62 @@ class HomeController extends GetxController {
     }
     update();
   }
+
+  // Future<GetMatchesApiResponse> getMatchData(context, matchId) async {
+  //   Map parameter = {
+  //     NetworkConstant.MatchId: matchId,
+
+  //   };
+  //   showLoaderDialog(context);
+  //   var response = await apiProvider.postAfterAuth(
+  //       routeUrl: NetworkConstant.quizByMatchId, bodyParams: parameter);
+  //   debugger();
+  //   print(response);
+  //   Navigator.pop(context);
+  //    return  GetMatchesApiResponse.fromJson(response);
+
+  // }
+
+  void callUpdateDialog(
+    context,
+  ) async{
+
+
+final info = await PackageInfo.fromPlatform();
+var currentVersion=getExtendedVersionNumber(info.version);
+var newVersion;
+var launchUrl;
+if(Platform.isAndroid){
+  newVersion=getExtendedVersionNumber(splashDataApiResponse.data.androidVersion);
+  launchUrl=splashDataApiResponse.data.androidApkUrl;
+}else{
+  newVersion=getExtendedVersionNumber(splashDataApiResponse.data.iosVersion);
+  launchUrl=splashDataApiResponse.data.iosApkUrl;
+}
+
+if(newVersion>currentVersion)
+{
+   showModalBottomSheet(
+        // isScrollControlled: true,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20), topRight: Radius.circular(20))),
+        context: context,
+        builder: (context) {
+          return UpdateDialog(
+            apkUrl: launchUrl,
+          );
+        });
+}else{
+  print("update not avaiable");
+}
+   
+  }
+
+
+  int getExtendedVersionNumber(String version) {
+  List versionCells = version.split('.');
+  versionCells = versionCells.map((i) => int.parse(i)).toList();
+  return versionCells[0] * 100000 + versionCells[1] * 1000 + versionCells[2];
+}
 }

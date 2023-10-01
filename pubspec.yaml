@@ -63,6 +63,9 @@ dependencies:
   showcaseview:
   fluttertoast: ^8.2.2
   just_the_tooltip: ^0.0.12
+  firebase_messaging: ^14.6.8
+  flutter_html: ^3.0.0-beta.2
+  package_info_plus: ^4.1.0
 
 dev_dependencies:
   flutter_test:

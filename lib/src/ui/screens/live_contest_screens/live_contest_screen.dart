@@ -62,6 +62,7 @@ class _LiveContestScreenState extends State<LiveContestScreen>
       onWillPop: () {
         if (controller.isMyContestDetailsPageEnable == false) {
           controller.closeTimer(context);
+          controller.liveMatchUpdateApiResponse=null;
           return Future.value(true);
         } else {
           controller.updateMycontestScreen('');
@@ -77,6 +78,7 @@ class _LiveContestScreenState extends State<LiveContestScreen>
             onTap: () {
               if (controller.isMyContestDetailsPageEnable == false) {
                 controller.closeTimer(context);
+                controller.liveMatchUpdateApiResponse=null;
               } else {
                 controller.updateMycontestScreen('');
               }
@@ -712,7 +714,11 @@ class _LiveContestScreenState extends State<LiveContestScreen>
                             children: [
                               controller.isMyContestDetailsPageEnable
                                   ? LeaderboardTab(
-                                      contestId: controller.tappedContestId)
+                                      contestId: controller.tappedContestId,
+                                       matchStatus: controller.liveMatchUpdateApiResponse[
+                                        'my_status']
+                                      
+                                      )
                                   : MyContestTab(),
                               controller.isMyContestDetailsPageEnable
                                   ? WinningTab(
@@ -728,7 +734,10 @@ class _LiveContestScreenState extends State<LiveContestScreen>
                             children: [
                               controller.isMyContestDetailsPageEnable
                                   ? LeaderboardTab(
-                                      contestId: controller.tappedContestId)
+                                      contestId: controller.tappedContestId,
+                                       matchStatus: controller.liveMatchUpdateApiResponse[
+                                        'my_status']
+                                      )
                                   : MyContestTab(),
                               controller.isMyContestDetailsPageEnable
                                   ? WinningTab(

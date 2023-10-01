@@ -55,11 +55,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   void initState() {
+    
     _body = _screens[widget.index];
     _currentIndex = widget.index;
     controller.getUsersProfile();
     controller.getMatchesApiCall(context);
     callGetMyMatchApi();
+    
     // TODO: implement initState
     super.initState();
   }

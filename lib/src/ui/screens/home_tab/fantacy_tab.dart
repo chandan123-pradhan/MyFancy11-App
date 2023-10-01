@@ -4,20 +4,26 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cricket_fantacy/src/controllers/splash_controller.dart';
 import 'package:cricket_fantacy/src/global_variable.dart';
+import 'package:cricket_fantacy/src/models/splahs_api_response.dart';
 import 'package:cricket_fantacy/src/ui/screens/auth_screens/login_screen.dart';
 import 'package:cricket_fantacy/src/ui/screens/home_tab/upcomming_matches_details.dart';
 import 'package:cricket_fantacy/src/ui/screens/live_contest_screens/live_contest_screen.dart';
+import 'package:cricket_fantacy/src/ui/screens/prediction_screens/prediction_home_screen.dart';
+import 'package:cricket_fantacy/src/ui/screens/refer_and_earn_screen.dart';
+import 'package:cricket_fantacy/src/ui/screens/wallets/wallet_screen.dart';
 import 'package:cricket_fantacy/src/ui/widgets/current_match_card_widget.dart';
 import 'package:cricket_fantacy/src/ui/widgets/shimmer_effect_widget.dart';
 import 'package:cricket_fantacy/src/ui/widgets/upcomming_matches_card_widget.dart';
 import 'package:cricket_fantacy/src/utils/color_scheme.dart';
 import 'package:cricket_fantacy/src/utils/image_utils.dart';
+import 'package:cricket_fantacy/src/utils/messages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class FantacyTab extends StatefulWidget {
   const FantacyTab({super.key});
@@ -164,11 +170,18 @@ class _FantacyTabState extends State<FantacyTab> {
                       return Padding(
                         padding:
                             const EdgeInsets.only(left: 5, right: 5, bottom: 5),
-                        child: Container(
-                          width: MediaQuery.of(context).size.width / 1.2,
-                          child: Image.network(
-                            controller.splashDataApiResponse.homeBanner[i].img,
-                            fit: BoxFit.fill,
+                        child: InkWell(
+                          onTap: () {
+                            onTapBanner(
+                                controller.splashDataApiResponse.homeBanner[i]);
+                          },
+                          child: Container(
+                            width: MediaQuery.of(context).size.width / 1.2,
+                            child: Image.network(
+                              controller
+                                  .splashDataApiResponse.homeBanner[i].img,
+                              fit: BoxFit.fill,
+                            ),
                           ),
                         ),
                       );
@@ -185,6 +198,7 @@ class _FantacyTabState extends State<FantacyTab> {
               options: CarouselOptions(
                 height: 120.0,
                 enlargeCenterPage: false,
+                reverse: true,
 
                 // disableCenter: true,
                 autoPlay: true,
@@ -285,5 +299,115 @@ class _FantacyTabState extends State<FantacyTab> {
         ],
       ),
     );
+  }
+
+  void onTapBanner(HomeBanner loginBanner) {
+    //debugger();
+    switch (loginBanner.action) {
+      case 'link':
+        //launch url
+        openWeb(loginBanner.matchId);
+        break;
+      case 'match':
+        launchContestListPage(loginBanner);
+        //navigate into contest list screen.
+        break;
+      case 'recharge':
+        navigateRechargePage();
+        //navigate into recharge section.
+        break;
+      case 'refer':
+        navigateReferAndEarnPage();
+        //navigate into refer screen.
+        break;
+      case 'quiz':
+        launchIntoQuizPage(loginBanner);
+        //navigate into quiz screen.
+        break;
+      default:
+        print("not matched");
+        break;
+    }
+  }
+
+  void openWeb(String url) {
+    launchUrl(
+      Uri.parse(url),
+      mode: LaunchMode.inAppWebView,
+    );
+  }
+
+  void launchContestListPage(HomeBanner loginBanner) {
+    if (logInStatus) {
+      bool isFound = false;
+      for (int i = 0; i < controller.getMatchesApiResponse!.data.length; i++) {
+        if (loginBanner.matchId ==
+            controller.getMatchesApiResponse!.data[i].matchId) {
+          setState(() {
+            isFound = true;
+          });
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return UpcommingMatchesDetails(
+                matches: controller.getMatchesApiResponse!.data[i]);
+          }));
+        }
+      }
+      if (isFound == false) {
+        Messages().showErrorMsg(context: context, message: 'Match Not Found');
+      }
+    } else {
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return LoginScreen();
+      }));
+    }
+  }
+
+  void navigateRechargePage() {
+    if (logInStatus) {
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return WalletScreen();
+      }));
+    } else {
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return LoginScreen();
+      }));
+    }
+  }
+
+  void navigateReferAndEarnPage() {
+    if (logInStatus) {
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return RefferAndEarnScreen();
+      }));
+    } else {
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return LoginScreen();
+      }));
+    }
+  }
+
+  void launchIntoQuizPage(HomeBanner loginBanner) {
+    if (logInStatus) {
+      bool isFound = false;
+      for (int i = 0; i < controller.getMatchesApiResponse!.data.length; i++) {
+        if (loginBanner.matchId ==
+            controller.getMatchesApiResponse!.data[i].matchId) {
+          setState(() {
+            isFound = true;
+          });
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return PredictionHomePage(
+                matches: controller.getMatchesApiResponse!.data[i]);
+          }));
+        }
+      }
+      if (isFound == false) {
+        Messages().showErrorMsg(context: context, message: 'Match Not Found');
+      }
+    } else {
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return LoginScreen();
+      }));
+    }
   }
 }

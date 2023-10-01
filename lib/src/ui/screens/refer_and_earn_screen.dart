@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cricket_fantacy/src/controllers/referal_controller.dart';
 import 'package:cricket_fantacy/src/ui/widgets/shimmer_effect_widget.dart';
 import 'package:cricket_fantacy/src/utils/color_scheme.dart';
@@ -72,6 +73,37 @@ class _RefferAndEarnScreenState extends State<RefferAndEarnScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            CachedNetworkImage(
+                              imageUrl: controller.refferalApiResponse!.image,
+                              imageBuilder: (context, imageProvider) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(15.0),
+                                  child: InkWell(
+                                    onTap: (){
+                                      
+                                    },
+                                    child: Container(
+                                      height: 120,
+                                      width: MediaQuery.of(context).size.width/1,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        border: Border.all(width: 1,color: ColorConstant.deviderColor),
+                                         // shape: BoxShape.circle,
+                                          image: DecorationImage(
+                                              image: NetworkImage(controller
+                                                  .refferalApiResponse!.image),
+                                              fit: BoxFit.fill)),
+                                    ),
+                                  ),
+                                );
+                              },
+                              progressIndicatorBuilder:
+                                  (context, url, downloadProgress) =>
+                                      CircularProgressIndicator(
+                                          value: downloadProgress.progress),
+                              errorWidget: (context, url, error) =>
+                                  Icon(Icons.error),
+                            ),
                             Padding(
                               padding:
                                   const EdgeInsets.fromLTRB(20.0, 20, 20, 0),
@@ -182,9 +214,7 @@ class _RefferAndEarnScreenState extends State<RefferAndEarnScreen> {
                                                 .setting.upgradeRequest !=
                                             0) {
                                           showUserInputModeBottomSheet(
-                                              'Normal Program',
-                                              'downgrade'
-                                              );
+                                              'Normal Program', 'downgrade');
                                         }
                                       },
                                       child: Container(
@@ -226,9 +256,7 @@ class _RefferAndEarnScreenState extends State<RefferAndEarnScreen> {
                                                 .setting.upgradeRequest !=
                                             1) {
                                           showUserInputModeBottomSheet(
-                                              'Affiliate Program',
-                                              'upgrade'
-                                              );
+                                              'Affiliate Program', 'upgrade');
                                         }
                                       },
                                       child: Container(
@@ -374,7 +402,7 @@ class _RefferAndEarnScreenState extends State<RefferAndEarnScreen> {
     );
   }
 
-  void showUserInputModeBottomSheet(String title,task) {
+  void showUserInputModeBottomSheet(String title, task) {
     showModalBottomSheet(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(13)),
         isScrollControlled: true,
@@ -391,7 +419,7 @@ class _RefferAndEarnScreenState extends State<RefferAndEarnScreen> {
 class AffiliateProgramForm extends StatefulWidget {
   String title;
   String task;
-  AffiliateProgramForm({required this.title,required this.task});
+  AffiliateProgramForm({required this.title, required this.task});
 
   @override
   State<AffiliateProgramForm> createState() => _AffiliateProgramFormState();
@@ -400,7 +428,7 @@ class AffiliateProgramForm extends StatefulWidget {
 class _AffiliateProgramFormState extends State<AffiliateProgramForm> {
   bool isFormSubmited = false;
   TextEditingController _textFieldController = new TextEditingController();
-var controller=Get.put(RefferalController());
+  var controller = Get.put(RefferalController());
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -506,7 +534,9 @@ var controller=Get.put(RefferalController());
                   InkWell(
                     onTap: () {
                       if (_textFieldController.text.isNotEmpty) {
-                        controller.requestForUpgrade(reason: _textFieldController.text, type: widget.task);
+                        controller.requestForUpgrade(
+                            reason: _textFieldController.text,
+                            type: widget.task);
                         setState(() {
                           isFormSubmited = true;
                         });

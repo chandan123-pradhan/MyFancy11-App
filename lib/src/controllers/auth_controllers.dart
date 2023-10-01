@@ -17,6 +17,7 @@ import 'package:cricket_fantacy/src/ui/screens/dashboard_screen.dart';
 import 'package:cricket_fantacy/src/utils/local_storage/shared_prefrences.dart';
 import 'package:cricket_fantacy/src/utils/messages.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
@@ -115,15 +116,18 @@ class AuthController extends GetxController {
       IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
       modelName = iosInfo.model;
     }
-
+final fcmToken = await FirebaseMessaging.instance.getToken();
     Map parameter = {
       NetworkConstant.Login_Method: 'phone',
       NetworkConstant.Login_Id: phoneNumberController.text,
       NetworkConstant.Device_Name: modelName,
-      NetworkConstant.One_Signal: 'ssss'
+      NetworkConstant.One_Signal: 'ssss',
+      'firebase':fcmToken
     };
+    //debugger();
     var response = await apiProvider.postBeforeAuthWithAppToken(
         routeUrl: NetworkConstant.LOGIN_ROUTE_URL, bodyParams: parameter);
+        // debugger();
     print(response);
     loginApiResponse = LoginApiResponse.fromJson(response);
     sharedPref.setUserToken(loginApiResponse.data.userToken);
@@ -224,7 +228,7 @@ class AuthController extends GetxController {
           var response = await apiProvider.postAfterAuth(
               routeUrl: NetworkConstant.ACCOUNT_UPDATE_URL, bodyParams: data);
           Navigator.pop(context);
-        //  debugger();
+          debugger();
           updateProfileApiReponse = UpdateProfileApiReponse.fromJson(response);
           sharedPref.setProfilepic(updateProfileApiReponse.updatedData.profile);
           sharedPref.setProfileDetails(

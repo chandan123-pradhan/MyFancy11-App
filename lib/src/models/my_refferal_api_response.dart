@@ -2,12 +2,14 @@ class MyRefferalApiResponse {
   MyRefferalApiResponse({
     required this.status,
     required this.message,
+    required this.image,
     required this.setting,
     required this.refer,
     required this.data,
   });
   late final int status;
   late final String message;
+  late final String image;
   late final Setting setting;
   late final Refer refer;
   late final List<RefferUserData> data;
@@ -15,6 +17,7 @@ class MyRefferalApiResponse {
   MyRefferalApiResponse.fromJson(Map<String, dynamic> json){
     status = json['status'];
     message = json['message'];
+    image=json['image'];
     setting = Setting.fromJson(json['setting']);
     refer = Refer.fromJson(json['refer']);
     data = List.from(json['data']).map((e)=>RefferUserData.fromJson(e)).toList();
@@ -24,6 +27,7 @@ class MyRefferalApiResponse {
     final _data = <String, dynamic>{};
     _data['status'] = status;
     _data['message'] = message;
+    _data['image']=image;
     _data['setting'] = setting.toJson();
     _data['refer'] = refer.toJson();
     _data['data'] = data.map((e)=>e.toJson()).toList();

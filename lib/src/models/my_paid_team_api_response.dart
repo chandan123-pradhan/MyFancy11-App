@@ -25,6 +25,7 @@ class MyPaidTeamApiResponse {
 
 class MyPaidTeamData {
   MyPaidTeamData({
+    required this.userId,
     required this.teamid,
     required this.name,
     required this.bat,
@@ -34,6 +35,7 @@ class MyPaidTeamData {
     required this.captain,
     required this.viceCaptain,
   });
+  late final String userId;
   late final String teamid;
   late final String name;
   late final int bat;
@@ -44,6 +46,7 @@ class MyPaidTeamData {
   late final ViceCaptain viceCaptain;
   
   MyPaidTeamData.fromJson(Map<String, dynamic> json){
+    userId=json['user_id'];
     teamid = json['teamid'];
     name = json['name'];
     bat = json['bat'];
@@ -56,6 +59,7 @@ class MyPaidTeamData {
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
+    _data['user_id']=userId;
     _data['teamid'] = teamid;
     _data['name'] = name;
     _data['bat'] = bat;

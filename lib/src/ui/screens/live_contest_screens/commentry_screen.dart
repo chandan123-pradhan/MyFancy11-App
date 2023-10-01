@@ -13,9 +13,10 @@ class CommentryScreen extends StatefulWidget {
 class _CommentryScreenState extends State<CommentryScreen> {
   @override
   Widget build(BuildContext context) {
+  List commentry= widget.commentry.reversed.toList();
     return Container(
       child: ListView.builder(
-        itemCount: widget.commentry.length,
+        itemCount: commentry.reversed.length,
         itemBuilder: (context,index){
         return Padding(
           padding: const EdgeInsets.fromLTRB(15,10,15,10),
@@ -31,7 +32,7 @@ class _CommentryScreenState extends State<CommentryScreen> {
               padding: const EdgeInsets.only(bottom:4.0),
               child: Row(
                 children: [
-                  Text("${widget.commentry[index]['ball']}",
+                  Text("${commentry[index]['ball']}",
                   style: TextStyle(
                     color: ColorConstant.primaryBlackColor,
                     fontSize: 15,fontWeight: FontWeight.w600
@@ -39,7 +40,7 @@ class _CommentryScreenState extends State<CommentryScreen> {
                   ),
                   SizedBox(width: 20,),
                   Expanded(child: 
-                  Text("${widget.commentry[index]['bowler']['fullname']} To ${widget.commentry[index]['batsman']['fullname']} ${widget.commentry[index]['score']['name']}",
+                  Text("${commentry[index]['bowler']['fullname']} To ${widget.commentry[index]['batsman']['fullname']} ${widget.commentry[index]['score']['name']}",
                   style: TextStyle(
                     color: ColorConstant.primaryBlackColor,
                     fontSize: 15,fontWeight: FontWeight.w500

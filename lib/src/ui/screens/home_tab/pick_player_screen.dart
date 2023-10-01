@@ -46,9 +46,11 @@ class _PickPlayerScreenState extends State<PickPlayerScreen>
   void callGetWinningInfo() {
     if (widget.myTeamId == '') {
        controller.totalCreditPoint=100;
+       controller.isLineupPressed=false; 
       controller.getSquad(context, widget.contest.matchId);
     } else {
       controller.totalCreditPoint=0;
+      controller.isLineupPressed=false; 
       controller.getMyTeamSquad(context, widget.contest.matchId,
           widget.myTeamId, widget.matches.teamid1, widget.matches.teamid2);
     }
@@ -513,7 +515,7 @@ width: 30,
                             }));
                           },
                           child: Row(
-                            children: const [
+                            children:  [
 
                               Icon(
                                 Icons.remove_red_eye,
@@ -532,12 +534,17 @@ width: 30,
                               ),
                               
                              
-                              Text(
-                                " / LINEUP",
-                                style: TextStyle(
-                                    color: ColorConstant.primaryWhiteColor,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500),
+                              InkWell(
+                                onTap: (){
+                                    controller.lineupBottonPressed();
+                                },
+                                child: Text(
+                                  " / LINEUP",
+                                  style: TextStyle(
+                                      color: ColorConstant.primaryWhiteColor,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500),
+                                ),
                               ),
                             ],
                           ),
@@ -875,7 +882,24 @@ width: 30,
                                                     height: 20,
                                                     width: 20,
                                                   ),
-                                                )
+                                                ),
+                                                 Visibility(
+                                      visible:            widget.matches
+                                                                      .elevenOut ==
+                                                                  1,
+                                                   child: Positioned(
+                                                    right: 10,
+                                                    top: 0,
+                                                    child: Image.asset(
+                                                    
+                                                     players[index].playingStatus=='0'?
+                                                     'assets/new_icons/lineup_not.png':
+                                                      'assets/new_icons/lineup.png',
+                                                      height: 20,
+                                                      width: 20,
+                                                    ),
+                                                                                                 ),
+                                                 )
                                               ]),
                                             ),
                                           ),

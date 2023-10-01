@@ -8,7 +8,9 @@ import 'package:get/get.dart';
 
 class LiveTeamPreview extends StatefulWidget {
   String teamID;
-  LiveTeamPreview({required this.teamID});
+  String userId;
+  bool flag;
+  LiveTeamPreview({required this.teamID,required this.userId,required this.flag});
 
   @override
   State<LiveTeamPreview> createState() => _LiveTeamPreviewState();
@@ -19,7 +21,9 @@ class _LiveTeamPreviewState extends State<LiveTeamPreview> {
 
   @override
   void initState() {
-    controller.getTeamPlayers(widget.teamID);
+   
+     controller.getTeamPlayers(widget.teamID,widget.userId);
+   
     // TODO: implement initState
     super.initState();
   }

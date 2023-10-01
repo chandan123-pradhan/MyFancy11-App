@@ -451,6 +451,7 @@ width: 30,
                 ), // Content for Tab 1
                 LeaderboardTab(
                   contestId: widget.contest.contestId,
+                  matchStatus: 'upcoming',
                 )
               ],
             ),
