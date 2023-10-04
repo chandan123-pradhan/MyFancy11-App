@@ -201,7 +201,7 @@ controller.updateMyPortfolio('1');
                                                                             .liveQuiz
                                                                             .length -
                                                                         1
-                                                                ? 30
+                                                                ? 100
                                                                 : 5.0,
                                                             top: 10),
                                                         child: InkWell(

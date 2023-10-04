@@ -20,7 +20,7 @@ class RefferalController extends GetxController {
       if (response['status'] == 404) {
         isError = true;
       } else {
-        debugger();
+        // debugger();
         refferalApiResponse = MyRefferalApiResponse.fromJson(response);
         isError = false;
       }

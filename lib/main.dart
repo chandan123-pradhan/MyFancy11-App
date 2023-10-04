@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'MyFancy11',
+      title: 'Myfancy11',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),

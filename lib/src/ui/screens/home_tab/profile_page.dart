@@ -61,7 +61,7 @@ class _ProfilePageState extends State<ProfilePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Profie Setup",
+              "Profile Setup",
               style: TextStyle(
                   color: ColorConstant.primaryWhiteColor,
                   fontSize: 17,
@@ -83,7 +83,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         child: Padding(
                           padding: const EdgeInsets.only(left: 20),
                           child: Text(
-                            "Select Awatar",
+                            "Select Avatar",
                             style: TextStyle(
                                 color: ColorConstant.primaryBlackColor,
                                 fontSize: 15,
@@ -192,11 +192,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             });
                           },
                           decoration: InputDecoration(
-                              suffixIcon: Icon(
-                                Icons.paste,
-                                size: 20,
-                                color: ColorConstant.primaryBlackColor,
-                              ),
+                             
                               filled: true,
                               hintText: "Enter Name"),
                         ),

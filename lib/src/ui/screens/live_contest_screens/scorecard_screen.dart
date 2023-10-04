@@ -219,7 +219,7 @@ int secondIningId=0;
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  width: MediaQuery.of(context).size.width / 3,
+                  width: MediaQuery.of(context).size.width / 3.1,
                   child: Text(
                     "PLAYER",
                     style: TextStyle(
@@ -229,7 +229,8 @@ int secondIningId=0;
                   ),
                 ),
                 Container(
-                  width: MediaQuery.of(context).size.width / 9,
+                  width: MediaQuery.of(context).size.width / 8.1,
+                  alignment: Alignment.center,
                   child: Text(
                     "R",
                     style: TextStyle(
@@ -239,7 +240,8 @@ int secondIningId=0;
                   ),
                 ),
                 Container(
-                  width: MediaQuery.of(context).size.width / 9,
+                  width: MediaQuery.of(context).size.width / 8.1,
+                  alignment: Alignment.center,
                   child: Text(
                     "B",
                     style: TextStyle(
@@ -250,7 +252,8 @@ int secondIningId=0;
                 ),
                 Container(
                   // color: Colors.blue,
-                  width: MediaQuery.of(context).size.width / 9,
+                  width: MediaQuery.of(context).size.width / 8.1,
+                  alignment: Alignment.center,
                   child: Text(
                     "4S",
                     style: TextStyle(
@@ -261,7 +264,8 @@ int secondIningId=0;
                 ),
                 Container(
                   //   color: Colors.blue,
-                  width: MediaQuery.of(context).size.width / 9,
+                  width: MediaQuery.of(context).size.width / 8.1,
+                  alignment: Alignment.center,
                   child: Text(
                     "6S",
                     style: TextStyle(
@@ -272,7 +276,8 @@ int secondIningId=0;
                 ),
                 Container(
                   // color: Colors.blue,
-                  width: MediaQuery.of(context).size.width / 8,
+                  width: MediaQuery.of(context).size.width / 8.1,
+                  alignment: Alignment.center,
                   child: Text(
                     "SR",
                     style: TextStyle(
@@ -293,7 +298,7 @@ int secondIningId=0;
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Container(
-                        width: MediaQuery.of(context).size.width / 3,
+                        width: MediaQuery.of(context).size.width / 3.1,
                         child: Text(
                           batList[i]['player_name'],
                           style: TextStyle(
@@ -303,7 +308,8 @@ int secondIningId=0;
                         ),
                       ),
                       Container(
-                        width: MediaQuery.of(context).size.width / 9,
+                        width: MediaQuery.of(context).size.width / 8.1,
+                        alignment: Alignment.center,
                         child: Text(
                           "${batList[i]['r']}",
                           style: TextStyle(
@@ -313,7 +319,8 @@ int secondIningId=0;
                         ),
                       ),
                       Container(
-                        width: MediaQuery.of(context).size.width / 9,
+                        width: MediaQuery.of(context).size.width / 8.1,
+                        alignment: Alignment.center,
                         child: Text(
                           "${batList[i]['b']}",
                           style: TextStyle(
@@ -324,7 +331,8 @@ int secondIningId=0;
                       ),
                       Container(
                         // color: Colors.blue,
-                        width: MediaQuery.of(context).size.width / 9,
+                        width: MediaQuery.of(context).size.width / 8.1,
+                        alignment: Alignment.center,
                         child: Text(
                           "${batList[i]['4s']}",
                           style: TextStyle(
@@ -335,7 +343,8 @@ int secondIningId=0;
                       ),
                       Container(
                         //   color: Colors.blue,
-                        width: MediaQuery.of(context).size.width / 9,
+                        width: MediaQuery.of(context).size.width / 8.1,
+                        alignment: Alignment.center,
                         child: Text(
                           "${batList[i]['6s']}",
                           style: TextStyle(
@@ -346,7 +355,8 @@ int secondIningId=0;
                       ),
                       Container(
                         // color: Colors.blue,
-                        width: MediaQuery.of(context).size.width / 8,
+                        width: MediaQuery.of(context).size.width / 8.1,
+                        alignment: Alignment.center,
                         child: Text(
                           "${batList[i]['rate']}",
                           style: TextStyle(
@@ -367,7 +377,7 @@ int secondIningId=0;
               height: 10,
             ),
             Container(
-              width: MediaQuery.of(context).size.width / 1.09,
+              width: MediaQuery.of(context).size.width / 1,
               height: 40,
               color: Colors.black12,
               child: Padding(
@@ -378,7 +388,7 @@ int secondIningId=0;
                     Container(
                       width: MediaQuery.of(context).size.width / 3,
                       child: Text(
-                        ' BOWLER',
+                        'BOWLER',
                         style: TextStyle(
                             color: ColorConstant.primaryBlackColor,
                             fontSize: 16,

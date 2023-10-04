@@ -316,7 +316,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                              Divider(),
                     InkWell(
                         onTap: () {
-                         
+                         openWeb('https://myfancy11.com/how_to_quiz.html');
                         },
                         child: Padding(
                           padding: const EdgeInsets.fromLTRB(15, 0, 15, 5),
@@ -441,7 +441,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                                     width: 20,
                                   ),
                                   Text(
-                                    " Ligality",
+                                    " Leegality",
                                     style: TextStyle(
                                         color: ColorConstant.primaryBlackColor,
                                         fontSize: 15,

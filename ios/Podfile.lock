@@ -32,10 +32,10 @@ PODS:
     - Firebase/Auth (= 10.15.0)
     - firebase_core
     - Flutter
-  - firebase_core (2.16.0):
+  - firebase_core (2.17.0):
     - Firebase/CoreOnly (= 10.15.0)
     - Flutter
-  - firebase_messaging (14.6.8):
+  - firebase_messaging (14.6.9):
     - Firebase/Messaging (= 10.15.0)
     - firebase_core
     - Flutter
@@ -257,8 +257,8 @@ SPEC CHECKSUMS:
   FBSDKLoginKit: e993f97c7cc794c5da4056d8aec3c3d66033a727
   Firebase: 66043bd4579e5b73811f96829c694c7af8d67435
   firebase_auth: fe628f773ffc4ccaf4a3c0d6cb45e9aae90c94bd
-  firebase_core: 77172d0a9d8d19d07606e24406e4c2fc14d3265b
-  firebase_messaging: 6aff54d420b7ce7080c26dd131b08bc632666852
+  firebase_core: 28e84c2a4fcf6a50ef83f47b145ded8c1fa331e4
+  firebase_messaging: 91ec967913a5d144f951b3c3ac17a57796d38735
   firebase_storage: 9e849862a6dd01d841352474a14dbcfb3cecc1b8
   FirebaseAppCheckInterop: a8c555b1c2db1d9445e6c3a08a848167ddb7eb51
   FirebaseAuth: a55ec5f7f8a5b1c2dd750235c1bb419bfb642445

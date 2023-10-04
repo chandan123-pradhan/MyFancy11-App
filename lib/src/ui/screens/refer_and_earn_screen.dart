@@ -51,7 +51,7 @@ class _RefferAndEarnScreenState extends State<RefferAndEarnScreen> {
         ),
         centerTitle: false,
         title: Text(
-          "Reffer & Earn",
+          "Refer & Earn",
           style: TextStyle(
               color: ColorConstant.primaryWhiteColor,
               fontSize: 17,

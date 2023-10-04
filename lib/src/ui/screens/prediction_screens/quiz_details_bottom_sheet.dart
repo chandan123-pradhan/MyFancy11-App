@@ -92,7 +92,7 @@ class _QuizDetailsBottomSheetState extends State<QuizDetailsBottomSheet> {
                                         Expanded(
                                           child: InkWell(
                                             onTap: (){
-                                              launchUrl(Uri.parse('https://myfancy11.com/about-us.html'),
+                                              launchUrl(Uri.parse('https://myfancy11.com/how_to_quiz.html'),
  mode: LaunchMode.inAppWebView,
  );
                                             },

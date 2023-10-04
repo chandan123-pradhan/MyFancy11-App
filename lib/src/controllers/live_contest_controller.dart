@@ -35,7 +35,7 @@ class LiveContestController extends GetxController {
     // debugger();
     var response = await apiProvider.postAfterAuth(
         routeUrl: NetworkConstant.Match_by_id, bodyParams: parameter);
-     // debugger();
+      debugger();
     liveMatchUpdateApiResponse = response;
     print("score udpated");
     update();

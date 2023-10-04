@@ -124,14 +124,17 @@ final fcmToken = await FirebaseMessaging.instance.getToken();
       NetworkConstant.One_Signal: 'ssss',
       'firebase':fcmToken
     };
+    
     //debugger();
     var response = await apiProvider.postBeforeAuthWithAppToken(
         routeUrl: NetworkConstant.LOGIN_ROUTE_URL, bodyParams: parameter);
-        // debugger();
+      // debugger();
     print(response);
     loginApiResponse = LoginApiResponse.fromJson(response);
     sharedPref.setUserToken(loginApiResponse.data.userToken);
     sharedPref.setProfilepic(loginApiResponse.data.profile);
+    sharedPref.setProfileDetails(
+              loginApiResponse.data.name, loginApiResponse.data.email);
     sharedPref.saveAuthToken();
     sharedPref.setLoginStatus();
     Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) {
@@ -151,12 +154,14 @@ final fcmToken = await FirebaseMessaging.instance.getToken();
       IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
       modelName = iosInfo.model;
     }
+    final fcmToken = await FirebaseMessaging.instance.getToken();
     Map parameter = {
       NetworkConstant.Login_Method: 'phone',
       NetworkConstant.Login_Id: phoneNumberController.text,
       NetworkConstant.Reffer_By: referByController.text,
       NetworkConstant.Device_Name: modelName,
-      NetworkConstant.One_Signal: 'ssss'
+      NetworkConstant.One_Signal: 'ssss',
+       'firebase':fcmToken
     };
     try {
       var response = await apiProvider.postBeforeAuthWithAppToken(
@@ -228,7 +233,7 @@ final fcmToken = await FirebaseMessaging.instance.getToken();
           var response = await apiProvider.postAfterAuth(
               routeUrl: NetworkConstant.ACCOUNT_UPDATE_URL, bodyParams: data);
           Navigator.pop(context);
-          debugger();
+          
           updateProfileApiReponse = UpdateProfileApiReponse.fromJson(response);
           sharedPref.setProfilepic(updateProfileApiReponse.updatedData.profile);
           sharedPref.setProfileDetails(
@@ -294,6 +299,8 @@ final fcmToken = await FirebaseMessaging.instance.getToken();
           loginApiResponse = LoginApiResponse.fromJson(response);
           sharedPref.setUserToken(loginApiResponse.data.userToken);
           sharedPref.setProfilepic(loginApiResponse.data.profile);
+          sharedPref.setProfileDetails(
+              loginApiResponse.data.name, loginApiResponse.data.email);
           sharedPref.saveAuthToken();
           sharedPref.setLoginStatus();
            homeController.getSplashData(context, 1);

@@ -58,60 +58,61 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
       body: SingleChildScrollView(
         child: Column(children: [
+             SizedBox(height: 15,),
           Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                InkWell(
-                  onTap: () {
-                    signInWithFacebook().then((value) {
-                      debugger();
-                    });
-                    // Navigator.push(context,
-                    //     MaterialPageRoute(builder: (context) {
-                    //   return UpcommingFeatureScreen();
-                    // }));
-                  },
-                  child: Container(
-                    height: 40,
-                    width: MediaQuery.of(context).size.width / 2.3,
-                    decoration: BoxDecoration(
-                        color: ColorConstant.primaryWhiteColor,
-                        borderRadius: BorderRadius.circular(5),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.2),
-                            spreadRadius: 1,
-                            blurRadius: 5,
-                            offset: Offset(0, 3), // changes position of shadow
-                          ),
-                        ],
-                        border: Border.all(
-                            width: 1, color: ColorConstant.deviderColor)),
-                    alignment: Alignment.center,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.facebook,
-                          size: 25,
-                          color: Colors.blue,
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          "Facebook",
-                          style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: ColorConstant.primaryBlackColor),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+            padding: const EdgeInsets.all(0.0),
+            child: 
+                // InkWell(
+                //   onTap: () {
+                //     signInWithFacebook().then((value) {
+                //       debugger();
+                //     });
+                //     // Navigator.push(context,
+                //     //     MaterialPageRoute(builder: (context) {
+                //     //   return UpcommingFeatureScreen();
+                //     // }));
+                //   },
+                //   child: Container(
+                //     height: 40,
+                //     width: MediaQuery.of(context).size.width / 2.3,
+                //     decoration: BoxDecoration(
+                //         color: ColorConstant.primaryWhiteColor,
+                //         borderRadius: BorderRadius.circular(5),
+                //         boxShadow: [
+                //           BoxShadow(
+                //             color: Colors.grey.withOpacity(0.2),
+                //             spreadRadius: 1,
+                //             blurRadius: 5,
+                //             offset: Offset(0, 3), // changes position of shadow
+                //           ),
+                //         ],
+                //         border: Border.all(
+                //             width: 1, color: ColorConstant.deviderColor)),
+                //     alignment: Alignment.center,
+                //     child: Row(
+                //       mainAxisAlignment: MainAxisAlignment.center,
+                //       children: [
+                //         Icon(
+                //           Icons.facebook,
+                //           size: 25,
+                //           color: Colors.blue,
+                //         ),
+                //         SizedBox(
+                //           width: 10,
+                //         ),
+                //         Text(
+                //           "Facebook",
+                //           style: TextStyle(
+                //               fontSize: 16,
+                //               fontWeight: FontWeight.w600,
+                //               color: ColorConstant.primaryBlackColor),
+                //         ),
+                //       ],
+                //     ),
+                //   ),
+                // ),
+              
+           
                 InkWell(
                   onTap: () {
                     if(isCheckBottonTrue){
@@ -123,50 +124,55 @@ class _LoginScreenState extends State<LoginScreen> {
                     //   return UpcommingFeatureScreen();
                     // }));
                   },
-                  child: Container(
-                    height: 40,
-                    width: MediaQuery.of(context).size.width / 2.3,
-                    decoration: BoxDecoration(
-                        color: ColorConstant.primaryWhiteColor,
-                        borderRadius: BorderRadius.circular(5),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.2),
-                            spreadRadius: 1,
-                            blurRadius: 5,
-                            offset: Offset(0, 3), // changes position of shadow
-                          ),
-                        ],
-                        border: Border.all(
-                            width: 1, color: ColorConstant.deviderColor)),
-                    alignment: Alignment.center,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "G",
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: ColorConstant.primaryColor),
+                  child:  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: Container(
+                        height: 40,
+                        width: MediaQuery.of(context).size.width / 1,
+                        decoration: BoxDecoration(
+                            color: ColorConstant.primaryWhiteColor,
+                            borderRadius: BorderRadius.circular(5),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.2),
+                                spreadRadius: 1,
+                                blurRadius: 5,
+                                offset: Offset(0, 3), // changes position of shadow
+                              ),
+                            ],
+                            border: Border.all(
+                                width: 1, color: ColorConstant.deviderColor)),
+                        alignment: Alignment.center,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "G",
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: ColorConstant.primaryColor),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              "Google",
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: ColorConstant.primaryBlackColor),
+                            ),
+                          ],
                         ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          "Google",
-                          style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: ColorConstant.primaryBlackColor),
-                        ),
-                      ],
-                    ),
+                      ),
                   ),
-                )
-              ],
+                  
+              
+              
             ),
           ),
+             SizedBox(height: 15,),
           Text(
             "Or",
             style: TextStyle(

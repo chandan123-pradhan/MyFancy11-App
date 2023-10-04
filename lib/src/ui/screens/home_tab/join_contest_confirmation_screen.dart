@@ -169,7 +169,7 @@ var controller =Get.put(HomeController());
                       ),
                       SizedBox(height: 20,),
                        Text(
-                              "Amount will be deduct ${widget.contest.entry} from your desposite and ${int.parse(widget.contest.bonusEntry)} your bonus balance.",
+                              "Amount from deposit account shall be debited to ${widget.contest.entry} and Amount of ${int.parse(widget.contest.bonusEntry)} hall be bonus account",
                               style: TextStyle(
                                   color: Colors.black38,
                                   fontSize: 14,

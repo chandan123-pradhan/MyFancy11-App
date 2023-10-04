@@ -39,7 +39,7 @@ class _MyContestTabState extends State<MyContestTab> {
                               .toString());
                         },
                         child: Container(
-                          height: 120,
+                       //   height: 120,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             boxShadow: [
@@ -88,7 +88,13 @@ class _MyContestTabState extends State<MyContestTab> {
                               ),
                               Container(
                                 height: 35,
-                                color: Colors.black12,
+                               decoration: BoxDecoration(
+                                 color: Colors.black12,
+                                 borderRadius: BorderRadius.only(
+                                  bottomLeft: Radius.circular(10),
+                                  bottomRight: Radius.circular(10)
+                                 )
+                               ),
                                 width: MediaQuery.of(context).size.width / 1,
                                 child: Padding(
                                   padding: const EdgeInsets.only(
@@ -138,21 +144,27 @@ class _MyContestTabState extends State<MyContestTab> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.start,
                                             children: [
-                                              Image.asset(
-                                                'assets/new_icons/trophy.png',
-                                                height: 11,
-                                                width: 11,
-                                              ),
-                                              SizedBox(
+                                              // Image.asset(
+                                              //   'assets/new_icons/trophy.png',
+                                              //   height: 11,
+                                              //   width: 11,
+                                              // ),
+                                              Container(
                                                 width: 5,
+                                                height: 5,
+                                                decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  color: Colors.black26
+                                                ),
                                               ),
+                                              SizedBox(width: 10,),
                                               // Icon(Icons.first)
                                               Text(
-                                                controller
+                                             "Max. Winners:- "+   controller
                                                         .myContestApiResponse!
                                                         .data[index]
-                                                        .winPercent +
-                                                    "%",
+                                                        .winPercent,
+                                                    
                                                 style: TextStyle(
                                                     color: ColorConstant
                                                         .primaryBlackColor,
@@ -191,42 +203,45 @@ class _MyContestTabState extends State<MyContestTab> {
                                   ),
                                 ),
                               ),
-                              Expanded(
-                                  child: Container(
-                                decoration: BoxDecoration(
-                                    color: Colors.amber[50],
-                                    borderRadius: BorderRadius.only(
-                                        bottomLeft: Radius.circular(10),
-                                        bottomRight: Radius.circular(10))),
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                                  child:
+                              // Expanded(
+                              //     child: Container(
+                              //   decoration: BoxDecoration(
+                              //       color: Colors.amber[50],
+                              //       borderRadius: BorderRadius.only(
+                              //           bottomLeft: Radius.circular(10),
+                              //           bottomRight: Radius.circular(10))),
+                              //   child: Padding(
+                              //     padding:
+                              //         const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                              //     child:
                                      
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                           Text(
-                                           'Rank',
-                                            style: TextStyle(
-                                                color: Colors.black, fontSize: 15),
-                                          ),
-                                          Text(
-                                            controller.myContestApiResponse!
-                                                        .data[index].rank ==
-                                                    'null'
-                                                ? '-'
-                                                : controller.myContestApiResponse!
-                                                    .data[index].rank,
-                                            style: TextStyle(
-                                                color: Colors.black, fontSize: 15),
-                                          ),
-                                        ],
+                              //         Row(
+                              //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              //           children: [
+                              //              Text(
+                              //              'Rank',
+                              //               style: TextStyle(
+                              //                   color: Colors.black, fontSize: 15),
+                              //             ),
+                              //             Text(
+                              //               controller.myContestApiResponse!
+                              //                           .data[index].rank ==
+                              //                       'null'
+                              //                   ? '-'
+                              //                   : controller.myContestApiResponse!
+                              //                       .data[index].rank,
+                              //               style: TextStyle(
+                              //                   color: Colors.black, fontSize: 15),
+                              //             ),
+                              //           ],
                                       
                                     
-                                  ),
-                                ),
-                              ))
+                              //     ),
+                              //   ),
+                              // ))
+                          
+                          
+                          
                             ],
                           ),
                         ),

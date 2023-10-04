@@ -385,6 +385,7 @@ class _PredictionHomePageState extends State<PredictionHomePage> {
                                                                                     );
                                                                                   }).then((value) {
                                                                                     controller.quizDetailsTimer!.cancel();
+                                                                                     controller.getQuizListByMatchId(widget.matches.matchId.toString());
                                                                                   });
                                                                             },
                                                                             child:
@@ -420,6 +421,9 @@ class _PredictionHomePageState extends State<PredictionHomePage> {
                                                                                       quizData: controller.getQuizByMatchId!.data[index],
                                                                                   flag:    'no'
                                                                                     );
+                                                                                  }).then((value) {
+                                                                                     controller.quizDetailsTimer!.cancel();
+                                                                                     controller.getQuizListByMatchId(widget.matches.matchId.toString());
                                                                                   });
                                                                             },
                                                                             child:

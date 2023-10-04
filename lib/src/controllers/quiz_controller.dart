@@ -96,7 +96,7 @@ class QuizController extends GetxController {
     try {
       Map paramter = {'match_id': matchId};
       //isFetchingData = true;
-      getQuizByMatchId = null;
+      //getQuizByMatchId = null;
       update();
       var response = await apiProvider.postAfterAuth(
           routeUrl: NetworkConstant.quizByMatchId, bodyParams: paramter);
@@ -210,7 +210,7 @@ class QuizController extends GetxController {
       'type': 'buy',
       'option': flag == 'yes' ? '1' : '2'
     };
-    debugger();
+    // debugger();
     var response = await apiProvider.postAfterAuth(
         routeUrl: NetworkConstant.buyQuiz, bodyParams: parameter);
     print(response);
@@ -279,6 +279,8 @@ class QuizController extends GetxController {
     });
   }
 
+  bool isCompleteQuizDataFetching=true;
+
   void getMyCompletedPortfolioList(String status) async {
     try {
       // debugger();
@@ -298,6 +300,7 @@ class QuizController extends GetxController {
       //   }
       // }
       // debugger();
+      isCompleteQuizDataFetching=false;
       update();
     } catch (e) {
       print(e);

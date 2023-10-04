@@ -326,6 +326,7 @@ class _FantacyTabState extends State<FantacyTab> {
         break;
       default:
         print("not matched");
+        print(loginBanner.action);
         break;
     }
   }

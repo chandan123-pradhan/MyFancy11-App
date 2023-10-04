@@ -660,40 +660,43 @@ width: 30,
                                               },
                                               child: Container(
                                                 height: 25,
-                                                width: 80,
+                                               // width: 80,
                                                 decoration: BoxDecoration(
                                                     color: Colors.black12,
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             10)),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    Container(
-                                                      height: 15,
-                                                      width: 15,
-                                                      decoration: BoxDecoration(
-                                                          shape:
-                                                              BoxShape.circle,
-                                                         ),
-                                                  alignment: Alignment.center,
-                                                  child: Image.asset("assets/new_icons/edit.png"
-                                                   ,  height: 12,
-                                                  )
-                                                    ),
-                                                    SizedBox(
-                                                      width: 5,
-                                                    ),
-                                                    Text(
-                                                      "Modify",
-                                                      style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: 12,
-                                                          fontWeight:
-                                                              FontWeight.w500),
+                                                child: Padding(
+                                                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.center,
+                                                    children: [
+                                                      Container(
+                                                        height: 15,
+                                                        width: 15,
+                                                        decoration: BoxDecoration(
+                                                            shape:
+                                                                BoxShape.circle,
+                                                           ),
+                                                    alignment: Alignment.center,
+                                                    child: Image.asset("assets/new_icons/edit.png"
+                                                     ,  height: 12,
                                                     )
-                                                  ],
+                                                      ),
+                                                      SizedBox(
+                                                        width: 5,
+                                                      ),
+                                                      Text(
+                                                        "Modify & Join",
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 12,
+                                                            fontWeight:
+                                                                FontWeight.w500),
+                                                      )
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
                                             ),

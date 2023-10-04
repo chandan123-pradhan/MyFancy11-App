@@ -101,14 +101,7 @@ class _MyTeamWidgetTabState extends State<MyTeamWidgetTab> {
                                                 ),
                                               ),
                                             ),
-                                            Text(
-                                              "(T${index + 1})",
-                                              style: TextStyle(
-                                                  color: ColorConstant
-                                                      .primaryWhiteColor,
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w600),
-                                            ),
+                                          
                                           ],
                                         ),
                                         // Padding(
@@ -135,7 +128,7 @@ class _MyTeamWidgetTabState extends State<MyTeamWidgetTab> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              "Points2",
+                                              "Points",
                                               style: TextStyle(
                                                   color: ColorConstant
                                                       .primaryWhiteColor,

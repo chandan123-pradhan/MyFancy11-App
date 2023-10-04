@@ -98,7 +98,7 @@ Widget winnerCard(context, var contestData, String matchDate, var matchData) {
                         ),
                       ),
                       Text(
-                        matchData['team2']['team_short_name'],
+                        matchData['team1']['team_short_name'],
                         style: TextStyle(
                             color: ColorConstant.primaryBlackColor,
                             fontSize: 13,
@@ -122,6 +122,7 @@ Widget winnerCard(context, var contestData, String matchDate, var matchData) {
                             fontSize: 12,
                             fontWeight: FontWeight.w600),
                       ),
+                      SizedBox(width: 10,),
                       Container(
                         height: 50,
                         width: 40,

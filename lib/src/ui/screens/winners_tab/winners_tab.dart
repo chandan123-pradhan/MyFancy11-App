@@ -62,7 +62,7 @@ class _WinnersTabState extends State<WinnersTab>
                         return Padding(
                             padding: EdgeInsets.only(
                                 left: 15, right: 15, top: 8, bottom: 
-                       index==    winnerController.winnerApiResponse['data'].length-1?50:      
+                       index==    winnerController.winnerApiResponse['data'].length-1?100:      
                                 8
                                 
                                 
@@ -196,7 +196,7 @@ class _WinnersTabState extends State<WinnersTab>
                                                      Text(
                                                   winnerController
                                                               .winnerApiResponse[
-                                                          'data'][index]['match']['team2']
+                                                          'data'][index]['match']['team1']
                                                       ['team_short_name'],
                                                   style: TextStyle(
                                                       color: ColorConstant
@@ -236,6 +236,7 @@ class _WinnersTabState extends State<WinnersTab>
                                                       fontWeight:
                                                           FontWeight.w600),
                                                 ),
+                                                SizedBox(width: 10,),
                                                     Container(
                                                       height: 50,
                                                       width: 40,

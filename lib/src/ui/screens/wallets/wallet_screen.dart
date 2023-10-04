@@ -308,33 +308,6 @@ class _WalletScreenState extends State<WalletScreen>
                             children: [
                               InkWell(
                                 onTap: () {
-                                  amountController.text = '500';
-                                  setState(() {});
-                                },
-                                child: Container(
-                                  height: 30,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(4),
-                                      border: Border.all(
-                                          width: 1,
-                                          color: ColorConstant.deviderColor)),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 10, right: 10),
-                                    child: Text(
-                                      "₹500",
-                                      style: TextStyle(
-                                          color:
-                                              ColorConstant.primaryBlackColor,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w400),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () {
                                   amountController.text = '100';
                                   setState(() {});
                                 },
@@ -362,7 +335,7 @@ class _WalletScreenState extends State<WalletScreen>
                               ),
                               InkWell(
                                 onTap: () {
-                                  amountController.text = '1500';
+                                  amountController.text = '200';
                                   setState(() {});
                                 },
                                 child: Container(
@@ -377,7 +350,7 @@ class _WalletScreenState extends State<WalletScreen>
                                     padding: const EdgeInsets.only(
                                         left: 10, right: 10),
                                     child: Text(
-                                      "₹1500",
+                                      "₹200",
                                       style: TextStyle(
                                           color:
                                               ColorConstant.primaryBlackColor,
@@ -389,7 +362,7 @@ class _WalletScreenState extends State<WalletScreen>
                               ),
                               InkWell(
                                 onTap: () {
-                                  amountController.text = '2500';
+                                  amountController.text = '500';
                                   setState(() {});
                                 },
                                 child: Container(
@@ -404,7 +377,34 @@ class _WalletScreenState extends State<WalletScreen>
                                     padding: const EdgeInsets.only(
                                         left: 10, right: 10),
                                     child: Text(
-                                      "₹2500",
+                                      "₹500",
+                                      style: TextStyle(
+                                          color:
+                                              ColorConstant.primaryBlackColor,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w400),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  amountController.text = '1000';
+                                  setState(() {});
+                                },
+                                child: Container(
+                                  height: 30,
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(4),
+                                      border: Border.all(
+                                          width: 1,
+                                          color: ColorConstant.deviderColor)),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 10, right: 10),
+                                    child: Text(
+                                      "₹1000",
                                       style: TextStyle(
                                           color:
                                               ColorConstant.primaryBlackColor,
@@ -665,7 +665,7 @@ class _WalletScreenState extends State<WalletScreen>
                                         width: 10,
                                       ),
                                       Text(
-                                        "Withdrable Balance",
+                                        "Withdrawable Balance",
                                         style: TextStyle(
                                             color:
                                                 ColorConstant.primaryBlackColor,

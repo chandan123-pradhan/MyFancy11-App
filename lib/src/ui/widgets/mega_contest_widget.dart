@@ -230,7 +230,7 @@ class _MegaContestWidgetState extends State<MegaContestWidget> {
                     Row(
                       children: [
                         Text(
-                          "winners:",
+                          "Max winners:",
                           style: TextStyle(
                               color: Colors.black45,
                               fontSize: 15,

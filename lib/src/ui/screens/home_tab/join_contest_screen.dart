@@ -306,12 +306,9 @@ width: 30,
                           ),
                           Row(
                             children: [
-                             Image.asset('assets/new_icons/trophy.png',
-                       height: 11,
-                       width: 11,
-                       ),
+                           
                               Text(
-                                " ${widget.contest.winPercent}% ",
+                                "Max winners:- ${widget.contest.winPercent} ",
                                 style: TextStyle(
                                     color: Colors.black45,
                                     fontSize: 15,

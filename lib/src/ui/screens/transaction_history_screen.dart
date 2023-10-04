@@ -68,34 +68,27 @@ class _TransactionHistoryPageState extends State<TransactionHistoryPage> {
           // ],
         ),
         body: RefreshIndicator(
-        onRefresh: () async {
-     controller.getTransactionHistory();
-        },
-      
+          onRefresh: () async {
+            controller.getTransactionHistory();
+          },
           child: GetBuilder<TransactionHistoryController>(
               init: TransactionHistoryController(),
               builder: (controller) {
-                return 
-                
-                
-                controller.isDataFetching == true
-                    ? shimerEffect(length: 5,context: context)
-                    :
-        
-                    controller.isEmpty? 
-        
-                    
-                    Center(
-                      child: Text("Data Not Found"),):
-                    
-                    ListView.builder(
-                      physics: AlwaysScrollableScrollPhysics(),
-                        itemCount: controller
-                            .getTransactionHistoryApiResponse!.data.length,
-                        itemBuilder: (context, index) {
-                          return _dateWiseTransactionCard(controller
-                              .getTransactionHistoryApiResponse!.data[index]);
-                        });
+                return controller.isDataFetching == true
+                    ? shimerEffect(length: 5, context: context)
+                    : controller.isEmpty
+                        ? Center(
+                            child: Text("Data Not Found"),
+                          )
+                        : ListView.builder(
+                            physics: AlwaysScrollableScrollPhysics(),
+                            itemCount: controller
+                                .getTransactionHistoryApiResponse!.data.length,
+                            itemBuilder: (context, index) {
+                              return _dateWiseTransactionCard(controller
+                                  .getTransactionHistoryApiResponse!
+                                  .data[index]);
+                            });
               }),
         ));
   }
@@ -113,8 +106,7 @@ class _TransactionHistoryPageState extends State<TransactionHistoryPage> {
             child: Padding(
               padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
               child: Row(
-                children:  [
-                
+                children: [
                   SizedBox(
                     width: 10,
                   ),
@@ -133,7 +125,9 @@ class _TransactionHistoryPageState extends State<TransactionHistoryPage> {
             color: Colors.white,
             child: Column(
               children: [
-                for (int i = 0; i < transactionHistory.transactionData.length; i++)
+                for (int i = 0;
+                    i < transactionHistory.transactionData.length;
+                    i++)
                   Container(
                     decoration: const BoxDecoration(
                         border: Border(
@@ -173,7 +167,8 @@ class _TransactionHistoryPageState extends State<TransactionHistoryPage> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        transactionHistory.transactionData[i].transectionMode,
+                                        transactionHistory
+                                            .transactionData[i].transectionMode,
                                         style: TextStyle(
                                             color:
                                                 ColorConstant.primaryBlackColor,
@@ -184,7 +179,8 @@ class _TransactionHistoryPageState extends State<TransactionHistoryPage> {
                                         height: 5,
                                       ),
                                       Text(
-                                       transactionHistory.transactionData[i].createdDate,
+                                        transactionHistory
+                                            .transactionData[i].createdDate,
                                         style: TextStyle(
                                             color:
                                                 ColorConstant.primaryBlackColor,
@@ -196,12 +192,17 @@ class _TransactionHistoryPageState extends State<TransactionHistoryPage> {
                                 ],
                               ),
                               Text(
-                      transactionHistory.transactionData[i].type.contains('credit')?          "+ ₹${transactionHistory.transactionData[i].amount}":
-                      "- ₹${transactionHistory.transactionData[i].amount}"
-                      
-                      ,
+                                transactionHistory.transactionData[i].type
+                                        .contains('credit')
+                                    ? "+ ₹${transactionHistory.transactionData[i].amount}"
+                                    : "- ₹${transactionHistory.transactionData[i].amount}",
                                 style: TextStyle(
-                                    color: ColorConstant.green,
+                                    color: transactionHistory
+                                                .transactionData[i].type
+                                                .contains('credit') ==
+                                            false
+                                        ? ColorConstant.primaryColor
+                                        : ColorConstant.green,
                                     fontSize: 15,
                                     fontWeight: FontWeight.w600),
                               )

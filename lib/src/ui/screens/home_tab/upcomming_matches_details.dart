@@ -229,7 +229,7 @@ width: 30,
                         
                               PopupMenuButton<dynamic>(
                                 child: Text(
-                                  "Prize Pool",
+                                  "Room Filter",
                                   style: TextStyle(
                                       color: ColorConstant.primaryBlackColor
                                          ,

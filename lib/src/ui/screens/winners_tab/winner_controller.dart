@@ -11,7 +11,7 @@ class WinnerController extends GetxController{
      Map parameter = {};
     var response = await apiProvider.postAfterAuth(
         routeUrl: NetworkConstant.winner_api, bodyParams: parameter);
-        // debugger();
+     //  debugger();
     if(response['status']==200){
       winnerApiResponse=response;
     }
