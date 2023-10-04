@@ -78,26 +78,26 @@ class _ProfilePageState extends State<ProfilePage> {
                       SizedBox(
                         height: 20,
                       ),
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 20),
-                          child: Text(
-                            "Select Avatar",
-                            style: TextStyle(
-                                color: ColorConstant.primaryBlackColor,
-                                fontSize: 15,
-                                fontWeight: FontWeight.w600),
-                          ),
-                        ),
-                      ),
+                      // Container(
+                      //   alignment: Alignment.centerLeft,
+                      //   child: Padding(
+                      //     padding: const EdgeInsets.only(left: 20),
+                      //     child: Text(
+                      //       "Select Avatar",
+                      //       style: TextStyle(
+                      //           color: ColorConstant.primaryBlackColor,
+                      //           fontSize: 15,
+                      //           fontWeight: FontWeight.w600),
+                      //     ),
+                      //   ),
+                      // ),
 
                       InkWell(
                         onTap: () {
-                          setState(() {
-                            _isActive=true;
-                          });
-                          choosedGalaryOrCamera();
+                          // setState(() {
+                          //   _isActive=true;
+                          // });
+                          // choosedGalaryOrCamera();
                         },
                         child: Container(
                           height: 70,
@@ -110,8 +110,8 @@ class _ProfilePageState extends State<ProfilePage> {
                             profilePic==null?
                             
                               Container(
-                                height: 60,
-                                width: 60,
+                                height: 80,
+                                width: 80,
                                 decoration: BoxDecoration(
                                   color: Colors.black12,
                                     shape: BoxShape.circle,
@@ -163,14 +163,14 @@ class _ProfilePageState extends State<ProfilePage> {
                               )
                               
                               ,
-                              Positioned(
-                                  right: 10,
-                                  bottom: 10,
-                                  child: Icon(
-                                    Icons.camera_alt_outlined,
-                                    size: 20,
-                                    color: ColorConstant.primaryBlackColor,
-                                  ))
+                              // Positioned(
+                              //     right: 10,
+                              //     bottom: 10,
+                              //     child: Icon(
+                              //       Icons.camera_alt_outlined,
+                              //       size: 20,
+                              //       color: ColorConstant.primaryBlackColor,
+                              //     ))
                             ],
                           ),
                         ),

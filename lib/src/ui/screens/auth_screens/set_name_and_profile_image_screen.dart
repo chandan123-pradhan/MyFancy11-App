@@ -80,23 +80,23 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                       SizedBox(
                         height: 20,
                       ),
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 20),
-                          child: Text(
-                            "Select Awatar",
-                            style: TextStyle(
-                                color: ColorConstant.primaryBlackColor,
-                                fontSize: 15,
-                                fontWeight: FontWeight.w600),
-                          ),
-                        ),
-                      ),
+                      // Container(
+                      //   alignment: Alignment.centerLeft,
+                      //   child: Padding(
+                      //     padding: const EdgeInsets.only(left: 20),
+                      //     child: Text(
+                      //       "Select Avatar",
+                      //       style: TextStyle(
+                      //           color: ColorConstant.primaryBlackColor,
+                      //           fontSize: 15,
+                      //           fontWeight: FontWeight.w600),
+                      //     ),
+                      //   ),
+                      // ),
 
                       InkWell(
                         onTap: () {
-                          choosedGalaryOrCamera();
+                         // choosedGalaryOrCamera();
                         },
                         child: Container(
                           height: 70,
@@ -106,8 +106,8 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                             profilePic==null?
                             
                               Container(
-                                height: 60,
-                                width: 60,
+                                height: 80,
+                                width: 80,
                                 decoration: BoxDecoration(
                                   color: Colors.black12,
                                     shape: BoxShape.circle,
@@ -140,14 +140,14 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                               )
                               
                               ,
-                              Positioned(
-                                  right: 10,
-                                  bottom: 10,
-                                  child: Icon(
-                                    Icons.camera_alt_outlined,
-                                    size: 20,
-                                    color: ColorConstant.primaryBlackColor,
-                                  ))
+                              // Positioned(
+                              //     right: 10,
+                              //     bottom: 10,
+                              //     child: Icon(
+                              //       Icons.camera_alt_outlined,
+                              //       size: 20,
+                              //       color: ColorConstant.primaryBlackColor,
+                              //     ))
                             ],
                           ),
                         ),
@@ -164,11 +164,11 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                           controller: controller.nameController,
                           onChanged: (val) {},
                           decoration: InputDecoration(
-                              suffixIcon: Icon(
-                                Icons.paste,
-                                size: 20,
-                                color: ColorConstant.primaryBlackColor,
-                              ),
+                              // suffixIcon: Icon(
+                              //   Icons.paste,
+                              //   size: 20,
+                              //   color: ColorConstant.primaryBlackColor,
+                              // ),
                               filled: true,
                               hintText: "Enter Name"),
                         ),

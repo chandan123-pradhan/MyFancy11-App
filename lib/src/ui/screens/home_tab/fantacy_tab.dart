@@ -240,7 +240,7 @@ class _FantacyTabState extends State<FantacyTab> {
                   child: Container(
                     alignment: Alignment.centerLeft,
                     child: const Text(
-                      "Upcomming Matches",
+                      "Upcoming Matches",
                       style: TextStyle(
                           color: ColorConstant.primaryBlackColor,
                           fontSize: 13,

@@ -157,7 +157,7 @@ class _WalletScreenState extends State<WalletScreen>
                                     width: 10,
                                   ),
                                   Text(
-                                    "Deposit Balance",
+                                    "Deposit Amount",
                                     style: TextStyle(
                                         color: ColorConstant.primaryBlackColor,
                                         fontSize: 14,
@@ -195,7 +195,7 @@ class _WalletScreenState extends State<WalletScreen>
                                     width: 10,
                                   ),
                                   Text(
-                                    "Winning Balance",
+                                    "Winning Amount",
                                     style: TextStyle(
                                         color: ColorConstant.primaryBlackColor,
                                         fontSize: 14,
@@ -234,7 +234,7 @@ class _WalletScreenState extends State<WalletScreen>
                                     width: 10,
                                   ),
                                   Text(
-                                    "Bonus Balance",
+                                    "Bonus Amount",
                                     style: TextStyle(
                                         color: ColorConstant.primaryBlackColor,
                                         fontSize: 14,
@@ -272,7 +272,7 @@ class _WalletScreenState extends State<WalletScreen>
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Add Balance",
+                                "Add Money",
                                 style: TextStyle(
                                     color: ColorConstant.primaryBlackColor,
                                     fontSize: 16,
@@ -665,7 +665,7 @@ class _WalletScreenState extends State<WalletScreen>
                                         width: 10,
                                       ),
                                       Text(
-                                        "Withdrawable Balance",
+                                        "Withdrawable Amount",
                                         style: TextStyle(
                                             color:
                                                 ColorConstant.primaryBlackColor,
@@ -706,7 +706,7 @@ class _WalletScreenState extends State<WalletScreen>
                                         width: 10,
                                       ),
                                       Text(
-                                        "Bonus Balance",
+                                        "Bonus Amount",
                                         style: TextStyle(
                                             color:
                                                 ColorConstant.primaryBlackColor,
@@ -741,7 +741,7 @@ class _WalletScreenState extends State<WalletScreen>
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "Your Ekyc is not Completed\nPlease Complete Your EKyc First.",
+                                    "Your E-KYC is not Completed\nPlease Complete Your E-KYC First.",
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                         color: ColorConstant.primaryBlackColor,
@@ -771,7 +771,7 @@ class _WalletScreenState extends State<WalletScreen>
                                               ColorConstant.primaryBlackColor),
                                       alignment: Alignment.center,
                                       child: Text(
-                                        "Start EKyc",
+                                        "Start E-KYC",
                                         style: TextStyle(
                                             color:
                                                 ColorConstant.primaryWhiteColor,
@@ -815,7 +815,7 @@ class _WalletScreenState extends State<WalletScreen>
                                             width: 10,
                                           ),
                                           Text(
-                                            "Current Balance",
+                                            "Current Amount",
                                             style: TextStyle(
                                                 color: ColorConstant
                                                     .primaryBlackColor,
@@ -857,7 +857,7 @@ class _WalletScreenState extends State<WalletScreen>
                                             width: 10,
                                           ),
                                           Text(
-                                            "Bonus Balance",
+                                            "Bonus Amount",
                                             style: TextStyle(
                                                 color: ColorConstant
                                                     .primaryBlackColor,
@@ -962,7 +962,7 @@ class _WalletScreenState extends State<WalletScreen>
                                                 width: 10,
                                               ),
                                               Text(
-                                                "Withdrable Balance",
+                                                "Withdrable Amount",
                                                 style: TextStyle(
                                                     color: ColorConstant
                                                         .primaryBlackColor,
@@ -1251,18 +1251,21 @@ class _WalletScreenState extends State<WalletScreen>
                   Wrap(
                     children: [
                       for (int i = 0; i < apps.length; i++)
-                        InkWell(
-                          onTap: () {
-                            Navigator.pop(context);
-                            _doPayment(apps[i]);
-                          },
-                          child: ListTile(
-                            leading: Image.memory(
-                              apps[i].icon,
-                              height: 60,
-                              width: 60,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
+                              _doPayment(apps[i]);
+                            },
+                            child: ListTile(
+                              leading: Image.memory(
+                                apps[i].icon,
+                                height: 60,
+                                width: 60,
+                              ),
+                              title: Text(apps![i].name),
                             ),
-                            title: Text(apps![i].name),
                           ),
                         ),
                     ],

@@ -189,7 +189,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               enabled: true,
               onChanged: (val) {},
               decoration: InputDecoration(
-                  filled: true, hintText: "Email or Mobile No."),
+                  filled: true, hintText: "Mobile No."),
             ),
           ),
           Padding(
@@ -271,7 +271,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Row(
                   children: [
                     Text(
-                      "I Agree all ",
+                      "I Agree all to ",
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 12,

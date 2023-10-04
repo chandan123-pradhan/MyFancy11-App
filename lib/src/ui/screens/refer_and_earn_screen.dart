@@ -237,7 +237,7 @@ class _RefferAndEarnScreenState extends State<RefferAndEarnScreen> {
                                                         .refferalApiResponse!
                                                         .setting
                                                         .upgradeRequest ==
-                                                    0
+                                                    1
                                                 ? ColorConstant.greenColor
                                                 : Colors.transparent),
                                         alignment: Alignment.center,
@@ -247,7 +247,7 @@ class _RefferAndEarnScreenState extends State<RefferAndEarnScreen> {
                                               color: controller
                                                           .refferalApiResponse!
                                                           .setting
-                                                          .upgradeRequest ==1
+                                                          .upgradeRequest ==2
                                                       
                                                   ? ColorConstant
                                                       .primaryBlackColor
@@ -279,7 +279,7 @@ class _RefferAndEarnScreenState extends State<RefferAndEarnScreen> {
                                                         .refferalApiResponse!
                                                         .setting
                                                         .upgradeRequest ==
-                                                    1
+                                                    2
                                                 ? ColorConstant.greenColor
                                                 : Colors.transparent),
                                         alignment: Alignment.center,
@@ -290,7 +290,7 @@ class _RefferAndEarnScreenState extends State<RefferAndEarnScreen> {
                                                           .refferalApiResponse!
                                                           .setting
                                                           .upgradeRequest ==
-                                                      1
+                                                      2
                                                   ? ColorConstant
                                                       .primaryWhiteColor
                                                   : ColorConstant
@@ -451,7 +451,7 @@ class _AffiliateProgramFormState extends State<AffiliateProgramForm> {
                       height: 10,
                     ),
                     Text(
-                      "Requiest Submited!",
+                      "Request Submited!",
                       style: TextStyle(
                           color: ColorConstant.primaryBlackColor,
                           fontSize: 16,

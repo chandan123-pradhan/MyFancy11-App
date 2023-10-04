@@ -239,7 +239,7 @@ class _LoginScreenState extends State<LoginScreen> {
               );
             },
             child: Text(
-              "No a member? Register",
+              "Not a member? Register",
               style: TextStyle(
                   color: Colors.black,
                   fontSize: 12,
@@ -271,7 +271,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Row(
                   children: [
                     Text(
-                      "I Agree all ",
+                      "I Agree all to ",
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 12,

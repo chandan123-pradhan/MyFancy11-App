@@ -132,7 +132,7 @@ class Matches {
     team1 = Team1.fromJson(json['team1']);
     team2 = Team2.fromJson(json['team2']);
     is_subscribe=json['is_subscribe'].toString();
-    vanue=json['vanue'].toString();
+    vanue=json['venue'].toString();
   }
 
   Map<String, dynamic> toJson() {
@@ -171,7 +171,7 @@ class Matches {
     _data['team1'] = team1.toJson();
     _data['team2'] = team2.toJson();
     _data['is_subscribe']=is_subscribe;
-    _data['vanue']=vanue;
+    _data['venue']=vanue;
     return _data;
   }
 }

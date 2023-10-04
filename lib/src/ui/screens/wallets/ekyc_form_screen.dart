@@ -101,6 +101,12 @@ class _EkycFormScreenState extends State<EkycFormScreen> {
                           SizedBox(
                             height: 20,
                           ),
+                           _getItemWidget(
+                              title: 'Bank Holder Name',
+                              tController: _bankHolderNameController),
+                          SizedBox(
+                            height: 20,
+                          ),
                           _getItemWidget(
                               title: 'Bank Name',
                               tController: _bankNameController),
@@ -118,12 +124,7 @@ class _EkycFormScreenState extends State<EkycFormScreen> {
                           SizedBox(
                             height: 20,
                           ),
-                          _getItemWidget(
-                              title: 'Bank Holder Name',
-                              tController: _bankHolderNameController),
-                          SizedBox(
-                            height: 20,
-                          ),
+                         
                           _getItemWidget(
                               title: 'UPI ID', tController: _upiIdController),
                           SizedBox(
@@ -186,6 +187,12 @@ class _EkycFormScreenState extends State<EkycFormScreen> {
                                                   border: Border.all(
                                                       width: 1,
                                                       color: Colors.black38),
+image: DecorationImage(image: 
+AssetImage('assets/new_icons/image_upload_placeholder.jpg'),
+fit: BoxFit.contain
+
+)
+
                                                 )
                                               : BoxDecoration(
                                                   borderRadius:
@@ -200,11 +207,7 @@ class _EkycFormScreenState extends State<EkycFormScreen> {
                                                       fit: BoxFit.fill)),
                                           alignment: Alignment.center,
                                           child: _addhaar_front_pic == null
-                                              ? Icon(
-                                                  Icons.image,
-                                                  size: 60,
-                                                  color: Colors.black38,
-                                                )
+                                              ? Container()
                                               : imageUploading == true &&
                                                       aadhaar_front_pic_url ==
                                                           ''
@@ -255,6 +258,10 @@ class _EkycFormScreenState extends State<EkycFormScreen> {
                                                       image: NetworkImage(
                                                           _aadhar_back_pic),
                                                       fit: BoxFit.fill)
+
+
+
+
                                                   : DecorationImage(
                                                       image: FileImage(File(
                                                           _aadhar_back_pic
@@ -275,6 +282,12 @@ class _EkycFormScreenState extends State<EkycFormScreen> {
                                                   border: Border.all(
                                                       width: 1,
                                                       color: Colors.black38),
+                                              
+                                              image: DecorationImage(image: 
+AssetImage('assets/new_icons/image_upload_placeholder.jpg'),
+fit: BoxFit.contain
+
+)
                                                 )
                                               : BoxDecoration(
                                                   borderRadius:
@@ -289,11 +302,7 @@ class _EkycFormScreenState extends State<EkycFormScreen> {
                                                       fit: BoxFit.fill)),
                                           alignment: Alignment.center,
                                           child: _aadhar_back_pic == null
-                                              ? Icon(
-                                                  Icons.image,
-                                                  size: 60,
-                                                  color: Colors.black38,
-                                                )
+                                              ? Container()
                                               : imageUploading == true &&
                                                       aadhar_back_pic_url == ''
                                                   ? CircularProgressIndicator(
@@ -361,6 +370,12 @@ class _EkycFormScreenState extends State<EkycFormScreen> {
                                                   border: Border.all(
                                                       width: 1,
                                                       color: Colors.black38),
+                                              
+                                              image: DecorationImage(image: 
+AssetImage('assets/new_icons/image_upload_placeholder.jpg'),
+fit: BoxFit.contain
+
+)
                                                 )
                                               : BoxDecoration(
                                                   borderRadius:
@@ -374,11 +389,7 @@ class _EkycFormScreenState extends State<EkycFormScreen> {
                                                       fit: BoxFit.fill)),
                                           alignment: Alignment.center,
                                           child: _pan_pic == null
-                                              ? Icon(
-                                                  Icons.image,
-                                                  size: 60,
-                                                  color: Colors.black38,
-                                                )
+                                              ?Container()
                                               : imageUploading == true &&
                                                       pan_pic_url == ''
                                                   ? CircularProgressIndicator(
@@ -614,7 +625,7 @@ class _EkycFormScreenState extends State<EkycFormScreen> {
         _addhaar_front_pic = await picker.pickImage(source: src);
         setState(() {});
         if (_addhaar_front_pic != null) {
-          debugger();
+          // debugger();
           return File(_addhaar_front_pic.path);
           // TODO: Upload the picked image to Firebase Storage
         } else {

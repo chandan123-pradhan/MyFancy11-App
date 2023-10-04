@@ -160,10 +160,12 @@ class HomeController extends GetxController {
       response = await apiProvider.postBeforeAuth(
           routeUrl: NetworkConstant.GET_MATCHES, bodyParams: parameter);
     }
-    // debugger();
+    //  debugger();
     print(response);
     if (response != null) {
       getMatchesApiResponse = GetMatchesApiResponse.fromJson(response);
+      // debugger();
+      print(getMatchesApiResponse);
     } else {
       getMatchesApiResponse = null;
     }
@@ -222,7 +224,7 @@ class HomeController extends GetxController {
     };
     var response = await apiProvider.postAfterAuth(
         routeUrl: NetworkConstant.Get_Squad, bodyParams: parameter);
-
+debugger();
     getSquadApiResponse = GetSquadApiResponse.fromJson(response);
 
     devidePlayersAccordingToTitle();
@@ -705,6 +707,7 @@ class HomeController extends GetxController {
       'default': '0'
     };
     debugger();
+    print(parameter);
     var response = await apiProvider.postAfterAuth(
         routeUrl: NetworkConstant.requestEkyc, bodyParams: parameter);
     print(response);

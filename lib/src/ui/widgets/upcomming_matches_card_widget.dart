@@ -378,7 +378,7 @@ class _UpcommingMatchCardWidgetState extends State<UpcommingMatchCardWidget> {
                                           padding: const EdgeInsets.all(5.0),
                                           child: Text(
                                      widget
-                                              .matches.mega=='0'?'Mega Comming Soon':     
+                                              .matches.mega=='0'?'Mega Coming Soon':     
                                           
                                             "Mega ₹${widget
                                               .matches.mega}",

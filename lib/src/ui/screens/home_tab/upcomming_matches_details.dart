@@ -35,22 +35,22 @@ class _UpcommingMatchesDetailsState extends State<UpcommingMatchesDetails> {
 
   List<PopupMenuEntry<dynamic>> menuItems = [
     PopupMenuItem(
-      child: Text('Low To High'),
-      value: '0',
-    ),
-    PopupMenuItem(
       child: Text('High To Low'),
       value: '1',
+    ),
+    PopupMenuItem(
+      child: Text('Low To High'),
+      value: '0',
     ),
     // Add more PopupMenuItems as needed
   ];
   List<PopupMenuEntry<dynamic>> pricePoolItems = [
     PopupMenuItem(
-      child: Text('Low To High'),
-      value: '0',
+      child: Text('High To Low'),
+      value: '1',
     ),
     PopupMenuItem(
-      child: Text('High To Low'),
+      child: Text('Low To High'),
       value: '1',
     ),
     // Add more PopupMenuItems as needed
@@ -162,7 +162,7 @@ width: 30,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Short By: ",
+                        "Sort By: ",
                         style: TextStyle(
                             color: ColorConstant.disableColor,
                             fontSize: 14,

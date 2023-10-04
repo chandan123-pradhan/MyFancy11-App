@@ -413,7 +413,7 @@ width: 30,
                                           MainAxisAlignment.center,
                                       children: [
                                         Text(
-                                          "Vanue:-",
+                                          "Venue:-",
                                           style: TextStyle(
                                               color: Colors.white,
                                               fontSize: 10,
