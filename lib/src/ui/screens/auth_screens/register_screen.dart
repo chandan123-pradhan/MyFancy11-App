@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:cricket_fantacy/src/controllers/auth_controllers.dart';
+import 'package:cricket_fantacy/src/controllers/facebool_auth_controller.dart';
 import 'package:cricket_fantacy/src/ui/screens/auth_screens/login_screen.dart';
 import 'package:cricket_fantacy/src/ui/screens/auth_screens/otp_screen.dart';
 import 'package:cricket_fantacy/src/ui/screens/upcomming_feature_screen.dart';
@@ -61,10 +64,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
               children: [
                 InkWell(
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return UpcommingFeatureScreen();
-                    }));
+                   signInWithFacebook().then((value) {
+                      debugger();
+                    });
                   },
                   child: Container(
                     height: 40,

@@ -193,6 +193,7 @@ width: 30,
                                   setState(() {
                                     selectedEntry = int.parse(value);
                                   });
+                                  debugger();
                                   controller.getContestList(
                                       context,
                                       widget.matches.matchId.toString(),
@@ -203,6 +204,7 @@ width: 30,
                               ),
 
                               SizedBox(width: 30,),
+                              
                         
                               //                         Padding(
                               //                           padding: const EdgeInsets.only(left: 8, right: 8),
@@ -227,7 +229,7 @@ width: 30,
                         
                               PopupMenuButton<dynamic>(
                                 child: Text(
-                                  "Price Pool",
+                                  "Prize Pool",
                                   style: TextStyle(
                                       color: ColorConstant.primaryBlackColor
                                          ,
@@ -238,7 +240,7 @@ width: 30,
                                   return pricePoolItems;
                                 },
                                 onSelected: (dynamic value) {
-                                  debugger();
+                                 // debugger();
                                   setState(() {
                                     selectedPricePool = int.parse(value);
                                   });
@@ -270,85 +272,89 @@ width: 30,
               Expanded(
                 child: Padding(
                     padding: const EdgeInsets.only(left: 0, right: 0, top: 10),
-                    child: GetBuilder<HomeController>(
-                        init: HomeController(),
-                        builder: (controller) {
-                          return controller.getContestListApiResponse == null
-                              ? Center(
-                                  child: CircularProgressIndicator(
-                                      color: ColorConstant.primaryColor),
-                                )
-                              : ListView.builder(
-                                  itemCount: controller
-                                      .getContestListApiResponse!
-                                      .contestList
-                                      .length,
-                                  itemBuilder: (context, index) {
-                                    return Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        controller
-                                                    .getContestListApiResponse!
-                                                    .contestList[index]
-                                                    .data
-                                                    .length ==
-                                                0
-                                            ? Container()
-                                            : Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 15,
-                                                    right: 14,
-                                                    top: 10),
-                                                child: Text(
+                    child:  RefreshIndicator(
+        onRefresh: () async {
+        controller.getContestList(
+        context, widget.matches.matchId.toString(), '0', '0');
+        },
+                      child: GetBuilder<HomeController>(
+                          init: HomeController(),
+                          builder: (controller) {
+                            return controller.getContestListApiResponse == null
+                                ? Center(
+                                    child: CircularProgressIndicator(
+                                        color: ColorConstant.primaryColor),
+                                  )
+                                : ListView.builder(
+                                  physics: AlwaysScrollableScrollPhysics(),
+                                    itemCount: 3,
+                                    itemBuilder: (context, index) {
+                                      return Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          controller
+                                                      .getContestListApiResponse!
+                                                      .contestList[index]
+                                                      .data
+                                                      .length ==
+                                                  0
+                                              ? Container()
+                                              : Padding(
+                                                  padding: const EdgeInsets.only(
+                                                      left: 15,
+                                                      right: 14,
+                                                      top: 10),
+                                                  child: Text(
+                                                    controller
+                                                        .getContestListApiResponse!
+                                                        .contestList[index]
+                                                        .name,
+                                                    style: TextStyle(
+                                                        color: ColorConstant
+                                                            .primaryBlackColor,
+                                                        fontSize: 13,
+                                                        fontWeight:
+                                                            FontWeight.w600),
+                                                  ),
+                                                ),
+                                          for (int i = 0;
+                                              i <
                                                   controller
                                                       .getContestListApiResponse!
                                                       .contestList[index]
-                                                      .name,
-                                                  style: TextStyle(
-                                                      color: ColorConstant
-                                                          .primaryBlackColor,
-                                                      fontSize: 13,
-                                                      fontWeight:
-                                                          FontWeight.w600),
-                                                ),
-                                              ),
-                                        for (int i = 0;
-                                            i <
-                                                controller
-                                                    .getContestListApiResponse!
-                                                    .contestList[index]
-                                                    .data
-                                                    .length;
-                                            i++)
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 15, right: 14, top: 10),
-                                            child: InkWell(
-                                                onTap: () {
-                                                  Navigator.push(context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) {
-                                                    return JoinContest(
-                                                      matches: widget.matches,
-                                                      contest: controller
-                                                          .getContestListApiResponse!
-                                                          .contestList[index]
-                                                          .data[i],
-                                                    );
-                                                  }));
-                                                },
-                                                child: MegaContestWidget(
-                                                  contest: controller
-                                                      .getContestListApiResponse!
-                                                      .contestList[index]
-                                                      .data[i],
-                                                )),
-                                          ),
-                                      ],
-                                    );
-                                  });
-                        })),
+                                                      .data
+                                                      .length;
+                                              i++)
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 15, right: 14, top: 10),
+                                              child: InkWell(
+                                                  onTap: () {
+                                                    Navigator.push(context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) {
+                                                      return JoinContest(
+                                                        matches: widget.matches,
+                                                        contest: controller
+                                                            .getContestListApiResponse!
+                                                            .contestList[index]
+                                                            .data[i],
+                                                      );
+                                                    }));
+                                                  },
+                                                  child: MegaContestWidget(
+                                                    contest: controller
+                                                        .getContestListApiResponse!
+                                                        .contestList[index]
+                                                        .data[i],
+                                                  )),
+                                            ),
+                                        ],
+                                      );
+                                    });
+                          }),
+                    )),
               ),
             ],
           ),

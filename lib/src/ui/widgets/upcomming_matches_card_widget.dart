@@ -69,7 +69,7 @@ class _UpcommingMatchCardWidgetState extends State<UpcommingMatchCardWidget> {
 
                   //     ),
                   Positioned(
-                    top: 0,
+                    top: 1,
                     right: 0,
                     child: InkWell(
                       onTap: () {
@@ -94,6 +94,7 @@ class _UpcommingMatchCardWidgetState extends State<UpcommingMatchCardWidget> {
                             color: ColorConstant.primaryColor,
                             borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(20),
+                              bottomRight: Radius.circular(0)
                             )),
                         alignment: Alignment.center,
                         child: const Text(
@@ -101,7 +102,7 @@ class _UpcommingMatchCardWidgetState extends State<UpcommingMatchCardWidget> {
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 13,
-                              fontWeight: FontWeight.w500),
+                              fontWeight: FontWeight.w600),
                         ),
                       ),
                     ),
@@ -115,7 +116,12 @@ class _UpcommingMatchCardWidgetState extends State<UpcommingMatchCardWidget> {
                       width: MediaQuery.of(context).size.width / 1,
                       height: 160,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(10),
+                          bottomLeft: Radius.circular(10),
+                          bottomRight: Radius.circular(10),
+                          topRight: Radius.circular(3)
+                        ),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.grey.withOpacity(0.3),
@@ -371,6 +377,9 @@ class _UpcommingMatchCardWidgetState extends State<UpcommingMatchCardWidget> {
                                         child: Padding(
                                           padding: const EdgeInsets.all(5.0),
                                           child: Text(
+                                     widget
+                                              .matches.mega=='0'?'Mega Comming Soon':     
+                                          
                                             "Mega ₹${widget
                                               .matches.mega}",
                                             style: TextStyle(

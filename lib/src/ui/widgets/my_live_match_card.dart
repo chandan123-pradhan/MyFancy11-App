@@ -51,7 +51,7 @@ class _MyLiveMatchCardState extends State<MyLiveMatchCard> {
       child: Stack(
         children: [
             Positioned(
-                    top: 0,
+                    top: 1,
                     right: 0,
                     child: InkWell(
                       onTap: () {
@@ -78,7 +78,7 @@ class _MyLiveMatchCardState extends State<MyLiveMatchCard> {
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 13,
-                              fontWeight: FontWeight.w500),
+                              fontWeight: FontWeight.w600),
                         ),
                       ),
                     ),
@@ -90,7 +90,12 @@ class _MyLiveMatchCardState extends State<MyLiveMatchCard> {
               width: MediaQuery.of(context).size.width / 1,
               height: 160,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
+               borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(10),
+                          bottomLeft: Radius.circular(10),
+                          bottomRight: Radius.circular(10),
+                          topRight: Radius.circular(2)
+                        ),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.grey.withOpacity(0.3),
@@ -259,7 +264,11 @@ class _MyLiveMatchCardState extends State<MyLiveMatchCard> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(5.0),
                                   child: Text(
-                                    "Mega Rs.1.5 Lacks",
+                                    widget
+                                              .matches.mega=='0'?'Mega Comming Soon':     
+                                          
+                                            "Mega ₹${widget
+                                              .matches.mega}",
                                     style: TextStyle(
                                         color: Colors.black45,
                                         fontSize: 12,

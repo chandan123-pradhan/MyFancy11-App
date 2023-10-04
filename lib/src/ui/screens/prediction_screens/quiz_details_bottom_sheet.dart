@@ -8,6 +8,7 @@ import 'package:cricket_fantacy/src/utils/color_scheme.dart';
 import 'package:cricket_fantacy/src/utils/messages.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class QuizDetailsBottomSheet extends StatefulWidget {
   QuizData quizData;
@@ -89,20 +90,27 @@ class _QuizDetailsBottomSheetState extends State<QuizDetailsBottomSheet> {
                                           ),
                                         ),
                                         Expanded(
-                                          child: Container(
-                                            height: 30,
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(25),
-                                                color: Colors.white30),
-                                            alignment: Alignment.center,
-                                            child: Text(
-                                              'How To Play?',
-                                              style: TextStyle(
-                                                  color: ColorConstant
-                                                      .primaryWhiteColor,
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.w500),
+                                          child: InkWell(
+                                            onTap: (){
+                                              launchUrl(Uri.parse('https://myfancy11.com/about-us.html'),
+ mode: LaunchMode.inAppWebView,
+ );
+                                            },
+                                            child: Container(
+                                              height: 30,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(25),
+                                                  color: Colors.white30),
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                'How To Play?',
+                                                style: TextStyle(
+                                                    color: ColorConstant
+                                                        .primaryWhiteColor,
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.w500),
+                                              ),
                                             ),
                                           ),
                                         )
@@ -521,7 +529,7 @@ class _QuizDetailsBottomSheetState extends State<QuizDetailsBottomSheet> {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                "Enter Contests",
+                                                "Number of Contract",
                                                 style: TextStyle(
                                                     color: ColorConstant
                                                         .primaryBlackColor,
@@ -533,7 +541,7 @@ class _QuizDetailsBottomSheetState extends State<QuizDetailsBottomSheet> {
                                                 height: 5,
                                               ),
                                               Text(
-                                                "Select the number of contest you want to join with.",
+                                                "Select the number of contract you want to join with.",
                                                 style: TextStyle(
                                                     color: Colors.black45,
                                                     fontSize: 12,
@@ -564,10 +572,7 @@ class _QuizDetailsBottomSheetState extends State<QuizDetailsBottomSheet> {
                                                     fontWeight:
                                                         FontWeight.w500),
                                               ),
-                                              Icon(
-                                                Icons.edit_square,
-                                                size: 18,
-                                              )
+                                             
                                             ],
                                           ),
                                         ))

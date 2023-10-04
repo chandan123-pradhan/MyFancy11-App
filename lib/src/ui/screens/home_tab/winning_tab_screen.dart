@@ -25,133 +25,138 @@ class _WinningTabState extends State<WinningTab> {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<HomeController>(
-      init: HomeController(),
-      builder: (controller) {
-        return 
-
-
-controller.getWinningInfoApiResponse==null?
-        
-        shimerEffect(length: 3,context: context)
-        :
-
-        Column(
-          children: [
-            SizedBox(height: 10,),
-            Container(
-              height: 40,
-              alignment: Alignment.centerLeft,
-              child: Padding(
-                padding: const EdgeInsets.only(left:15.0),
-                child: Text("Be the first in your network to join this contest",
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black54
-                ),
-                
-                
-                ),
-              ),
-            ),
-          //  Divider(),
-            Container(
-               decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(
-                  width: 1,color: Colors.black12
-                ),
-                top: BorderSide(
-                  width: 1,color: Colors.black12
-                )
-              )
-            ),
-            height: 40,
-              child: Padding(
-                padding: const EdgeInsets.only(left:15.0,right: 15,top: 5),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Rank",
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black54
-                    ),
-                    
-                    
-                    ),
-                     Text("Winnings",
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black54
-                    ),
-                    
-                    
-                    ),
-                  ],
+    return   RefreshIndicator(
+        onRefresh: () async {
+       controller.getWinningInfo(context, widget.contestId);
+        },
+      child: GetBuilder<HomeController>(
+        init: HomeController(),
+        builder: (controller) {
+          return 
+    
+    
+    controller.getWinningInfoApiResponse==null?
+          
+          shimerEffect(length: 3,context: context)
+          :
+    
+          Column(
+            children: [
+              SizedBox(height: 10,),
+              Container(
+                height: 40,
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: const EdgeInsets.only(left:15.0),
+                  child: Text("Be the first in your network to join this contest",
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black54
+                  ),
+                  
+                  
+                  ),
                 ),
               ),
-            ),
-            
-
-Expanded(
-  child: controller.getWinningInfoApiResponse==null?const Center(
-    child: CircularProgressIndicator(color: ColorConstant.primaryColor),
-  ): SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: Column
-        (
-          children: [
-            for(int i=0;i<controller.getWinningInfoApiResponse!.data.length;i++)
-            Container(
-              decoration: BoxDecoration(
+            //  Divider(),
+              Container(
+                 decoration: BoxDecoration(
                 border: Border(
                   bottom: BorderSide(
+                    width: 1,color: Colors.black12
+                  ),
+                  top: BorderSide(
                     width: 1,color: Colors.black12
                   )
                 )
               ),
               height: 40,
-              child: Padding(
-                padding: const EdgeInsets.only(left:15.0,right: 15),
-                child: Row(
+                child: Padding(
+                  padding: const EdgeInsets.only(left:15.0,right: 15,top: 5),
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("${controller.getWinningInfoApiResponse!.data[i].rank}",
+                      Text("Rank",
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
-                        color: ColorConstant.primaryBlackColor
+                        color: Colors.black54
                       ),
                       
                       
                       ),
-                       Text("₹${controller.getWinningInfoApiResponse!.data[i].price}",
+                       Text("Winnings",
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
-                       color: ColorConstant.primaryBlackColor
+                        color: Colors.black54
                       ),
                       
                       
                       ),
                     ],
                   ),
+                ),
               ),
-            )
-          ],
-        ),
-  )
-  
-  
-  )
-
-          ],
-        );
-      }
+              
+    
+    Expanded(
+      child: controller.getWinningInfoApiResponse==null?const Center(
+      child: CircularProgressIndicator(color: ColorConstant.primaryColor),
+      ): SingleChildScrollView(
+          physics: AlwaysScrollableScrollPhysics(),
+          child: Column
+          (
+            children: [
+              for(int i=0;i<controller.getWinningInfoApiResponse!.data.length;i++)
+              Container(
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                      width: 1,color: Colors.black12
+                    )
+                  )
+                ),
+                height: 40,
+                child: Padding(
+                  padding: const EdgeInsets.only(left:15.0,right: 15),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("${controller.getWinningInfoApiResponse!.data[i].rank}",
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: ColorConstant.primaryBlackColor
+                        ),
+                        
+                        
+                        ),
+                         Text("₹${controller.getWinningInfoApiResponse!.data[i].price}",
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                         color: ColorConstant.primaryBlackColor
+                        ),
+                        
+                        
+                        ),
+                      ],
+                    ),
+                ),
+              )
+            ],
+          ),
+      )
+      
+      
+      )
+    
+            ],
+          );
+        }
+      ),
     );
   }
 }

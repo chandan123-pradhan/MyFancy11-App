@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cricket_fantacy/src/controllers/splash_controller.dart';
@@ -138,7 +140,7 @@ width: 30,
           Padding(
             padding: const EdgeInsets.only(left: 15.0),
             child: Text(
-              "Price Pool",
+              "Prize Pool",
               style: TextStyle(
                   color: ColorConstant.primaryBlackColor,
                   fontSize: 14,
@@ -203,8 +205,9 @@ width: 30,
             child: InkWell(
               onTap: () async {
                 controller
-                    .getMyPaidTeam(matchId: widget.matches.matchId.toString(),context: context)
+                    .getMyTeam(matchId: widget.matches.matchId.toString(),context: context)
                     .then((value) {
+                     // debugger();
                   if (value != null) {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
@@ -258,7 +261,7 @@ width: 30,
                     //       fontWeight: FontWeight.w500),
                     // ),
                     Text(
-                      " ₹${widget.contest.entry}",
+                      " ₹${int.parse(widget.contest.entry)+int.parse(widget.contest.bonusEntry)}",
                       style: TextStyle(
                           color: ColorConstant.primaryWhiteColor,
                           fontSize: 14,

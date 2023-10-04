@@ -39,11 +39,26 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
   }
 
+   void callGetMyMatchApi() async {
+    await controller.getMyMatch(context, 'fixture');
+    // await controller.getMyMatch(context, 'live');
+    // await controller.getMyMatch(context, 'completed');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
   //  backgroundColor: Colors.white60,
-      body:  FantacyTab(),
+      body:  
+      RefreshIndicator(
+        onRefresh: () async {
+        controller.getUsersProfile();
+    controller.getMatchesApiCall(context);
+    callGetMyMatchApi();
+        },
+      
+      
+      child: FantacyTab()),
       // Column(
       //   children: [
       //     Container(

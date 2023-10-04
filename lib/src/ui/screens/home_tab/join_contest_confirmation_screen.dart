@@ -136,7 +136,7 @@ var controller =Get.put(HomeController());
                             )
                           ]),
                           Text(
-                            "₹${widget.contest.entry}",
+                            "₹${int.parse(widget.contest.entry)+int.parse(widget.contest.bonusEntry)}",
                             style: TextStyle(
                                 color: ColorConstant.primaryBlackColor,
                                 fontSize: 14,
@@ -167,6 +167,14 @@ var controller =Get.put(HomeController());
                           )
                         ],
                       ),
+                      SizedBox(height: 20,),
+                       Text(
+                              "Amount will be deduct ${widget.contest.entry} from your desposite and ${int.parse(widget.contest.bonusEntry)} your bonus balance.",
+                              style: TextStyle(
+                                  color: Colors.black38,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400),
+                            )
                   
                     ],
                   ),

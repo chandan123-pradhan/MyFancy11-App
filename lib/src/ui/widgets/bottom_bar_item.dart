@@ -61,7 +61,7 @@ class _BottomBarItemState extends State<BottomBarItem> {
                   color:  Colors.black,
                   fontSize: 12,
                   fontWeight: widget.isSelected == true
-                      ? FontWeight.w500
+                      ? FontWeight.w600
                       : FontWeight.w400),
             )
           ],

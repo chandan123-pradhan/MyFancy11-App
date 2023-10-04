@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cricket_fantacy/src/utils/color_scheme.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +13,13 @@ class CommentryScreen extends StatefulWidget {
 }
 
 class _CommentryScreenState extends State<CommentryScreen> {
+  @override
+  void initState() {
+    print(widget.commentry);
+   // debugger();
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
   List commentry= widget.commentry.reversed.toList();
@@ -40,7 +49,7 @@ class _CommentryScreenState extends State<CommentryScreen> {
                   ),
                   SizedBox(width: 20,),
                   Expanded(child: 
-                  Text("${commentry[index]['bowler']['fullname']} To ${widget.commentry[index]['batsman']['fullname']} ${widget.commentry[index]['score']['name']}",
+                  Text("${commentry[index]['bowler']['fullname']} To ${commentry[index]['batsman']['fullname']} ${commentry[index]['score']['name']}",
                   style: TextStyle(
                     color: ColorConstant.primaryBlackColor,
                     fontSize: 15,fontWeight: FontWeight.w500

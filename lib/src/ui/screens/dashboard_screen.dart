@@ -205,7 +205,7 @@ width: 30,
                     imageName: 'assets/new_icons/match_not.png',
                     title: 'My Matches',
                     isSelected: _currentIndex == 1 ? true : false,
-                     selectedImage: 'assets/new_icons/lineup.png'
+                     selectedImage: 'assets/new_icons/match.png'
                   ),
                 ),
                 InkWell(

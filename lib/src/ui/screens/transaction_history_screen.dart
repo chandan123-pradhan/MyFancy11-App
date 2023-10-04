@@ -1,5 +1,6 @@
 import 'package:cricket_fantacy/src/controllers/transaction_history_controller.dart';
 import 'package:cricket_fantacy/src/models/transaction_history_api_response.dart';
+import 'package:cricket_fantacy/src/ui/widgets/shimmer_effect_widget.dart';
 import 'package:cricket_fantacy/src/utils/color_scheme.dart';
 import 'package:cricket_fantacy/src/utils/image_utils.dart';
 import 'package:flutter/material.dart';
@@ -47,53 +48,56 @@ class _TransactionHistoryPageState extends State<TransactionHistoryPage> {
                 fontSize: 17,
                 fontWeight: FontWeight.w500),
           ),
-          actions: const [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-              child: Icon(
-                Icons.file_download_outlined,
-                size: 25,
-                color: ColorConstant.primaryWhiteColor,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(15, 10, 10, 0),
-              child: Icon(
-                Icons.filter_alt_sharp,
-                size: 25,
-                color: ColorConstant.primaryWhiteColor,
-              ),
-            )
-          ],
+          // actions: const [
+          //   Padding(
+          //     padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+          //     child: Icon(
+          //       Icons.file_download_outlined,
+          //       size: 25,
+          //       color: ColorConstant.primaryWhiteColor,
+          //     ),
+          //   ),
+          //   Padding(
+          //     padding: const EdgeInsets.fromLTRB(15, 10, 10, 0),
+          //     child: Icon(
+          //       Icons.filter_alt_sharp,
+          //       size: 25,
+          //       color: ColorConstant.primaryWhiteColor,
+          //     ),
+          //   )
+          // ],
         ),
-        body: GetBuilder<TransactionHistoryController>(
-            init: TransactionHistoryController(),
-            builder: (controller) {
-              return 
-              
-              
-              controller.isDataFetching == true
-                  ? Center(
-                      child: CircularProgressIndicator(
-                        color: ColorConstant.primaryColor,
-                      ),
-                    )
-                  :
-
-                  controller.isEmpty? 
-
-                  
-                  Center(
-                    child: Text("Data Not Found"),):
-                  
-                  ListView.builder(
-                      itemCount: controller
-                          .getTransactionHistoryApiResponse!.data.length,
-                      itemBuilder: (context, index) {
-                        return _dateWiseTransactionCard(controller
-                            .getTransactionHistoryApiResponse!.data[index]);
-                      });
-            }));
+        body: RefreshIndicator(
+        onRefresh: () async {
+     controller.getTransactionHistory();
+        },
+      
+          child: GetBuilder<TransactionHistoryController>(
+              init: TransactionHistoryController(),
+              builder: (controller) {
+                return 
+                
+                
+                controller.isDataFetching == true
+                    ? shimerEffect(length: 5,context: context)
+                    :
+        
+                    controller.isEmpty? 
+        
+                    
+                    Center(
+                      child: Text("Data Not Found"),):
+                    
+                    ListView.builder(
+                      physics: AlwaysScrollableScrollPhysics(),
+                        itemCount: controller
+                            .getTransactionHistoryApiResponse!.data.length,
+                        itemBuilder: (context, index) {
+                          return _dateWiseTransactionCard(controller
+                              .getTransactionHistoryApiResponse!.data[index]);
+                        });
+              }),
+        ));
   }
 
   Widget _dateWiseTransactionCard(TransactionHistory transactionHistory) {
@@ -110,11 +114,7 @@ class _TransactionHistoryPageState extends State<TransactionHistoryPage> {
               padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
               child: Row(
                 children:  [
-                  Icon(
-                    Icons.circle,
-                    size: 15,
-                    color: ColorConstant.deviderColor,
-                  ),
+                
                   SizedBox(
                     width: 10,
                   ),
@@ -196,7 +196,10 @@ class _TransactionHistoryPageState extends State<TransactionHistoryPage> {
                                 ],
                               ),
                               Text(
-                                "+ ₹${transactionHistory.transactionData[i].amount}",
+                      transactionHistory.transactionData[i].type.contains('credit')?          "+ ₹${transactionHistory.transactionData[i].amount}":
+                      "- ₹${transactionHistory.transactionData[i].amount}"
+                      
+                      ,
                                 style: TextStyle(
                                     color: ColorConstant.green,
                                     fontSize: 15,

@@ -71,9 +71,11 @@ class LiveContestController extends GetxController {
   }
 
   void getMyTeam(matchId) async {
-    Map parameter = {NetworkConstant.MatchId: matchId};
+    Map parameter = {NetworkConstant.MatchId: matchId,
+    
+    };
     var response = await apiProvider.postAfterAuth(
-        routeUrl: NetworkConstant.My_Team, bodyParams: parameter);
+        routeUrl: NetworkConstant.My_paid_Team, bodyParams: parameter);
     // debugger();
     getMyTeamApiResponse = GetMyTeamApiResponse.fromJson(response);
     print("my team data featched");

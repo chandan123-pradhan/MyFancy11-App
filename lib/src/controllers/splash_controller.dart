@@ -106,7 +106,7 @@ class HomeController extends GetxController {
     var response = await apiProvider.postBeforeAuthStaticToken(
         routeUrl: NetworkConstant.CUSTOMER_DATE_ROUTE_URL,
         bodyParams: parameter);
-    //  debugger();
+      debugger();
     //print(response);
     splashDataApiResponse = SplashDataApiResponse.fromJson(response);
     sharedPref.setAppToken(splashDataApiResponse.data.appToken);
@@ -115,7 +115,6 @@ class HomeController extends GetxController {
     if (flag != 0) {
       _navigateFromThisPage(context, splashDataApiResponse.islogin);
     }
-    
   }
 
   void _navigateFromThisPage(BuildContext context, bool islogin) async {
@@ -180,11 +179,13 @@ class HomeController extends GetxController {
       'entry': entry,
       'price_pool': pricePool
     };
+    // debugger();
     var response = await apiProvider.postAfterAuth(
         routeUrl: NetworkConstant.GET_CONTEST, bodyParams: parameter);
     print(response);
-    getContestListApiResponse = GetContestListApiResponse.fromJson(response);
 
+    getContestListApiResponse = GetContestListApiResponse.fromJson(response);
+    //  debugger();
     update();
   }
 
@@ -208,7 +209,7 @@ class HomeController extends GetxController {
         routeUrl: NetworkConstant.GET_LEADERBOARD_URL, bodyParams: parameter);
     print(response);
     getLeaderboardApiResponse = GetLeaderboardApiResponse.fromJson(response);
-//  debugger();
+
     update();
   }
 
@@ -221,7 +222,7 @@ class HomeController extends GetxController {
     };
     var response = await apiProvider.postAfterAuth(
         routeUrl: NetworkConstant.Get_Squad, bodyParams: parameter);
-// debugger();
+
     getSquadApiResponse = GetSquadApiResponse.fromJson(response);
 
     devidePlayersAccordingToTitle();
@@ -254,19 +255,46 @@ class HomeController extends GetxController {
     for (int i = 0; i < getSquadApiResponse!.data.length; i++) {
       switch (getSquadApiResponse!.data[i].playerDesigination) {
         case AppConstant.wicketKeeper:
-          wiketKeeperList.add(getSquadApiResponse!.data[i]);
+          //wiketKeeperList.add(getSquadApiResponse!.data[i]);
+          if (getSquadApiResponse!.data[i].isSelect == '1') {
+            var v = wiketKeeperList.reversed.toList();
+            v.add(getSquadApiResponse!.data[i]);
+            wiketKeeperList = v.reversed.toList();
+          } else {
+            wiketKeeperList.add(getSquadApiResponse!.data[i]);
+          }
           dummywiketKeeperList.add(0);
           break;
         case AppConstant.batsMan:
-          batsManList.add(getSquadApiResponse!.data[i]);
+          if (getSquadApiResponse!.data[i].isSelect == '1') {
+            var v = batsManList.reversed.toList();
+            v.add(getSquadApiResponse!.data[i]);
+            batsManList = v.reversed.toList();
+          } else {
+            batsManList.add(getSquadApiResponse!.data[i]);
+          }
           dummyBatsManList.add(0);
           break;
         case AppConstant.bowler:
-          bowlerlist.add(getSquadApiResponse!.data[i]);
+          if (getSquadApiResponse!.data[i].isSelect == '1') {
+            var v = bowlerlist.reversed.toList();
+            v.add(getSquadApiResponse!.data[i]);
+            bowlerlist = v.reversed.toList();
+          } else {
+            bowlerlist.add(getSquadApiResponse!.data[i]);
+          }
+          //bowlerlist.add(getSquadApiResponse!.data[i]);
           dummybowlerlist.add(0);
           break;
         case AppConstant.allRownder:
-          allRounderList.add(getSquadApiResponse!.data[i]);
+          if (getSquadApiResponse!.data[i].isSelect == '1') {
+            var v = allRounderList.reversed.toList();
+            v.add(getSquadApiResponse!.data[i]);
+            allRounderList = v.reversed.toList();
+          } else {
+            allRounderList.add(getSquadApiResponse!.data[i]);
+          }
+
           dummyallRounderList.add(0);
           break;
         default:
@@ -306,8 +334,12 @@ class HomeController extends GetxController {
         }
         choosedPlayerList.add(getSquadApiResponse!.data[i]);
         devideTeam(t1Id, t2Id, getSquadApiResponse!.data[i], 1);
+        // debugger();
+        // print(choosedPlayerList.le);
       }
     }
+    // debugger();
+    print(choosedPlayerList.length);
   }
 
   void chosedPlayer(
@@ -321,33 +353,59 @@ class HomeController extends GetxController {
           context: context,
           message: 'You can only select Maximum 10 plyer from one team.');
     } else {
-      switch (player.playerDesigination) {
-        case AppConstant.wicketKeeper:
-          dummywiketKeeperList[index] = 1;
-          choosedWiketKeeperList.add(player);
+      if (player.playerDesigination == AppConstant.allRownder &&
+          choosedAllRounderList.length >= 8) {
+        //allrounder cannot be more than 8
+        Messages().showErrorMsg(
+            context: context,
+            message: 'You cannot choose more than 8 Allrounder.');
+      } else if (player.playerDesigination == AppConstant.wicketKeeper &&
+          choosedWiketKeeperList.length >= 8) {
+        //weeketkeepr cannot be more than 8
+        Messages().showErrorMsg(
+            context: context,
+            message: 'You cannot choose more than 8 Wicketkeeper.');
+      } else if (player.playerDesigination == AppConstant.batsMan &&
+          choosedBatsManList.length >= 8) {
+        //batsman cannot be more than 8
+        Messages().showErrorMsg(
+            context: context,
+            message: 'You cannot choose more than 8 Batsman.');
+      } else if (player.playerDesigination == AppConstant.bowler &&
+          choosedBowlerlist.length >= 8) {
+        //bowlner cannot be more than 8
+        Messages().showErrorMsg(
+            context: context,
+            message: 'You cannot choose more than 8 Bowlers.');
+      } else {
+        switch (player.playerDesigination) {
+          case AppConstant.wicketKeeper:
+            dummywiketKeeperList[index] = 1;
+            choosedWiketKeeperList.add(player);
 
-          break;
-        case AppConstant.batsMan:
-          dummyBatsManList[index] = 1;
-          choosedBatsManList.add(player);
-          break;
-        case AppConstant.bowler:
-          dummybowlerlist[index] = 1;
-          choosedBowlerlist.add(player);
-          break;
-        case AppConstant.allRownder:
-          dummyallRounderList[index] = 1;
-          choosedAllRounderList.add(player);
-          break;
-        default:
-          break;
+            break;
+          case AppConstant.batsMan:
+            dummyBatsManList[index] = 1;
+            choosedBatsManList.add(player);
+            break;
+          case AppConstant.bowler:
+            dummybowlerlist[index] = 1;
+            choosedBowlerlist.add(player);
+            break;
+          case AppConstant.allRownder:
+            dummyallRounderList[index] = 1;
+            choosedAllRounderList.add(player);
+            break;
+          default:
+            break;
+        }
+        totalCreditPoint = totalCreditPoint - int.parse(player.creditPoints);
+        choosedPlayerList.add(player);
+        devideTeam(team1Id, team2Id, player, 1);
       }
-      totalCreditPoint = totalCreditPoint - int.parse(player.creditPoints);
-      choosedPlayerList.add(player);
-      devideTeam(team1Id, team2Id, player, 1);
-    }
 
-    update();
+      update();
+    }
   }
 
   void devideTeam(String team1Id, String team2Id, SquadPlayer player, flag) {
@@ -370,6 +428,7 @@ class HomeController extends GetxController {
 
   void removeChosedPlayer(
       SquadPlayer player, index, String team1Id, String team2Id) {
+    print(player.playerDesigination);
     switch (player.playerDesigination) {
       case AppConstant.wicketKeeper:
         dummywiketKeeperList[index] = 0;
@@ -391,10 +450,15 @@ class HomeController extends GetxController {
         break;
     }
     totalCreditPoint = totalCreditPoint + int.parse(player.creditPoints);
-    choosedPlayerList.remove(player);
-    print(choosedPlayerList.length);
-    devideTeam(team1Id, team2Id, player, 0);
-    update();
+    try {
+      //debugger();
+      bool val = choosedPlayerList.remove(player);
+      print("is data removed=$val");
+      devideTeam(team1Id, team2Id, player, 0);
+      update();
+    } catch (e) {
+      print(e);
+    }
   }
 
   void choosedCaption(
@@ -457,7 +521,7 @@ class HomeController extends GetxController {
       }
       update();
     } catch (e) {
-      debugger();
+      // debugger();
       Messages().showMsg(
           context: context, message: 'Something Went Wrong, Please Try Again');
     }
@@ -571,7 +635,6 @@ class HomeController extends GetxController {
         update();
       }
     }
-    
   }
 
   void recharge(
@@ -592,7 +655,7 @@ class HomeController extends GetxController {
         routeUrl: NetworkConstant.recharge, bodyParams: parameter);
     Navigator.pop(context);
     print(response);
-    debugger();
+    // debugger();
     getWalletApi(context);
     // getWalletApiResponse = GetWalletApiResponse.fromJson(response);
 
@@ -674,6 +737,24 @@ class HomeController extends GetxController {
     }
   }
 
+  Future<MyPaidTeamApiResponse?> getMyTeam(
+      {required matchId, required context}) async {
+    showLoaderDialog(context);
+    Map parameter = {'match_id': matchId};
+    var response = await apiProvider.postAfterAuth(
+        routeUrl: NetworkConstant.myTeamApi, bodyParams: parameter);
+    print(response);
+    //  debugger();
+    Navigator.pop(context);
+    if (response['status'] == 200) {
+      myPaidTeamApiResponse = MyPaidTeamApiResponse.fromJson(response);
+      update();
+      return myPaidTeamApiResponse;
+    } else {
+      return null;
+    }
+  }
+
   void cloneTeam(
       {required context,
       required teamId,
@@ -689,7 +770,6 @@ class HomeController extends GetxController {
     debugger();
     Navigator.pop(context);
     if (response['status'] == 200) {
-      // debugger();
       Navigator.push(context, MaterialPageRoute(builder: (context) {
         return PickPlayerScreen(
           matches: matches,
@@ -762,6 +842,14 @@ class HomeController extends GetxController {
     update();
   }
 
+  void removeAppliedCode() async {
+    appliedPromoCode='';
+    update();
+  }
+
+
+
+
   void requestForWithdrawal(
       String amount, context, selectedPaymentMethod) async {
     showLoaderDialog(context);
@@ -796,44 +884,41 @@ class HomeController extends GetxController {
 
   void callUpdateDialog(
     context,
-  ) async{
+  ) async {
+    final info = await PackageInfo.fromPlatform();
+    var currentVersion = getExtendedVersionNumber(info.version);
+    var newVersion;
+    var launchUrl;
+    if (Platform.isAndroid) {
+      newVersion =
+          getExtendedVersionNumber(splashDataApiResponse.data.androidVersion);
+      launchUrl = splashDataApiResponse.data.androidApkUrl;
+    } else {
+      newVersion =
+          getExtendedVersionNumber(splashDataApiResponse.data.iosVersion);
+      launchUrl = splashDataApiResponse.data.iosApkUrl;
+    }
 
-
-final info = await PackageInfo.fromPlatform();
-var currentVersion=getExtendedVersionNumber(info.version);
-var newVersion;
-var launchUrl;
-if(Platform.isAndroid){
-  newVersion=getExtendedVersionNumber(splashDataApiResponse.data.androidVersion);
-  launchUrl=splashDataApiResponse.data.androidApkUrl;
-}else{
-  newVersion=getExtendedVersionNumber(splashDataApiResponse.data.iosVersion);
-  launchUrl=splashDataApiResponse.data.iosApkUrl;
-}
-
-if(newVersion>currentVersion)
-{
-   showModalBottomSheet(
-        // isScrollControlled: true,
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20), topRight: Radius.circular(20))),
-        context: context,
-        builder: (context) {
-          return UpdateDialog(
-            apkUrl: launchUrl,
-          );
-        });
-}else{
-  print("update not avaiable");
-}
-   
+    if (newVersion > currentVersion) {
+      showModalBottomSheet(
+          // isScrollControlled: true,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20), topRight: Radius.circular(20))),
+          context: context,
+          builder: (context) {
+            return UpdateDialog(
+              apkUrl: launchUrl,
+            );
+          });
+    } else {
+      print("update not avaiable");
+    }
   }
 
-
   int getExtendedVersionNumber(String version) {
-  List versionCells = version.split('.');
-  versionCells = versionCells.map((i) => int.parse(i)).toList();
-  return versionCells[0] * 100000 + versionCells[1] * 1000 + versionCells[2];
-}
+    List versionCells = version.split('.');
+    versionCells = versionCells.map((i) => int.parse(i)).toList();
+    return versionCells[0] * 100000 + versionCells[1] * 1000 + versionCells[2];
+  }
 }

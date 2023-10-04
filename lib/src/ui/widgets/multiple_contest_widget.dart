@@ -37,7 +37,7 @@ class _MultipleContestState extends State<MultipleContest> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      "Max Price Pool",
+                      "Max Prize Pool",
                       style: TextStyle(
                           color: ColorConstant.primaryBlackColor,
                           fontSize: 14,

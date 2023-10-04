@@ -37,6 +37,7 @@ class TeamData {
   late final String userId;
   late final String teamid;
   late final String name;
+  late final String points;
   late final int bat;
   late final int wk;
   late final int bow;
@@ -48,6 +49,7 @@ class TeamData {
 userId=json['user_id'];
     teamid = json['teamid'];
     name = json['name'];
+    points=json['points'].toString();
     bat = json['bat'];
     wk = json['wk'];
     bow = json['bow'];
@@ -61,6 +63,7 @@ userId=json['user_id'];
     _data['user_id']=userId;
     _data['teamid'] = teamid;
     _data['name'] = name;
+    _data['points']=points;
     _data['bat'] = bat;
     _data['wk'] = wk;
     _data['bow'] = bow;

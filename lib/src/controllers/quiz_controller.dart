@@ -19,8 +19,8 @@ class QuizController extends GetxController {
   GetQuizByCategoryApiResponse? getQuizByCategoryApiResponse;
   QuizDetailsApiResponse? quizDetailsApiResponse;
   ApiProvider apiProvider = ApiProvider();
-  List<MyQuizData>liveQuiz=[];
-  List<MyQuizData>completedQuiz=[];
+  List<MyQuizData> liveQuiz = [];
+  List<MyQuizData> completedQuiz = [];
   double priceValue = 7.6;
   double defaultInvenstmentAmount = 0.0;
   double defaultReturnAmount = 0.0;
@@ -31,7 +31,7 @@ class QuizController extends GetxController {
   GetWalletApiResponse? getWalletApiResponse;
   GetQuizMyListApiResponse? getQuizMyListApiResponse;
   Timer? timer;
-
+  bool isCalculated = false;
   Future<void> getWalletApi() async {
     Map parameter = {};
     var response = await apiProvider.postAfterAuth(
@@ -69,7 +69,7 @@ class QuizController extends GetxController {
           routeUrl: NetworkConstant.getQuizByCategory, bodyParams: paramter);
       getQuizByCategoryApiResponse =
           GetQuizByCategoryApiResponse.fromJson(response);
-         
+
       update();
       _startCallingQuizList(catId);
     } catch (e) {
@@ -90,7 +90,8 @@ class QuizController extends GetxController {
       });
     }
   }
-GetQuizByCategoryApiResponse? getQuizByMatchId;
+
+  GetQuizByCategoryApiResponse? getQuizByMatchId;
   void getQuizListByMatchId(String matchId) async {
     try {
       Map paramter = {'match_id': matchId};
@@ -99,8 +100,7 @@ GetQuizByCategoryApiResponse? getQuizByMatchId;
       update();
       var response = await apiProvider.postAfterAuth(
           routeUrl: NetworkConstant.quizByMatchId, bodyParams: paramter);
-      getQuizByMatchId =
-          GetQuizByCategoryApiResponse.fromJson(response);
+      getQuizByMatchId = GetQuizByCategoryApiResponse.fromJson(response);
       //  debugger();
       update();
     } catch (e) {
@@ -109,7 +109,6 @@ GetQuizByCategoryApiResponse? getQuizByMatchId;
   }
 
   void getQuizDetails(String quizId, flag) async {
-    
     try {
       Map paramter = {'quiz_id': quizId};
       update();
@@ -119,7 +118,6 @@ GetQuizByCategoryApiResponse? getQuizByMatchId;
       // debugger();
       update();
       calculateDefaultInvestmentAndReturns(flag);
-     
     } catch (e) {
       print(e);
     }
@@ -127,9 +125,9 @@ GetQuizByCategoryApiResponse? getQuizByMatchId;
 
   Timer? quizDetailsTimer;
   startQuizDetailsCallingApi(String quizId, flag) {
-  //quizDetailsTimer!.cancel();
+    //quizDetailsTimer!.cancel();
     quizDetailsTimer = Timer.periodic((Duration(seconds: 5)), (timer) {
-       print("quiz details api calling");
+      print("quiz details api calling");
       getQuizDetails(quizId, flag);
     });
   }
@@ -150,28 +148,35 @@ GetQuizByCategoryApiResponse? getQuizByMatchId;
   }
 
   void calculateDefaultInvestmentAndReturns(flag) async {
-    await getWalletApi();
-    if (flag == 'yes') {
-      overAllStockQty = (double.parse(getWalletApiResponse!.data.depositWallet) /
-          double.parse(quizDetailsApiResponse!.data.option1));
-      defaultInvenstmentAmount =
-          overAllStockQty * double.parse(quizDetailsApiResponse!.data.option1);
+    if (isCalculated == false) {
+      await getWalletApi();
+      if (flag == 'yes') {
+        overAllStockQty =
+            (double.parse(getWalletApiResponse!.data.depositWallet) /
+                double.parse(quizDetailsApiResponse!.data.option1));
+        defaultInvenstmentAmount = overAllStockQty *
+            double.parse(quizDetailsApiResponse!.data.option1);
 
-      defaultReturnAmount =
-          overAllStockQty * double.parse(quizDetailsApiResponse!.data.option2);
+        defaultReturnAmount = overAllStockQty *
+            double.parse(quizDetailsApiResponse!.data.option2);
 
+        // debugger();
+      } else if (flag == 'no') {
+        overAllStockQty =
+            (double.parse(getWalletApiResponse!.data.depositWallet) /
+                double.parse(quizDetailsApiResponse!.data.option2));
+        defaultInvenstmentAmount = overAllStockQty *
+            double.parse(quizDetailsApiResponse!.data.option2);
+        defaultReturnAmount = overAllStockQty *
+            double.parse(quizDetailsApiResponse!.data.option1);
+      }
+      currentStockQty = overAllStockQty.toInt();
+      isCalculated = true;
       // debugger();
-    } else if (flag == 'no') {
-      overAllStockQty = (double.parse(getWalletApiResponse!.data.depositWallet) /
-          double.parse(quizDetailsApiResponse!.data.option2));
-      defaultInvenstmentAmount =
-          overAllStockQty * double.parse(quizDetailsApiResponse!.data.option2);
-      defaultReturnAmount =
-          overAllStockQty * double.parse(quizDetailsApiResponse!.data.option1);
+      update();
+    } else {
+      print("already calculated");
     }
-    currentStockQty = overAllStockQty.toInt();
-    // debugger();
-    update();
   }
 
   void changeQty(val, flag) {
@@ -222,26 +227,76 @@ GetQuizByCategoryApiResponse? getQuizByMatchId;
     update();
   }
 
-  void getMyPortfolioList() async {
+  void getMyPortfolioList(String status) async {
     try {
-      Map paramter = {'status': '1'};
+      // debugger();
+      Map paramter = {'status': status};
       //isFetchingData = true;
-completedQuiz.clear();
-liveQuiz.cast();
+
+      liveQuiz.clear();
       var response = await apiProvider.postAfterAuth(
           routeUrl: NetworkConstant.getMyQuizList, bodyParams: paramter);
       //  debugger();
       getQuizMyListApiResponse = GetQuizMyListApiResponse.fromJson(response);
-      for(int i=0;i<getQuizMyListApiResponse!.data.length;i++){
-        if(getQuizMyListApiResponse!.data[i].status=='1'){
+      for (int i = 0; i < getQuizMyListApiResponse!.data.length; i++) {
+        if (status == '1') {
           liveQuiz.add(getQuizMyListApiResponse!.data[i]);
-
-        }
-        if(getQuizMyListApiResponse!.data[i].status=='2')
-        {
-completedQuiz.add(getQuizMyListApiResponse!.data[i]);
         }
       }
+      // debugger();
+      update();
+      updateMyPortfolio(status);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Timer? myQuizTimer;
+  void updateMyPortfolio(String status) async {
+    myQuizTimer = Timer.periodic(Duration(seconds: 5), (timer) async {
+      print("updating my portfolio");
+      try {
+        // debugger();
+        Map paramter = {'status': status};
+        //isFetchingData = true;
+
+        var response = await apiProvider.postAfterAuth(
+            routeUrl: NetworkConstant.getMyQuizList, bodyParams: paramter);
+        //  debugger();
+        getQuizMyListApiResponse = GetQuizMyListApiResponse.fromJson(response);
+        liveQuiz = getQuizMyListApiResponse!.data;
+        // for (int i = 0; i < getQuizMyListApiResponse!.data.length; i++) {
+        //   if (status== '1') {
+        //     liveQuiz.add(getQuizMyListApiResponse!.data[i]);
+        //   }
+
+        // }
+        // debugger();
+        update();
+      } catch (e) {
+        print(e);
+      }
+    });
+  }
+
+  void getMyCompletedPortfolioList(String status) async {
+    try {
+      // debugger();
+      Map paramter = {'status': status};
+      //isFetchingData = true;
+      completedQuiz.clear();
+
+      var response = await apiProvider.postAfterAuth(
+          routeUrl: NetworkConstant.getMyQuizList, bodyParams: paramter);
+      //  debugger();
+      getQuizMyListApiResponse = GetQuizMyListApiResponse.fromJson(response);
+      completedQuiz = getQuizMyListApiResponse!.data;
+      // for (int i = 0; i < getQuizMyListApiResponse!.data.length; i++) {
+
+      //   if (status == '2') {
+      //     completedQuiz.add(getQuizMyListApiResponse!.data[i]);
+      //   }
+      // }
       // debugger();
       update();
     } catch (e) {
@@ -249,9 +304,7 @@ completedQuiz.add(getQuizMyListApiResponse!.data[i]);
     }
   }
 
-
-
-  Future<void> sellQuiz(MyQuizData myQuizData, context,index) async {
+  Future<void> sellQuiz(MyQuizData myQuizData, context, index) async {
     showLoaderDialog(context);
     Map parameter = {
       'quiz_id': myQuizData.quizId,
@@ -259,7 +312,7 @@ completedQuiz.add(getQuizMyListApiResponse!.data[i]);
       'qty': myQuizData.qty,
       'type': 'sell',
       'option': myQuizData.myOption,
-       'join_id':myQuizData.joinId.toString()
+      'join_id': myQuizData.joinId.toString()
     };
     //  debugger();
     var response = await apiProvider.postAfterAuth(
@@ -269,7 +322,7 @@ completedQuiz.add(getQuizMyListApiResponse!.data[i]);
     if (response['status'] == 200) {
       messages.showMsg(context: context, message: response['message']);
       liveQuiz.removeAt(index);
-      getMyPortfolioList();
+      getMyPortfolioList('1');
     } else {
       messages.showMsg(
           context: context,

@@ -66,7 +66,7 @@ class _MyUpcommingMatchCardWidgetState
 
                   //     ),
                   Positioned(
-                    top: 0,
+                    top: 1,
                     right: 0,
                     child: InkWell(
                       onTap: () {
@@ -100,7 +100,7 @@ class _MyUpcommingMatchCardWidgetState
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 13,
-                              fontWeight: FontWeight.w500),
+                              fontWeight: FontWeight.w600),
                         ),
                       ),
                     ),
@@ -114,7 +114,12 @@ class _MyUpcommingMatchCardWidgetState
                       width: MediaQuery.of(context).size.width / 1,
                       height: 160,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(10),
+                          bottomLeft: Radius.circular(10),
+                          bottomRight: Radius.circular(10),
+                          topRight: Radius.circular(2)
+                        ),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.grey.withOpacity(0.3),
@@ -152,31 +157,11 @@ class _MyUpcommingMatchCardWidgetState
                                             fontSize: 13,
                                             fontWeight: FontWeight.w600),
                                       ),
-                                      Expanded(
-                                          
-                                              child: Material(
-                                                color: Colors.white,
-                                                //shape: CircleBorder(),
-                                                elevation: 0.0,
-
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.end,
-                                                  children: [
-                                                    // Icon(
-                                                    //   Icons.live_tv_sharp,
-                                                    //   size: 18,
-                                                    //   color: Colors.black38,
-                                                    // ),
-                                                    SizedBox(
-                                                      width: 5,
-                                                    ),
-                                                    Row(
-                                                      children: [
+                                    
                                                         Image.asset(
-                                                          widget.matches
+                                                         widget.matches
                                                                       .elevenOut ==
-                                                                  0
+                                                                  '0'
                                                               ? "assets/new_icons/lineup_not.png"
                                                               : "assets/new_icons/lineup.png",
                                                           height: 20,
@@ -213,11 +198,8 @@ class _MyUpcommingMatchCardWidgetState
                                                         //       // ),
 
                                                         //   )
-                                                      ],
-                                                    )
-                                                  ],
-                                                ),
-                                              ))
+                                                   
+                                              
                                     ],
                                   ),
                                   SizedBox(
@@ -375,7 +357,11 @@ class _MyUpcommingMatchCardWidgetState
                                         child: Padding(
                                           padding: const EdgeInsets.all(5.0),
                                           child: Text(
-                                            "Mega Rs.1.5 Lacks",
+  widget
+                                              .matches.mega=='0'?'Mega Comming Soon':     
+                                          
+                                            "Mega ₹${widget
+                                              .matches.mega}",
                                             style: TextStyle(
                                                 color: Colors.black45,
                                                 fontSize: 12,

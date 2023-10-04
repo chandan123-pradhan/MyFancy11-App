@@ -23,7 +23,7 @@ class NetworkConstant{
   static const String Get_transaction_history_url='/app/tracker';
   static const String Match_by_id='/app/match_by_id';
   static const String My_Contest='/app/my_contest';
-  static const String My_Team='/app/my_paid_team';
+  static const String My_paid_Team='/app/my_paid_team';
   static const String player='/app/player';
   static const String recharge='/app/recharge';
   static const String getQuizCategory='/app/quiz_category';
@@ -46,6 +46,7 @@ class NetworkConstant{
  static const String validatePromoCode='/app/promo_valided';
  static const String requestForWithdrawal='/app/payment_request';
  static const String winner_api='/app/winner';
+ static const String myTeamApi='/app/my_team';
   //parames.
 
   static const String PHONE_PARAMS='phone';

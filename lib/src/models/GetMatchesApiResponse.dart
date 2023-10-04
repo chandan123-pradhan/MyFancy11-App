@@ -91,7 +91,7 @@ class Matches {
   late final String createdDate;
   late final String modifiedDate;
   late final int cancelled;
-  late final int mega;
+  late final String mega;
   late final Team1 team1;
   late final Team2 team2;
   late final String is_subscribe;
@@ -128,7 +128,7 @@ class Matches {
     createdDate = json['created_date'];
     modifiedDate = json['modified_date'];
     cancelled = json['cancelled'];
-    mega = json['mega'];
+    mega = json['mega'].toString();
     team1 = Team1.fromJson(json['team1']);
     team2 = Team2.fromJson(json['team2']);
     is_subscribe=json['is_subscribe'].toString();

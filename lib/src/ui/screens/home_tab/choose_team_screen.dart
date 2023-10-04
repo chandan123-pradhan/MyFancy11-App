@@ -185,7 +185,9 @@ width: 30,
                                                 Row(
                                                   children: [
                                                     Text(
-                                                      "Team ${index + 1}",
+                                                      "${controller
+                                                                              .myPaidTeamApiResponse!
+                                                                              .data[index].name}",
                                                       style: TextStyle(
                                                           color: ColorConstant
                                                               .primaryWhiteColor,
@@ -203,28 +205,52 @@ width: 30,
                                                           children: [
                                                             Container(
                                                               height: 40,
-                                                              width: 40,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                      color: Colors
-                                                                          .white,
-                                                                      shape: BoxShape
-                                                                          .circle,
-                                                                      image:
-                                                                          DecorationImage(
-                                                                        image:
-                                                                            NetworkImage(
-                                                                          controller
-                                                                              .myPaidTeamApiResponse!
-                                                                              .data[index]
-                                                                              .captain
-                                                                              .image,
-
-                                                                          //  width: 100,
-                                                                        ),
-                                                                        fit: BoxFit
-                                                                            .contain,
-                                                                      )),
+                                                                    width: 40,
+                                                              child: Stack(
+                                                                children: [
+                                                                  Container(
+                                                                    height: 40,
+                                                                    width: 40,
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                            color: Colors
+                                                                                .white,
+                                                                            shape: BoxShape
+                                                                                .circle,
+                                                                            image:
+                                                                                DecorationImage(
+                                                                              image:
+                                                                                  NetworkImage(
+                                                                                controller
+                                                                                    .myPaidTeamApiResponse!
+                                                                                    .data[index]
+                                                                                    .captain
+                                                                                    .image,
+                                                            
+                                                                                //  width: 100,
+                                                                              ),
+                                                                              fit: BoxFit
+                                                                                  .contain,
+                                                                            )),
+                                                                  ),
+                                                               Positioned(
+                                                                right: 0,
+                                                                top: 2,
+                                                                 child: Image.network(
+                                                               
+                                                                  controller
+                                                                                      .myPaidTeamApiResponse!
+                                                                                      .data[index]
+                                                                                      .captain.team.teamImage,
+                                                               
+                                                                                      height: 15,
+                                                                                      width: 15,
+                                                                                      
+                                                                 ),
+                                                               )
+                                                               
+                                                                ],
+                                                              ),
                                                             ),
                                                             Text(
                                                               controller
@@ -286,30 +312,53 @@ width: 30,
                                                       children: [
                                                         Column(
                                                           children: [
-                                                            Container(
-                                                              height: 40,
-                                                              width: 40,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                      color: Colors
-                                                                          .white,
-                                                                      shape: BoxShape
-                                                                          .circle,
-                                                                      image:
-                                                                          DecorationImage(
-                                                                        image:
-                                                                            NetworkImage(
-                                                                          controller
-                                                                              .myPaidTeamApiResponse!
-                                                                              .data[index]
-                                                                              .viceCaptain
-                                                                              .image,
-
-                                                                          //  width: 100,
-                                                                        ),
-                                                                        fit: BoxFit
-                                                                            .contain,
-                                                                      )),
+                                                            SizedBox(
+                                                               height: 40,
+                                                                    width: 40,
+                                                              child: Stack(
+                                                                children: [
+                                                                  Container(
+                                                                    height: 40,
+                                                                    width: 40,
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                            color: Colors
+                                                                                .white,
+                                                                            shape: BoxShape
+                                                                                .circle,
+                                                                            image:
+                                                                                DecorationImage(
+                                                                              image:
+                                                                                  NetworkImage(
+                                                                                controller
+                                                                                    .myPaidTeamApiResponse!
+                                                                                    .data[index]
+                                                                                    .viceCaptain
+                                                                                    .image,
+                                                            
+                                                                                //  width: 100,
+                                                                              ),
+                                                                              fit: BoxFit
+                                                                                  .contain,
+                                                                            )),
+                                                                  ),
+                                                                   Positioned(
+                                                                right: 0,
+                                                                top: 2,
+                                                                 child: Image.network(
+                                                               
+                                                                  controller
+                                                                                      .myPaidTeamApiResponse!
+                                                                                      .data[index]
+                                                                                      .viceCaptain.team.teamImage,
+                                                               
+                                                                                      height: 15,
+                                                                                      width: 15,
+                                                                                      
+                                                                 ),
+                                                               )
+                                                                ],
+                                                              ),
                                                             ),
                                                             Text(
                                                               controller

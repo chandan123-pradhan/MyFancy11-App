@@ -112,445 +112,461 @@ class _MyMatchesTabState extends State<MyMatchesTab>
   }
 
   Widget upcomminMatchTabWidget() {
-    return GetBuilder<HomeController>(
-        init: HomeController(),
-        builder: (controller) {
-          return logInStatus == false
-              ? Center(
-                  child: Text("You are not logged in."),
-                )
-              : controller.getUpcommingMyMatchResponse == null
-                  ? Center(
-                      child: CircularProgressIndicator(
-                        color: ColorConstant.primaryColor,
-                      ),
-                    )
-                  : controller.getUpcommingMyMatchResponse!.data.isEmpty
-                      ? Center(
-                          child: Text("No Upcomming matches are available"),
-                        )
-                      : ListView.builder(
-                          physics: BouncingScrollPhysics(),
-                          itemCount: controller
-                              .getUpcommingMyMatchResponse!.data.length,
-                          itemBuilder: (context, index) {
-                            return Padding(
-                              padding: const EdgeInsets.fromLTRB(10, 15, 10, 0),
-                              child: InkWell(
-                                onTap: () {
-                                  print(controller
-                                          .getUpcommingMyMatchResponse!
-                                          .data[index].matchId);
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (context) {
-                                    return LiveContestScreen(
-                                      myMatchModel: controller
-                                          .getUpcommingMyMatchResponse!
-                                          .data[index],
-                                          flag: 'Upcoming Match',
-                                    );
-                                  }));
-                                },
-                                child: MyUpcommingMatchCardWidget(
-                                    matches: controller
-                                        .getUpcommingMyMatchResponse!
-                                        .data[index],
-                                        machesmodel: 
-                                        controller.getMatchesApiResponse!.data[index]
-                                        ,
-                                        ),
-                              ),
-                            );
-                          });
-        });
-  }
-
-  Widget liveMatches() {
-    return GetBuilder<HomeController>(
-        init: HomeController(),
-        builder: (controller) {
-          return logInStatus == false
-              ? Center(
-                  child: Text("You are not logged in."),
-                )
-              : controller.getLiveMyMatchReponse == null
-                  ? shimerEffect(length: 3, context: context)
-                  : controller.getLiveMyMatchReponse!.data.isEmpty
-                      ? Center(
-                          child: Text("No live matches are available"),
-                        )
-                      : ListView.builder(
-                          physics: BouncingScrollPhysics(),
-                          itemCount:
-                              controller.getLiveMyMatchReponse!.data.length,
-                          itemBuilder: (context, index) {
-                            return Padding(
-                              padding: EdgeInsets.only(
-                                  left: 15,
-                                  right: 15,
-                                  top: 8,
-                                  bottom: index ==
-                                          controller.getLiveMyMatchReponse!.data
-                                                  .length -
-                                              1
-                                      ? 50
-                                      : 8),
-                              child: InkWell(
-                                onTap: () {
-                                  print(controller
-                                          .getLiveMyMatchReponse!
-                                          .data[index].matchId);
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (context) {
-                                    return LiveContestScreen(
-                                      myMatchModel: controller
-                                          .getLiveMyMatchReponse!.data[index],
-                                          flag: 'Live Match',
-                                    );
-                                  }));
-                                },
-                                child: MyLiveMatchCard(
-                                  matches: controller
-                                      .getLiveMyMatchReponse!.data[index],
-                                ),
-                              ),
-                            );
-                          },
-                        );
-        });
-  }
-
-  Widget completedMatches() {
-    return GetBuilder<HomeController>(
-        init: HomeController(),
-        builder: (controller) {
-          return logInStatus == false
-              ? Center(
-                  child: Text("You are not logged in."),
-                )
-              : controller.getCompletedMyMatchResponse == null
-                  ? shimerEffect(length: 2, context: context)
-                  : controller.getCompletedMyMatchResponse!.data.isEmpty
-                      ? Center(
-                          child: Text("No completed matches are available"),
-                        )
-                      : ListView.builder(
-                          physics: BouncingScrollPhysics(),
-                          itemCount: controller
-                              .getCompletedMyMatchResponse!.data.length,
-                          itemBuilder: (context, index) {
-                            return 
-                            
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  left: 15,
-                                  right: 15,
-                                  top: 8,
-                                  bottom: index ==
-                                          controller.getCompletedMyMatchResponse!.data
-                                                  .length -
-                                              1
-                                      ? 50
-                                      : 8),
+    return  RefreshIndicator(
+        onRefresh: () async {
+       controller.getMyMatch(context, 'fixture');
+        },
+      child: GetBuilder<HomeController>(
+          init: HomeController(),
+          builder: (controller) {
+            return logInStatus == false
+                ? Center(
+                    child: Text("You are not logged in."),
+                  )
+                : controller.getUpcommingMyMatchResponse == null
+                    ? Center(
+                        child: CircularProgressIndicator(
+                          color: ColorConstant.primaryColor,
+                        ),
+                      )
+                    : controller.getUpcommingMyMatchResponse!.data.isEmpty
+                        ? Center(
+                            child: Text("No Upcomming matches are available"),
+                          )
+                        : ListView.builder(
+                           physics: const AlwaysScrollableScrollPhysics(),
+                            itemCount: controller
+                                .getUpcommingMyMatchResponse!.data.length,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.fromLTRB(10, 15, 10, 0),
                                 child: InkWell(
                                   onTap: () {
+                                    print(controller
+                                            .getUpcommingMyMatchResponse!
+                                            .data[index].matchId);
                                     Navigator.push(context,
                                         MaterialPageRoute(builder: (context) {
                                       return LiveContestScreen(
                                         myMatchModel: controller
-                                            .getCompletedMyMatchResponse!
+                                            .getUpcommingMyMatchResponse!
                                             .data[index],
-                                            flag: 'Completed Match',
+                                            flag: 'Upcoming Match',
                                       );
                                     }));
                                   },
-                                  child: 
-                                  
-                                  
-                                  Container(
-                                    width:
-                                        MediaQuery.of(context).size.width / 1,
-                                    // height: 100,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: ColorConstant.primaryWhiteColor,
-                                        border: Border.all(
-                                            width: 1, color: Colors.black26)),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(0.0),
-                                      child: Column(
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.all(10.0),
-                                            child: Column(
-                                              children: [
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Text(
-                                                      controller
-                                                          .getCompletedMyMatchResponse!
-                                                          .data[index]
-                                                          .leagueName,
-                                                      style: TextStyle(
-                                                          color: ColorConstant
-                                                              .primaryBlackColor,
-                                                          fontSize: 13,
-                                                          fontWeight:
-                                                              FontWeight.w600),
-                                                    ),
-                                                    Row(
-                                                      children: [
-                                                        // Icon(
-                                                        //   Icons
-                                                        //       .movie_filter_outlined,
-                                                        //   size: 18,
-                                                        //   color: ColorConstant
-                                                        //       .deviderColor,
-                                                        // ),
-                                                        // SizedBox(
-                                                        //   width: 10,
-                                                        // ),
-                                                        // Text(
-                                                        //   "Lineup Out",
-                                                        //   style: TextStyle(
-                                                        //       color: ColorConstant
-                                                        //           .greenColor,
-                                                        //       fontSize: 13,
-                                                        //       fontWeight:
-                                                        //           FontWeight
-                                                        //               .w500),
-                                                        // ),
-                                                      ],
-                                                    )
-                                                  ],
-                                                ),
-                                                SizedBox(
-                                                  height: 10,
-                                                ),
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Row(
-                                                      children: [
-                                                      
-                                                       Container(
-                            height: 35,
-                            width: 35,
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                    image: NetworkImage(
-                                        controller
-                                                              .getCompletedMyMatchResponse!
-                                                              .data[index]
-                                                              .team1
-                                                              .teamImage),
-                                    fit: BoxFit.fill)),
-                          ),
-                          SizedBox(width: 5,),
-                                                      
-                                                     
-                                                        Text(
-                                                          controller
-                                                              .getCompletedMyMatchResponse!
-                                                              .data[index]
-                                                              .team1
-                                                              .teamShortName,
-                                                          style: TextStyle(
-                                                              color: ColorConstant
-                                                                  .primaryBlackColor,
-                                                              fontSize: 13,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    Column(
-                                                      children: [
-                                                        Container(
-                                                          height: 30,
-                                                         // width: 80,
-                                                          decoration: BoxDecoration(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          10),
-                                                             ),
-                                                          alignment:
-                                                              Alignment.center,
-                                                          child: Row(
-                                                            children: [
-                                                              Icon(
-                                                                Icons.check_circle_outline,size:13,
-                                                                color: ColorConstant.greenColor,
-                                                              ),
-                                                              SizedBox(width: 5,),
-                                                              Text(
-                                                                "Completed",
-                                                                style: TextStyle(
-                                                                    color: ColorConstant
-                                                                        .greenColor,
-                                                                    fontSize: 12,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                        SizedBox(
-                                                          height: 5,
-                                                        ),
-                                                        Text(
-                                                          controller
-                                                              .getCompletedMyMatchResponse!
-                                                              .data[index]
-                                                              .matchDateTime,
-                                                          style: TextStyle(
-                                                              color: Colors
-                                                                  .black45,
-                                                              fontSize: 12,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    Row(
-                                                      children: [
-                                                        Text(
-                                                          controller
-                                                              .getCompletedMyMatchResponse!
-                                                              .data[index]
-                                                              .team2
-                                                              .teamShortName,
-                                                          style: TextStyle(
-                                                              color: ColorConstant
-                                                                  .primaryBlackColor,
-                                                              fontSize: 13,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600),
-                                                        ),
-                                                        SizedBox(
-                                                          width: 5,
-                                                        ),
-                                                                  Container(
-                            height: 35,
-                            width: 35,
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                    image: NetworkImage(
-                                        controller
-                                                              .getCompletedMyMatchResponse!
-                                                              .data[index]
-                                                              .team2
-                                                              .teamImage),
-                                    fit: BoxFit.fill)),
-                          ),
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.fromLTRB(
-                                                          0, 5, 10, 0),
-                                                  child: Container(
-                                                    alignment:
-                                                        Alignment.centerLeft,
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        Text(
-                                                          controller
-                                                              .getCompletedMyMatchResponse!
-                                                              .data[index]
-                                                              .team1
-                                                              .teamName,
-                                                          style: const TextStyle(
-                                                              color: Colors
-                                                                  .black45,
-                                                              fontSize: 12,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500),
-                                                        ),
-                                                        Text(
-                                                          controller
-                                                              .getCompletedMyMatchResponse!
-                                                              .data[index]
-                                                              .team2
-                                                              .teamName,
-                                                          style: const TextStyle(
-                                                              color: Colors
-                                                                  .black45,
-                                                              fontSize: 12,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                )
-                                              ],
-                                            ),
+                                  child: MyUpcommingMatchCardWidget(
+                                      matches: controller
+                                          .getUpcommingMyMatchResponse!
+                                          .data[index],
+                                          machesmodel: 
+                                          controller.getMatchesApiResponse!.data[index]
+                                          ,
                                           ),
-                                          Divider(
-                                            height: 1,
-                                            color: ColorConstant.deviderColor,
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.all(10.0),
-                                            child: Container(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width /
-                                                  1,
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
+                                ),
+                              );
+                            });
+          }),
+    );
+  }
+
+  Widget liveMatches() {
+    return  RefreshIndicator(
+        onRefresh: () async {
+        controller.getMyMatch(context, 'latest');
+    controller.getMyMatch(context, 'live');
+        },
+      child: GetBuilder<HomeController>(
+          init: HomeController(),
+          builder: (controller) {
+            return logInStatus == false
+                ? Center(
+                    child: Text("You are not logged in."),
+                  )
+                : controller.getLiveMyMatchReponse == null
+                    ? shimerEffect(length: 3, context: context)
+                    : controller.getLiveMyMatchReponse!.data.isEmpty
+                        ? Center(
+                            child: Text("No live matches are available"),
+                          )
+                        : ListView.builder(
+                            physics: AlwaysScrollableScrollPhysics(),
+                            itemCount:
+                                controller.getLiveMyMatchReponse!.data.length,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: EdgeInsets.only(
+                                    left: 15,
+                                    right: 15,
+                                    top: 8,
+                                    bottom: index ==
+                                            controller.getLiveMyMatchReponse!.data
+                                                    .length -
+                                                1
+                                        ? 50
+                                        : 8),
+                                child: InkWell(
+                                  onTap: () {
+                                    print(controller
+                                            .getLiveMyMatchReponse!
+                                            .data[index].matchId);
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                      return LiveContestScreen(
+                                        myMatchModel: controller
+                                            .getLiveMyMatchReponse!.data[index],
+                                            flag: 'Live Match',
+                                      );
+                                    }));
+                                  },
+                                  child: MyLiveMatchCard(
+                                    matches: controller
+                                        .getLiveMyMatchReponse!.data[index],
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+          }),
+    );
+  }
+
+  Widget completedMatches() {
+    return  RefreshIndicator(
+        onRefresh: () async {
+        controller.getMyMatch(context, 'result');
+        },
+      child: GetBuilder<HomeController>(
+          init: HomeController(),
+          builder: (controller) {
+            return logInStatus == false
+                ? Center(
+                    child: Text("You are not logged in."),
+                  )
+                : controller.getCompletedMyMatchResponse == null
+                    ? shimerEffect(length: 2, context: context)
+                    : controller.getCompletedMyMatchResponse!.data.isEmpty
+                        ? Center(
+                            child: Text("No completed matches are available"),
+                          )
+                        : ListView.builder(
+                            physics: AlwaysScrollableScrollPhysics(),
+                            itemCount: controller
+                                .getCompletedMyMatchResponse!.data.length,
+                            itemBuilder: (context, index) {
+                              return 
+                              
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: 15,
+                                    right: 15,
+                                    top: 8,
+                                    bottom: index ==
+                                            controller.getCompletedMyMatchResponse!.data
+                                                    .length -
+                                                1
+                                        ? 50
+                                        : 8),
+                                  child: InkWell(
+                                    onTap: () {
+                                      Navigator.push(context,
+                                          MaterialPageRoute(builder: (context) {
+                                        return LiveContestScreen(
+                                          myMatchModel: controller
+                                              .getCompletedMyMatchResponse!
+                                              .data[index],
+                                              flag: 'Completed Match',
+                                        );
+                                      }));
+                                    },
+                                    child: 
+                                    
+                                    
+                                    Container(
+                                      width:
+                                          MediaQuery.of(context).size.width / 1,
+                                      // height: 100,
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(10),
+                                          color: ColorConstant.primaryWhiteColor,
+                                          border: Border.all(
+                                              width: 1, color: Colors.black26)),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(0.0),
+                                        child: Column(
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.all(10.0),
+                                              child: Column(
                                                 children: [
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        controller
+                                                            .getCompletedMyMatchResponse!
+                                                            .data[index]
+                                                            .leagueName,
+                                                        style: TextStyle(
+                                                            color: ColorConstant
+                                                                .primaryBlackColor,
+                                                            fontSize: 13,
+                                                            fontWeight:
+                                                                FontWeight.w600),
+                                                      ),
+                                                      Row(
+                                                        children: [
+                                                          // Icon(
+                                                          //   Icons
+                                                          //       .movie_filter_outlined,
+                                                          //   size: 18,
+                                                          //   color: ColorConstant
+                                                          //       .deviderColor,
+                                                          // ),
+                                                          // SizedBox(
+                                                          //   width: 10,
+                                                          // ),
+                                                          // Text(
+                                                          //   "Lineup Out",
+                                                          //   style: TextStyle(
+                                                          //       color: ColorConstant
+                                                          //           .greenColor,
+                                                          //       fontSize: 13,
+                                                          //       fontWeight:
+                                                          //           FontWeight
+                                                          //               .w500),
+                                                          // ),
+                                                        ],
+                                                      )
+                                                    ],
+                                                  ),
+                                                  SizedBox(
+                                                    height: 10,
+                                                  ),
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Row(
+                                                        children: [
+                                                        
+                                                         Container(
+                              height: 35,
+                              width: 35,
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                      image: NetworkImage(
+                                          controller
+                                                                .getCompletedMyMatchResponse!
+                                                                .data[index]
+                                                                .team1
+                                                                .teamImage),
+                                      fit: BoxFit.fill)),
+                            ),
+                            SizedBox(width: 5,),
+                                                        
+                                                       
+                                                          Text(
+                                                            controller
+                                                                .getCompletedMyMatchResponse!
+                                                                .data[index]
+                                                                .team1
+                                                                .teamShortName,
+                                                            style: TextStyle(
+                                                                color: ColorConstant
+                                                                    .primaryBlackColor,
+                                                                fontSize: 13,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      Column(
+                                                        children: [
+                                                          Container(
+                                                            height: 30,
+                                                           // width: 80,
+                                                            decoration: BoxDecoration(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            10),
+                                                               ),
+                                                            alignment:
+                                                                Alignment.center,
+                                                            child: Row(
+                                                              children: [
+                                                                Icon(
+                                                                  Icons.check_circle_outline,size:13,
+                                                                  color: ColorConstant.greenColor,
+                                                                ),
+                                                                SizedBox(width: 5,),
+                                                                Text(
+                                                                  "Completed",
+                                                                  style: TextStyle(
+                                                                      color: ColorConstant
+                                                                          .greenColor,
+                                                                      fontSize: 12,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          SizedBox(
+                                                            height: 5,
+                                                          ),
+                                                          Text(
+                                                            controller
+                                                                .getCompletedMyMatchResponse!
+                                                                .data[index]
+                                                                .matchDateTime,
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .black45,
+                                                                fontSize: 12,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      Row(
+                                                        children: [
+                                                          Text(
+                                                            controller
+                                                                .getCompletedMyMatchResponse!
+                                                                .data[index]
+                                                                .team2
+                                                                .teamShortName,
+                                                            style: TextStyle(
+                                                                color: ColorConstant
+                                                                    .primaryBlackColor,
+                                                                fontSize: 13,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600),
+                                                          ),
+                                                          SizedBox(
+                                                            width: 5,
+                                                          ),
+                                                                    Container(
+                              height: 35,
+                              width: 35,
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                      image: NetworkImage(
+                                          controller
+                                                                .getCompletedMyMatchResponse!
+                                                                .data[index]
+                                                                .team2
+                                                                .teamImage),
+                                      fit: BoxFit.fill)),
+                            ),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
                                                   Padding(
                                                     padding:
-                                                        const EdgeInsets.all(
-                                                            0.0),
-                                                    child: Text(
-                                                      "1 Team    1 Contest",
-                                                      style: TextStyle(
-                                                          color: Colors.black45,
-                                                          fontSize: 12,
-                                                          fontWeight:
-                                                              FontWeight.w500),
+                                                        const EdgeInsets.fromLTRB(
+                                                            0, 5, 10, 0),
+                                                    child: Container(
+                                                      alignment:
+                                                          Alignment.centerLeft,
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Text(
+                                                            controller
+                                                                .getCompletedMyMatchResponse!
+                                                                .data[index]
+                                                                .team1
+                                                                .teamName,
+                                                            style: const TextStyle(
+                                                                color: Colors
+                                                                    .black45,
+                                                                fontSize: 12,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500),
+                                                          ),
+                                                          Text(
+                                                            controller
+                                                                .getCompletedMyMatchResponse!
+                                                                .data[index]
+                                                                .team2
+                                                                .teamName,
+                                                            style: const TextStyle(
+                                                                color: Colors
+                                                                    .black45,
+                                                                fontSize: 12,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500),
+                                                          ),
+                                                        ],
+                                                      ),
                                                     ),
-                                                  ),
-                                                
+                                                  )
                                                 ],
                                               ),
                                             ),
-                                          )
-                                        ],
+                                            Divider(
+                                              height: 1,
+                                              color: ColorConstant.deviderColor,
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.all(10.0),
+                                              child: Container(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width /
+                                                    1,
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              0.0),
+                                                      child: Text(
+                                                        "1 Team    1 Contest",
+                                                        style: TextStyle(
+                                                            color: Colors.black45,
+                                                            fontSize: 12,
+                                                            fontWeight:
+                                                                FontWeight.w500),
+                                                      ),
+                                                    ),
+                                                  
+                                                  ],
+                                                ),
+                                              ),
+                                            )
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ),
-                             
-                             
-                             
-                                ));
-                       
-                       
-                          });
-        });
+                               
+                               
+                               
+                                  ));
+                         
+                         
+                            });
+          }),
+    );
   }
 }

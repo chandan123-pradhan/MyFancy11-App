@@ -10,7 +10,8 @@ class LiveTeamPreview extends StatefulWidget {
   String teamID;
   String userId;
   bool flag;
-  LiveTeamPreview({required this.teamID,required this.userId,required this.flag});
+  LiveTeamPreview(
+      {required this.teamID, required this.userId, required this.flag});
 
   @override
   State<LiveTeamPreview> createState() => _LiveTeamPreviewState();
@@ -21,9 +22,8 @@ class _LiveTeamPreviewState extends State<LiveTeamPreview> {
 
   @override
   void initState() {
-   
-     controller.getTeamPlayers(widget.teamID,widget.userId);
-   
+    controller.getTeamPlayers(widget.teamID, widget.userId);
+
     // TODO: implement initState
     super.initState();
   }
@@ -189,22 +189,21 @@ class _LiveTeamPreviewState extends State<LiveTeamPreview> {
                         Positioned(
                           top: 40,
                           child: Padding(
-                            padding: const EdgeInsets.only(left: 20, right: 20),
+                            padding: const EdgeInsets.only(left: 0, right: 0),
                             child: Container(
-                              width: controller.wicketKeeperList.length > 4
-                                  ? MediaQuery.of(context).size.width / 1.01
+                              width: controller.wicketKeeperList.length >= 4
+                                  ? MediaQuery.of(context).size.width / 1
                                   : MediaQuery.of(context).size.width / 1.2,
                               child: Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
                                   for (int i = 0;
                                       i < controller.wicketKeeperList.length;
                                       i++)
                                     playerWidget(
-                                       
-                                       myPlayerData: controller.wicketKeeperList[i]
-                                       ),
+                                        myPlayerData:
+                                            controller.wicketKeeperList[i]),
                                 ],
                               ),
                             ),
@@ -227,22 +226,21 @@ class _LiveTeamPreviewState extends State<LiveTeamPreview> {
                           top: MediaQuery.of(context).size.height / 3.5,
                           // left: 20,
                           child: Padding(
-                            padding: const EdgeInsets.only(left: 20, right: 20),
+                            padding: const EdgeInsets.only(left: 0, right: 0),
                             child: Container(
-                              width: controller.batsmanData.length > 4
-                                  ? MediaQuery.of(context).size.width / 1.01
+                              width: controller.batsmanData.length >= 4
+                                  ? MediaQuery.of(context).size.width / 1
                                   : MediaQuery.of(context).size.width / 1.2,
                               child: Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
                                   for (int i = 0;
                                       i < controller.batsmanData.length;
                                       i++)
                                     playerWidget(
-                                       
-                                       myPlayerData: controller.batsmanData[i]
-                                       ),
+                                        myPlayerData:
+                                            controller.batsmanData[i]),
                                 ],
                               ),
                             ),
@@ -259,29 +257,30 @@ class _LiveTeamPreviewState extends State<LiveTeamPreview> {
                           ),
                         ),
                         Positioned(
-                          top: MediaQuery.of(context).size.height / 1.8,
+                          top: MediaQuery.of(context).size.height / 1.85,
+
                           // left: 30,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 20, right: 20),
-                            child: Container(
-                              width: controller.allrounderList.length > 4
-                                  ? MediaQuery.of(context).size.width / 1.01
-                                  : MediaQuery.of(context).size.width / 1.2,
+                          child: Container(
+                            width: controller.allrounderList.length >= 4
+                                ? MediaQuery.of(context).size.width / 1
+                                : MediaQuery.of(context).size.width / 1.2,
+                            child: SingleChildScrollView(
                               child: Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
                                   for (int i = 0;
                                       i < controller.allrounderList.length;
                                       i++)
                                     playerWidget(
-                                       myPlayerData: controller.allrounderList[i]
-                                       ),
+                                        myPlayerData:
+                                            controller.allrounderList[i]),
                                 ],
                               ),
                             ),
                           ),
                         ),
+
                         Positioned(
                           top: MediaQuery.of(context).size.height / 1.38,
                           child: Text(
@@ -296,20 +295,20 @@ class _LiveTeamPreviewState extends State<LiveTeamPreview> {
                           top: MediaQuery.of(context).size.height / 1.3,
                           // left: 30,
                           child: Padding(
-                            padding: const EdgeInsets.only(left: 10, right: 10),
+                            padding: const EdgeInsets.only(left: 0, right: 0),
                             child: Container(
-                              width: controller.bowlerList.length > 4
-                                  ? MediaQuery.of(context).size.width / 1.01
+                              width: controller.bowlerList.length >= 4
+                                  ? MediaQuery.of(context).size.width / 1
                                   : MediaQuery.of(context).size.width / 1.2,
                               child: Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
                                   for (int i = 0;
                                       i < controller.bowlerList.length;
                                       i++)
                                     playerWidget(
-                                       myPlayerData: controller.bowlerList[i])
+                                        myPlayerData: controller.bowlerList[i])
                                 ],
                               ),
                             ),
@@ -325,17 +324,71 @@ class _LiveTeamPreviewState extends State<LiveTeamPreview> {
     );
   }
 
-  Widget playerWidget(
-      {required MyPlayerData myPlayerData}) {
+  Widget playerWidget({required MyPlayerData myPlayerData}) {
     return Column(
       children: [
         Container(
-          height: 50,
-          width: 50,
-          decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              image: DecorationImage(
-                  image: NetworkImage(myPlayerData.image), fit: BoxFit.fill)),
+          height: 40,
+          width: 40,
+          child: Stack(
+            children: [
+              Container(
+                height: 40,
+                width: 40,
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                        image: NetworkImage(myPlayerData.image),
+                        fit: BoxFit.fill)),
+              ),
+              Positioned(
+                  top: 0,
+                  right: 0,
+                  child: Image.network(
+                    myPlayerData.team.teamImage,
+                    height: 15,
+                    width: 15,
+                  )),
+              Visibility(
+                  visible: myPlayerData.isCaptain == '0' ? false : true,
+                  child: Positioned(
+                      bottom: 0,
+                      left: 0,
+                      child: Container(
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: ColorConstant.primaryWhiteColor),
+                          child: Padding(
+                            padding: const EdgeInsets.all(3.0),
+                            child: Text(
+                              "C",
+                              style: TextStyle(
+                                  color: ColorConstant.primaryBlackColor,
+                                  fontSize: 12),
+                            ),
+                          ),),),),
+
+  Visibility(
+                  visible: myPlayerData.isVicecaptain == '0' ? false : true,
+                  child: Positioned(
+                      bottom: 0,
+                      left: 0,
+                      child: Container(
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: ColorConstant.primaryWhiteColor),
+                          child: Padding(
+                            padding: const EdgeInsets.all(3.0),
+                            child: Text(
+                              "VC",
+                              style: TextStyle(
+                                  color: ColorConstant.primaryBlackColor,
+                                  fontSize: 12),
+                            ),
+                          ))))
+
+            ],
+          ),
         ),
         Container(
           // width: 70,
@@ -354,8 +407,7 @@ class _LiveTeamPreviewState extends State<LiveTeamPreview> {
           height: 5,
         ),
         Text(
-         
-         "Point: "+ myPlayerData.totalPoints,
+          "Point: " + myPlayerData.totalPoints,
           style:
               TextStyle(color: ColorConstant.primaryWhiteColor, fontSize: 11),
         ),

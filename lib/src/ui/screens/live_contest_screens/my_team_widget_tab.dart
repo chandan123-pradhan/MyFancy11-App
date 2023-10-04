@@ -135,7 +135,7 @@ class _MyTeamWidgetTabState extends State<MyTeamWidgetTab> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              "Points",
+                                              "Points2",
                                               style: TextStyle(
                                                   color: ColorConstant
                                                       .primaryWhiteColor,
@@ -147,7 +147,7 @@ class _MyTeamWidgetTabState extends State<MyTeamWidgetTab> {
                                             ),
                                             Text(
                                               controller.getMyTeamApiResponse!
-                                                  .data[index].captain.points,
+                                                  .data[index].points,
                                               style: TextStyle(
                                                   color: ColorConstant
                                                       .primaryWhiteColor,

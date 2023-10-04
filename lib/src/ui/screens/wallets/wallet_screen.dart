@@ -157,7 +157,7 @@ class _WalletScreenState extends State<WalletScreen>
                                     width: 10,
                                   ),
                                   Text(
-                                    "Current Balance",
+                                    "Deposit Balance",
                                     style: TextStyle(
                                         color: ColorConstant.primaryBlackColor,
                                         fontSize: 14,
@@ -174,7 +174,46 @@ class _WalletScreenState extends State<WalletScreen>
                                 )
                               ],
                             ),
+                              SizedBox(
+                              height: 5,
+                            ),
+                            Divider(),
                             SizedBox(
+                              height: 5,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(children: [
+                                  Image.asset(
+                                    ImageUitls.Wallet_icon,
+                                    height: 20,
+                                    width: 20,
+                                    color: ColorConstant.primaryBlackColor,
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    "Winning Balance",
+                                    style: TextStyle(
+                                        color: ColorConstant.primaryBlackColor,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400),
+                                  )
+                                ]),
+                                Text(
+                                  // "0",
+                                  "₹${controller.getWalletApiResponse!.data.winningWallet}",
+                                  style: TextStyle(
+                                      color: ColorConstant.primaryBlackColor,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400),
+                                )
+                              ],
+                            ),
+                            
+                          SizedBox(
                               height: 5,
                             ),
                             Divider(),
@@ -528,6 +567,8 @@ class _WalletScreenState extends State<WalletScreen>
                                                             .data[i]
                                                             .code,
                                                         context);
+                                                  }else{
+                                                    controller.removeAppliedCode();
                                                   }
                                                 },
                                                 child: Padding(
@@ -624,7 +665,7 @@ class _WalletScreenState extends State<WalletScreen>
                                         width: 10,
                                       ),
                                       Text(
-                                        "Current Balance",
+                                        "Withdrable Balance",
                                         style: TextStyle(
                                             color:
                                                 ColorConstant.primaryBlackColor,
@@ -901,8 +942,8 @@ class _WalletScreenState extends State<WalletScreen>
                                     padding: const EdgeInsets.only(
                                         left: 15,
                                         right: 15,
-                                        top: 10,
-                                        bottom: 10),
+                                        top: 15,
+                                        bottom: 5),
                                     child: Column(
                                       children: [
                                         Row(
@@ -921,7 +962,7 @@ class _WalletScreenState extends State<WalletScreen>
                                                 width: 10,
                                               ),
                                               Text(
-                                                "Current Balance",
+                                                "Withdrable Balance",
                                                 style: TextStyle(
                                                     color: ColorConstant
                                                         .primaryBlackColor,
@@ -932,7 +973,7 @@ class _WalletScreenState extends State<WalletScreen>
                                             ]),
                                             Text(
                                               // "0",
-                                              "₹${controller.getWalletApiResponse!.data.depositWallet}",
+                                              "₹${controller.getWalletApiResponse!.data.winningWallet}",
                                               style: TextStyle(
                                                   color: ColorConstant
                                                       .primaryBlackColor,
@@ -941,49 +982,7 @@ class _WalletScreenState extends State<WalletScreen>
                                             )
                                           ],
                                         ),
-                                        SizedBox(
-                                          height: 5,
-                                        ),
-                                        Divider(),
-                                        SizedBox(
-                                          height: 5,
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Row(children: [
-                                              Image.asset(
-                                                ImageUitls.Wallet_icon,
-                                                height: 20,
-                                                width: 20,
-                                                color: ColorConstant
-                                                    .primaryBlackColor,
-                                              ),
-                                              SizedBox(
-                                                width: 10,
-                                              ),
-                                              Text(
-                                                "Bonus Balance",
-                                                style: TextStyle(
-                                                    color: ColorConstant
-                                                        .primaryBlackColor,
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                        FontWeight.w400),
-                                              )
-                                            ]),
-                                            Text(
-                                              // "0",
-                                              "₹${controller.getWalletApiResponse!.data.bonusWallet}",
-                                              style: TextStyle(
-                                                  color: ColorConstant
-                                                      .primaryBlackColor,
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.w400),
-                                            )
-                                          ],
-                                        ),
+                                       
                                       ],
                                     ),
                                   ),
@@ -1123,9 +1122,19 @@ class _WalletScreenState extends State<WalletScreen>
                                         onChanged: (val) {},
                                         decoration: InputDecoration(
                                             filled: true,
-                                            hintText: "Amount to add"),
+                                            hintText: "Amount to withdraw"),
                                       ),
                                       SizedBox(
+                                        height: 20,
+                                      ),
+
+                                      Text("Note:- 31% Income Tax Applicable",
+                                      style: TextStyle(
+                                        color: Colors.black38,
+                                        fontSize: 12
+                                      ),
+                                      ),
+                                       SizedBox(
                                         height: 20,
                                       ),
                                       InkWell(
@@ -1226,29 +1235,7 @@ class _WalletScreenState extends State<WalletScreen>
                   SizedBox(
                     height: 20,
                   ),
-                  Image.asset(
-                    'assets/images/webgradle.png',
-                    height: 100,
-                    width: 100,
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      openWeb('https://webgradle.com/');
-                    },
-                    child: Text(
-                      "Developed By: WEBGRADLE",
-                      style: TextStyle(
-                          color: ColorConstant.primaryBlackColor,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
+                 
                   Center(
                     child:
                         Text("You Don't Have UPI Apss, Please Install first!"),
@@ -1257,28 +1244,9 @@ class _WalletScreenState extends State<WalletScreen>
               )
             : Column(
                 children: [
-                  Image.asset(
-                    'assets/images/webgradle.png',
-                    height: 100,
-                    width: 100,
-                  ),
+                  
                   SizedBox(
-                    height: 20,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      openWeb('https://webgradle.com/');
-                    },
-                    child: Text(
-                      "Developed By: WEBGRADLE",
-                      style: TextStyle(
-                          color: ColorConstant.primaryBlackColor,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
+                    height: 10,
                   ),
                   Wrap(
                     children: [

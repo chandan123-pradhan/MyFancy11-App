@@ -43,7 +43,7 @@ class _FantacyTabState extends State<FantacyTab> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      physics: BouncingScrollPhysics(),
+     physics: const AlwaysScrollableScrollPhysics(),
       child: Column(
         children: [
           logInStatus == false
@@ -198,13 +198,13 @@ class _FantacyTabState extends State<FantacyTab> {
               options: CarouselOptions(
                 height: 120.0,
                 enlargeCenterPage: false,
-                reverse: true,
+                reverse: false,
 
                 // disableCenter: true,
                 autoPlay: true,
                 aspectRatio: 16 / 9,
                 autoPlayCurve: Curves.fastOutSlowIn,
-                enableInfiniteScroll: true,
+                enableInfiniteScroll: false,
                 autoPlayAnimationDuration: Duration(milliseconds: 800),
                 viewportFraction: 0.93,
                 onPageChanged: (index, reason) {

@@ -159,12 +159,12 @@ int secondIningId=0;
                 child: Container(
                     child: teamTab == 0
                         ? teamWiseWidget(firstIningBatsmanList, firstIningBowlerList,
-                        '${widget.liveMatchData['data'][0]['team1Score']} (${widget.liveMatchData['data'][0]['team1Over']} Ov)',
+                        '${widget.liveMatchData['data'][0]['team1Score']} (${widget.liveMatchData['data'][0]['team1Over']} OVR)',
                         
                         )
                         : teamWiseWidget(secondIningBatsmanList, secondIningBowlerList,
                         
-                        '${widget.liveMatchData['data'][0]['team2Score']} (${widget.liveMatchData['data'][0]['team2Over']} Ov)',
+                        '${widget.liveMatchData['data'][0]['team2Score']} (${widget.liveMatchData['data'][0]['team2Over']} OVR)',
                         )))
           ],
         ),
@@ -183,7 +183,7 @@ int secondIningId=0;
               height: 10,
             ),
             Container(
-              width: MediaQuery.of(context).size.width / 1.09,
+              width: MediaQuery.of(context).size.width / 1,
               height: 40,
               color: Colors.black12,
               child: Padding(
@@ -194,7 +194,7 @@ int secondIningId=0;
                     Container(
                       width: MediaQuery.of(context).size.width / 3,
                       child: Text(
-                        ' BATSMAN',
+                        'BATSMAN',
                         style: TextStyle(
                             color: ColorConstant.primaryBlackColor,
                             fontSize: 16,

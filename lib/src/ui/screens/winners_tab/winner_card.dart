@@ -196,89 +196,99 @@ Widget winnerCard(context, var contestData, String matchDate, var matchData) {
 
             Padding(
               padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  for (int i = 0;
-                      i < contestData['contest'][1]['user'].length;
-                      i++)
-                    Container(
-                      //  height: 100,
-                      width: MediaQuery.of(context).size.width / 4,
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                              width: 1, color: ColorConstant.deviderColor),
-                          borderRadius: BorderRadius.circular(5)),
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 6, 0, 0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 6, right: 6),
-                              child: Text(
-                                "Rank #${contestData['contest'][1]['user'][i]['rank']}",
-                                style: TextStyle(
-                                    color: ColorConstant.primaryBlackColor,
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w600),
+              child: Container(
+
+                width: MediaQuery.of(context).size.width/1,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      for (int i = 0;
+                          i < contestData['contest'][1]['user'].length;
+                          i++)
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(5,0,5,0),
+                          child: Container(
+                            //  height: 100,
+                            width: MediaQuery.of(context).size.width / 4,
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    width: 1, color: ColorConstant.deviderColor),
+                                borderRadius: BorderRadius.circular(5)),
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 6, 0, 0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 6, right: 6),
+                                    child: Text(
+                                      "Rank #${contestData['contest'][1]['user'][i]['rank']}",
+                                      style: TextStyle(
+                                          color: ColorConstant.primaryBlackColor,
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 6, right: 6),
+                                    child: Text(
+                                      "${contestData['contest'][1]['user'][i]['name']}",
+                                      style: TextStyle(
+                                          color: Colors.black45,
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Container(
+                                    alignment: Alignment.center,
+                                    child: Container(
+                                      height: 60,
+                                      width: 60,
+                                      decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          image: DecorationImage(
+                                              image: NetworkImage(contestData[
+                                                              'contest'][1]['user'][i]
+                                                          ['image'] ==
+                                                      'NA'
+                                                  ? 'https://static.vecteezy.com/system/resources/previews/004/991/321/original/picture-profile-icon-male-icon-human-or-people-sign-and-symbol-vector.jpg'
+                                                  : contestData['contest'][1]['user']
+                                                      [i]['image']),
+                                              fit: BoxFit.fill)),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 6,
+                                  ),
+                                  Container(
+                                    height: 20,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.only(
+                                            bottomLeft: Radius.circular(5),
+                                            bottomRight: Radius.circular(5)),
+                                        color: Colors.blue[100]),
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      " Won ₹${contestData['contest'][1]['user'][i]['win_amount']}",
+                                      style: TextStyle(
+                                          color: ColorConstant.primaryBlackColor,
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                  )
+                                ],
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 6, right: 6),
-                              child: Text(
-                                "${contestData['contest'][1]['user'][i]['name']}",
-                                style: TextStyle(
-                                    color: Colors.black45,
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Container(
-                              alignment: Alignment.center,
-                              child: Container(
-                                height: 60,
-                                width: 60,
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    image: DecorationImage(
-                                        image: NetworkImage(contestData[
-                                                        'contest'][1]['user'][i]
-                                                    ['image'] ==
-                                                'NA'
-                                            ? 'https://static.vecteezy.com/system/resources/previews/004/991/321/original/picture-profile-icon-male-icon-human-or-people-sign-and-symbol-vector.jpg'
-                                            : contestData['contest'][1]['user']
-                                                [i]['image']),
-                                        fit: BoxFit.fill)),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 6,
-                            ),
-                            Container(
-                              height: 20,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.only(
-                                      bottomLeft: Radius.circular(5),
-                                      bottomRight: Radius.circular(5)),
-                                  color: Colors.blue[100]),
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                " Won ₹${contestData['contest'][1]['user'][i]['win_amount']}",
-                                style: TextStyle(
-                                    color: ColorConstant.primaryBlackColor,
-                                    fontSize: 10,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                            )
-                          ],
+                          ),
                         ),
-                      ),
-                    ),
-                ],
+                    ],
+                  ),
+                ),
               ),
             )
           ],

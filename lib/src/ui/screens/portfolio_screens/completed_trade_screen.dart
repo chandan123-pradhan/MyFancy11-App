@@ -15,7 +15,8 @@ class _CompletedTradePageState extends State<CompletedTradePage> {
   var controller = Get.put(QuizController());
   @override
   void initState() {
-    controller.getMyPortfolioList();
+    
+    controller.getMyCompletedPortfolioList('2');
     // TODO: implement initState
     super.initState();
   }
@@ -229,7 +230,7 @@ class _CompletedTradePageState extends State<CompletedTradePage> {
                                                                               Text(
                                                                                  controller
                                                 .completedQuiz[index].pl.toString() + "%",
-                                                                                style: TextStyle(color: double.parse(controller.getQuizMyListApiResponse!.data[index].pl) <= 0 ? ColorConstant.primaryColor : ColorConstant.primaryBlackColor, fontSize: 15, fontWeight: FontWeight.w500),
+                                                                                style: TextStyle(color: double.parse(controller.completedQuiz[index].pl) <= 0 ? ColorConstant.primaryColor : ColorConstant.primaryBlackColor, fontSize: 15, fontWeight: FontWeight.w500),
                                                                               ),
                                                                             ],
                                                                           ),

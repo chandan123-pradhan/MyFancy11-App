@@ -222,7 +222,7 @@ width: 30,
                                                         FontWeight.w500),
                                               ),
                                               Text(
-                                                "${controller.team1ChoosedPlayers.length}/11",
+                                                "${controller.choosedPlayerList.length}/11",
                                                 style: TextStyle(
                                                     color: Colors.white,
                                                     fontSize: 13,
@@ -776,13 +776,9 @@ width: 30,
                                     fontWeight: FontWeight.w400),
                               ),
                               SizedBox(
-                                width: 10,
+                                width: 20,
                               ),
-                              Icon(
-                                Icons.download_sharp,
-                                size: 18,
-                                color: Colors.black54,
-                              ),
+                              
                             ],
                           )
                         ],
@@ -965,7 +961,7 @@ width: 30,
                                     ),
                                     Container(
                                       width:
-                                          MediaQuery.of(context).size.width / 6,
+                                          MediaQuery.of(context).size.width / 5,
                                       alignment: Alignment.center,
                                       child: Text(
                                         players[index].playerPoints,
@@ -975,6 +971,7 @@ width: 30,
                                             fontWeight: FontWeight.w500),
                                       ),
                                     ),
+                                    SizedBox(width: 10,),
                                     Expanded(
                                       // width: MediaQuery.of(context).size.width / 6,
                                       child: Row(
@@ -988,6 +985,7 @@ width: 30,
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.w500),
                                           ),
+                                          SizedBox(width: 0,),
 
                                           dummyPlayer[index] == 0
                                               ? Icon(
