@@ -114,7 +114,7 @@ class _RefferAndEarnScreenState extends State<RefferAndEarnScreen> {
                                   Row(
                                     children: [
                                       Text(
-                                        "Your Refferal ID:",
+                                        "Your Referral ID:",
                                         style: TextStyle(
                                             color:
                                                 ColorConstant.primaryBlackColor,
@@ -179,7 +179,7 @@ class _RefferAndEarnScreenState extends State<RefferAndEarnScreen> {
                             Padding(
                               padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                               child: Text(
-                                "By Each Refferal You'll be earn Reffer amount and ${controller.refferalApiResponse!.setting.referPercent}% of Each contest match fee. ",
+                                "By Each Referral You'll be earn Refer amount and ${controller.refferalApiResponse!.setting.referPercent}% of Each contest match fee. ",
                                 style: TextStyle(
                                     color: Colors.black45,
                                     fontSize: 12,
@@ -220,7 +220,7 @@ class _RefferAndEarnScreenState extends State<RefferAndEarnScreen> {
                                       onTap: () {
                                         if (controller.refferalApiResponse!
                                                 .setting.upgradeRequest !=
-                                            0) {
+                                            1) {
                                           showUserInputModeBottomSheet(
                                               'Normal Program', 'downgrade');
                                         }
@@ -262,9 +262,9 @@ class _RefferAndEarnScreenState extends State<RefferAndEarnScreen> {
                                       onTap: () {
                                         if (controller.refferalApiResponse!
                                                 .setting.upgradeRequest !=
-                                            1) {
+                                            2) {
                                           showUserInputModeBottomSheet(
-                                              'Affiliate Program', 'upgrade');
+                                              'Affiliate', 'upgrade');
                                         }
                                       },
                                       child: Container(
@@ -314,7 +314,7 @@ class _RefferAndEarnScreenState extends State<RefferAndEarnScreen> {
                             Padding(
                               padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                               child: Text(
-                                "Your All Refferals",
+                                "Your All Referrals",
                                 style: TextStyle(
                                     color: ColorConstant.primaryBlackColor,
                                     fontSize: 16,
@@ -342,7 +342,7 @@ class _RefferAndEarnScreenState extends State<RefferAndEarnScreen> {
                                         fontWeight: FontWeight.w500),
                                   ),
                                   Text(
-                                    "Refferal Amount",
+                                    "Referral Amount",
                                     style: TextStyle(
                                         color: ColorConstant.primaryBlackColor,
                                         fontSize: 16,
@@ -508,7 +508,7 @@ class _AffiliateProgramFormState extends State<AffiliateProgramForm> {
                     height: 10,
                   ),
                   Text(
-                    "Why You want to go in ${widget.title}?",
+                    "Provide you below input to be an ${widget.title}?",
                     style: TextStyle(
                         color: ColorConstant.primaryBlackColor,
                         fontSize: 16,

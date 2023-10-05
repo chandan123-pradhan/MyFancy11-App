@@ -5,3 +5,4 @@ bool isUnAuthenicated=false;
 bool logInStatus=false;
 String userName='';
 String userEmail='';
+String mobileNubmer='';

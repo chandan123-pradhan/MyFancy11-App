@@ -71,12 +71,17 @@ class _NotificationScreenState extends State<NotificationScreen> {
       body: GetBuilder<NotificationController>(
           init: NotificationController(),
           builder: (controller) {
-            return controller.getNotificationApiResponse == null
+            return controller.getNotificationApiResponse == null && controller.isNotFound==false
                 ? const Center(
                     child: CircularProgressIndicator(
                       color: ColorConstant.primaryColor,
                     ),
                   )
+
+:controller.isNotFound==true?Center(
+  child: Text("Data Not Found"),
+)
+
                 : ListView.builder(
                     itemCount:
                         controller.getNotificationApiResponse!.data.length,

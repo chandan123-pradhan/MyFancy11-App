@@ -177,7 +177,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                                     width: 20,
                                   ),
                                   Text(
-                                    "Home",
+                                    " Home",
                                     style: TextStyle(
                                         color: ColorConstant.primaryBlackColor,
                                         fontSize: 15,
@@ -441,7 +441,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                                     width: 20,
                                   ),
                                   Text(
-                                    " Leegality",
+                                    " Legality",
                                     style: TextStyle(
                                         color: ColorConstant.primaryBlackColor,
                                         fontSize: 15,
@@ -660,7 +660,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                                     width: 20,
                                   ),
                                   Text(
-                                    "Login",
+                                    " Login",
                                     style: TextStyle(
                                         color: ColorConstant.primaryBlackColor,
                                         fontSize: 15,

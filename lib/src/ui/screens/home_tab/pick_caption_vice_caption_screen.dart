@@ -39,7 +39,7 @@ class _PickCaptionViceCaptionScreenState
 
   void calculateCaptianAndVc() {
     for (int i = 0; i < controller.choosedPlayerList.length; i++) {
-      debugger();
+      // debugger();
       if (controller.choosedPlayerList[i].isCaptain == '1') {
         controller.choosedCaption(controller.choosedPlayerList[i]);
         captainIndex = i;

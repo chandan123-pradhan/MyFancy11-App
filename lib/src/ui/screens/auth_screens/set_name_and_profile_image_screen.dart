@@ -106,8 +106,8 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                             profilePic==null?
                             
                               Container(
-                                height: 80,
-                                width: 80,
+                                 height: 100,
+                                width: 100,
                                 decoration: BoxDecoration(
                                   color: Colors.black12,
                                     shape: BoxShape.circle,

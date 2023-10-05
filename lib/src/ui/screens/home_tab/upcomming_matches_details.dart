@@ -35,22 +35,22 @@ class _UpcommingMatchesDetailsState extends State<UpcommingMatchesDetails> {
 
   List<PopupMenuEntry<dynamic>> menuItems = [
     PopupMenuItem(
-      child: Text('High To Low'),
+      child: Text('Low To High'),
       value: '1',
     ),
     PopupMenuItem(
-      child: Text('Low To High'),
+      child: Text('High To Low'),
       value: '0',
     ),
     // Add more PopupMenuItems as needed
   ];
   List<PopupMenuEntry<dynamic>> pricePoolItems = [
     PopupMenuItem(
-      child: Text('High To Low'),
+      child: Text('Low To High'),
       value: '1',
     ),
     PopupMenuItem(
-      child: Text('Low To High'),
+      child: Text('High To Low'),
       value: '1',
     ),
     // Add more PopupMenuItems as needed
@@ -193,7 +193,7 @@ width: 30,
                                   setState(() {
                                     selectedEntry = int.parse(value);
                                   });
-                                  debugger();
+                                 // debugger();
                                   controller.getContestList(
                                       context,
                                       widget.matches.matchId.toString(),
@@ -285,9 +285,16 @@ width: 30,
                                     child: CircularProgressIndicator(
                                         color: ColorConstant.primaryColor),
                                   )
-                                : ListView.builder(
+                                : 
+                                
+                                controller.getContestListApiResponse!.contestList.length==0?Center(
+                                  child: Text("Contest Not Found"),
+                                ):
+                                ListView.builder(
                                   physics: AlwaysScrollableScrollPhysics(),
-                                    itemCount: 3,
+                                    itemCount: controller.getContestListApiResponse!.contestList.length
+                                                      
+                                                    ,
                                     itemBuilder: (context, index) {
                                       return Column(
                                         crossAxisAlignment:

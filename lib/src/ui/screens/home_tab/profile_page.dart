@@ -21,21 +21,21 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-   var controller = Get.put(AuthController());
-   var hoemController=Get.put(HomeController());
+  var controller = Get.put(AuthController());
+  var hoemController = Get.put(HomeController());
   int selectedIndex = -1;
   var profilePic;
   String proifleUrl = '';
-  bool _isActive=false;
- 
+  bool _isActive = false;
 
   @override
   void initState() {
-    controller.nameController.text=userName;
-    controller.emailController.text=userEmail;
+    controller.nameController.text = userName;
+    controller.emailController.text = userEmail;
+    controller.phoneNumberController.text=mobileNubmer;
     hoemController.getUsersProfile();
-    proifleUrl=hoemController.profilePicUrl;
-    controller.selectedAwatarLink=proifleUrl;
+    proifleUrl = hoemController.profilePicUrl;
+    controller.selectedAwatarLink = proifleUrl;
     // TODO: implement initState
     super.initState();
   }
@@ -43,13 +43,13 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-  backgroundColor: ColorConstant.bg_color,
+      backgroundColor: ColorConstant.bg_color,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: ColorConstant.primaryColor,
         leading: InkWell(
           onTap: () {
-             Navigator.pop(context);
+            Navigator.pop(context);
           },
           child: Icon(
             Icons.navigate_before,
@@ -73,187 +73,178 @@ class _ProfilePageState extends State<ProfilePage> {
       body: GetBuilder<AuthController>(
           init: AuthController(),
           builder: (controller) {
-            return  SingleChildScrollView(
-                    child: Column(children: [
-                      SizedBox(
-                        height: 20,
-                      ),
-                      // Container(
-                      //   alignment: Alignment.centerLeft,
-                      //   child: Padding(
-                      //     padding: const EdgeInsets.only(left: 20),
-                      //     child: Text(
-                      //       "Select Avatar",
-                      //       style: TextStyle(
-                      //           color: ColorConstant.primaryBlackColor,
-                      //           fontSize: 15,
-                      //           fontWeight: FontWeight.w600),
-                      //     ),
-                      //   ),
-                      // ),
+            return SingleChildScrollView(
+              child: Column(children: [
+                SizedBox(
+                  height: 20,
+                ),
+                // Container(
+                //   alignment: Alignment.centerLeft,
+                //   child: Padding(
+                //     padding: const EdgeInsets.only(left: 20),
+                //     child: Text(
+                //       "Select Avatar",
+                //       style: TextStyle(
+                //           color: ColorConstant.primaryBlackColor,
+                //           fontSize: 15,
+                //           fontWeight: FontWeight.w600),
+                //     ),
+                //   ),
+                // ),
 
-                      InkWell(
-                        onTap: () {
-                          // setState(() {
-                          //   _isActive=true;
-                          // });
-                          // choosedGalaryOrCamera();
-                        },
-                        child: Container(
-                          height: 70,
-                          width: 70,
-                          child: Stack(
-                            children: [
-                        
-                        
-                        
-                            profilePic==null?
-                            
-                              Container(
-                                height: 80,
-                                width: 80,
+                InkWell(
+                  onTap: () {
+                    // setState(() {
+                    //   _isActive=true;
+                    // });
+                    // choosedGalaryOrCamera();
+                  },
+                  child: Container(
+                    child: Stack(
+                      children: [
+                        profilePic == null
+                            ? Container(
+                                height: 100,
+                                width: 100,
                                 decoration: BoxDecoration(
-                                  color: Colors.black12,
+                                    color: Colors.black12,
                                     shape: BoxShape.circle,
                                     border: Border.all(
                                         width: 1, color: Colors.black),
-                                        
-                                        image: DecorationImage(image: NetworkImage(proifleUrl),
-                                        fit: BoxFit.fill
-                                        )
-                                        ),
-                             alignment: Alignment.center,
-                             child: CachedNetworkImage(
-  imageUrl: proifleUrl,
-  imageBuilder: (context, imageProvider) => Container(
-    decoration: BoxDecoration(
-      shape: BoxShape.circle,
-      image: DecorationImage(
-        
-          image: imageProvider,
-          fit: BoxFit.cover,
-         ),
-    ),
-  ),
-  placeholder: (context, url) => Icon(Icons.image),
-  errorWidget: (context, url, error) => Icon(Icons.error),
-),
-                             
-                              ):
-                              
-                               Container(
-                                height: 60,
-                                width: 60,
-                                decoration: BoxDecoration(
-                                  color: Colors.black12,
-                                    shape: BoxShape.circle,
-                                    border: Border.all(
-                                        width: 1, color: Colors.black),
-                                        image: DecorationImage(image: 
-                                        FileImage(File(profilePic.path)),
-                                        fit: BoxFit.fill
-                                        
-                                        ),
-                                        
-                                        
-                                        ),
-                           
-                             
-                             
+                                    image: DecorationImage(
+                                        image: NetworkImage(proifleUrl),
+                                        fit: BoxFit.fill)),
+                                alignment: Alignment.center,
+                                child: CachedNetworkImage(
+                                  imageUrl: proifleUrl,
+                                  imageBuilder: (context, imageProvider) =>
+                                      Container(
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      image: DecorationImage(
+                                        image: imageProvider,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                  placeholder: (context, url) =>
+                                      Icon(Icons.image),
+                                  errorWidget: (context, url, error) =>
+                                      Icon(Icons.error),
+                                ),
                               )
-                              
-                              ,
-                              // Positioned(
-                              //     right: 10,
-                              //     bottom: 10,
-                              //     child: Icon(
-                              //       Icons.camera_alt_outlined,
-                              //       size: 20,
-                              //       color: ColorConstant.primaryBlackColor,
-                              //     ))
-                            ],
-                          ),
-                        ),
-                      ),
+                            : Container(
+                                // height: 80,
+                                // width: 80,
+                                decoration: BoxDecoration(
+                                  color: Colors.black12,
+                                  shape: BoxShape.circle,
+                                  border:
+                                      Border.all(width: 1, color: Colors.black),
+                                  image: DecorationImage(
+                                      image: FileImage(File(profilePic.path)),
+                                      fit: BoxFit.fill),
+                                ),
+                              ),
+                        // Positioned(
+                        //     right: 10,
+                        //     bottom: 10,
+                        //     child: Icon(
+                        //       Icons.camera_alt_outlined,
+                        //       size: 20,
+                        //       color: ColorConstant.primaryBlackColor,
+                        //     ))
+                      ],
+                    ),
+                  ),
+                ),
 
-                      SizedBox(
-                        height: 10,
-                      ),
+                SizedBox(
+                  height: 10,
+                ),
 
-                      SizedBox(height: 16),
-                      Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: TextFormField(
-                          controller: controller.nameController,
-                          onChanged: (val) {
-                            _isActive=true;
-                            setState(() {
-                              
-                            });
-                          },
-                          decoration: InputDecoration(
-                             
-                              filled: true,
-                              hintText: "Enter Name"),
-                        ),
+                SizedBox(height: 16),
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: TextFormField(
+                    controller: controller.nameController,
+                    onChanged: (val) {
+                      _isActive = true;
+                      setState(() {});
+                    },
+                    decoration:
+                        InputDecoration(filled: true, hintText: "Enter Name"),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: TextFormField(
+                    //  enabled: widget.email != null ? false : true,
+                    controller: controller.emailController,
+                    onChanged: (val) {
+                      _isActive = true;
+                      setState(() {});
+                    },
+                    decoration:
+                        InputDecoration(filled: true, hintText: "Email"),
+                  ),
+                ),
+
+                SizedBox(height: 16),
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: TextFormField(
+                    controller: controller.nameController,
+                    onChanged: (val) {
+                      _isActive = true;
+                      setState(() {});
+                    },
+                    decoration:
+                        InputDecoration(filled: true, hintText: "Mobile Nume"),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(15, 15, 15, 20),
+                  child: InkWell(
+                    onTap: () {
+                      if (_isActive == true) {
+                        controller.updateProfile(context);
+                        // Navigator.push(
+                        //   context,
+                        //   (MaterialPageRoute(
+                        //     builder: (context) {
+                        //       return OtpScreen();
+                        //     },
+                        //   )),
+                        // );
+                      }
+                    },
+                    child: Container(
+                      height: 40,
+                      width: MediaQuery.of(context).size.width / 1,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: _isActive == true
+                              ? ColorConstant.primaryBlackColor
+                              : Colors.grey[400]),
+                      alignment: Alignment.center,
+                      child: Text(
+                        "Update",
+                        style: TextStyle(
+                            color: ColorConstant.primaryWhiteColor,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: TextFormField(
-                        //  enabled: widget.email != null ? false : true,
-                          controller: controller.emailController,
-                          onChanged: (val) {
-                            _isActive=true;
-                            setState(() {
-                              
-                            });
-                          },
-                          decoration:
-                              InputDecoration(filled: true, hintText: "Email"),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(15, 15, 15, 20),
-                        child: InkWell(
-                          onTap: () {
-                            if (_isActive == true) {
-                              controller.updateProfile(context);
-                              // Navigator.push(
-                              //   context,
-                              //   (MaterialPageRoute(
-                              //     builder: (context) {
-                              //       return OtpScreen();
-                              //     },
-                              //   )),
-                              // );
-                            }
-                          },
-                          child: Container(
-                            height: 40,
-                            width: MediaQuery.of(context).size.width / 1,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                color: _isActive == true
-                                    ? ColorConstant.primaryBlackColor
-                                    : Colors.grey[400]),
-                            alignment: Alignment.center,
-                            child: Text(
-                              "Update",
-                              style: TextStyle(
-                                  color: ColorConstant.primaryWhiteColor,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600),
-                            ),
-                          ),
-                        ),
-                      ),
-                      // Text(
-                      //   "Not Now? Skip",
-                      //   style: TextStyle(
-                      //       color: Colors.black, fontSize: 12, fontWeight: FontWeight.w600),
-                      // ),
-                    ]),
-                  );
+                    ),
+                  ),
+                ),
+                // Text(
+                //   "Not Now? Skip",
+                //   style: TextStyle(
+                //       color: Colors.black, fontSize: 12, fontWeight: FontWeight.w600),
+                // ),
+              ]),
+            );
           }),
     );
   }
@@ -445,7 +436,6 @@ class _ProfilePageState extends State<ProfilePage> {
 
     setState(() {
       imageUploading = false;
-      
     });
     controller.selectedAwatarLink = downloadURL;
   }

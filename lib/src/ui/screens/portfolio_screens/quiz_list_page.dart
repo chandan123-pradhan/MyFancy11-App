@@ -61,7 +61,8 @@ class _QuizListPageState extends State<QuizListPage> {
                                               left: 5,
                                               right: 5,
                                               top: 10,
-                                              bottom: 10),
+                                              bottom: 
+                                              10),
                                           child: InkWell(
                                             onTap: () {
                                               selectedCategory = index;
@@ -143,9 +144,20 @@ class _QuizListPageState extends State<QuizListPage> {
                                                         (context, index) {
                                                       return Padding(
                                                         padding:
-                                                            const EdgeInsets.only(
-                                                                bottom: 5.0,
-                                                                top: 10),
+                                                             EdgeInsets.only(
+                                                                bottom:
+
+                                                                index==controller
+                                          .getQuizByCategoryApiResponse!
+                                          .data
+                                          .length-1?
+                                              100:
+                                                                 5.0,
+                                                                top: 10
+                                                                
+                                                                
+                                                                
+                                                                ),
                                                         child: Container(
                                                           child: Column(
                                                             children: [
