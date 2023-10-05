@@ -56,7 +56,7 @@ class _WinnersTabState extends State<WinnersTab>
                   ? shimerEffect(length: 4, context: context)
                   : 
                   winnerController.winnerApiResponse['data'].length==0?Center(
-                    child: Text("No Data Found"),
+                    child: Text("Data not found"),
                   ):
                   
                   ListView.builder(

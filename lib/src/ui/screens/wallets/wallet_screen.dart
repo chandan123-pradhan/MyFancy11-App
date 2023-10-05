@@ -650,10 +650,12 @@ class _WalletScreenState extends State<WalletScreen>
                                 left: 15, right: 15, top: 10, bottom: 10),
                             child: Column(
                               children: [
+                                SizedBox(height: 5,),
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
+                                    
                                     Row(children: [
                                       Image.asset(
                                         ImageUitls.Wallet_icon,
@@ -687,44 +689,46 @@ class _WalletScreenState extends State<WalletScreen>
                                 SizedBox(
                                   height: 5,
                                 ),
-                                Divider(),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(children: [
-                                      Image.asset(
-                                        ImageUitls.Wallet_icon,
-                                        height: 20,
-                                        width: 20,
-                                        color: ColorConstant.primaryBlackColor,
-                                      ),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      Text(
-                                        "Bonus Amount",
-                                        style: TextStyle(
-                                            color:
-                                                ColorConstant.primaryBlackColor,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w400),
-                                      )
-                                    ]),
-                                    Text(
-                                      // "0",
-                                      "₹${controller.getWalletApiResponse!.data.bonusWallet}",
-                                      style: TextStyle(
-                                          color:
-                                              ColorConstant.primaryBlackColor,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w400),
-                                    )
-                                  ],
-                                ),
+                                // Divider(),
+                                // SizedBox(
+                                //   height: 5,
+                                // ),
+                                // Row(
+                                //   mainAxisAlignment:
+                                //       MainAxisAlignment.spaceBetween,
+                                //   children: [
+                                //     Row(children: [
+                                //       Image.asset(
+                                //         ImageUitls.Wallet_icon,
+                                //         height: 20,
+                                //         width: 20,
+                                //         color: ColorConstant.primaryBlackColor,
+                                //       ),
+                                //       SizedBox(
+                                //         width: 10,
+                                //       ),
+                                //       Text(
+                                //         "Bonus Amount",
+                                //         style: TextStyle(
+                                //             color:
+                                //                 ColorConstant.primaryBlackColor,
+                                //             fontSize: 14,
+                                //             fontWeight: FontWeight.w400),
+                                //       )
+                                //     ]),
+                                //     Text(
+                                //       // "0",
+                                //       "₹${controller.getWalletApiResponse!.data.bonusWallet}",
+                                //       style: TextStyle(
+                                //           color:
+                                //               ColorConstant.primaryBlackColor,
+                                //           fontSize: 14,
+                                //           fontWeight: FontWeight.w400),
+                                //     )
+                                //   ],
+                                // ),
+                           
+                           
                               ],
                             ),
                           ),
@@ -962,7 +966,7 @@ class _WalletScreenState extends State<WalletScreen>
                                                 width: 10,
                                               ),
                                               Text(
-                                                "Withdrable Amount",
+                                                "Withdrawable Amount",
                                                 style: TextStyle(
                                                     color: ColorConstant
                                                         .primaryBlackColor,
@@ -1193,6 +1197,7 @@ class _WalletScreenState extends State<WalletScreen>
         transactionRefId: DateTime.now().toString(),
         transactionNote: 'Buying a team.',
         amount: double.parse(amountController.text),
+        
       )
           .then((value) {
         debugger();
@@ -1252,7 +1257,7 @@ class _WalletScreenState extends State<WalletScreen>
                     children: [
                       for (int i = 0; i < apps.length; i++)
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
                           child: InkWell(
                             onTap: () {
                               Navigator.pop(context);

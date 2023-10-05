@@ -183,6 +183,19 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                               InputDecoration(filled: true, hintText: "Email"),
                         ),
                       ),
+
+
+
+                  widget.email!=null?    Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: TextFormField(
+                          enabled: widget.email != null ? false : true,
+                          controller: controller.phoneNumberController,
+                          onChanged: (val) {},
+                          decoration:
+                              InputDecoration(filled: true, hintText: "Email"),
+                        ),
+                       ):Container(),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(15, 15, 15, 20),
                         child: InkWell(

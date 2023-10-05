@@ -27,6 +27,7 @@ import 'package:cricket_fantacy/src/ui/screens/dashboard_screen.dart';
 import 'package:cricket_fantacy/src/ui/screens/home_tab/pick_player_screen.dart';
 import 'package:cricket_fantacy/src/utils/app_constant.dart';
 import 'package:cricket_fantacy/src/utils/local_storage/shared_prefrences.dart';
+// import 'package:cricket_fantacy/src/utils/local_storage/shared_prefrences.dart';
 import 'package:cricket_fantacy/src/utils/messages.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
@@ -699,6 +700,8 @@ debugger();
           ekycRequestBody.adhaarBackPicUrl +
           ',' +
           ekycRequestBody.panPicUrl,
+        'aadhaar_number':ekycRequestBody.aadhaarNumber,
+        'pan_number':ekycRequestBody.panNumber,
       'bank_name': ekycRequestBody.bankName,
       'ifsc_code': ekycRequestBody.ifscCode,
       'account_number': ekycRequestBody.accountNumber,

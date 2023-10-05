@@ -271,7 +271,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 Row(
                   children: [
                     Text(
-                      "I Agree all to ",
+                      "I Agree to all ",
                       style: TextStyle(
                           color: Colors.black,
                           fontSize: 12,

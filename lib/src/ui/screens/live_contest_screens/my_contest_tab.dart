@@ -16,6 +16,19 @@ class MyContestTab extends StatefulWidget {
 }
 
 class _MyContestTabState extends State<MyContestTab> {
+var controller=Get.put(LiveContestController());
+
+
+
+
+@override
+  void dispose() {
+    
+    // TODO: implement dispose
+    super.dispose();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<LiveContestController>(

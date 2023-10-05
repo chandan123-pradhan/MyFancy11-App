@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:cricket_fantacy/src/controllers/splash_controller.dart';
@@ -28,6 +29,7 @@ class _LeaderboardTabState extends State<LeaderboardTab> {
   void initState() {
     getAuthToken();
     controller.getLeaderBoardResponse(context, widget.contestId);
+    updateLive();
     // TODO: implement initState
     super.initState();
   }
@@ -39,6 +41,22 @@ class _LeaderboardTabState extends State<LeaderboardTab> {
     // debugger();
   }
 
+Timer? _t;
+void updateLive(){
+  _t=Timer.periodic((Duration(seconds: 5)), (timer) { 
+    controller.getLeaderBoardResponse(context, widget.contestId);
+  });
+}
+
+@override
+  void dispose() {
+
+    _t!.cancel();
+    print("leaderboard timer cancle");
+    controller.getLeaderboardApiResponse = null;
+    // TODO: implement dispose
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return  RefreshIndicator(

@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -32,6 +33,7 @@ class _ProfilePageState extends State<ProfilePage> {
   void initState() {
     controller.nameController.text = userName;
     controller.emailController.text = userEmail;
+    // debugger();
     controller.phoneNumberController.text=mobileNubmer;
     hoemController.getUsersProfile();
     proifleUrl = hoemController.profilePicUrl;
@@ -194,7 +196,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: TextFormField(
-                    controller: controller.nameController,
+                    controller: controller.phoneNumberController,
                     onChanged: (val) {
                       _isActive = true;
                       setState(() {});

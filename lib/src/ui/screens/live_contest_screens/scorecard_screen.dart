@@ -122,7 +122,7 @@ int secondIningId=0;
                     SizedBox(
                       width: 10,
                     ),
-                    InkWell(
+         secondIningBatsmanList.length==0 &&    secondIningBowlerList.length==0?Container():       InkWell(
                       onTap: () {
                         if (teamTab != 1) {
                           setState(() {

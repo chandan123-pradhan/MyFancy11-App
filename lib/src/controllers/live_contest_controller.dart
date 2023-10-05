@@ -18,13 +18,13 @@ class LiveContestController extends GetxController {
   MyContestApiResponse? myContestApiResponse;
   GetMyTeamApiResponse? getMyTeamApiResponse;
   GetMyPlayerApiResponse? getMyPlayerApiResponse;
-  bool isMyContestDetailsPageEnable=false;
+  bool isMyContestDetailsPageEnable = false;
 
   List<MyPlayerData> batsmanData = [];
   List<MyPlayerData> bowlerList = [];
   List<MyPlayerData> wicketKeeperList = [];
   List<MyPlayerData> allrounderList = [];
-  String tappedContestId='';
+  String tappedContestId = '';
 
   Timer? timer;
 
@@ -35,13 +35,36 @@ class LiveContestController extends GetxController {
     // debugger();
     var response = await apiProvider.postAfterAuth(
         routeUrl: NetworkConstant.Match_by_id, bodyParams: parameter);
-      // debugger();
+    // debugger();
     liveMatchUpdateApiResponse = response;
     print("score udpated");
     update();
     getMyContest(matchId);
     upatedScroe(matchId);
+    calcaulateLastBowlwerBowled();
     //  });
+  }
+
+  List<String> lastBolwerBowled = [];
+
+  void calcaulateLastBowlwerBowled() {
+    List<String> dummyList = [];
+    List v = liveMatchUpdateApiResponse['commentry'].toList();
+    // debugger();
+    int lastItem =
+        int.parse(v[v.length - 1]['ball'].toString().split('.').last);
+        // debugger();
+    dummyList.clear();
+    for (int i = 0; i<lastItem; i++) {
+// debugger();
+      if (v[v.length-(i+1)]['score']['is_wicket'] == true) {
+        dummyList.add('w');
+      } else {
+        dummyList.add(v[v.length-(i+1)]['score']['runs'].toString());
+      }
+    }
+    lastBolwerBowled.clear();
+    lastBolwerBowled.addAll(dummyList);
   }
 
   void upatedScroe(matchId) async {
@@ -51,11 +74,12 @@ class LiveContestController extends GetxController {
           routeUrl: NetworkConstant.Match_by_id, bodyParams: parameter);
       // debugger();
       liveMatchUpdateApiResponse = response;
-      
+
       print("score udpated");
       update();
       getMyTeam(matchId);
       getMyTeam(matchId);
+      calcaulateLastBowlwerBowled();
     });
   }
 
@@ -71,8 +95,8 @@ class LiveContestController extends GetxController {
   }
 
   void getMyTeam(matchId) async {
-    Map parameter = {NetworkConstant.MatchId: matchId,
-    
+    Map parameter = {
+      NetworkConstant.MatchId: matchId,
     };
     var response = await apiProvider.postAfterAuth(
         routeUrl: NetworkConstant.My_paid_Team, bodyParams: parameter);
@@ -85,16 +109,13 @@ class LiveContestController extends GetxController {
   void closeTimer(context) {
     _timer!.cancel();
     liveMatchUpdateApiResponse = null;
+
     update();
     Navigator.pop(context);
-    
   }
 
-  void getTeamPlayers(teamId,userId) async {
-    Map parameter = {'team_id': teamId,
-    'user_id':userId
-    
-    };
+  void getTeamPlayers(teamId, userId) async {
+    Map parameter = {'team_id': teamId, 'user_id': userId};
     var response = await apiProvider.postAfterAuth(
         routeUrl: NetworkConstant.getMyPlayers, bodyParams: parameter);
 //  debugger();
@@ -103,19 +124,15 @@ class LiveContestController extends GetxController {
     //update();
   }
 
-void getMyTeamPlayers(teamId,userId) async {
-    Map parameter = {'team_id': teamId,
-    'user_id':userId
-    };
+  void getMyTeamPlayers(teamId, userId) async {
+    Map parameter = {'team_id': teamId, 'user_id': userId};
     var response = await apiProvider.postAfterAuth(
         routeUrl: NetworkConstant.getMyPlayers, bodyParams: parameter);
- debugger();
+    debugger();
     getMyPlayerApiResponse = GetMyPlayerApiResponse.fromJson(response);
     calculatePlayerByDesignation();
     //update();
   }
-
-
 
   void calculatePlayerByDesignation() {
     batsmanData.clear();
@@ -136,18 +153,13 @@ void getMyTeamPlayers(teamId,userId) async {
         case '4':
           wicketKeeperList.add(getMyPlayerApiResponse!.data[i]);
       }
-
     }
     update();
   }
 
-
-
-void updateMycontestScreen(contestId){
-  isMyContestDetailsPageEnable=!isMyContestDetailsPageEnable;
-  tappedContestId=contestId;
-  update();
-}
-
-
+  void updateMycontestScreen(contestId) {
+    isMyContestDetailsPageEnable = !isMyContestDetailsPageEnable;
+    tappedContestId = contestId;
+    update();
+  }
 }

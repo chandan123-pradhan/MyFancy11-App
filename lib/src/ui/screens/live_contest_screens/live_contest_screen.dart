@@ -48,6 +48,7 @@ class _LiveContestScreenState extends State<LiveContestScreen>
     targetDate = DateFormat("yyyy-MM-dd hh:mm:ss")
         .parse(widget.myMatchModel.matchDateTime);
     remainingDuration = targetDate.difference(now);
+    controller.getMyTeamApiResponse=null;
 
     int hours = remainingDuration!.inHours;
     int minutes = remainingDuration!.inMinutes.remainder(60);
@@ -63,6 +64,8 @@ class _LiveContestScreenState extends State<LiveContestScreen>
         if (controller.isMyContestDetailsPageEnable == false) {
           controller.closeTimer(context);
           controller.liveMatchUpdateApiResponse=null;
+          controller.myContestApiResponse = null;
+          controller.getMyTeamApiResponse=null;
           return Future.value(true);
         } else {
           controller.updateMycontestScreen('');
@@ -79,6 +82,7 @@ class _LiveContestScreenState extends State<LiveContestScreen>
               if (controller.isMyContestDetailsPageEnable == false) {
                 controller.closeTimer(context);
                 controller.liveMatchUpdateApiResponse=null;
+                controller.myContestApiResponse = null;
               } else {
                 controller.updateMycontestScreen('');
               }
@@ -451,6 +455,10 @@ class _LiveContestScreenState extends State<LiveContestScreen>
                                                       ),
                                                     ),
                                                     Text(
+                                     controller.liveMatchUpdateApiResponse!['current']['c_data'][0]['strik']['strik_data'].toString()=='null'?"":       
+                                            
+                                            
+                                            
                                                       "${controller.liveMatchUpdateApiResponse!['current']['c_data'][0]['strik']['strik_data']['score']} (${controller.liveMatchUpdateApiResponse!['current']['c_data'][0]['strik']['strik_data']['ball']})",
 
                                                       //    "10 (10)",
@@ -565,10 +573,12 @@ class _LiveContestScreenState extends State<LiveContestScreen>
                                                         CrossAxisAlignment
                                                             .center,
                                                     children: [
-                                                      for (int i = (controller
-                                                                  .liveMatchUpdateApiResponse![
-                                                                      'current']
-                                                                      ['list']
+                                                      for (
+                                                        
+                                                        
+                                                        int i = (controller
+                                                                  .lastBolwerBowled
+                                                                     
                                                                   .length) -
                                                               1;
                                                           i >= 0;
@@ -593,21 +603,22 @@ class _LiveContestScreenState extends State<LiveContestScreen>
                                                             alignment: Alignment
                                                                 .center,
                                                             child: Text(
-                                                              controller.liveMatchUpdateApiResponse!['current']['list']
-                                                                              [
-                                                                              i]
-                                                                          [
-                                                                          'is_wicket'] ==
-                                                                      true
-                                                                  ? 'W'
-                                                                  : controller
-                                                                      .liveMatchUpdateApiResponse![
-                                                                          'current']
-                                                                          [
-                                                                          'list']
-                                                                          [i][
-                                                                          'runs']
-                                                                      .toString(),
+                                                              controller.lastBolwerBowled[i],
+                                                              // controller.liveMatchUpdateApiResponse!['current']['list']
+                                                              //                 [
+                                                              //                 i]
+                                                              //             [
+                                                              //             'is_wicket'] ==
+                                                              //         true
+                                                              //     ? 'W'
+                                                              //     : controller
+                                                              //         .liveMatchUpdateApiResponse![
+                                                              //             'current']
+                                                              //             [
+                                                              //             'list']
+                                                              //             [i][
+                                                              //             'runs']
+                                                              //         .toString(),
                                                               style: TextStyle(
                                                                   color: Colors
                                                                       .white,

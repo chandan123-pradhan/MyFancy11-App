@@ -534,18 +534,18 @@ width: 30,
                               ),
                               
                              
-                              InkWell(
-                                onTap: (){
-                                    controller.lineupBottonPressed();
-                                },
-                                child: Text(
-                                  " / LINEUP",
-                                  style: TextStyle(
-                                      color: ColorConstant.primaryWhiteColor,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              ),
+                              // InkWell(
+                              //   onTap: (){
+                              //       controller.lineupBottonPressed();
+                              //   },
+                              //   child: Text(
+                              //     " / LINEUP",
+                              //     style: TextStyle(
+                              //         color: ColorConstant.primaryWhiteColor,
+                              //         fontSize: 12,
+                              //         fontWeight: FontWeight.w500),
+                              //   ),
+                              // ),
                             ],
                           ),
                         ),

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cricket_fantacy/src/controllers/splash_controller.dart';
 import 'package:cricket_fantacy/src/ui/widgets/shimmer_effect_widget.dart';
 import 'package:cricket_fantacy/src/utils/color_scheme.dart';
@@ -19,9 +21,34 @@ class _WinningTabState extends State<WinningTab> {
 @override
   void initState() {
     controller.getWinningInfo(context, widget.contestId);
+    updateLive();
     // TODO: implement initState
     super.initState();
   }
+
+
+
+
+Timer? _t;
+void updateLive(){
+  print("winer tab timer start");
+  _t=Timer.periodic((Duration(seconds: 5)), (timer) { 
+   controller.getWinningInfo(context, widget.contestId);
+  });
+}
+
+@override
+  void dispose() {
+
+    _t!.cancel();
+    print("Winner timer cancle");
+    controller.getWinningInfoApiResponse=null;
+    // TODO: implement dispose
+    super.dispose();
+  }
+ 
+
+
 
   @override
   Widget build(BuildContext context) {
