@@ -38,10 +38,10 @@ class MyPaidTeamData {
   late final String userId;
   late final String teamid;
   late final String name;
-  late final int bat;
-  late final int wk;
-  late final int bow;
-  late final int all;
+  late final String bat;
+  late final String wk;
+  late final String bow;
+  late final String all;
   late final Captain captain;
   late final ViceCaptain viceCaptain;
   
@@ -49,10 +49,10 @@ class MyPaidTeamData {
     userId=json['user_id'];
     teamid = json['teamid'];
     name = json['name'];
-    bat = json['bat'];
-    wk = json['wk'];
-    bow = json['bow'];
-    all = json['all'];
+    bat = json['bat'].toString();
+    wk = json['wk'].toString();
+    bow = json['bow'].toString();
+    all = json['all'].toString();
     captain = Captain.fromJson(json['captain']);
     viceCaptain = ViceCaptain.fromJson(json['vice_captain']);
   }
@@ -85,7 +85,7 @@ class Captain {
     required this.image,
     required this.dob,
     required this.nationality,
-     this.bowls,
+    required this.bowls,
     required this.bats,
     required this.createdDate,
     required this.modifiedDate,
@@ -102,28 +102,28 @@ class Captain {
   late final String image;
   late final String dob;
   late final String nationality;
-  late final Null bowls;
+  late final String bowls;
   late final String bats;
   late final String createdDate;
   late final String modifiedDate;
   late final Team team;
   
   Captain.fromJson(Map<String, dynamic> json){
-    id = json['id'];
-    pid = json['pid'];
-    name = json['name'];
-    designationid = json['designationid'];
-    teamid = json['teamid'];
-    playingStatus = json['playing_status'];
-    creditPoints = json['credit_points'];
-    points = json['points'];
-    image = json['image'];
-    dob = json['dob'];
-    nationality = json['nationality'];
-    bowls = null;
-    bats = json['bats'];
-    createdDate = json['created_date'];
-    modifiedDate = json['modified_date'];
+    id = json['id'].toString();
+    pid = json['pid'].toString();
+    name = json['name'].toString();
+    designationid = json['designationid'].toString();
+    teamid = json['teamid'].toString();
+    playingStatus = json['playing_status'].toString();
+    creditPoints = json['credit_points'].toString();
+    points = json['points'].toString();
+    image = json['image'].toString();
+    dob = json['dob'].toString();
+    nationality = json['nationality'].toString();
+    bowls = json['bowls'].toString();
+    bats = json['bats'].toString();
+    createdDate = json['created_date'].toString();
+    modifiedDate = json['modified_date'].toString();
     team = Team.fromJson(json['team']);
   }
 
@@ -207,21 +207,21 @@ class ViceCaptain {
   late final Team team;
   
   ViceCaptain.fromJson(Map<String, dynamic> json){
-    id = json['id'];
-    pid = json['pid'];
-    name = json['name'];
-    designationid = json['designationid'];
-    teamid = json['teamid'];
-    playingStatus = json['playing_status'];
-    creditPoints = json['credit_points'];
-    points = json['points'];
-    image = json['image'];
-    dob = json['dob'];
-    nationality = json['nationality'];
+    id = json['id'].toString();
+    pid = json['pid'].toString();
+    name = json['name'].toString();
+    designationid = json['designationid'].toString();
+    teamid = json['teamid'].toString();
+    playingStatus = json['playing_status'].toString();
+    creditPoints = json['credit_points'].toString();
+    points = json['points'].toString();
+    image = json['image'].toString();
+    dob = json['dob'].toString();
+    nationality = json['nationality'].toString();
     bowls = json['bowls'].toString();
     bats = json['bats'].toString();
-    createdDate = json['created_date'];
-    modifiedDate = json['modified_date'];
+    createdDate = json['created_date'].toString();
+    modifiedDate = json['modified_date'].toString();
     team = Team.fromJson(json['team']);
   }
 

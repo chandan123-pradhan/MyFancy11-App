@@ -26,10 +26,14 @@ class LiveContestController extends GetxController {
   List<MyPlayerData> allrounderList = [];
   String tappedContestId = '';
 
-  Timer? timer;
+  // Timer? timer;
 
   ApiProvider apiProvider = ApiProvider();
-  getData(matchId) async {
+  
+  getData(matchId,flag) async {
+    if(_timer!=null){
+      _timer!.cancel();
+  }
     // Timer.periodic(Duration(seconds: 5), (timer)async {
     Map parameter = {NetworkConstant.MatchId: matchId};
     // debugger();
@@ -40,7 +44,9 @@ class LiveContestController extends GetxController {
     print("score udpated");
     update();
     getMyContest(matchId);
-    upatedScroe(matchId);
+   if(flag!='Completed Match'){
+     upatedScroe(matchId);
+   }
     calcaulateLastBowlwerBowled();
     //  });
   }
@@ -107,9 +113,10 @@ class LiveContestController extends GetxController {
   }
 
   void closeTimer(context) {
-    _timer!.cancel();
+    if(_timer!=null){
+      _timer!.cancel();
+    }
     liveMatchUpdateApiResponse = null;
-
     update();
     Navigator.pop(context);
   }

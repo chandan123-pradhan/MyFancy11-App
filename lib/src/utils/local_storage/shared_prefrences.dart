@@ -51,12 +51,12 @@ Future<String?> getProfilePic() async {
   }
 
    void setProfileDetails(profileName,emailId,m) async {
-    debugger();
+    // debugger();
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.setString(email, emailId);
     preferences.setString(name, profileName);
     preferences.setString(phone,m);
-    debugger();
+    // debugger();
     getProfileData();
   }
 

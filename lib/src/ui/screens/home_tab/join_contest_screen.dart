@@ -452,6 +452,8 @@ width: 30,
                 LeaderboardTab(
                   contestId: widget.contest.contestId,
                   matchStatus: 'upcoming',
+                  flag: false,
+                  isForLive: false,
                 )
               ],
             ),

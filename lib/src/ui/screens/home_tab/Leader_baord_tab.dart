@@ -16,7 +16,9 @@ import 'package:get/get.dart';
 class LeaderboardTab extends StatefulWidget {
   String contestId;
   String matchStatus;
-  LeaderboardTab({required this.contestId, required this.matchStatus});
+  bool flag;
+  bool isForLive;
+  LeaderboardTab({required this.contestId, required this.matchStatus,required this.flag,required this.isForLive});
 
   @override
   State<LeaderboardTab> createState() => _LeaderboardTabState();
@@ -29,7 +31,9 @@ class _LeaderboardTabState extends State<LeaderboardTab> {
   void initState() {
     getAuthToken();
     controller.getLeaderBoardResponse(context, widget.contestId);
-    updateLive();
+   if(widget.flag==false){
+     updateLive();
+   }
     // TODO: implement initState
     super.initState();
   }
@@ -51,7 +55,9 @@ void updateLive(){
 @override
   void dispose() {
 
-    _t!.cancel();
+    if(_t!=null){
+      _t!.cancel();
+    }
     print("leaderboard timer cancle");
     controller.getLeaderboardApiResponse = null;
     // TODO: implement dispose
@@ -74,17 +80,21 @@ void updateLive(){
                       SizedBox(
                         height: 10,
                       ),
-                      Container(
-                        height: 40,
-                        alignment: Alignment.centerLeft,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 15.0),
-                          child: Text(
-                            "Be the first in your network to join this contest",
-                            style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black54),
+                      Visibility
+                      (
+                        visible: !widget.isForLive,
+                        child: Container(
+                          height: 40,
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 15.0),
+                            child: Text(
+                              "Be the first in your network to join this contest",
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black54),
+                            ),
                           ),
                         ),
                       ),
@@ -149,7 +159,7 @@ void updateLive(){
                                 width: MediaQuery.of(context).size.width / 5,
                                 alignment: Alignment.center,
                                 child: Text(
-                                  "POINT",
+                            widget.flag==true?'Win':      "POINT",
                                   style: TextStyle(
                                       color: ColorConstant.primaryBlackColor,
                                       fontSize: 14,
@@ -330,7 +340,12 @@ void updateLive(){
                                                         alignment:
                                                             Alignment.center,
                                                         child: Text(
-                                                          controller
+                                                   widget.flag==true? 
+                                                   
+                                                      controller
+                                                              .getLeaderboardApiResponse!
+                                                              .data[i].winAmount:
+                                                         controller
                                                               .getLeaderboardApiResponse!
                                                               .data[i]
                                                               .points,

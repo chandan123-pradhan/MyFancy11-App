@@ -128,7 +128,7 @@ final fcmToken = await FirebaseMessaging.instance.getToken();
     //debugger();
     var response = await apiProvider.postBeforeAuthWithAppToken(
         routeUrl: NetworkConstant.LOGIN_ROUTE_URL, bodyParams: parameter);
-       debugger();
+      //  debugger();
     print(response);
     loginApiResponse = LoginApiResponse.fromJson(response);
     sharedPref.setUserToken(loginApiResponse.data.userToken);

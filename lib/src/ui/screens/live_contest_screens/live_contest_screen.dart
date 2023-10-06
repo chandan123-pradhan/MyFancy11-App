@@ -34,7 +34,7 @@ class _LiveContestScreenState extends State<LiveContestScreen>
     _tabController = TabController(length: 4, vsync: this);
     print(widget.myMatchModel.matchId);
     _calculateTimeRemaining();
-    controller.getData(widget.myMatchModel.matchId);
+    controller.getData(widget.myMatchModel.matchId,widget.flag);
 
     // TODO: implement initState
     super.initState();
@@ -55,6 +55,14 @@ class _LiveContestScreenState extends State<LiveContestScreen>
     print('$hours hours and $minutes minutes remaining');
     //return '';
     setState(() {});
+  }
+
+
+  @override
+  void dispose() {
+    controller.closeTimer(context);
+    // TODO: implement dispose
+    super.dispose();
   }
 
   @override
@@ -83,6 +91,7 @@ class _LiveContestScreenState extends State<LiveContestScreen>
                 controller.closeTimer(context);
                 controller.liveMatchUpdateApiResponse=null;
                 controller.myContestApiResponse = null;
+                controller.getMyTeamApiResponse=null;
               } else {
                 controller.updateMycontestScreen('');
               }
@@ -727,7 +736,9 @@ class _LiveContestScreenState extends State<LiveContestScreen>
                                   ? LeaderboardTab(
                                       contestId: controller.tappedContestId,
                                        matchStatus: controller.liveMatchUpdateApiResponse[
-                                        'my_status']
+                                        'my_status'],
+                                        flag: widget.flag=='Completed Match'?true:false,
+                                        isForLive: true,
                                       
                                       )
                                   : MyContestTab(),
@@ -747,7 +758,9 @@ class _LiveContestScreenState extends State<LiveContestScreen>
                                   ? LeaderboardTab(
                                       contestId: controller.tappedContestId,
                                        matchStatus: controller.liveMatchUpdateApiResponse[
-                                        'my_status']
+                                        'my_status'],
+                                         flag: widget.flag=='Completed Match'?true:false,
+                                         isForLive: true,
                                       )
                                   : MyContestTab(),
                               controller.isMyContestDetailsPageEnable

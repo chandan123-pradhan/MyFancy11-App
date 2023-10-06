@@ -38,10 +38,10 @@ class TeamData {
   late final String teamid;
   late final String name;
   late final String points;
-  late final int bat;
-  late final int wk;
-  late final int bow;
-  late final int all;
+  late final String bat;
+  late final String wk;
+  late final String bow;
+  late final String all;
   late final Captain captain;
   late final ViceCaptain viceCaptain;
   
@@ -50,10 +50,10 @@ userId=json['user_id'];
     teamid = json['teamid'];
     name = json['name'];
     points=json['points'].toString();
-    bat = json['bat'];
-    wk = json['wk'];
-    bow = json['bow'];
-    all = json['all'];
+    bat = json['bat'].toString();
+    wk = json['wk'].toString();
+    bow = json['bow'].toString();
+    all = json['all'].toString();
     captain = Captain.fromJson(json['captain']);
     viceCaptain = ViceCaptain.fromJson(json['vice_captain']);
   }
@@ -221,7 +221,7 @@ class ViceCaptain {
     dob = json['dob'];
     nationality = json['nationality'];
     bowls = null;
-    bats = json['bats'];
+    bats = json['bats'].toString();
     createdDate = json['created_date'];
     modifiedDate = json['modified_date'];
     team = Team.fromJson(json['team']);

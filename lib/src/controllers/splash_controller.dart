@@ -210,7 +210,8 @@ class HomeController extends GetxController {
     };
     var response = await apiProvider.postAfterAuth(
         routeUrl: NetworkConstant.GET_LEADERBOARD_URL, bodyParams: parameter);
-    print(response);
+    // debugger();
+    // print(response);
     getLeaderboardApiResponse = GetLeaderboardApiResponse.fromJson(response);
 
     update();
@@ -225,7 +226,7 @@ class HomeController extends GetxController {
     };
     var response = await apiProvider.postAfterAuth(
         routeUrl: NetworkConstant.Get_Squad, bodyParams: parameter);
-debugger();
+// debugger();
     getSquadApiResponse = GetSquadApiResponse.fromJson(response);
 
     devidePlayersAccordingToTitle();
@@ -840,10 +841,14 @@ debugger();
         routeUrl: NetworkConstant.validatePromoCode, bodyParams: parameter);
 
     Navigator.pop(context);
+   // debugger();
     if (response['status'] == 200) {
       appliedPromoCode = code;
       Messages().showMsg(
           context: context, message: 'Promocode successfully applied.');
+    }else{
+       Messages().showErrorMsg(
+          context: context, message: response['message']);
     }
     update();
   }

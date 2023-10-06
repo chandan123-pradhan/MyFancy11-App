@@ -31,6 +31,7 @@ class LeaderboardData {
     required this.rank,
     required this.name,
     required this.userId,
+    required this.winAmount,
     required this.points,
     required this.TeamName,
   });
@@ -40,6 +41,7 @@ class LeaderboardData {
   late final String rank;
   late final String name;
   late final String userId;
+  late final String winAmount;
   late final String points;
   late final String TeamName;
   
@@ -50,6 +52,7 @@ class LeaderboardData {
     rank = json['rank'];
     name = json['name'];
     userId = json['user_id'];
+winAmount=json['win_amount'].toString();
     points = json['points'];
     TeamName = json['TeamName'];
   }
@@ -62,6 +65,7 @@ class LeaderboardData {
     _data['rank'] = rank;
     _data['name'] = name;
     _data['user_id'] = userId;
+    _data['win_amount']=winAmount;
     _data['points'] = points;
     _data['TeamName'] = TeamName;
     return _data;

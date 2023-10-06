@@ -677,7 +677,7 @@ class _WalletScreenState extends State<WalletScreen>
                                     ]),
                                     Text(
                                       // "0",
-                                      "₹${controller.getWalletApiResponse!.data.depositWallet}",
+                                      "₹${controller.getWalletApiResponse!.data.winningWallet}",
                                       style: TextStyle(
                                           color:
                                               ColorConstant.primaryBlackColor,

@@ -29,14 +29,14 @@ class WalletData {
     required this.depositWallet,
     required this.winningWallet,
   });
-  late final int bonusWallet;
+  late final String bonusWallet;
   late final String depositWallet;
-  late final int winningWallet;
+  late final String winningWallet;
   
   WalletData.fromJson(Map<String, dynamic> json){
-    bonusWallet = json['bonus_wallet'];
+    bonusWallet = json['bonus_wallet'].toString();
     depositWallet = json['deposit_wallet'].toString();
-    winningWallet = json['winning_wallet'];
+    winningWallet = json['winning_wallet'].toString();
   }
 
   Map<String, dynamic> toJson() {
