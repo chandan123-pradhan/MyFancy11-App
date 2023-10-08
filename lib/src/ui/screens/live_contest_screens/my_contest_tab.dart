@@ -11,23 +11,20 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 
 class MyContestTab extends StatefulWidget {
+  bool isCompleted;
+  MyContestTab({required this.isCompleted});
   @override
   State<MyContestTab> createState() => _MyContestTabState();
 }
 
 class _MyContestTabState extends State<MyContestTab> {
-var controller=Get.put(LiveContestController());
+  var controller = Get.put(LiveContestController());
 
-
-
-
-@override
+  @override
   void dispose() {
-    
     // TODO: implement dispose
     super.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -43,16 +40,16 @@ var controller=Get.put(LiveContestController());
                       padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
                       child: InkWell(
                         onTap: () {
-                          var v=controller
+                          var v = controller
                               .myContestApiResponse!.data[index].contestId;
-                              print(v);
+                          print(v);
                           //    debugger();
                           controller.updateMycontestScreen(controller
                               .myContestApiResponse!.data[index].contestId
                               .toString());
                         },
                         child: Container(
-                       //   height: 120,
+                          // height: 120,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             boxShadow: [
@@ -101,13 +98,11 @@ var controller=Get.put(LiveContestController());
                               ),
                               Container(
                                 height: 35,
-                               decoration: BoxDecoration(
-                                 color: Colors.black12,
-                                 borderRadius: BorderRadius.only(
-                                  bottomLeft: Radius.circular(10),
-                                  bottomRight: Radius.circular(10)
-                                 )
-                               ),
+                                decoration: BoxDecoration(
+                                    color: Colors.black12,
+                                    borderRadius: BorderRadius.only(
+                                        bottomLeft: Radius.circular(10),
+                                        bottomRight: Radius.circular(10))),
                                 width: MediaQuery.of(context).size.width / 1,
                                 child: Padding(
                                   padding: const EdgeInsets.only(
@@ -166,18 +161,19 @@ var controller=Get.put(LiveContestController());
                                                 width: 5,
                                                 height: 5,
                                                 decoration: BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  color: Colors.black26
-                                                ),
+                                                    shape: BoxShape.circle,
+                                                    color: Colors.black26),
                                               ),
-                                              SizedBox(width: 10,),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
                                               // Icon(Icons.first)
                                               Text(
-                                             "Max. Winners:- "+   controller
+                                                "Max. Winners:- " +
+                                                    controller
                                                         .myContestApiResponse!
                                                         .data[index]
                                                         .winPercent,
-                                                    
                                                 style: TextStyle(
                                                     color: ColorConstant
                                                         .primaryBlackColor,
@@ -216,45 +212,73 @@ var controller=Get.put(LiveContestController());
                                   ),
                                 ),
                               ),
-                              // Expanded(
-                              //     child: Container(
-                              //   decoration: BoxDecoration(
-                              //       color: Colors.amber[50],
-                              //       borderRadius: BorderRadius.only(
-                              //           bottomLeft: Radius.circular(10),
-                              //           bottomRight: Radius.circular(10))),
-                              //   child: Padding(
-                              //     padding:
-                              //         const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                              //     child:
-                                     
-                              //         Row(
-                              //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              //           children: [
-                              //              Text(
-                              //              'Rank',
-                              //               style: TextStyle(
-                              //                   color: Colors.black, fontSize: 15),
-                              //             ),
-                              //             Text(
-                              //               controller.myContestApiResponse!
-                              //                           .data[index].rank ==
-                              //                       'null'
-                              //                   ? '-'
-                              //                   : controller.myContestApiResponse!
-                              //                       .data[index].rank,
-                              //               style: TextStyle(
-                              //                   color: Colors.black, fontSize: 15),
-                              //             ),
-                              //           ],
-                                      
-                                    
-                              //     ),
-                              //   ),
-                              // ))
-                          
-                          
-                          
+                              widget.isCompleted == false
+                                  ? Container()
+                                  : Container(
+                                      height: 40,
+                                      decoration: BoxDecoration(
+                                          // color: Colors.amber[50],
+                                          borderRadius: BorderRadius.only(
+                                              bottomLeft: Radius.circular(10),
+                                              bottomRight:
+                                                  Radius.circular(10))),
+                                      child: Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            15, 0, 15, 0),
+                                        child: controller
+                                                    .myContestApiResponse!
+                                                    .data[index]
+                                                    .winInfo
+                                                    .totalWinAmount ==
+                                                ''
+                                            ? Center(
+                                                child: Text(
+                                                  'You Loss The Game',
+                                                  style: TextStyle(
+                                                      color: ColorConstant
+                                                          .primaryColor,
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.w600),
+                                                ),
+                                              )
+                                            : Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    'Win ${controller.myContestApiResponse!.data[index].winInfo.totalWinTeam} Team',
+                                                    style: TextStyle(
+                                                        color: ColorConstant
+                                                            .greenColor,
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.w600),
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      Image.asset(
+                                                        'assets/new_icons/crown.png',
+                                                        height: 17,
+                                                        width: 17,
+                                                      ),
+                                                      Text(
+                                                        'Won ₹${controller.myContestApiResponse!.data[index].winInfo.totalWinAmount}',
+                                                        style: TextStyle(
+                                                            color: ColorConstant
+                                                                .greenColor,
+                                                            fontSize: 15,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w600),
+                                                      ),
+                                                    ],
+                                                  )
+                                                ],
+                                              ),
+                                      ),
+                                    )
                             ],
                           ),
                         ),

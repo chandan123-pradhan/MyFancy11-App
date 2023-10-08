@@ -11,6 +11,7 @@ import 'package:cricket_fantacy/src/ui/widgets/shimmer_effect_widget.dart';
 import 'package:cricket_fantacy/src/utils/color_scheme.dart';
 import 'package:cricket_fantacy/src/utils/image_utils.dart';
 import 'package:cricket_fantacy/src/utils/messages.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:lottie/lottie.dart';
 import 'package:upi_india/upi_india.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +40,7 @@ class _WalletScreenState extends State<WalletScreen>
     controller.getWalletApi(context);
   }
 
-
+  String withdrawableAmt = '';
   // TextEditingController promoCodeController = new TextEditingController();
   @override
   void initState() {
@@ -174,7 +175,7 @@ class _WalletScreenState extends State<WalletScreen>
                                 )
                               ],
                             ),
-                              SizedBox(
+                            SizedBox(
                               height: 5,
                             ),
                             Divider(),
@@ -212,8 +213,7 @@ class _WalletScreenState extends State<WalletScreen>
                                 )
                               ],
                             ),
-                            
-                          SizedBox(
+                            SizedBox(
                               height: 5,
                             ),
                             Divider(),
@@ -423,7 +423,16 @@ class _WalletScreenState extends State<WalletScreen>
                       padding: const EdgeInsets.fromLTRB(15, 15, 15, 20),
                       child: InkWell(
                         onTap: () {
-                          _getUpiApp();
+                          if (double.parse(amountController.text) >=
+                              double.parse(controller.splashDataApiResponse!
+                                  .data.rechargeMinimum)) {
+                            _getUpiApp();
+                          } else {
+                            Messages().showErrorMsg(
+                                context: context,
+                                message:
+                                    'Minimum recharge should be ${controller.splashDataApiResponse!.data.rechargeMinimum}');
+                          }
                           // initiateTransaction();
                           // _pay();
                           //           if (_isActive == true) {
@@ -567,8 +576,9 @@ class _WalletScreenState extends State<WalletScreen>
                                                             .data[i]
                                                             .code,
                                                         context);
-                                                  }else{
-                                                    controller.removeAppliedCode();
+                                                  } else {
+                                                    controller
+                                                        .removeAppliedCode();
                                                   }
                                                 },
                                                 child: Padding(
@@ -650,12 +660,13 @@ class _WalletScreenState extends State<WalletScreen>
                                 left: 15, right: 15, top: 10, bottom: 10),
                             child: Column(
                               children: [
-                                SizedBox(height: 5,),
+                                SizedBox(
+                                  height: 5,
+                                ),
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    
                                     Row(children: [
                                       Image.asset(
                                         ImageUitls.Wallet_icon,
@@ -727,8 +738,6 @@ class _WalletScreenState extends State<WalletScreen>
                                 //     )
                                 //   ],
                                 // ),
-                           
-                           
                               ],
                             ),
                           ),
@@ -986,7 +995,6 @@ class _WalletScreenState extends State<WalletScreen>
                                             )
                                           ],
                                         ),
-                                       
                                       ],
                                     ),
                                   ),
@@ -1012,9 +1020,9 @@ class _WalletScreenState extends State<WalletScreen>
                                   ),
                                 ),
                                 InkWell(
-                                  onTap: (){
+                                  onTap: () {
                                     setState(() {
-                                      controller.selectedPaymentGateway='0';
+                                      controller.selectedPaymentGateway = '0';
                                     });
                                   },
                                   child: Padding(
@@ -1034,8 +1042,8 @@ class _WalletScreenState extends State<WalletScreen>
                                               width: 10,
                                             ),
                                             Text(
-                                              controller
-                                                  .checkEkyApiResponse!.data.upi,
+                                              controller.checkEkyApiResponse!
+                                                  .data.upi,
                                               style: TextStyle(
                                                   color: ColorConstant
                                                       .primaryBlackColor,
@@ -1045,7 +1053,8 @@ class _WalletScreenState extends State<WalletScreen>
                                           ],
                                         ),
                                         Icon(
-                                             controller.selectedPaymentGateway == '0'
+                                            controller.selectedPaymentGateway ==
+                                                    '0'
                                                 ? Icons.stop_circle_outlined
                                                 : Icons.circle_outlined,
                                             size: 25)
@@ -1054,9 +1063,9 @@ class _WalletScreenState extends State<WalletScreen>
                                   ),
                                 ),
                                 InkWell(
-                                  onTap: (){
+                                  onTap: () {
                                     setState(() {
-                                      controller.selectedPaymentGateway='1';
+                                      controller.selectedPaymentGateway = '1';
                                     });
                                   },
                                   child: Padding(
@@ -1077,11 +1086,8 @@ class _WalletScreenState extends State<WalletScreen>
                                               width: 10,
                                             ),
                                             Text(
-                                        
-                                        
-                                        
-                                              controller.checkEkyApiResponse!.data
-                                                  .accountNumber,
+                                              controller.checkEkyApiResponse!
+                                                  .data.accountNumber,
                                               style: TextStyle(
                                                   color: ColorConstant
                                                       .primaryBlackColor,
@@ -1090,8 +1096,9 @@ class _WalletScreenState extends State<WalletScreen>
                                             )
                                           ],
                                         ),
-                                          Icon(
-                                            controller.selectedPaymentGateway == '1'
+                                        Icon(
+                                            controller.selectedPaymentGateway ==
+                                                    '1'
                                                 ? Icons.stop_circle_outlined
                                                 : Icons.circle_outlined,
                                             size: 25)
@@ -1123,7 +1130,11 @@ class _WalletScreenState extends State<WalletScreen>
                                       TextFormField(
                                         controller: withdrawAmountController,
                                         keyboardType: TextInputType.number,
-                                        onChanged: (val) {},
+                                        onChanged: (val) {
+                                          setState(() {
+                                            withdrawableAmt = val;
+                                          });
+                                        },
                                         decoration: InputDecoration(
                                             filled: true,
                                             hintText: "Amount to withdraw"),
@@ -1131,14 +1142,139 @@ class _WalletScreenState extends State<WalletScreen>
                                       SizedBox(
                                         height: 20,
                                       ),
-
-                                      Text("Note:- 31% Income Tax Applicable",
-                                      style: TextStyle(
-                                        color: Colors.black38,
-                                        fontSize: 12
-                                      ),
-                                      ),
-                                       SizedBox(
+                                      withdrawableAmt == ''
+                                          ? Container()
+                                          : Container(
+                                              // height: 150,
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  1,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(4),
+                                                  color: Colors.black12),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(10.0),
+                                                child: Column(
+                                                  children: [
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Text(
+                                                          "Withdrawal Amount",
+                                                          style: TextStyle(
+                                                              color: ColorConstant
+                                                                  .primaryBlackColor,
+                                                              fontSize: 14,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
+                                                        ),
+                                                        Text(
+                                                          "₹${withdrawableAmt}",
+                                                          style: TextStyle(
+                                                              color: ColorConstant
+                                                                  .primaryBlackColor,
+                                                              fontSize: 14,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    SizedBox(
+                                                      height: 10,
+                                                    ),
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Text(
+                                                          "31.2% Income Tax",
+                                                          style: TextStyle(
+                                                              color: ColorConstant
+                                                                  .primaryBlackColor,
+                                                              fontSize: 14,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
+                                                        ),
+                                                        Text(
+                                                          "- ₹${((double.parse(withdrawableAmt) / 100) * 31.2).toStringAsFixed(2)}",
+                                                          style: TextStyle(
+                                                              color: ColorConstant
+                                                                  .primaryBlackColor,
+                                                              fontSize: 14,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    SizedBox(
+                                                      height: 10,
+                                                    ),
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Container(
+                                                          height: 5,
+                                                          width: 5,
+                                                        ),
+                                                        Text(
+                                                          "----------",
+                                                          style: TextStyle(
+                                                              color: ColorConstant
+                                                                  .primaryBlackColor,
+                                                              fontSize: 14,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    SizedBox(
+                                                      height: 10,
+                                                    ),
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Text(
+                                                          "Final Withdrawable Amount",
+                                                          style: TextStyle(
+                                                              color: ColorConstant
+                                                                  .greenColor,
+                                                              fontSize: 14,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
+                                                        ),
+                                                        Text(
+                                                          "- ₹${((double.parse(withdrawableAmt) - (double.parse(withdrawableAmt) / 100) * 31.2)).toStringAsFixed(2)}",
+                                                          style: TextStyle(
+                                                              color: ColorConstant
+                                                                  .greenColor,
+                                                              fontSize: 14,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                      SizedBox(
                                         height: 20,
                                       ),
                                       InkWell(
@@ -1148,9 +1284,9 @@ class _WalletScreenState extends State<WalletScreen>
                                             controller.requestForWithdrawal(
                                                 withdrawAmountController.text,
                                                 context,
-                                                
-                                                controller.selectedPaymentGateway.toString()
-                                                );
+                                                controller
+                                                    .selectedPaymentGateway
+                                                    .toString());
                                           }
                                         },
                                         child: Container(
@@ -1197,7 +1333,6 @@ class _WalletScreenState extends State<WalletScreen>
         transactionRefId: DateTime.now().toString(),
         transactionNote: 'Buying a team.',
         amount: double.parse(amountController.text),
-        
       )
           .then((value) {
         debugger();
@@ -1240,7 +1375,6 @@ class _WalletScreenState extends State<WalletScreen>
                   SizedBox(
                     height: 20,
                   ),
-                 
                   Center(
                     child:
                         Text("You Don't Have UPI Apss, Please Install first!"),
@@ -1249,7 +1383,6 @@ class _WalletScreenState extends State<WalletScreen>
               )
             : Column(
                 children: [
-                  
                   SizedBox(
                     height: 10,
                   ),
@@ -1257,7 +1390,8 @@ class _WalletScreenState extends State<WalletScreen>
                     children: [
                       for (int i = 0; i < apps.length; i++)
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 10),
                           child: InkWell(
                             onTap: () {
                               Navigator.pop(context);

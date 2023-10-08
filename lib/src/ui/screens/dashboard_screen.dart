@@ -226,7 +226,7 @@ width: 30,
                     },
                     child: BottomBarItem(
                       imageName: ImageUitls.Profile_icon,
-                      title: 'Portfolio',
+                      title: 'Trading',
                       isSelected: _currentIndex == 3 ? true : false,
                       selectedImage: 'assets/new_icons/quiz.png'
                     ))

@@ -342,7 +342,7 @@ void updateLive(){
                                                         child: Text(
                                                    widget.flag==true? 
                                                    
-                                                      controller
+                                                    "₹"+  controller
                                                               .getLeaderboardApiResponse!
                                                               .data[i].winAmount:
                                                          controller

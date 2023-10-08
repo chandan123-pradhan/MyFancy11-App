@@ -183,6 +183,7 @@ class _LoginScreenState extends State<LoginScreen> {
           Padding(
             padding: const EdgeInsets.all(15.0),
             child: TextFormField(
+              keyboardType: TextInputType.number,
               controller: controller.phoneNumberController,
               onChanged: (val) {
                 if (val.isNotEmpty) {
@@ -196,7 +197,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 }
               },
               decoration: InputDecoration(
-                  filled: true, hintText: "Email or Mobile No."),
+                  filled: true, hintText: "Mobile No."),
             ),
           ),
           Padding(
@@ -204,7 +205,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: InkWell(
               onTap: () {
                 if (_isActive == true && isCheckBottonTrue) {
-                  controller.callValidatePhoneApi(context);
+                  controller.callValidatePhoneApi(context,'login');
                 }
               },
               child: Container(

@@ -186,6 +186,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             padding: const EdgeInsets.all(15.0),
             child: TextFormField(
               controller: controller.phoneNumberController,
+              keyboardType: TextInputType.number,
               enabled: true,
               onChanged: (val) {},
               decoration: InputDecoration(

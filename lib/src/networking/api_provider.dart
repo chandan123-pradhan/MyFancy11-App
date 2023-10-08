@@ -80,9 +80,10 @@ class ApiProvider {
           Uri.parse(NetworkConstant.BASE_URL + routeUrl),
           headers: {'Token': appToken!},
           body: bodyParams);
-    // debugger();
+// debugger();
      print(response);
       if (response.statusCode == 200|| response.statusCode==404) {
+        // debugger();
         return json.decode(response.body);
       } else if (response.statusCode == 400) {
         isUnAuthenicated=true;

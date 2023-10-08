@@ -199,7 +199,10 @@ class Data {
     required this.favicon,
     required this.upi,
     required this.iosVersion,
-    required this.iosApkUrl
+    required this.iosApkUrl,
+    required this.homePagePopup,
+    required this.rechargeMinimum,
+    required this.withdrawMinimum
   });
   late final String id;
   late final String appToken;
@@ -221,6 +224,9 @@ class Data {
   late final String upi;
   late final String iosVersion;
   late final String iosApkUrl;
+  late final String rechargeMinimum;
+  late final String withdrawMinimum;
+  late final String homePagePopup;
   
   Data.fromJson(Map<String, dynamic> json){
     id = json['id'];
@@ -243,6 +249,10 @@ class Data {
     upi = json['upi'];
     iosVersion=json['ios_version'];
     iosApkUrl=json['ios_url'];
+    rechargeMinimum=json['recharge_min'].toString();
+    withdrawMinimum=json['withdraw_min'].toString();
+    homePagePopup=json['home_popup'];
+
 
   }
 
@@ -268,6 +278,9 @@ class Data {
     _data['upi'] = upi;
     _data['ios_version']=iosVersion;
     _data['ios_url']=iosApkUrl;
+    _data['recharge_min']=rechargeMinimum;
+    _data['withdraw_min']=withdrawMinimum;
+    _data['home_popup']=homePagePopup;
     return _data;
   }
 }

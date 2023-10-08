@@ -302,7 +302,7 @@ class _FantacyTabState extends State<FantacyTab> {
   }
 
   void onTapBanner(HomeBanner loginBanner) {
-    //debugger();
+    debugger();
     switch (loginBanner.action) {
       case 'link':
         //launch url

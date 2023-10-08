@@ -108,7 +108,7 @@ class HomeController extends GetxController {
         routeUrl: NetworkConstant.CUSTOMER_DATE_ROUTE_URL,
         bodyParams: parameter);
       // debugger();
-    //print(response);
+    print(response);
     splashDataApiResponse = SplashDataApiResponse.fromJson(response);
     sharedPref.setAppToken(splashDataApiResponse.data.appToken);
     update();
@@ -227,6 +227,7 @@ class HomeController extends GetxController {
     var response = await apiProvider.postAfterAuth(
         routeUrl: NetworkConstant.Get_Squad, bodyParams: parameter);
 // debugger();
+print("sdf");
     getSquadApiResponse = GetSquadApiResponse.fromJson(response);
 
     devidePlayersAccordingToTitle();
@@ -863,7 +864,8 @@ class HomeController extends GetxController {
 
   void requestForWithdrawal(
       String amount, context, selectedPaymentMethod) async {
-    showLoaderDialog(context);
+   if(double.parse(splashDataApiResponse.data.withdrawMinimum)<=double.parse(amount)){
+     showLoaderDialog(context);
     Map parameter = {'amount': amount, 'is_default': selectedPaymentMethod};
     var response = await apiProvider.postAfterAuth(
         routeUrl: NetworkConstant.requestForWithdrawal, bodyParams: parameter);
@@ -876,6 +878,9 @@ class HomeController extends GetxController {
       Messages().showErrorMsg(context: context, message: response['message']);
     }
     update();
+   }else{
+ Messages().showErrorMsg(context: context, message: 'Minimum Withdrawal should be ${splashDataApiResponse.data.withdrawMinimum}');
+   }
   }
 
   // Future<GetMatchesApiResponse> getMatchData(context, matchId) async {

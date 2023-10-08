@@ -741,7 +741,9 @@ class _LiveContestScreenState extends State<LiveContestScreen>
                                         isForLive: true,
                                       
                                       )
-                                  : MyContestTab(),
+                                  : MyContestTab(
+                                    isCompleted: widget.flag=='Completed Match'?true:false,
+                                  ),
                               controller.isMyContestDetailsPageEnable
                                   ? WinningTab(
                                       contestId: controller.tappedContestId)
@@ -762,7 +764,9 @@ class _LiveContestScreenState extends State<LiveContestScreen>
                                          flag: widget.flag=='Completed Match'?true:false,
                                          isForLive: true,
                                       )
-                                  : MyContestTab(),
+                                  : MyContestTab(
+                                    isCompleted: widget.flag=='Completed Match'?true:false,
+                                  ),
                               controller.isMyContestDetailsPageEnable
                                   ? WinningTab(
                                       contestId: controller.tappedContestId)

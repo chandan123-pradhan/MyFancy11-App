@@ -10,7 +10,9 @@ import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
 
 class OtpScreen extends StatefulWidget {
-  const OtpScreen({super.key});
+  String type;
+  OtpScreen({required this.type});
+  // const OtpScreen({super.key});
 
   @override
   State<OtpScreen> createState() => _OtpScreenState();
@@ -40,7 +42,7 @@ class _OtpScreenState extends State<OtpScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Register & Play",
+              "Verify OTP",
               style: TextStyle(
                   color: ColorConstant.primaryWhiteColor,
                   fontSize: 17,
@@ -119,7 +121,7 @@ class _OtpScreenState extends State<OtpScreen> {
             child: InkWell(
               onTap: () {
                 if (_isActive == true) {
-                  controller.validateOtp(context);
+                  controller.validateOtp(context,widget.type);
                   // Navigator.push(
                   //   context,
                   //   (MaterialPageRoute(

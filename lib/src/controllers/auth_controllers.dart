@@ -40,26 +40,46 @@ class AuthController extends GetxController {
   String selectedAwatarLink = '';
   late UpdateProfileApiReponse updateProfileApiReponse;
   var homeController = Get.put(HomeController());
-  void callValidatePhoneApi(context) async {
+  void callValidatePhoneApi(context, type) async {
     homeController.getSplashData(context, 0);
     if (phoneNumberController.text.length == 10) {
-      Map data = {NetworkConstant.PHONE_PARAMS: phoneNumberController.text};
-      //  debugger();
+      Map data = {
+        NetworkConstant.PHONE_PARAMS: phoneNumberController.text,
+        'type': type
+      };
+      debugger();
       try {
         showLoaderDialog(context);
         var response = await apiProvider.postBeforeAuth(
             routeUrl: NetworkConstant.VERIFY_MOBILE_NUMBER_URL,
             bodyParams: data);
         Navigator.pop(context);
-//  debugger();
+
+
+
+
+
+ debugger();
         print(response);
         if (response['status'] == 200) {
-          validatePhoneNumberApiResponse =
+          if(type=='register'){
+            // validatePhoneNumberApiResponse =
+          //     ValidatePhoneNumberApiResponse.fromJson(response);
+          messages.showMsg(
+              context: context,
+              message: "Mobile Number Already Register Please Login");
+          }else{
+            validatePhoneNumberApiResponse =
               ValidatePhoneNumberApiResponse.fromJson(response);
           messages.showMsg(
               context: context,
-              message: "OTP has been sent on your mobile number.");
-          _navigateToOtpPage(context);
+              message: "OTP Has been shared on your Number");
+             _navigateToOtpPage(context, type);
+          }
+        } else if (response['status'] == 400) {
+          validatePhoneNumberApiResponse =
+              ValidatePhoneNumberApiResponse.fromJson(response);
+          _navigateToOtpPage(context, type);
         } else {
           messages.showErrorMsg(context: context, message: response['message']);
         }
@@ -75,22 +95,28 @@ class AuthController extends GetxController {
     }
   }
 
-  void _navigateToOtpPage(context) {
+  void _navigateToOtpPage(context, type) {
     Navigator.push(
       context,
       (MaterialPageRoute(
         builder: (context) {
-          return OtpScreen();
+          return OtpScreen(type: type);
         },
       )),
     );
   }
 
-  void validateOtp(context) {
+  void validateOtp(context, type) {
     print(otpController.text);
     if (validatePhoneNumberApiResponse.otp.toString() == otpController.text) {
       messages.showMsg(
           context: context, message: "OTP Verified Successfully Done.");
+      otpController.clear();
+      debugger();
+
+if(type=='register'){
+callRegisterApi(context);
+}else{
 
       if (isUnAuthenicated) {
         // //for new user.
@@ -99,11 +125,14 @@ class AuthController extends GetxController {
         //   return const RegisterScreen();
         // }), (route) => false);
       } else {
-        callLoginApi(context);
+        
+          callLoginApi(context);
       }
+}
     } else {
       messages.showErrorMsg(context: context, message: "Invalid OTP");
     }
+    
   }
 
   void callLoginApi(context) async {
@@ -116,27 +145,25 @@ class AuthController extends GetxController {
       IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
       modelName = iosInfo.model;
     }
-final fcmToken = await FirebaseMessaging.instance.getToken();
+    final fcmToken = await FirebaseMessaging.instance.getToken();
     Map parameter = {
       NetworkConstant.Login_Method: 'phone',
       NetworkConstant.Login_Id: phoneNumberController.text,
       NetworkConstant.Device_Name: modelName,
       NetworkConstant.One_Signal: 'ssss',
-      'firebase':fcmToken
+      'firebase': fcmToken
     };
-    
+
     //debugger();
     var response = await apiProvider.postBeforeAuthWithAppToken(
         routeUrl: NetworkConstant.LOGIN_ROUTE_URL, bodyParams: parameter);
-      //  debugger();
+    //  debugger();
     print(response);
     loginApiResponse = LoginApiResponse.fromJson(response);
     sharedPref.setUserToken(loginApiResponse.data.userToken);
     sharedPref.setProfilepic(loginApiResponse.data.profile);
-    sharedPref.setProfileDetails(
-              loginApiResponse.data.name, loginApiResponse.data.email,
-              loginApiResponse.data.phone
-              );
+    sharedPref.setProfileDetails(loginApiResponse.data.name,
+        loginApiResponse.data.email, loginApiResponse.data.phone);
     sharedPref.saveAuthToken();
     sharedPref.setLoginStatus();
     Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) {
@@ -163,25 +190,32 @@ final fcmToken = await FirebaseMessaging.instance.getToken();
       NetworkConstant.Reffer_By: referByController.text,
       NetworkConstant.Device_Name: modelName,
       NetworkConstant.One_Signal: 'ssss',
-       'firebase':fcmToken
+      'firebase': fcmToken
     };
+    debugger();
     try {
       var response = await apiProvider.postBeforeAuthWithAppToken(
           routeUrl: NetworkConstant.REGISTER_ROUTE_URL, bodyParams: parameter);
+      debugger();
 
-      loginApiResponse = LoginApiResponse.fromJson(response);
-      //debugger();
-      sharedPref.setUserToken(loginApiResponse.data.userToken);
-      sharedPref.setProfilepic(loginApiResponse.data.profile);
-      messages.showMsg(
-          context: context, message: 'Registration Successfully Done.');
-      sharedPref.saveAuthToken();
-      homeController.getSplashData(context, 0);
-      Navigator.pop(context);
-      Navigator.pushAndRemoveUntil(context,
-          MaterialPageRoute(builder: (context) {
-        return  ProfileSetupScreen();
-      }), (route) => false);
+      if (response['status'] == 200) {
+        loginApiResponse = LoginApiResponse.fromJson(response);
+        //debugger();
+        sharedPref.setUserToken(loginApiResponse.data.userToken);
+        sharedPref.setProfilepic(loginApiResponse.data.profile);
+        messages.showMsg(
+            context: context, message: 'Registration Successfully Done.');
+        sharedPref.saveAuthToken();
+        homeController.getSplashData(context, 0);
+        Navigator.pop(context);
+        Navigator.pushAndRemoveUntil(context,
+            MaterialPageRoute(builder: (context) {
+          return ProfileSetupScreen();
+        }), (route) => false);
+      } else if (response['status'] == 400) {
+        messages.showMsg(context: context, message: response['message']);
+        Navigator.pop(context);
+      }
     } catch (e) {
       Navigator.pop(context);
       messages.showErrorMsg(
@@ -190,8 +224,8 @@ final fcmToken = await FirebaseMessaging.instance.getToken();
   }
 
   void verifyRefferalCode(context) async {
-    showLoaderDialog(context);
     if (referByController.text.isNotEmpty) {
+      showLoaderDialog(context);
       Map data = {NetworkConstant.Reffer_By: referByController.text};
       var response = await apiProvider.postBeforeAuthWithAppToken(
           routeUrl: NetworkConstant.REFER_VALIDATION_ROUTE_URL,
@@ -203,9 +237,11 @@ final fcmToken = await FirebaseMessaging.instance.getToken();
         Navigator.pop(context);
       }
     } else {
-      callRegisterApi(context);
+      callValidatePhoneApi(context, 'register');
     }
   }
+
+//  callRegisterApi(context);
 
   getAwatarList(context) async {
     Map data = {};
@@ -221,7 +257,9 @@ final fcmToken = await FirebaseMessaging.instance.getToken();
     }
   }
 
-  updateProfile(context,) async {
+  updateProfile(
+    context,
+  ) async {
     if (nameController.text.isNotEmpty) {
       if (emailController.text.isNotEmpty && emailController.text.isEmail) {
         showLoaderDialog(context);
@@ -235,13 +273,11 @@ final fcmToken = await FirebaseMessaging.instance.getToken();
           var response = await apiProvider.postAfterAuth(
               routeUrl: NetworkConstant.ACCOUNT_UPDATE_URL, bodyParams: data);
           Navigator.pop(context);
-          
+
           updateProfileApiReponse = UpdateProfileApiReponse.fromJson(response);
           sharedPref.setProfilepic(updateProfileApiReponse.updatedData.profile);
-          sharedPref.setProfileDetails(
-              nameController.text, emailController.text,
-              updateProfileApiReponse.updatedData.phone
-              );
+          sharedPref.setProfileDetails(nameController.text,
+              emailController.text, updateProfileApiReponse.updatedData.phone);
           sharedPref.setLoginStatus();
           messages.showMsg(
               context: context, message: updateProfileApiReponse.message);
@@ -269,12 +305,63 @@ final fcmToken = await FirebaseMessaging.instance.getToken();
   }
 
   void googleLogin(context) {
-         showLoaderDialog(context);
-   try{
-     GoogleSignInService().signInWithGoogle().then((value) async {
-      //  debugger();
-      if (value != null) {
+    showLoaderDialog(context);
+    try {
+      GoogleSignInService().signInWithGoogle().then((value) async {
+        //  debugger();
+        if (value != null) {
+          DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+          String modelName = '';
+          if (Platform.isAndroid) {
+            AndroidDeviceInfo mName = await deviceInfo.androidInfo;
+            modelName = mName.model;
+          } else if (Platform.isIOS) {
+            IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+            modelName = iosInfo.model;
+          }
 
+          Map parameter = {
+            NetworkConstant.Login_Method: 'google',
+            NetworkConstant.Login_Id: value.email,
+            NetworkConstant.Device_Name: modelName,
+            NetworkConstant.One_Signal: 'ssss'
+          };
+
+          var response = await apiProvider.postBeforeAuthWithAppToken(
+              routeUrl: NetworkConstant.LOGIN_ROUTE_URL, bodyParams: parameter);
+          //    debugger();
+          print(response);
+          if (response == null) {
+            messages.showErrorMsg(
+                context: context, message: 'Account not found');
+            // account not found.
+          } else {
+            loginApiResponse = LoginApiResponse.fromJson(response);
+            sharedPref.setUserToken(loginApiResponse.data.userToken);
+            sharedPref.setProfilepic(loginApiResponse.data.profile);
+            sharedPref.setProfileDetails(loginApiResponse.data.name,
+                loginApiResponse.data.email, loginApiResponse.data.phone);
+            sharedPref.saveAuthToken();
+            sharedPref.setLoginStatus();
+            homeController.getSplashData(context, 1);
+            // Navigator.pushAndRemoveUntil(context,
+            //     MaterialPageRoute(builder: (context) {
+            //   return DashboardScreen(
+            //     index: 0,
+            //   );
+            // }), (route) => false);
+          }
+        }
+      });
+    } catch (e) {
+      Navigator.pop(context);
+    }
+  }
+
+  void registerWithGoogle(context) {
+    showLoaderDialog(context);
+    GoogleSignInService().signInWithGoogle().then((value) async {
+      if (value != null) {
         DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
         String modelName = '';
         if (Platform.isAndroid) {
@@ -284,110 +371,53 @@ final fcmToken = await FirebaseMessaging.instance.getToken();
           IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
           modelName = iosInfo.model;
         }
-
         Map parameter = {
           NetworkConstant.Login_Method: 'google',
           NetworkConstant.Login_Id: value.email,
+          NetworkConstant.Reffer_By: referByController.text,
           NetworkConstant.Device_Name: modelName,
           NetworkConstant.One_Signal: 'ssss'
         };
+        try {
+          var response = await apiProvider.postBeforeAuthWithAppToken(
+              routeUrl: NetworkConstant.REGISTER_ROUTE_URL,
+              bodyParams: parameter);
+          debugger();
+          if (response['status'] == 400) {
+            Navigator.pop(context);
+            messages.showErrorMsg(
+                context: context, message: response['message']);
+          } else {
+            loginApiResponse = LoginApiResponse.fromJson(response);
 
-        var response = await apiProvider.postBeforeAuthWithAppToken(
-            routeUrl: NetworkConstant.LOGIN_ROUTE_URL, bodyParams: parameter);
-        //    debugger();
-        print(response);
-        if (response == null) {
-          messages.showErrorMsg(context: context, message: 'Account not found');
-          // account not found.
-        } else {
-          loginApiResponse = LoginApiResponse.fromJson(response);
-          sharedPref.setUserToken(loginApiResponse.data.userToken);
-          sharedPref.setProfilepic(loginApiResponse.data.profile);
-          sharedPref.setProfileDetails(
-              loginApiResponse.data.name, loginApiResponse.data.email,loginApiResponse.data.phone);
-          sharedPref.saveAuthToken();
-          sharedPref.setLoginStatus();
-           homeController.getSplashData(context, 1);
-          // Navigator.pushAndRemoveUntil(context,
-          //     MaterialPageRoute(builder: (context) {
-          //   return DashboardScreen(
-          //     index: 0,
-          //   );
-          // }), (route) => false);
+            sharedPref.setUserToken(loginApiResponse.data.userToken);
+            sharedPref.setProfilepic(loginApiResponse.data.profile);
+            messages.showMsg(
+                context: context, message: 'Registration Successfully Done.');
+            sharedPref.saveAuthToken();
+            homeController.getSplashData(context, 0);
+            Navigator.pop(context);
+            Navigator.pushAndRemoveUntil(context,
+                MaterialPageRoute(builder: (context) {
+              return ProfileSetupScreen(
+                email: value.email,
+              );
+            }), (route) => false);
+          }
+        } catch (e) {
+          Navigator.pop(context);
+          messages.showErrorMsg(
+              context: context,
+              message: 'Registration Failed Please Try Again.');
         }
       }
     });
-  
-  
-   }catch(e){
-    Navigator.pop(context);
-   }
-  
   }
 
-
-void registerWithGoogle(context){
-    showLoaderDialog(context);
-   GoogleSignInService().signInWithGoogle().then((value) async {
-    if(value!=null){
-      DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-    String modelName = '';
-    if (Platform.isAndroid) {
-      AndroidDeviceInfo mName = await deviceInfo.androidInfo;
-      modelName = mName.model;
-    } else if (Platform.isIOS) {
-      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
-      modelName = iosInfo.model;
+  void updateEmail(value) {
+    if (value != null) {
+      emailController.text = value;
     }
-    Map parameter = {
-      NetworkConstant.Login_Method: 'google',
-      NetworkConstant.Login_Id: value.email,
-      NetworkConstant.Reffer_By: referByController.text,
-      NetworkConstant.Device_Name: modelName,
-      NetworkConstant.One_Signal: 'ssss'
-    };
-    try {
-      var response = await apiProvider.postBeforeAuthWithAppToken(
-          routeUrl: NetworkConstant.REGISTER_ROUTE_URL, bodyParams: parameter);
-  debugger();
-if(response['status']==400){
-   Navigator.pop(context);
-      messages.showErrorMsg(
-          context: context, message: response['message']);
-}
-else{
-      loginApiResponse = LoginApiResponse.fromJson(response);
-    
-      sharedPref.setUserToken(loginApiResponse.data.userToken);
-      sharedPref.setProfilepic(loginApiResponse.data.profile);
-      messages.showMsg(
-          context: context, message: 'Registration Successfully Done.');
-      sharedPref.saveAuthToken();
-      homeController.getSplashData(context, 0);
-      Navigator.pop(context);
-      Navigator.pushAndRemoveUntil(context,
-          MaterialPageRoute(builder: (context) {
-        return  ProfileSetupScreen(
-          email: value.email,
-        );
-      }), (route) => false);
-   
-}
-    } catch (e) {
-      Navigator.pop(context);
-      messages.showErrorMsg(
-          context: context, message: 'Registration Failed Please Try Again.');
-    }
-    }
-   });
-}
-
-void updateEmail(value){
-if(value!=null){
-  emailController.text=value;
-}
-update();
-}
-
-
+    update();
+  }
 }

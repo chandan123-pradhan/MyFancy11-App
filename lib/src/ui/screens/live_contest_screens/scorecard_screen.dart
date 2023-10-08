@@ -45,6 +45,8 @@ int secondIningId=0;
   }
 
   void classifyLists() {
+  //  print(widget.liveMatchData);
+  //  debugger();
     firstIningBatsmanList.clear();
     firstIningBowlerList.clear();
     secondIningBatsmanList.clear();
@@ -159,12 +161,22 @@ int secondIningId=0;
                 child: Container(
                     child: teamTab == 0
                         ? teamWiseWidget(firstIningBatsmanList, firstIningBowlerList,
+                       
+                       widget.liveMatchData['data'][0]['team1Score']==null?
+                       '${widget.liveMatchData['data'][0]['team2Score']} (${widget.liveMatchData['data'][0]['team2Over']} OVR)':
+                       
                         '${widget.liveMatchData['data'][0]['team1Score']} (${widget.liveMatchData['data'][0]['team1Over']} OVR)',
                         
                         )
                         : teamWiseWidget(secondIningBatsmanList, secondIningBowlerList,
                         
+                         widget.liveMatchData['data'][0]['team2Score']==null?
+                       '${widget.liveMatchData['data'][0]['team1Score']} (${widget.liveMatchData['data'][0]['team1Over']} OVR)':
+                       
                         '${widget.liveMatchData['data'][0]['team2Score']} (${widget.liveMatchData['data'][0]['team2Over']} OVR)',
+                       
+                       
+                       // '${widget.liveMatchData['data'][0]['team2Score']} (${widget.liveMatchData['data'][0]['team2Over']} OVR)',
                         )))
           ],
         ),

@@ -219,7 +219,7 @@ class _RefferAndEarnScreenState extends State<RefferAndEarnScreen> {
                                     InkWell(
                                       onTap: () {
                                         if (controller.refferalApiResponse!
-                                                .setting.upgradeRequest !=
+                                                .setting.upgradeRequest ==
                                             1) {
                                           showUserInputModeBottomSheet(
                                               'Normal Program', 'downgrade');
@@ -261,8 +261,8 @@ class _RefferAndEarnScreenState extends State<RefferAndEarnScreen> {
                                     InkWell(
                                       onTap: () {
                                         if (controller.refferalApiResponse!
-                                                .setting.upgradeRequest !=
-                                            2) {
+                                                .setting.upgradeRequest ==
+                                            0) {
                                           showUserInputModeBottomSheet(
                                               'Affiliate', 'upgrade');
                                         }
@@ -508,7 +508,7 @@ class _AffiliateProgramFormState extends State<AffiliateProgramForm> {
                     height: 10,
                   ),
                   Text(
-                    "Provide you below input to be an ${widget.title}?",
+                    "Provide your below input to be an ${widget.title}",
                     style: TextStyle(
                         color: ColorConstant.primaryBlackColor,
                         fontSize: 16,

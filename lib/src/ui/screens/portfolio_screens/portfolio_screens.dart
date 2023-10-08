@@ -50,9 +50,9 @@ class _PortfolioScreenState extends State<PortfolioScreen>with SingleTickerProvi
                 labelColor: ColorConstant.primaryBlackColor,
                 tabs: const [
                   Tab(
-                    text: 'Portfolio',
+                    text: 'Trading',
                   ),
-                  Tab(text: "My Portfolio"),
+                  Tab(text: "My Trading"),
                 
                 ],
               ),
