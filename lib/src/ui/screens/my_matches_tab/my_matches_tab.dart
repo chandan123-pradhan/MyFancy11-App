@@ -265,7 +265,7 @@ class _MyMatchesTabState extends State<MyMatchesTab>
                                             controller.getCompletedMyMatchResponse!.data
                                                     .length -
                                                 1
-                                        ? 50
+                                        ? 100
                                         : 8),
                                   child: InkWell(
                                     onTap: () {
@@ -542,7 +542,11 @@ class _MyMatchesTabState extends State<MyMatchesTab>
                                                           const EdgeInsets.all(
                                                               0.0),
                                                       child: Text(
-                                                        "1 Team    1 Contest",
+                                                        "${controller
+                                                                .getCompletedMyMatchResponse!
+                                                                .data[index].myteamCount} Team    ${controller
+                                                                .getCompletedMyMatchResponse!
+                                                                .data[index].contestCount} Contest",
                                                         style: TextStyle(
                                                             color: Colors.black45,
                                                             fontSize: 12,

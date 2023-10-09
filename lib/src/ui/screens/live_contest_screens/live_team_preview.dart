@@ -38,32 +38,35 @@ ScreenshotController screenshotController = ScreenshotController();
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-          preferredSize: Size.fromHeight(35),
+          preferredSize: Size.fromHeight(45),
           child: AppBar(
             elevation: 0,
             backgroundColor: ColorConstant.primaryBlackColor,
             leading: Container(),
+            centerTitle: true,
             title: Text(
               "Preview",
               style: TextStyle(
                   color: ColorConstant.primaryWhiteColor, fontSize: 16),
             ),
             actions: [
-              Padding(
-                padding: const EdgeInsets.only(right: 15.0),
-                child: InkWell(
+             InkWell(
                   onTap: (){
                     CaptureScreenshot().captureAndShareScreen(
                       screenshotController
                     );
                   },
-                  child: Icon(
-                    Icons.share_sharp,
-                    size: 20,
-                    color: ColorConstant.primaryWhiteColor,
+                  child: Container(
+                    width: 60,
+
+                    child: Icon(
+                      Icons.share_sharp,
+                      size: 20,
+                      color: ColorConstant.primaryWhiteColor,
+                    ),
                   ),
                 ),
-              )
+              
             ],
           )),
 

@@ -259,7 +259,7 @@ flag: 'Upcoming Match',
                             child: Container(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                           widget.myMatchModel.mega=='0'? " Coming Soon":'₹'+widget.myMatchModel.mega,
+                           widget.myMatchModel.mega=='0'? " Comming Soon":'₹'+widget.myMatchModel.mega,
                             style: TextStyle(
                                 color: ColorConstant.primaryBlackColor,
                                 fontSize: 11,

@@ -57,6 +57,7 @@ class HomeController extends GetxController {
   GetMyMatchesApiResponse? getCompletedMyMatchResponse;
   List<SquadPlayer> batsManList = [];
   bool isLineupPressed = false;
+  TextEditingController amountController = new TextEditingController();
   List<SquadPlayer> wiketKeeperList = [];
   List<SquadPlayer> allRounderList = [];
   List<SquadPlayer> bowlerlist = [];
@@ -108,7 +109,7 @@ class HomeController extends GetxController {
     var response = await apiProvider.postBeforeAuthStaticToken(
         routeUrl: NetworkConstant.CUSTOMER_DATE_ROUTE_URL,
         bodyParams: parameter);
-      // debugger();
+    // debugger();
     print(response);
     splashDataApiResponse = SplashDataApiResponse.fromJson(response);
     sharedPref.setAppToken(splashDataApiResponse.data.appToken);
@@ -228,7 +229,7 @@ class HomeController extends GetxController {
     var response = await apiProvider.postAfterAuth(
         routeUrl: NetworkConstant.Get_Squad, bodyParams: parameter);
 // debugger();
-print("sdf");
+    print("sdf");
     getSquadApiResponse = GetSquadApiResponse.fromJson(response);
 
     devidePlayersAccordingToTitle();
@@ -643,17 +644,13 @@ print("sdf");
     }
   }
 
-  void recharge(
-      {required context,
-      required UpiResponse upiResponse,
-      required String amount,
-      required String mode}) async {
+  void recharge({
+    required context,
+    required String amount,
+  }) async {
     showLoaderDialog(context);
     Map parameter = {
       NetworkConstant.amount: amount,
-      NetworkConstant.mode: mode,
-      NetworkConstant.transaction_details:
-          "Transaction id= ${upiResponse.transactionId}, Transaction Ref Id=${upiResponse.transactionRefId}",
       NetworkConstant.status: 'TXN_SUCCESS',
       'promo_code': appliedPromoCode
     };
@@ -661,7 +658,11 @@ print("sdf");
         routeUrl: NetworkConstant.recharge, bodyParams: parameter);
     Navigator.pop(context);
     print(response);
-    // debugger();
+    // debugger();  
+    amountController.clear();
+    if(response['status']==200){
+      Messages().showMsg(context: context, message: 'Recharge Successfully Done');
+    }
     getWalletApi(context);
     // getWalletApiResponse = GetWalletApiResponse.fromJson(response);
 
@@ -703,8 +704,8 @@ print("sdf");
           ekycRequestBody.adhaarBackPicUrl +
           ',' +
           ekycRequestBody.panPicUrl,
-        'aadhaar_number':ekycRequestBody.aadhaarNumber,
-        'pan_number':ekycRequestBody.panNumber,
+      'aadhaar_number': ekycRequestBody.aadhaarNumber,
+      'pan_number': ekycRequestBody.panNumber,
       'bank_name': ekycRequestBody.bankName,
       'ifsc_code': ekycRequestBody.ifscCode,
       'account_number': ekycRequestBody.accountNumber,
@@ -843,45 +844,46 @@ print("sdf");
         routeUrl: NetworkConstant.validatePromoCode, bodyParams: parameter);
 
     Navigator.pop(context);
-   // debugger();
+    // debugger();
     if (response['status'] == 200) {
       appliedPromoCode = code;
       Messages().showMsg(
           context: context, message: 'Promocode successfully applied.');
-    }else{
-       Messages().showErrorMsg(
-          context: context, message: response['message']);
+    } else {
+      Messages().showErrorMsg(context: context, message: response['message']);
     }
     update();
   }
 
   void removeAppliedCode() async {
-    appliedPromoCode='';
+    appliedPromoCode = '';
     update();
   }
 
-
-
-
   void requestForWithdrawal(
       String amount, context, selectedPaymentMethod) async {
-   if(double.parse(splashDataApiResponse.data.withdrawMinimum)<=double.parse(amount)){
-     showLoaderDialog(context);
-    Map parameter = {'amount': amount, 'is_default': selectedPaymentMethod};
-    var response = await apiProvider.postAfterAuth(
-        routeUrl: NetworkConstant.requestForWithdrawal, bodyParams: parameter);
-    // debugger();
-    Navigator.pop(context);
-    if (response['status'] == 200) {
-      Messages().showErrorMsg(context: context, message: response['message']);
-      getWalletApi(context);
+    if (double.parse(splashDataApiResponse.data.withdrawMinimum) <=
+        double.parse(amount)) {
+      showLoaderDialog(context);
+      Map parameter = {'amount': amount, 'is_default': selectedPaymentMethod};
+      var response = await apiProvider.postAfterAuth(
+          routeUrl: NetworkConstant.requestForWithdrawal,
+          bodyParams: parameter);
+      // debugger();
+      Navigator.pop(context);
+      if (response['status'] == 200) {
+        Messages().showErrorMsg(context: context, message: response['message']);
+        getWalletApi(context);
+      } else {
+        Messages().showErrorMsg(context: context, message: response['message']);
+      }
+      update();
     } else {
-      Messages().showErrorMsg(context: context, message: response['message']);
+      Messages().showErrorMsg(
+          context: context,
+          message:
+              'Minimum Withdrawal should be ${splashDataApiResponse.data.withdrawMinimum}');
     }
-    update();
-   }else{
- Messages().showErrorMsg(context: context, message: 'Minimum Withdrawal should be ${splashDataApiResponse.data.withdrawMinimum}');
-   }
   }
 
   // Future<GetMatchesApiResponse> getMatchData(context, matchId) async {
@@ -939,38 +941,59 @@ print("sdf");
     return versionCells[0] * 100000 + versionCells[1] * 1000 + versionCells[2];
   }
 
+  String orderId = '';
 
-String upiId='';
-
-   void getUpiId(amount,context) async {
+  void getUpiId(amount, context) async {
     showLoaderDialog(context);
     Map parameter = {'amount': amount};
     var response = await apiProvider.postAfterAuth(
         routeUrl: NetworkConstant.getUpi, bodyParams: parameter);
-debugger();
+    // debugger();
     Navigator.pop(context);
-   // debugger();
+    //  debugger();
     if (response['status'] == 200) {
-     // upiId=response['']
-    openWeb(response['data']);
-
-
-    }else{
-       Messages().showErrorMsg(
-          context: context, message: response['message']);
+      // upiId=response['']
+      orderId = response['order_id'];
+      openWeb(response['data']);
+    } else {
+      Messages().showErrorMsg(context: context, message: response['message']);
     }
     update();
   }
 
+  void updatePayment(context) async {
+    showLoaderDialog(context);
+    Map parameter = {'order_id': orderId};
+    var response = await apiProvider.postAfterAuth(
+        routeUrl: NetworkConstant.check_status, bodyParams: parameter);
+    Navigator.pop(context);
 
-   void openWeb(var url){
-   // debugger();
-try{
-   launchUrl(Uri.parse(url),);
-}catch(e){
-  print(e);
-}
+    orderId = '';
+    if (response['status'] == 200) {
+      if (response['data']['code'] == 'PAYMENT_SUCCESS') {
+        // Messages().showErrorMsg(
+        //     context: context, message: response['data']['message']);
+        // amountController.clear();
+        recharge(amount: amountController.text, context: context);
+      } else {
+        Messages().showErrorMsg(
+            context: context, message: response['data']['message']);
+      }
+    } else {
+      Messages().showErrorMsg(context: context, message: response['message']);
+    }
+    update();
+  }
+
+  void openWeb(var url) {
+    // debugger();
+    try {
+      launchUrl(
+        Uri.parse(url),
+      );
+    } catch (e) {
+      print(e);
+    }
 //  mode: LaunchMode.inAppWebView,
-
   }
 }

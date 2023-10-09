@@ -48,6 +48,7 @@ class NetworkConstant{
  static const String winner_api='/app/winner';
  static const String myTeamApi='/app/my_team';
 static const String getUpi='/app/getupi';
+static const String check_status='/app/check_status';
   //parames.
 
   static const String PHONE_PARAMS='phone';

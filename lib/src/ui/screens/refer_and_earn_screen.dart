@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class RefferAndEarnScreen extends StatefulWidget {
   const RefferAndEarnScreen({super.key});
@@ -35,6 +36,7 @@ class _RefferAndEarnScreenState extends State<RefferAndEarnScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: ColorConstant.bg_color,
       appBar: AppBar(
         elevation: 0,
@@ -215,21 +217,24 @@ class _RefferAndEarnScreenState extends State<RefferAndEarnScreen> {
                                     borderRadius: BorderRadius.circular(20),
                                     color: Colors.black12),
                                 child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     InkWell(
                                       onTap: () {
-                                        if (controller.refferalApiResponse!
-                                                .setting.upgradeRequest ==
-                                            1) {
-                                          showUserInputModeBottomSheet(
-                                              'Normal Program', 'downgrade');
-                                        }
+                                        // if (controller.refferalApiResponse!
+                                        //         .setting.upgradeRequest ==
+                                        //     1) {
+                                        //   showUserInputModeBottomSheet(
+                                        //       'Normal Program', 'downgrade');
+                                        // }
+
+                                        
                                       },
                                       child: Container(
                                         height: 40,
                                         width:
                                             MediaQuery.of(context).size.width /
-                                                2.23,
+                                                2.4,
                                         decoration: BoxDecoration(
                                             borderRadius:
                                                 BorderRadius.circular(20),
@@ -271,7 +276,7 @@ class _RefferAndEarnScreenState extends State<RefferAndEarnScreen> {
                                         height: 40,
                                         width:
                                             MediaQuery.of(context).size.width /
-                                                2.23,
+                                                2.4,
                                         decoration: BoxDecoration(
                                             borderRadius:
                                                 BorderRadius.circular(20),
@@ -412,8 +417,12 @@ class _RefferAndEarnScreenState extends State<RefferAndEarnScreen> {
 
   void showUserInputModeBottomSheet(String title, task) {
     showModalBottomSheet(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(13)),
-        isScrollControlled: true,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(13),
+          topRight: Radius.circular(13)
+        )),
+         isScrollControlled: true,
+        enableDrag: true,
         context: context,
         builder: (context) {
           return AffiliateProgramForm(
@@ -441,133 +450,171 @@ class _AffiliateProgramFormState extends State<AffiliateProgramForm> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(20.0),
-      child: Container(
-        height: MediaQuery.of(context).size.height / 2.8,
-        child: isFormSubmited == true
-            ? SingleChildScrollView(
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      "Request Submited!",
-                      style: TextStyle(
-                          color: ColorConstant.primaryBlackColor,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      "Congratulations, Your Rquest have been submited, We'll Review it and will update your Profile soon",
-                      style: TextStyle(
-                          color: Colors.black54,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Lottie.asset(
-                      'assets/lotties/done.json',
-                      width: 150,
-                      height: 150,
-                      fit: BoxFit.fill,
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: Container(
-                        height: 40,
-                        width: MediaQuery.of(context).size.width / 1,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: ColorConstant.primaryBlackColor),
-                        alignment: Alignment.center,
-                        child: Text(
-                          "Okay",
-                          style: TextStyle(
-                              color: ColorConstant.primaryWhiteColor,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600),
-                        ),
+      child: SingleChildScrollView(
+        child: Container(
+           height: MediaQuery.of(context).size.height / 1.8,
+          child: isFormSubmited == true
+              ? 
+              
+             Column(
+                    children: [
+                      SizedBox(
+                        height: 10,
                       ),
-                    ),
-                  ],
-                ),
-              )
-            : ListView(
-                children: [
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    "Provide your below input to be an ${widget.title}",
-                    style: TextStyle(
-                        color: ColorConstant.primaryBlackColor,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    "Please Enter The Reason why you want to go ${widget.title}?",
-                    style: TextStyle(
-                        color: Colors.black54,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  TextFormField(
-                    controller: _textFieldController,
-                    maxLines: 5,
-                    decoration: InputDecoration(
-                        focusedBorder: InputBorder.none,
-                        enabledBorder: InputBorder.none,
-                        filled: true,
-                        hintText: "Enter Here.."),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      if (_textFieldController.text.isNotEmpty) {
-                        controller.requestForUpgrade(
-                            reason: _textFieldController.text,
-                            type: widget.task);
-                        setState(() {
-                          isFormSubmited = true;
-                        });
-                      }
-                    },
-                    child: Container(
-                      height: 40,
-                      width: MediaQuery.of(context).size.width / 1,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: ColorConstant.primaryBlackColor),
-                      alignment: Alignment.center,
-                      child: Text(
-                        "Submit",
+                      Text(
+                        "Request Submited!",
                         style: TextStyle(
-                            color: ColorConstant.primaryWhiteColor,
+                            color: ColorConstant.primaryBlackColor,
                             fontSize: 16,
                             fontWeight: FontWeight.w600),
                       ),
-                    ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Congratulations, Your Rquest have been submited, We'll Review it and will update your Profile soon",
+                        style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Lottie.asset(
+                        'assets/lotties/done.json',
+                        width: 150,
+                        height: 150,
+                        fit: BoxFit.fill,
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                          height: 40,
+                          width: MediaQuery.of(context).size.width / 1,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: ColorConstant.primaryBlackColor),
+                          alignment: Alignment.center,
+                          child: Text(
+                            "Okay",
+                            style: TextStyle(
+                                color: ColorConstant.primaryWhiteColor,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                      ),
+                        SizedBox(height: 10,),
+                            Expanded(
+                              child: Container(
+                                alignment: Alignment.bottomCenter,
+                                child: InkWell(
+                                                onTap: (){
+                                                  launchUrl(Uri.parse('https://webgradle.com/'));
+                                                },
+                                                child: Image.asset("assets/new_icons/developed_by.png",
+                                                height: 25,
+                                                color: Colors.black54,
+                                                )
+                                          ),
+                              ),
+                            ),
+                    ],
+                  )
+                
+              : 
+              
+              
+               Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Provide your below input to be an ${widget.title}",
+                        style: TextStyle(
+                            color: ColorConstant.primaryBlackColor,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Please Enter The Reason why you want to go ${widget.title}?",
+                        style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      TextFormField(
+                        controller: _textFieldController,
+                        maxLines: 10,
+                        decoration: InputDecoration(
+                            focusedBorder: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            filled: true,
+                            hintText: "Enter Here.."),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      InkWell(
+                        onTap: () {
+                          if (_textFieldController.text.isNotEmpty) {
+                            controller.requestForUpgrade(
+                                reason: _textFieldController.text,
+                                type: widget.task);
+                            setState(() {
+                              isFormSubmited = true;
+                            });
+                          }
+                        },
+                        child: Container(
+                          height: 40,
+                          width: MediaQuery.of(context).size.width / 1,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: ColorConstant.primaryBlackColor),
+                          alignment: Alignment.center,
+                          child: Text(
+                            "Submit",
+                            style: TextStyle(
+                                color: ColorConstant.primaryWhiteColor,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                      ),
+                       SizedBox(height: 10,),
+                            Expanded(
+                              child: Container(
+                                alignment: Alignment.bottomCenter,
+                                child: InkWell(
+                                                onTap: (){
+                                                  launchUrl(Uri.parse('https://webgradle.com/'));
+                                                },
+                                                child: Image.asset("assets/new_icons/developed_by.png",
+                                                height: 25,
+                                                color: Colors.black54,
+                                                )
+                                          ),
+                              ),
+                            ),
+                    ],
                   ),
-                ],
               ),
+        
       ),
     );
   }

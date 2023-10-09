@@ -4,6 +4,7 @@ import 'package:cricket_fantacy/src/models/GetContestListApiResponse.dart';
 import 'package:cricket_fantacy/src/models/GetMatchesApiResponse.dart';
 import 'package:cricket_fantacy/src/ui/screens/dashboard_screen.dart';
 import 'package:cricket_fantacy/src/ui/screens/my_matches_tab/my_matches_tab.dart';
+import 'package:cricket_fantacy/src/ui/widgets/shimmer_effect_widget.dart';
 import 'package:cricket_fantacy/src/utils/color_scheme.dart';
 import 'package:cricket_fantacy/src/utils/image_utils.dart';
 import 'package:flutter/material.dart';
@@ -72,10 +73,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
           init: NotificationController(),
           builder: (controller) {
             return controller.getNotificationApiResponse == null && controller.isNotFound==false
-                ? const Center(
-                    child: CircularProgressIndicator(
-                      color: ColorConstant.primaryColor,
-                    ),
+                ? shimerEffect(length: 5,context: context
                   )
 
 :controller.isNotFound==true?Center(
