@@ -474,7 +474,7 @@ class _UpcommingMatchCardWidgetState extends State<UpcommingMatchCardWidget> {
  * 18- increase icon botton touch area like notification and wallet.-done
  * 19- replace snackbar to tost msg.-done
  * 20- use tool tip on lineup icon and mega contest body on home.-pending
- * 21- on first price use tool tip and wining pertage and guaranted on contest list page.-pending
+ * 21- on first price use tool tip and wining pertage and guaranteed on contest list page.-pending
  * 22- spots left prograss not working on contest list.- done
  * 23- preview and lineup botton little bit fade.-done
  * 23- when lineup not available then remove or hide lineup text in pick player.-done

@@ -47,7 +47,7 @@ class AuthController extends GetxController {
         NetworkConstant.PHONE_PARAMS: phoneNumberController.text,
         'type': type
       };
-      debugger();
+      // debugger();
       try {
         showLoaderDialog(context);
         var response = await apiProvider.postBeforeAuth(
@@ -59,7 +59,7 @@ class AuthController extends GetxController {
 
 
 
- debugger();
+//  debugger();
         print(response);
         if (response['status'] == 200) {
           if(type=='register'){
@@ -112,7 +112,7 @@ class AuthController extends GetxController {
       messages.showMsg(
           context: context, message: "OTP Verified Successfully Done.");
       otpController.clear();
-      debugger();
+      // debugger();
 
 if(type=='register'){
 callRegisterApi(context);
@@ -146,6 +146,7 @@ callRegisterApi(context);
       modelName = iosInfo.model;
     }
     final fcmToken = await FirebaseMessaging.instance.getToken();
+    print("fireabase token = $fcmToken");
     Map parameter = {
       NetworkConstant.Login_Method: 'phone',
       NetworkConstant.Login_Id: phoneNumberController.text,

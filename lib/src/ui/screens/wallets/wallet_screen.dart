@@ -53,17 +53,26 @@ class _WalletScreenState extends State<WalletScreen>
   }
 
   void _getUpiApp() async {
-    _upiIndia.getAllUpiApps(mandatoryTransactionId: false).then((value) {
-      setState(() {
-        apps = value;
-      });
-      showUpiApps();
+    
+    
+    controller.getUpiId(amountController.text,context);
+    
+    
+    
+    
+    
+    
+    // _upiIndia.getAllUpiApps(mandatoryTransactionId: false).then((value) {
+    //   setState(() {
+    //     apps = value;
+    //   });
+    //   showUpiApps();
 
-      //getWallets();
-    }).catchError((e) {
-      print(e);
-      apps = [];
-    });
+    //   //getWallets();
+    // }).catchError((e) {
+    //   print(e);
+    //   apps = [];
+    // });
   }
 
   @override

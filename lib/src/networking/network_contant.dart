@@ -47,6 +47,7 @@ class NetworkConstant{
  static const String requestForWithdrawal='/app/payment_request';
  static const String winner_api='/app/winner';
  static const String myTeamApi='/app/my_team';
+static const String getUpi='/app/getupi';
   //parames.
 
   static const String PHONE_PARAMS='phone';

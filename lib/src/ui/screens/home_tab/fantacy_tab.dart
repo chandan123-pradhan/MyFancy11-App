@@ -6,6 +6,7 @@ import 'package:cricket_fantacy/src/controllers/splash_controller.dart';
 import 'package:cricket_fantacy/src/global_variable.dart';
 import 'package:cricket_fantacy/src/models/splahs_api_response.dart';
 import 'package:cricket_fantacy/src/ui/screens/auth_screens/login_screen.dart';
+import 'package:cricket_fantacy/src/ui/screens/dashboard_screen.dart';
 import 'package:cricket_fantacy/src/ui/screens/home_tab/upcomming_matches_details.dart';
 import 'package:cricket_fantacy/src/ui/screens/live_contest_screens/live_contest_screen.dart';
 import 'package:cricket_fantacy/src/ui/screens/prediction_screens/prediction_home_screen.dart';
@@ -302,7 +303,7 @@ class _FantacyTabState extends State<FantacyTab> {
   }
 
   void onTapBanner(HomeBanner loginBanner) {
-    debugger();
+    // debugger();
     switch (loginBanner.action) {
       case 'link':
         //launch url
@@ -321,9 +322,15 @@ class _FantacyTabState extends State<FantacyTab> {
         //navigate into refer screen.
         break;
       case 'quiz':
-        launchIntoQuizPage(loginBanner);
-        //navigate into quiz screen.
+        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context){
+          return DashboardScreen(index: 3,);
+        }), (route) => false);
         break;
+      case 'winner':
+        Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context){
+          return DashboardScreen(index: 2,);
+        }), (route) => false);
+      break;
       default:
         print("not matched");
         print(loginBanner.action);
@@ -340,9 +347,11 @@ class _FantacyTabState extends State<FantacyTab> {
 
   void launchContestListPage(HomeBanner loginBanner) {
     if (logInStatus) {
+      // debugger();
       bool isFound = false;
       for (int i = 0; i < controller.getMatchesApiResponse!.data.length; i++) {
-        if (loginBanner.matchId ==
+        // debugger();
+        if (int.parse(loginBanner.matchId) ==
             controller.getMatchesApiResponse!.data[i].matchId) {
           setState(() {
             isFound = true;

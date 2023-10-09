@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cricket_fantacy/src/controllers/quiz_controller.dart';
 import 'package:cricket_fantacy/src/controllers/splash_controller.dart';
 import 'package:cricket_fantacy/src/global_variable.dart';
@@ -34,6 +36,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   Widget _body = Container();
   var controller = Get.put(HomeController());
+
+
   var quizController = Get.put(QuizController());
   void _changeIndex(int value) {
          
@@ -61,10 +65,166 @@ class _DashboardScreenState extends State<DashboardScreen> {
     controller.getUsersProfile();
     controller.getMatchesApiCall(context);
     callGetMyMatchApi();
+   if(widget.index==0 ){
+    showFancyCustomDialog(context);
+   }
     
     // TODO: implement initState
     super.initState();
   }
+
+
+   void showFancyCustomDialog(BuildContext context) {
+           Timer(Duration(seconds: 2), () {
+
+//              Dialog fancyDialog = Dialog(
+//             shape: RoundedRectangleBorder(
+//                 borderRadius: BorderRadius.circular(12.0),
+//             ), 
+//              backgroundColor: Colors.transparent,
+//              elevation: 0,
+//             child: Container(
+
+
+//                 decoration: BoxDecoration(
+//                   color: Colors.transparent,
+//                 borderRadius: BorderRadius.circular(20.0),
+//                 ),
+//                 height:MediaQuery.of(context).size.height/1.5,
+//                 width: MediaQuery.of(context).size.width/1,
+//                 child: Stack(
+//                 children: <Widget>[
+
+// Positioned(
+
+//   top: 10,
+//   right: 10,
+//   child:   Container(
+  
+  
+//                   decoration: BoxDecoration(
+//                     color: Colors.white,
+//                   borderRadius: BorderRadius.circular(20.0),
+//                   ),
+//                   height:MediaQuery.of(context).size.height/1.4,
+//                   width: MediaQuery.of(context).size.width/1,
+
+// child: Image.network(controller.splashDataApiResponse.data.homePagePopup,
+// fit: BoxFit.fill,
+// ),
+
+
+//   ),
+// ),
+
+//                     Positioned(
+//                       top: 0,
+//                       right: 0,
+//                       child: Container(
+//                         decoration: BoxDecoration(
+//                           shape: BoxShape.circle,
+//                           color: ColorConstant.primaryColor,
+//                         ),
+//                         child: Padding(
+//                           padding: const EdgeInsets.all(4.0),
+//                           child: Icon(Icons.clear_outlined,size:20,color: Colors.white,),
+//                         )),
+//                     ),
+
+             
+//                 ],
+//                 ),
+//             ),
+//             );
+//     showDialog(
+//         context: context, builder: (BuildContext context) => fancyDialog);
+
+showDialog(
+  context: context,
+  builder: (_) => new AlertDialog(
+    backgroundColor: Colors.transparent,
+     insetPadding: EdgeInsets.only(left: 10,right: 10),
+          contentPadding: EdgeInsets.zero,
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+  shape: RoundedRectangleBorder(
+    borderRadius:
+      BorderRadius.all(
+        Radius.circular(10.0))),
+    content: Builder(
+      builder: (context) {
+        // Get available height and width of the build area of this widget. Make a choice depending on the size.                              
+        var height = MediaQuery.of(context).size.height;
+        var width = MediaQuery.of(context).size.width;
+
+        return Container(
+
+
+                decoration: BoxDecoration(
+                  color: Colors.transparent,
+                borderRadius: BorderRadius.circular(20.0),
+                ),
+                height:MediaQuery.of(context).size.height/1.5,
+                width: MediaQuery.of(context).size.width/1,
+                child: Stack(
+                children: <Widget>[
+
+Positioned(
+
+  top: 10,
+  right: 10,
+  left: 10,
+  child:   Container(
+  
+  
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                  borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  height:MediaQuery.of(context).size.height/1.4,
+                  width: MediaQuery.of(context).size.width/1,
+
+child: Image.network(controller.splashDataApiResponse.data.homePagePopup,
+fit: BoxFit.fill,
+),
+
+
+  ),
+),
+
+                    Positioned(
+                      top: 0,
+                      right: 0,
+                      child: InkWell(
+                        onTap: (){
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: ColorConstant.primaryColor,
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Icon(Icons.clear_outlined,size:20,color: Colors.white,),
+                          )),
+                      ),
+                    ),
+
+             
+                ],
+                ),
+            );
+      },
+    ),
+  )
+);
+
+
+             });
+
+
+
+}
 
   void callGetMyMatchApi() async {
     await controller.getMyMatch(context, 'fixture');
@@ -74,6 +234,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // showFancyCustomDialog(context);
     return Scaffold(
       key: _scaffoldKey,
       body: _body,

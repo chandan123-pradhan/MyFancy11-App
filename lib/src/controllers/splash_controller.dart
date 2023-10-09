@@ -36,6 +36,7 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:cricket_fantacy/src/ui/screens/home_tab/join_contest_confirmation_screen.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:upi_india/upi_india.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomeController extends GetxController {
   ApiProvider apiProvider = ApiProvider();
@@ -936,5 +937,40 @@ print("sdf");
     List versionCells = version.split('.');
     versionCells = versionCells.map((i) => int.parse(i)).toList();
     return versionCells[0] * 100000 + versionCells[1] * 1000 + versionCells[2];
+  }
+
+
+String upiId='';
+
+   void getUpiId(amount,context) async {
+    showLoaderDialog(context);
+    Map parameter = {'amount': amount};
+    var response = await apiProvider.postAfterAuth(
+        routeUrl: NetworkConstant.getUpi, bodyParams: parameter);
+debugger();
+    Navigator.pop(context);
+   // debugger();
+    if (response['status'] == 200) {
+     // upiId=response['']
+    openWeb(response['data']);
+
+
+    }else{
+       Messages().showErrorMsg(
+          context: context, message: response['message']);
+    }
+    update();
+  }
+
+
+   void openWeb(var url){
+   // debugger();
+try{
+   launchUrl(Uri.parse(url),);
+}catch(e){
+  print(e);
+}
+//  mode: LaunchMode.inAppWebView,
+
   }
 }

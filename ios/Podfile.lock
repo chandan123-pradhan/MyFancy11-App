@@ -9,6 +9,8 @@ PODS:
     - Flutter
   - device_info_plus (0.0.1):
     - Flutter
+  - esys_flutter_share_plus (0.0.1):
+    - Flutter
   - FBAEMKit (12.1.0):
     - FBSDKCoreKit_Basics (= 12.1.0)
   - FBSDKCoreKit (12.1.0):
@@ -158,6 +160,7 @@ PODS:
 DEPENDENCIES:
   - cashfree_pg (from `.symlinks/plugins/cashfree_pg/ios`)
   - device_info_plus (from `.symlinks/plugins/device_info_plus/ios`)
+  - esys_flutter_share_plus (from `.symlinks/plugins/esys_flutter_share_plus/ios`)
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
@@ -210,6 +213,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/cashfree_pg/ios"
   device_info_plus:
     :path: ".symlinks/plugins/device_info_plus/ios"
+  esys_flutter_share_plus:
+    :path: ".symlinks/plugins/esys_flutter_share_plus/ios"
   firebase_auth:
     :path: ".symlinks/plugins/firebase_auth/ios"
   firebase_core:
@@ -251,6 +256,7 @@ SPEC CHECKSUMS:
   AppAuth: 3bb1d1cd9340bd09f5ed189fb00b1cc28e1e8570
   cashfree_pg: 36bb2a5b4cc228a7697f55c55300b4a8b42fff00
   device_info_plus: 7545d84d8d1b896cb16a4ff98c19f07ec4b298ea
+  esys_flutter_share_plus: 302b73471e2686a9ce282898d1df5d6f4382edba
   FBAEMKit: 56c0bb9b42e3747cd82b67934f0c2b19325382ea
   FBSDKCoreKit: 75368765d9c2303073145a7925dfaa9d60bcd77b
   FBSDKCoreKit_Basics: 39865aff97e5f6951a78fb3e89dc4460e35e1895

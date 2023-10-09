@@ -189,7 +189,7 @@ class _MultipleContestState extends State<MultipleContest> {
                         color: Colors.black45,
                       ),
                       Text(
-                        " Guaranted",
+                        " guaranteed",
                         style: TextStyle(
                             color: Colors.black45,
                             fontSize: 15,

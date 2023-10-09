@@ -165,15 +165,31 @@ width: 30,
           ),
           Padding(
             padding: const EdgeInsets.only(left: 15, right: 15),
-            child: Container(
-              width: MediaQuery.of(context).size.width / 1,
-              child: LinearProgressIndicator(
-                minHeight: 4,
-                value:  ((int.parse(widget.contest.joinTeam)/int.parse(widget.contest.totalTeam))*100)/100,
-                backgroundColor: Colors.red[50],
-                valueColor:
-                    AlwaysStoppedAnimation<Color>(ColorConstant.primaryColor),
-              ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  width: 
+                  
+                   widget.contest.bonusEntry!='0'? 
+                  MediaQuery.of(context).size.width / 1.5:MediaQuery.of(context).size.width/1.09,
+                  child: LinearProgressIndicator(
+                    minHeight: 4,
+                    value:  ((int.parse(widget.contest.joinTeam)/int.parse(widget.contest.totalTeam))*100)/100,
+                    backgroundColor: Colors.red[50],
+                    valueColor:
+                        AlwaysStoppedAnimation<Color>(ColorConstant.primaryColor),
+                  ),
+                ),
+                  widget.contest.bonusEntry!='0'?     Text("Use Bonus ₹${widget.contest.bonusEntry}",
+                style: TextStyle(
+                  color: ColorConstant.primaryColor,
+                  fontSize: 13,
+                  fontWeight: FontWeight.w500
+                  
+                ),
+                ):Container()
+              ],
             ),
           ),
 
@@ -325,7 +341,7 @@ width: 30,
                               color: Colors.black45,
                             ),
                             Text(
-                              " Guaranted",
+                              " guaranteed",
                               style: TextStyle(
                                   color: Colors.black45,
                                   fontSize: 15,

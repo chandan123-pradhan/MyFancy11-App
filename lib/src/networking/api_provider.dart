@@ -74,13 +74,13 @@ class ApiProvider {
       isUnAuthenicated=false;
       SharedPref sharedPref = SharedPref();
       String? appToken = await sharedPref.getAuthToken();
-  //   debugger();
+     //debugger();
     print(appToken);
       var response = await http.post(
           Uri.parse(NetworkConstant.BASE_URL + routeUrl),
           headers: {'Token': appToken!},
           body: bodyParams);
-// debugger();
+//  debugger();
      print(response);
       if (response.statusCode == 200|| response.statusCode==404) {
         // debugger();

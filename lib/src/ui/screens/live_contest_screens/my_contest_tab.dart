@@ -199,7 +199,7 @@ class _MyContestTabState extends State<MyContestTab> {
                                             width: 5,
                                           ),
                                           Text(
-                                            "Guaranted!",
+                                            "Guaranteed!",
                                             style: TextStyle(
                                                 color: ColorConstant
                                                     .primaryBlackColor,
@@ -264,7 +264,7 @@ class _MyContestTabState extends State<MyContestTab> {
                                                         width: 17,
                                                       ),
                                                       Text(
-                                                        'Won ₹${controller.myContestApiResponse!.data[index].winInfo.totalWinAmount}',
+                                                        ' Won ₹${controller.myContestApiResponse!.data[index].winInfo.totalWinAmount}',
                                                         style: TextStyle(
                                                             color: ColorConstant
                                                                 .greenColor,

@@ -141,92 +141,145 @@ class _TransactionHistoryPageState extends State<TransactionHistoryPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Row(
-                                children: [
-                                  Container(
-                                      height: 60,
-                                      width: 60,
-                                      decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          border: Border.all(
-                                              width: 1,
-                                              color:
-                                                  ColorConstant.deviderColor)),
-                                      alignment: Alignment.center,
-                                      child: Image.asset(
-                                        ImageUitls.winner_band,
-                                        height: 30,
-                                        width: 30,
-                                      )),
-                                  SizedBox(
-                                    width: 15,
-                                  ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        transactionHistory
-                                            .transactionData[i].transectionMode,
-                                        style: TextStyle(
-                                            color:
-                                                ColorConstant.primaryBlackColor,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500),
+                              Container(
+                                width: MediaQuery.of(context).size.width / 1.1,
+                                child: Row(
+                                  children: [
+                                    Container(
+                                        height: 40,
+                                        width: 40,
+                                        decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            border: Border.all(
+                                                width: 1,
+                                                color: ColorConstant
+                                                    .deviderColor)),
+                                        alignment: Alignment.center,
+                                        child: Image.asset(
+                                          ImageUitls.winner_band,
+                                          height: 30,
+                                          width: 30,
+                                        )),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Expanded(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            transactionHistory
+                                                .transactionData[i]
+                                                .transectionMode,
+                                            style: TextStyle(
+                                                color: ColorConstant
+                                                    .primaryBlackColor,
+                                                fontSize: 13,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                transactionHistory
+                                                    .transactionData[i]
+                                                    .createdDate,
+                                                style: TextStyle(
+                                                    color: ColorConstant
+                                                        .primaryBlackColor,
+                                                    fontSize: 11,
+                                                    fontWeight:
+                                                        FontWeight.w400),
+                                              ),
+                                              Text(
+                                                transactionHistory
+                                                        .transactionData[i].type
+                                                        .contains('credit')
+                                                    ? "+ ₹${transactionHistory.transactionData[i].amount}"
+                                                    : "- ₹${transactionHistory.transactionData[i].amount}",
+                                                style: TextStyle(
+                                                    color: transactionHistory
+                                                                .transactionData[
+                                                                    i]
+                                                                .type
+                                                                .contains(
+                                                                    'credit') ==
+                                                            false
+                                                        ? ColorConstant
+                                                            .primaryColor
+                                                        : ColorConstant.green,
+                                                    fontSize: 13,
+                                                    fontWeight:
+                                                        FontWeight.w600),
+                                              )
+                                            ],
+                                          )
+                                        ],
                                       ),
-                                      SizedBox(
-                                        height: 5,
-                                      ),
-                                      Text(
-                                        transactionHistory
-                                            .transactionData[i].createdDate,
-                                        style: TextStyle(
-                                            color:
-                                                ColorConstant.primaryBlackColor,
-                                            fontSize: 11,
-                                            fontWeight: FontWeight.w400),
-                                      )
-                                    ],
-                                  )
-                                ],
+                                    )
+                                  ],
+                                ),
                               ),
-                              Text(
-                                transactionHistory.transactionData[i].type
-                                        .contains('credit')
-                                    ? "+ ₹${transactionHistory.transactionData[i].amount}"
-                                    : "- ₹${transactionHistory.transactionData[i].amount}",
-                                style: TextStyle(
-                                    color: transactionHistory
-                                                .transactionData[i].type
-                                                .contains('credit') ==
-                                            false
-                                        ? ColorConstant.primaryColor
-                                        : ColorConstant.green,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w600),
-                              )
                             ],
                           ),
                           SizedBox(
                             height: 10,
                           ),
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                "Transaction ID: ",
-                                style: TextStyle(
-                                    color: Colors.black54,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w400),
+                              Row(
+                                children: [
+                                  Text(
+                                    "Transaction ID: ",
+                                    style: TextStyle(
+                                        color: Colors.black54,
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.w400),
+                                  ),
+                                  Text(
+                                    transactionHistory.transactionData[i].id,
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.w500),
+                                  )
+                                ],
                               ),
-                              Text(
-                                transactionHistory.transactionData[i].id,
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w500),
-                              )
+                              Row(
+                                children: [
+                                  
+                                  Text(
+                                    transactionHistory.transactionData[i].transactionStatus,
+                                    style: TextStyle(
+                                        color: 
+                                        
+                                         transactionHistory.transactionData[i].transactionStatus=='TXN-SUCCESS'?
+
+
+
+
+                                         ColorConstant.greenColor:
+
+
+                                           transactionHistory.transactionData[i].transactionStatus=='TXN-PENDING'?
+                                        Colors.yellow[700]:
+
+
+                                        
+                                        ColorConstant.primaryColor,
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.w500),
+                                  )
+                                ],
+                              ),
                             ],
                           )
                         ],

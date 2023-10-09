@@ -6,6 +6,7 @@ import 'package:cricket_fantacy/src/ui/screens/live_contest_screens/commentry_sc
 import 'package:cricket_fantacy/src/ui/screens/live_contest_screens/my_contest_tab.dart';
 import 'package:cricket_fantacy/src/ui/screens/live_contest_screens/my_team_widget_tab.dart';
 import 'package:cricket_fantacy/src/ui/screens/live_contest_screens/scorecard_screen.dart';
+import 'package:cricket_fantacy/src/ui/screens/live_contest_screens/stats_tab.dart';
 import 'package:cricket_fantacy/src/ui/screens/wallets/wallet_screen.dart';
 import 'package:cricket_fantacy/src/ui/widgets/shimmer_effect_widget.dart';
 import 'package:cricket_fantacy/src/utils/color_scheme.dart';
@@ -31,7 +32,7 @@ class _LiveContestScreenState extends State<LiveContestScreen>
   var controller = Get.put(LiveContestController());
   @override
   void initState() {
-    _tabController = TabController(length: 4, vsync: this);
+    _tabController = TabController(length: 5, vsync: this);
     print(widget.myMatchModel.matchId);
     _calculateTimeRemaining();
     controller.getData(widget.myMatchModel.matchId,widget.flag);
@@ -712,6 +713,7 @@ class _LiveContestScreenState extends State<LiveContestScreen>
                                 ),
                           Tab(text: 'Commentary'),
                           Tab(text: "Scorecard"),
+                           Tab(text: "Stats"),
                         ],
                       );
                     }),
@@ -791,6 +793,8 @@ class _LiveContestScreenState extends State<LiveContestScreen>
                                 liveMatchData:
                                     controller.liveMatchUpdateApiResponse,
                               ),
+                              StatsTab()
+
                             ],
                           );
                   }),

@@ -15,7 +15,7 @@ class TransactionHistoryController extends GetxController {
     Map parameter = {};
     var response = await apiProvider.postAfterAuth(
         routeUrl: NetworkConstant.Get_transaction_history_url, bodyParams: parameter);
-  //  debugger();
+    // debugger();
    if(response['status']==404){
 isEmpty=true;
    }else{
