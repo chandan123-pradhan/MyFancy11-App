@@ -338,6 +338,7 @@ callRegisterApi(context);
             messages.showErrorMsg(
                 context: context, message: 'Account not found');
             // account not found.
+            Navigator.pop(context);
           } else {
             loginApiResponse = LoginApiResponse.fromJson(response);
             sharedPref.setUserToken(loginApiResponse.data.userToken);

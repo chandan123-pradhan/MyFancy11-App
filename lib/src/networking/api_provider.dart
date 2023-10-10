@@ -30,6 +30,8 @@ class ApiProvider {
   Future<dynamic> postBeforeAuthStaticToken(
       {required String routeUrl, required Map bodyParams}) async {
     try {
+
+      // debugger();
       var response = await http.post(
           Uri.parse(NetworkConstant.BASE_URL + routeUrl),
           headers: {'Token': AppConstant.staticToken},
@@ -39,6 +41,7 @@ class ApiProvider {
         return json.decode(response.body);
       } else {}
     } catch (e) {
+      debugger();
       print(e);
     }
   }

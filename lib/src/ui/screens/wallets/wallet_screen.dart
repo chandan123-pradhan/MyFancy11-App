@@ -13,7 +13,6 @@ import 'package:cricket_fantacy/src/utils/image_utils.dart';
 import 'package:cricket_fantacy/src/utils/messages.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:lottie/lottie.dart';
-import 'package:upi_india/upi_india.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart';
@@ -31,9 +30,7 @@ class _WalletScreenState extends State<WalletScreen>
   Messages messages = Messages();
 
   var controller = Get.put(HomeController());
-  List<UpiApp> apps = [];
-  final UpiIndia _upiIndia = UpiIndia();
-  
+
   TextEditingController withdrawAmountController = new TextEditingController();
   late TabController _tablController;
   void getWallets() {
@@ -157,7 +154,7 @@ class _WalletScreenState extends State<WalletScreen>
               labelColor: ColorConstant.primaryBlackColor,
               tabs: const [
                 Tab(
-                  text: 'Wallet',
+                  text: 'Add Money',
                 ),
                 Tab(text: "Withdraw"),
               ],
@@ -301,16 +298,31 @@ class _WalletScreenState extends State<WalletScreen>
                           ),
                         ),
                       ),
-                      Container(
-                        width: MediaQuery.of(context).size.width / 1,
-                        height: 10,
-                        color: ColorConstant.deviderColor,
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
+                    
                       Column(
                         children: [
+
+Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                  child: Container(
+                    //height: 40,
+                    width: MediaQuery.of(context).size.width / 1,
+                    decoration: BoxDecoration(color: Colors.green[100]),
+                    alignment: Alignment.center,
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 15.0, bottom: 5, top: 5),
+                      child: Text(
+                        'We care GST, You will get full amount of your recharge.',
+                       style: TextStyle(
+                            color: Colors.green,
+                            fontSize: 13,
+                            fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                  ),
+                ),
+
+                          
                           Padding(
                             padding: const EdgeInsets.only(
                                 left: 15, right: 15, top: 10),
@@ -328,6 +340,7 @@ class _WalletScreenState extends State<WalletScreen>
                                   height: 10,
                                 ),
                                 TextFormField(
+                                  keyboardType: TextInputType.number,
                                   controller: controller.amountController,
                                   onChanged: (val) {
                                     if (val.isNotEmpty) {
@@ -470,14 +483,14 @@ class _WalletScreenState extends State<WalletScreen>
                         child: InkWell(
                           onTap: () {
                             if (double.parse(controller.amountController.text) >=
-                                double.parse(controller.splashDataApiResponse!
+                                double.parse(controller.splashDataApiResponse
                                     .data.rechargeMinimum)) {
                               _getUpiApp();
                             } else {
                               Messages().showErrorMsg(
                                   context: context,
                                   message:
-                                      'Minimum recharge should be ${controller.splashDataApiResponse!.data.rechargeMinimum}');
+                                      'Minimum recharge should be ${controller.splashDataApiResponse.data.rechargeMinimum}');
                             }
                             // initiateTransaction();
                             // _pay();
@@ -1183,6 +1196,7 @@ class _WalletScreenState extends State<WalletScreen>
                                           height: 10,
                                         ),
                                         TextFormField(
+                                          
                                           controller: withdrawAmountController,
                                           keyboardType: TextInputType.number,
                                           onChanged: (val) {
@@ -1314,7 +1328,7 @@ class _WalletScreenState extends State<WalletScreen>
                                                                         .w500),
                                                           ),
                                                           Text(
-                                                            "- ₹${((double.parse(withdrawableAmt) - (double.parse(withdrawableAmt) / 100) * 31.2)).toStringAsFixed(2)}",
+                                                            "₹${((double.parse(withdrawableAmt) - (double.parse(withdrawableAmt) / 100) * 31.2)).toStringAsFixed(2)}",
                                                             style: TextStyle(
                                                                 color: ColorConstant
                                                                     .greenColor,
@@ -1378,11 +1392,7 @@ class _WalletScreenState extends State<WalletScreen>
 
  
 
-  void _paymentFailed(UpiResponse upiResponse) {
-    messages.showMsg(
-        context: context,
-        message: 'Payment Couldnot compete, Please Try Again');
-  }
+  
 
   // void showUpiApps() {
   //   showModalBottomSheet(

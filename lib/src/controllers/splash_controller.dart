@@ -35,7 +35,6 @@ import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:cricket_fantacy/src/ui/screens/home_tab/join_contest_confirmation_screen.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:upi_india/upi_india.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomeController extends GetxController {

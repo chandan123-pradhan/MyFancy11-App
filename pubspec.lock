@@ -161,14 +161,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.0.0"
-  easy_upi_payment:
-    dependency: "direct main"
-    description:
-      name: easy_upi_payment
-      sha256: a75c2b9341798defcd9d1f38aa2db642224e9f82a6c714b0d7841ac15591e0d8
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.1.5"
   esys_flutter_share_plus:
     dependency: "direct main"
     description:
@@ -440,14 +432,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.6.5"
-  get_upi:
-    dependency: "direct main"
-    description:
-      name: get_upi
-      sha256: e62c1fbb4c8e6026177671720184ecdffff2cf2ee527cd05fbe89c074bd86862
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.2"
   google_identity_services_web:
     dependency: transitive
     description:
@@ -1037,14 +1021,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0+1"
-  upi_india:
-    dependency: "direct main"
-    description:
-      name: upi_india
-      sha256: "483f1425ee8f0897397861b107e50b3aa195fec71215f86e906b625e841e90dd"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.1"
   url_launcher:
     dependency: "direct main"
     description:
