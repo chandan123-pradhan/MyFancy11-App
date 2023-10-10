@@ -170,6 +170,7 @@ callRegisterApi(context);
     Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) {
       return DashboardScreen(
         index: 0,
+        isFirstTime: true,
       );
     }), (route) => false);
   }
@@ -287,6 +288,7 @@ callRegisterApi(context);
               MaterialPageRoute(builder: (context) {
             return DashboardScreen(
               index: 0,
+              isFirstTime: true,
             );
           }), (route) => false);
         } catch (e) {

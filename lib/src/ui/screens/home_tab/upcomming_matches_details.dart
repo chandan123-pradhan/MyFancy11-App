@@ -35,11 +35,11 @@ class _UpcommingMatchesDetailsState extends State<UpcommingMatchesDetails> {
 
   List<PopupMenuEntry<dynamic>> menuItems = [
     PopupMenuItem(
-      child: Text('Low To High'),
+      child: Text('High To Low'),
       value: '1',
     ),
     PopupMenuItem(
-      child: Text('High To Low'),
+      child: Text('Low To High'),
       value: '0',
     ),
     // Add more PopupMenuItems as needed
@@ -47,7 +47,7 @@ class _UpcommingMatchesDetailsState extends State<UpcommingMatchesDetails> {
   List<PopupMenuEntry<dynamic>> pricePoolItems = [
     PopupMenuItem(
       child: Text('Low To High'),
-      value: '1',
+      value: '0',
     ),
     PopupMenuItem(
       child: Text('High To Low'),
@@ -61,12 +61,9 @@ class _UpcommingMatchesDetailsState extends State<UpcommingMatchesDetails> {
   void initState() {
     _calculateTimeRemaining();
     controller.getContestList(
-        context, widget.matches.matchId.toString(), '0', '0');
-
-    // TODO: implement initState
+        context, widget.matches.matchId.toString(), '0', '0','');
     super.initState();
   }
-
   var targetDate;
 
   _calculateTimeRemaining() {
@@ -107,7 +104,7 @@ class _UpcommingMatchesDetailsState extends State<UpcommingMatchesDetails> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "${widget.matches.team2.teamName} Vs ${widget.matches.team1.teamName}",
+                "${widget.matches.team1.teamName} Vs ${widget.matches.team2.teamName}",
                 style: TextStyle(
                     color: ColorConstant.primaryWhiteColor,
                     fontSize: 17,
@@ -198,7 +195,9 @@ width: 30,
                                       context,
                                       widget.matches.matchId.toString(),
                                       selectedEntry.toString(),
-                                      '0');
+                                      '0',
+                                      'entry'
+                                      );
                                   print('Selected: $value');
                                 },
                               ),
@@ -248,7 +247,9 @@ width: 30,
                                       context,
                                       widget.matches.matchId.toString(),
                                       selectedEntry.toString(),
-                                      selectedPricePool.toString());
+                                      selectedPricePool.toString(),
+                                      'room'
+                                      );
                                   print('Selected: $value');
                                 },
                               ),
@@ -275,7 +276,7 @@ width: 30,
                     child:  RefreshIndicator(
         onRefresh: () async {
         controller.getContestList(
-        context, widget.matches.matchId.toString(), '0', '0');
+        context, widget.matches.matchId.toString(), '0', '0','');
         },
                       child: GetBuilder<HomeController>(
                           init: HomeController(),

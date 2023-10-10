@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:cricket_fantacy/src/controllers/quiz_controller.dart';
 import 'package:cricket_fantacy/src/controllers/splash_controller.dart';
@@ -22,10 +23,12 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DashboardScreen extends StatefulWidget {
   final int index;
-  DashboardScreen({required this.index});
+  final bool? isFirstTime;
+  DashboardScreen({required this.index, this.isFirstTime});
 
   @override
   State<DashboardScreen> createState() => _DashboardScreenState();
@@ -33,6 +36,7 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   int _currentIndex = 0;
+
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   Widget _body = Container();
   var controller = Get.put(HomeController());
@@ -65,7 +69,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     controller.getUsersProfile();
     controller.getMatchesApiCall(context);
     callGetMyMatchApi();
-   if(widget.index==0 ){
+   if(widget.index==0 && widget.isFirstTime==true ){
     showFancyCustomDialog(context);
    }
     
@@ -156,64 +160,72 @@ showDialog(
         var height = MediaQuery.of(context).size.height;
         var width = MediaQuery.of(context).size.width;
 
-        return Container(
-
-
-                decoration: BoxDecoration(
-                  color: Colors.transparent,
-                borderRadius: BorderRadius.circular(20.0),
-                ),
-                height:MediaQuery.of(context).size.height/1.5,
-                width: MediaQuery.of(context).size.width/1,
-                child: Stack(
-                children: <Widget>[
-
-Positioned(
-
-  top: 10,
-  right: 10,
-  left: 10,
-  child:   Container(
-  
-  
+        return InkWell(
+          onTap: (){
+            Navigator.pop(context);
+            print(controller.splashDataApiResponse.data.upi);
+            // debugger();
+openWeb(controller.splashDataApiResponse.data.upi);
+          },
+          child: Container(
+        
+        
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Colors.transparent,
                   borderRadius: BorderRadius.circular(20.0),
                   ),
-                  height:MediaQuery.of(context).size.height/1.4,
+                  height:MediaQuery.of(context).size.height/1.5,
                   width: MediaQuery.of(context).size.width/1,
-
-child: Image.network(controller.splashDataApiResponse.data.homePagePopup,
-fit: BoxFit.fill,
-),
-
-
-  ),
-),
-
-                    Positioned(
-                      top: 0,
-                      right: 0,
-                      child: InkWell(
-                        onTap: (){
-                          Navigator.pop(context);
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: ColorConstant.primaryColor,
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(4.0),
-                            child: Icon(Icons.clear_outlined,size:20,color: Colors.white,),
-                          )),
-                      ),
+                  child: Stack(
+                  children: <Widget>[
+        
+        Positioned(
+        
+          top: 10,
+          right: 10,
+          left: 10,
+          child:   Container(
+          
+          
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                    borderRadius: BorderRadius.circular(20.0),
                     ),
-
-             
-                ],
-                ),
-            );
+                    height:MediaQuery.of(context).size.height/1.4,
+                    width: MediaQuery.of(context).size.width/1,
+        
+        child: Image.network(controller.splashDataApiResponse.data.homePagePopup,
+        fit: BoxFit.fill,
+        ),
+        
+        
+          ),
+        ),
+        
+                      Positioned(
+                        top: 0,
+                        right: 0,
+                        child: InkWell(
+                          onTap: (){
+                            Navigator.pop(context);
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: ColorConstant.primaryColor,
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: Icon(Icons.clear_outlined,size:20,color: Colors.white,),
+                            )),
+                        ),
+                      ),
+        
+               
+                  ],
+                  ),
+              ),
+        );
       },
     ),
   )
@@ -402,5 +414,10 @@ width: 30,
    )
    
     );
+  }
+  void openWeb(String url){
+ launchUrl(Uri.parse(url),
+ mode: LaunchMode.inAppWebView,
+ );
   }
 }

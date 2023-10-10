@@ -127,6 +127,7 @@ class HomeController extends GetxController {
             MaterialPageRoute(builder: (context) {
           return DashboardScreen(
             index: 0,
+            isFirstTime: true,
           );
         }), (route) => false);
       } else {
@@ -134,6 +135,7 @@ class HomeController extends GetxController {
             MaterialPageRoute(builder: (context) {
           return DashboardScreen(
             index: 0,
+            isFirstTime: true,
           );
         }), (route) => false);
       }
@@ -178,15 +180,18 @@ class HomeController extends GetxController {
     callUpdateDialog(context);
   }
 
-  void getContestList(context, matchId, entry, pricePool) async {
+  void getContestList(context, matchId, entry, pricePool,type) async {
     Map parameter = {
       NetworkConstant.MatchId: matchId,
       'entry': entry,
-      'price_pool': pricePool
+      'price_pool': pricePool,
+      'type':type
     };
-    // debugger();
+    //  debugger();
     var response = await apiProvider.postAfterAuth(
         routeUrl: NetworkConstant.GET_CONTEST, bodyParams: parameter);
+  //  debugger();
+   
     print(response);
 
     getContestListApiResponse = GetContestListApiResponse.fromJson(response);

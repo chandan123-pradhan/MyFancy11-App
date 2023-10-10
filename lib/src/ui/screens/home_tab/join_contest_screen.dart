@@ -92,7 +92,7 @@ class _UpcommingMatchesDetailsState extends State<JoinContest>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "${widget.matches.team2.teamName} Vs ${widget.matches.team1.teamName}",
+              "${widget.matches.team1.teamName} Vs ${widget.matches.team2.teamName}",
               style: TextStyle(
                   color: ColorConstant.primaryWhiteColor,
                   fontSize: 17,
