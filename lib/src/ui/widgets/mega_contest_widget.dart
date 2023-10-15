@@ -158,7 +158,7 @@ class _MegaContestWidgetState extends State<MegaContestWidget> {
                 Container(
                   width: widget.contest.bonusEntry != '0'
                       ? MediaQuery.of(context).size.width / 1.8
-                      : MediaQuery.of(context).size.width / 1.19,
+                      : MediaQuery.of(context).size.width / 1.21,
                   child: LinearProgressIndicator(
                     minHeight: 4,
                     value:
@@ -271,22 +271,24 @@ class _MegaContestWidgetState extends State<MegaContestWidget> {
                       ],
                     ),
                   ]),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.check_circle_outline,
-                        size: 15,
-                        color: Colors.black45,
-                      ),
-                      Text(
-                        " guaranteed",
-                        style: TextStyle(
-                            color: Colors.black45,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w400),
-                      )
-                    ],
-                  ),
+                  widget.contest.guaranteed == '0'
+                      ? Container()
+                      : Row(
+                          children: [
+                            Icon(
+                              Icons.check_circle_outline,
+                              size: 15,
+                              color: Colors.black45,
+                            ),
+                            Text(
+                              " Guaranteed",
+                              style: TextStyle(
+                                  color: Colors.black45,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w400),
+                            )
+                          ],
+                        ),
                 ],
               ),
             ),

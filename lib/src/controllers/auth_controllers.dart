@@ -40,7 +40,7 @@ class AuthController extends GetxController {
   String selectedAwatarLink = '';
   late UpdateProfileApiReponse updateProfileApiReponse;
   var homeController = Get.put(HomeController());
-  void callValidatePhoneApi(context, type) async {
+  void callValidatePhoneApi(context, type, isForResend) async {
     homeController.getSplashData(context, 0);
     if (phoneNumberController.text.length == 10) {
       Map data = {
@@ -55,31 +55,31 @@ class AuthController extends GetxController {
             bodyParams: data);
         Navigator.pop(context);
 
-
-
-
-
 //  debugger();
         print(response);
         if (response['status'] == 200) {
-          if(type=='register'){
+          if (type == 'register') {
             // validatePhoneNumberApiResponse =
-          //     ValidatePhoneNumberApiResponse.fromJson(response);
-          messages.showMsg(
-              context: context,
-              message: "Mobile Number Already Register Please Login");
-          }else{
+            //     ValidatePhoneNumberApiResponse.fromJson(response);
+            messages.showMsg(
+                context: context,
+                message: "Mobile Number Already Register Please Login");
+          } else {
             validatePhoneNumberApiResponse =
-              ValidatePhoneNumberApiResponse.fromJson(response);
-          messages.showMsg(
-              context: context,
-              message: "OTP Has been shared on your Number");
-             _navigateToOtpPage(context, type);
+                ValidatePhoneNumberApiResponse.fromJson(response);
+            messages.showMsg(
+                context: context,
+                message: "OTP Has been shared on your Number");
+            if (isForResend == false) {
+              _navigateToOtpPage(context, type);
+            }
           }
         } else if (response['status'] == 400) {
           validatePhoneNumberApiResponse =
               ValidatePhoneNumberApiResponse.fromJson(response);
-          _navigateToOtpPage(context, type);
+          if (isForResend == false) {
+            _navigateToOtpPage(context, type);
+          }
         } else {
           messages.showErrorMsg(context: context, message: response['message']);
         }
@@ -93,6 +93,14 @@ class AuthController extends GetxController {
     } else {
       messages.showErrorMsg(context: context, message: 'Invalid Phone Number');
     }
+  }
+
+  void subscribeToTopic() {
+    FirebaseMessaging.instance.subscribeToTopic('all_users').then((value) {
+      print('Subscribed to "all_users" topic');
+    }).catchError((error) {
+      print('Error subscribing to "all_users" topic: $error');
+    });
   }
 
   void _navigateToOtpPage(context, type) {
@@ -114,25 +122,26 @@ class AuthController extends GetxController {
       otpController.clear();
       // debugger();
 
-if(type=='register'){
-callRegisterApi(context);
-}else{
-
-      if (isUnAuthenicated) {
-        // //for new user.
-        // Navigator.pushAndRemoveUntil(context,
-        //     MaterialPageRoute(builder: (context) {
-        //   return const RegisterScreen();
-        // }), (route) => false);
+      if (type == 'register') {
+        callRegisterApi(context);
       } else {
-        
+        debugger();
+        if (isUnAuthenicated) {
+          messages.showErrorMsg(
+              context: context,
+              message: "You have not registered, please register first.");
+          // //for new user.
+          // Navigator.pushAndRemoveUntil(context,
+          //     MaterialPageRoute(builder: (context) {
+          //   return const RegisterScreen();
+          // }), (route) => false);
+        } else {
           callLoginApi(context);
+        }
       }
-}
     } else {
       messages.showErrorMsg(context: context, message: "Invalid OTP");
     }
-    
   }
 
   void callLoginApi(context) async {
@@ -167,12 +176,14 @@ callRegisterApi(context);
         loginApiResponse.data.email, loginApiResponse.data.phone);
     sharedPref.saveAuthToken();
     sharedPref.setLoginStatus();
+    subscribeToTopic();
     Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) {
       return DashboardScreen(
         index: 0,
         isFirstTime: true,
       );
     }), (route) => false);
+    
   }
 
   void callRegisterApi(context) async {
@@ -209,6 +220,7 @@ callRegisterApi(context);
             context: context, message: 'Registration Successfully Done.');
         sharedPref.saveAuthToken();
         homeController.getSplashData(context, 0);
+        subscribeToTopic();
         Navigator.pop(context);
         Navigator.pushAndRemoveUntil(context,
             MaterialPageRoute(builder: (context) {
@@ -239,7 +251,7 @@ callRegisterApi(context);
         Navigator.pop(context);
       }
     } else {
-      callValidatePhoneApi(context, 'register');
+      callValidatePhoneApi(context, 'register', false);
     }
   }
 

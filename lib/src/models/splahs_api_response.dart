@@ -12,7 +12,7 @@
 //   late final List<LoginBanner> loginBanner;
 //   late final List<LoginBanner>homeBanner;
 //   late final bool islogin;
-  
+
 //   SplashDataApiResponse.fromJson(Map<String, dynamic> json){
 //     status = json['status'];
 //     message = json['message'];
@@ -63,7 +63,7 @@
 //   late final String termUrl;
 //   late final String userAggreementUrl;
 //   late final String liveScore;
-  
+
 //   Data.fromJson(Map<String, dynamic> json){
 //     id = json['id'];
 //     appToken = json['app_token'];
@@ -115,7 +115,7 @@
 //   late final String type;
 //   late final String matchId;
 //   late final String action;
-  
+
 //   LoginBanner.fromJson(Map<String, dynamic> json){
 //     id = json['id'];
 //     title = json['title'];
@@ -156,13 +156,17 @@ class SplashDataApiResponse {
   late final List<LoginBanner> loginBanner;
   late final List<HomeBanner> homeBanner;
   late final bool islogin;
-  
-  SplashDataApiResponse.fromJson(Map<String, dynamic> json){
+
+  SplashDataApiResponse.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
     data = Data.fromJson(json['data']);
-    loginBanner = List.from(json['login_banner']).map((e)=>LoginBanner.fromJson(e)).toList();
-    homeBanner = List.from(json['home_banner']).map((e)=>HomeBanner.fromJson(e)).toList();
+    loginBanner = List.from(json['login_banner'])
+        .map((e) => LoginBanner.fromJson(e))
+        .toList();
+    homeBanner = List.from(json['home_banner'])
+        .map((e) => HomeBanner.fromJson(e))
+        .toList();
     islogin = json['islogin'];
   }
 
@@ -171,39 +175,38 @@ class SplashDataApiResponse {
     _data['status'] = status;
     _data['message'] = message;
     _data['data'] = data.toJson();
-    _data['login_banner'] = loginBanner.map((e)=>e.toJson()).toList();
-    _data['home_banner'] = homeBanner.map((e)=>e.toJson()).toList();
+    _data['login_banner'] = loginBanner.map((e) => e.toJson()).toList();
+    _data['home_banner'] = homeBanner.map((e) => e.toJson()).toList();
     _data['islogin'] = islogin;
     return _data;
   }
 }
 
 class Data {
-  Data({
-    required this.id,
-    required this.appToken,
-    required this.appLive,
-    required this.packageName,
-    required this.referBonus,
-    required this.androidVersion,
-    required this.referMsg,
-    required this.updateMsgHtml,
-    required this.androidApkUrl,
-    required this.privacyUrl,
-    required this.termUrl,
-    required this.userAggreementUrl,
-    required this.liveScore,
-    required this.referPercent,
-    required this.promotionPercent,
-    required this.logo,
-    required this.favicon,
-    required this.upi,
-    required this.iosVersion,
-    required this.iosApkUrl,
-    required this.homePagePopup,
-    required this.rechargeMinimum,
-    required this.withdrawMinimum
-  });
+  Data(
+      {required this.id,
+      required this.appToken,
+      required this.appLive,
+      required this.packageName,
+      required this.referBonus,
+      required this.androidVersion,
+      required this.referMsg,
+      required this.updateMsgHtml,
+      required this.androidApkUrl,
+      required this.privacyUrl,
+      required this.termUrl,
+      required this.userAggreementUrl,
+      required this.liveScore,
+      required this.referPercent,
+      required this.promotionPercent,
+      required this.logo,
+      required this.favicon,
+      required this.upi,
+      required this.iosVersion,
+      required this.iosApkUrl,
+      required this.homePagePopup,
+      required this.rechargeMinimum,
+      required this.withdrawMinimum});
   late final String id;
   late final String appToken;
   late final String appLive;
@@ -227,11 +230,11 @@ class Data {
   late final String rechargeMinimum;
   late final String withdrawMinimum;
   late final String homePagePopup;
-  
-  Data.fromJson(Map<String, dynamic> json){
+
+  Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     appToken = json['app_token'];
-    appLive = json['app_live'];
+    appLive = json['app_live'].toString();
     packageName = json['package_name'];
     referBonus = json['refer_bonus'];
     androidVersion = json['app_version'];
@@ -247,13 +250,11 @@ class Data {
     logo = json['logo'];
     favicon = json['favicon'];
     upi = json['upi'];
-    iosVersion=json['ios_version'];
-    iosApkUrl=json['ios_url'];
-    rechargeMinimum=json['recharge_min'].toString();
-    withdrawMinimum=json['withdraw_min'].toString();
-    homePagePopup=json['home_popup'];
-
-
+    iosVersion = json['ios_version'];
+    iosApkUrl = json['ios_url'];
+    rechargeMinimum = json['recharge_min'].toString();
+    withdrawMinimum = json['withdraw_min'].toString();
+    homePagePopup = json['home_popup'];
   }
 
   Map<String, dynamic> toJson() {
@@ -276,11 +277,11 @@ class Data {
     _data['logo'] = logo;
     _data['favicon'] = favicon;
     _data['upi'] = upi;
-    _data['ios_version']=iosVersion;
-    _data['ios_url']=iosApkUrl;
-    _data['recharge_min']=rechargeMinimum;
-    _data['withdraw_min']=withdrawMinimum;
-    _data['home_popup']=homePagePopup;
+    _data['ios_version'] = iosVersion;
+    _data['ios_url'] = iosApkUrl;
+    _data['recharge_min'] = rechargeMinimum;
+    _data['withdraw_min'] = withdrawMinimum;
+    _data['home_popup'] = homePagePopup;
     return _data;
   }
 }
@@ -304,8 +305,8 @@ class LoginBanner {
   late final String type;
   late final String matchId;
   late final String action;
-  
-  LoginBanner.fromJson(Map<String, dynamic> json){
+
+  LoginBanner.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'];
     description = json['description'];
@@ -349,8 +350,8 @@ class HomeBanner {
   late final String type;
   late final String matchId;
   late final String action;
-  
-  HomeBanner.fromJson(Map<String, dynamic> json){
+
+  HomeBanner.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'];
     description = json['description'];

@@ -5,6 +5,7 @@ import 'dart:io';
 
 import 'package:cricket_fantacy/src/dialogs/AlertDialog.dart';
 import 'package:cricket_fantacy/src/dialogs/loadingDialog.dart';
+import 'package:cricket_fantacy/src/dialogs/maintainance_dialog.dart';
 import 'package:cricket_fantacy/src/dialogs/update_dialog.dart';
 import 'package:cricket_fantacy/src/global_variable.dart';
 import 'package:cricket_fantacy/src/models/GetContestListApiResponse.dart';
@@ -179,19 +180,19 @@ class HomeController extends GetxController {
     callUpdateDialog(context);
   }
 
-  void getContestList(context, matchId, entry, pricePool,type) async {
+  void getContestList(context, matchId, entry, pricePool, type) async {
     Map parameter = {
       NetworkConstant.MatchId: matchId,
       'entry': entry,
       'price_pool': pricePool,
-      'type':type
+      'type': type
     };
     //  debugger();
     var response = await apiProvider.postAfterAuth(
         routeUrl: NetworkConstant.GET_CONTEST, bodyParams: parameter);
-  //  debugger();
-   
-    print(response);
+    debugger();
+
+    // print(response);
 
     getContestListApiResponse = GetContestListApiResponse.fromJson(response);
     //  debugger();
@@ -662,10 +663,11 @@ class HomeController extends GetxController {
         routeUrl: NetworkConstant.recharge, bodyParams: parameter);
     Navigator.pop(context);
     print(response);
-    // debugger();  
+    // debugger();
     amountController.clear();
-    if(response['status']==200){
-      Messages().showMsg(context: context, message: 'Recharge Successfully Done');
+    if (response['status'] == 200) {
+      Messages()
+          .showMsg(context: context, message: 'Recharge Successfully Done');
     }
     getWalletApi(context);
     // getWalletApiResponse = GetWalletApiResponse.fromJson(response);
@@ -673,6 +675,7 @@ class HomeController extends GetxController {
     update();
   }
 
+  String eKycMessage = '';
   String selectedPaymentGateway = '';
   void checkKyc(context) async {
     eKycStatus = 0;
@@ -693,6 +696,9 @@ class HomeController extends GetxController {
       selectedPaymentGateway = checkEkyApiResponse!.data.isDefault;
 
       eKycStatus = 3;
+    } else if (response['status'] == 400) {
+      eKycStatus = 4;
+      eKycMessage = response['reason'];
     }
 
     update();
@@ -923,7 +929,10 @@ class HomeController extends GetxController {
     }
 
     if (newVersion > currentVersion) {
+      isDialogEnable = true;
       showModalBottomSheet(
+          isDismissible: false,
+          enableDrag: false,
           // isScrollControlled: true,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
@@ -935,7 +944,24 @@ class HomeController extends GetxController {
             );
           });
     } else {
-      print("update not avaiable");
+      isDialogEnable = true;
+      //under maintainance
+      if (splashDataApiResponse.data.appLive == '0') {
+        showModalBottomSheet(
+            enableDrag: false,
+            isDismissible: false,
+            // isScrollControlled: true,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20))),
+            context: context,
+            builder: (context) {
+              return maintainanceDialog();
+            });
+      } else {
+        isDialogEnable = false;
+      }
     }
   }
 

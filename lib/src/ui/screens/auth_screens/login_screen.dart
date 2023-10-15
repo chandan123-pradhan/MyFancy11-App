@@ -205,7 +205,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: InkWell(
               onTap: () {
                 if (_isActive == true && isCheckBottonTrue) {
-                  controller.callValidatePhoneApi(context,'login');
+                  controller.callValidatePhoneApi(context,'login',false);
                 }
               },
               child: Container(

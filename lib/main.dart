@@ -5,21 +5,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
 
-
 Future<void> _firebaseMessagingBackgroundHandler(message) async {
   await Firebase.initializeApp();
   print('Handling a background message ${message.messageId}');
+ 
 }
 
-void main() async{
+
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-await Firebase.initializeApp();
+  await Firebase.initializeApp();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    systemNavigationBarColor: ColorConstant.primaryWhiteColor, // navigation bar color
+    systemNavigationBarColor:
+        ColorConstant.primaryWhiteColor, // navigation bar color
     statusBarColor: ColorConstant.primaryColor, // status bar color
   ));
 
-   FirebaseMessaging messaging = FirebaseMessaging.instance;
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
 
   NotificationSettings settings = await messaging.requestPermission(
     alert: true,
@@ -42,9 +45,6 @@ await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
-
-
-
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
@@ -53,8 +53,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
- @override
+  @override
   void initState() {
     FirebaseMessaging.onMessage.listen(
       (RemoteMessage message) {
@@ -68,17 +67,15 @@ class _MyAppState extends State<MyApp> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Myfancy11',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const SplashScreen()
-    );
+        debugShowCheckedModeBanner: false,
+        title: 'Myfancy11',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: const SplashScreen());
   }
 }
 

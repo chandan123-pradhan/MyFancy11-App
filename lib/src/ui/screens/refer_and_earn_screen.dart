@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cricket_fantacy/src/controllers/referal_controller.dart';
+import 'package:cricket_fantacy/src/global_variable.dart';
 import 'package:cricket_fantacy/src/ui/widgets/shimmer_effect_widget.dart';
 import 'package:cricket_fantacy/src/utils/color_scheme.dart';
 import 'package:cricket_fantacy/src/utils/messages.dart';
@@ -81,16 +82,19 @@ class _RefferAndEarnScreenState extends State<RefferAndEarnScreen> {
                                 return Padding(
                                   padding: const EdgeInsets.all(15.0),
                                   child: InkWell(
-                                    onTap: (){
-                                      
-                                    },
+                                    onTap: () {},
                                     child: Container(
                                       height: 120,
-                                      width: MediaQuery.of(context).size.width/1,
+                                      width:
+                                          MediaQuery.of(context).size.width / 1,
                                       decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        border: Border.all(width: 1,color: ColorConstant.deviderColor),
-                                         // shape: BoxShape.circle,
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          border: Border.all(
+                                              width: 1,
+                                              color:
+                                                  ColorConstant.deviderColor),
+                                          // shape: BoxShape.circle,
                                           image: DecorationImage(
                                               image: NetworkImage(controller
                                                   .refferalApiResponse!.image),
@@ -160,7 +164,22 @@ class _RefferAndEarnScreenState extends State<RefferAndEarnScreen> {
                                   InkWell(
                                     onTap: () {
                                       Share.share(
-                                          '${controller.refferalApiResponse!.refer.refercode}');
+                                          // '$refferAndEarnMsg\n${controller.refferalApiResponse!.refer.refercode}');
+
+                                          "\uD83C\uDDEE\uD83C\uDDF3Bharat Ka Aapna Fantasy App: Myfancy11\uD83C\uDDEE\uD83C\uDDF3\n" +
+                                              "\n" +
+                                              "\uD83D\uDFE2Play Fantasy Cricket and Option Trading On Bharat's Leading Fantasy App\uD83D\uDFE2\n" +
+                                              "\n" +
+                                              "\uD83D\uDC49Download Myfancy11 From Here:\n" +
+                                              "\n" +
+                                              "✅Use My Refer Code To Get ${controller.refferalApiResponse!.referBonusAmount} Rs. Directly to your Bonus Account As a Welcome Bonus, My Refer Code is ${controller.refferalApiResponse!.refer.refercode}\n" +
+                                              "\n" +
+                                              "⚠️Some Extra Rewards For You: Get ${controller.refferalApiResponse!.setting.referPercent}% For Every Contest Join From Your Referred User.\n" +
+                                              "\n" +
+                                              "Download & Enjoy The Winning❤️\n" +
+                                              "\n" +
+                                              "#teamaapkijeetaapki\n" +
+                                              "#happygaming");
                                     },
                                     child: Container(
                                       width: 50,
@@ -217,7 +236,8 @@ class _RefferAndEarnScreenState extends State<RefferAndEarnScreen> {
                                     borderRadius: BorderRadius.circular(20),
                                     color: Colors.black12),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     InkWell(
                                       onTap: () {
@@ -227,8 +247,6 @@ class _RefferAndEarnScreenState extends State<RefferAndEarnScreen> {
                                         //   showUserInputModeBottomSheet(
                                         //       'Normal Program', 'downgrade');
                                         // }
-
-                                        
                                       },
                                       child: Container(
                                         height: 40,
@@ -252,11 +270,11 @@ class _RefferAndEarnScreenState extends State<RefferAndEarnScreen> {
                                               color: controller
                                                           .refferalApiResponse!
                                                           .setting
-                                                          .upgradeRequest ==0
-                                                      
-                                                
+                                                          .upgradeRequest ==
+                                                      0
                                                   ? ColorConstant
-                                                      .primaryWhiteColor: ColorConstant
+                                                      .primaryWhiteColor
+                                                  : ColorConstant
                                                       .primaryBlackColor,
                                               fontSize: 16,
                                               fontWeight: FontWeight.w600),
@@ -417,11 +435,10 @@ class _RefferAndEarnScreenState extends State<RefferAndEarnScreen> {
 
   void showUserInputModeBottomSheet(String title, task) {
     showModalBottomSheet(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(13),
-          topRight: Radius.circular(13)
-        )),
-         isScrollControlled: true,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(13), topRight: Radius.circular(13))),
+        isScrollControlled: true,
         enableDrag: true,
         context: context,
         builder: (context) {
@@ -452,169 +469,166 @@ class _AffiliateProgramFormState extends State<AffiliateProgramForm> {
       padding: const EdgeInsets.all(20.0),
       child: SingleChildScrollView(
         child: Container(
-           height: MediaQuery.of(context).size.height / 1.8,
+          height: MediaQuery.of(context).size.height / 1.8,
           child: isFormSubmited == true
-              ? 
-              
-             Column(
-                    children: [
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        "Request Submited!",
-                        style: TextStyle(
-                            color: ColorConstant.primaryBlackColor,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        "Congratulations, Your Rquest have been submited, We'll Review it and will update your Profile soon",
-                        style: TextStyle(
-                            color: Colors.black54,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Lottie.asset(
-                        'assets/lotties/done.json',
-                        width: 150,
-                        height: 150,
-                        fit: BoxFit.fill,
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      InkWell(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: Container(
-                          height: 40,
-                          width: MediaQuery.of(context).size.width / 1,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: ColorConstant.primaryBlackColor),
-                          alignment: Alignment.center,
-                          child: Text(
-                            "Okay",
-                            style: TextStyle(
-                                color: ColorConstant.primaryWhiteColor,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600),
-                          ),
+              ? Column(
+                  children: [
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      "Request Submited!",
+                      style: TextStyle(
+                          color: ColorConstant.primaryBlackColor,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      "Congratulations, Your Rquest have been submited, We'll Review it and will update your Profile soon",
+                      style: TextStyle(
+                          color: Colors.black54,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Lottie.asset(
+                      'assets/lotties/done.json',
+                      width: 150,
+                      height: 150,
+                      fit: BoxFit.fill,
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        height: 40,
+                        width: MediaQuery.of(context).size.width / 1,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: ColorConstant.primaryBlackColor),
+                        alignment: Alignment.center,
+                        child: Text(
+                          "Okay",
+                          style: TextStyle(
+                              color: ColorConstant.primaryWhiteColor,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600),
                         ),
                       ),
-                        SizedBox(height: 10,),
-                            Expanded(
-                              child: Container(
-                                alignment: Alignment.bottomCenter,
-                                child: InkWell(
-                                                onTap: (){
-                                                  launchUrl(Uri.parse('https://webgradle.com/'));
-                                                },
-                                                child: Image.asset("assets/new_icons/developed_by.png",
-                                                height: 25,
-                                                color: Colors.black54,
-                                                )
-                                          ),
-                              ),
-                            ),
-                    ],
-                  )
-                
-              : 
-              
-              
-               Column(
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Expanded(
+                      child: Container(
+                        alignment: Alignment.bottomCenter,
+                        child: InkWell(
+                            onTap: () {
+                              launchUrl(Uri.parse('https://webgradle.com/'));
+                            },
+                            child: Image.asset(
+                              "assets/new_icons/developed_by.png",
+                              height: 25,
+                              color: Colors.black54,
+                            )),
+                      ),
+                    ),
+                  ],
+                )
+              : Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        "Provide your below input to be an ${widget.title}",
-                        style: TextStyle(
-                            color: ColorConstant.primaryBlackColor,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        "Please Enter The Reason why you want to go ${widget.title}?",
-                        style: TextStyle(
-                            color: Colors.black54,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      TextFormField(
-                        controller: _textFieldController,
-                        maxLines: 10,
-                        decoration: InputDecoration(
-                            focusedBorder: InputBorder.none,
-                            enabledBorder: InputBorder.none,
-                            filled: true,
-                            hintText: "Enter Here.."),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      InkWell(
-                        onTap: () {
-                          if (_textFieldController.text.isNotEmpty) {
-                            controller.requestForUpgrade(
-                                reason: _textFieldController.text,
-                                type: widget.task);
-                            setState(() {
-                              isFormSubmited = true;
-                            });
-                          }
-                        },
-                        child: Container(
-                          height: 40,
-                          width: MediaQuery.of(context).size.width / 1,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: ColorConstant.primaryBlackColor),
-                          alignment: Alignment.center,
-                          child: Text(
-                            "Submit",
-                            style: TextStyle(
-                                color: ColorConstant.primaryWhiteColor,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600),
-                          ),
+                  children: [
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      "Provide your below input to be an ${widget.title}",
+                      style: TextStyle(
+                          color: ColorConstant.primaryBlackColor,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      "Please Enter The Reason why you want to go ${widget.title}?",
+                      style: TextStyle(
+                          color: Colors.black54,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w400),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    TextFormField(
+                      controller: _textFieldController,
+                      maxLines: 10,
+                      decoration: InputDecoration(
+                          focusedBorder: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          filled: true,
+                          hintText: "Enter Here.."),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    InkWell(
+                      onTap: () {
+                        if (_textFieldController.text.isNotEmpty) {
+                          controller.requestForUpgrade(
+                              reason: _textFieldController.text,
+                              type: widget.task);
+                          setState(() {
+                            isFormSubmited = true;
+                          });
+                        }
+                      },
+                      child: Container(
+                        height: 40,
+                        width: MediaQuery.of(context).size.width / 1,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: ColorConstant.primaryBlackColor),
+                        alignment: Alignment.center,
+                        child: Text(
+                          "Submit",
+                          style: TextStyle(
+                              color: ColorConstant.primaryWhiteColor,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600),
                         ),
                       ),
-                       SizedBox(height: 10,),
-                            Expanded(
-                              child: Container(
-                                alignment: Alignment.bottomCenter,
-                                child: InkWell(
-                                                onTap: (){
-                                                  launchUrl(Uri.parse('https://webgradle.com/'));
-                                                },
-                                                child: Image.asset("assets/new_icons/developed_by.png",
-                                                height: 25,
-                                                color: Colors.black54,
-                                                )
-                                          ),
-                              ),
-                            ),
-                    ],
-                  ),
-              ),
-        
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Expanded(
+                      child: Container(
+                        alignment: Alignment.bottomCenter,
+                        child: InkWell(
+                            onTap: () {
+                              launchUrl(Uri.parse('https://webgradle.com/'));
+                            },
+                            child: Image.asset(
+                              "assets/new_icons/developed_by.png",
+                              height: 25,
+                              color: Colors.black54,
+                            )),
+                      ),
+                    ),
+                  ],
+                ),
+        ),
       ),
     );
   }

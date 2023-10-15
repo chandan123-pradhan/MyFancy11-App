@@ -10,27 +10,31 @@ class MyRefferalApiResponse {
   late final int status;
   late final String message;
   late final String image;
+  late final String referBonusAmount;
   late final Setting setting;
   late final Refer refer;
   late final List<RefferUserData> data;
-  
-  MyRefferalApiResponse.fromJson(Map<String, dynamic> json){
+
+  MyRefferalApiResponse.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-    image=json['image'];
+    image = json['image'];
+    referBonusAmount = json['refer_bonus'];
     setting = Setting.fromJson(json['setting']);
     refer = Refer.fromJson(json['refer']);
-    data = List.from(json['data']).map((e)=>RefferUserData.fromJson(e)).toList();
+    data =
+        List.from(json['data']).map((e) => RefferUserData.fromJson(e)).toList();
   }
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
     _data['status'] = status;
     _data['message'] = message;
-    _data['image']=image;
+    _data['image'] = image;
+    _data['refer_bonus'] = referBonusAmount;
     _data['setting'] = setting.toJson();
     _data['refer'] = refer.toJson();
-    _data['data'] = data.map((e)=>e.toJson()).toList();
+    _data['data'] = data.map((e) => e.toJson()).toList();
     return _data;
   }
 }
@@ -44,8 +48,8 @@ class Setting {
   late final String referPercent;
   late final String promotionPercent;
   late final int upgradeRequest;
-  
-  Setting.fromJson(Map<String, dynamic> json){
+
+  Setting.fromJson(Map<String, dynamic> json) {
     referPercent = json['refer_percent'];
     promotionPercent = json['promotion_percent'];
     upgradeRequest = json['upgrade_request'];
@@ -77,8 +81,8 @@ class Refer {
   late final String isActive;
   late final String paidAmount;
   late final String accountType;
-  
-  Refer.fromJson(Map<String, dynamic> json){
+
+  Refer.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     userToken = json['user_token'];
     refercode = json['refercode'];
@@ -112,8 +116,8 @@ class RefferUserData {
   late final String profile;
   late final String userToken;
   late final int amount;
-  
-  RefferUserData.fromJson(Map<String, dynamic> json){
+
+  RefferUserData.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     profile = json['profile'];
     userToken = json['user_token'];

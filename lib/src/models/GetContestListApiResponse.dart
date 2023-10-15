@@ -7,18 +7,19 @@ class GetContestListApiResponse {
   late final int status;
   late final String message;
   late final List<ContestList> contestList;
-  
-  GetContestListApiResponse.fromJson(Map<String, dynamic> json){
+
+  GetContestListApiResponse.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-    contestList = List.from(json['data']).map((e)=>ContestList.fromJson(e)).toList();
+    contestList =
+        List.from(json['data']).map((e) => ContestList.fromJson(e)).toList();
   }
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
     _data['status'] = status;
     _data['message'] = message;
-    _data['data'] = contestList.map((e)=>e.toJson()).toList();
+    _data['data'] = contestList.map((e) => e.toJson()).toList();
     return _data;
   }
 }
@@ -34,12 +35,12 @@ class ContestList {
   late final String name;
   late final String status;
   late final List<Contest> data;
-  
-  ContestList.fromJson(Map<String, dynamic> json){
+
+  ContestList.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     status = json['status'];
-    data = List.from(json['data']).map((e)=>Contest.fromJson(e)).toList();
+    data = List.from(json['data']).map((e) => Contest.fromJson(e)).toList();
   }
 
   Map<String, dynamic> toJson() {
@@ -47,36 +48,36 @@ class ContestList {
     _data['id'] = id;
     _data['name'] = name;
     _data['status'] = status;
-    _data['data'] = data.map((e)=>e.toJson()).toList();
+    _data['data'] = data.map((e) => e.toJson()).toList();
     return _data;
   }
 }
 
 class Contest {
-  Contest({
-    required this.contestId,
-    required this.contestName,
-    required this.contestTag,
-    required this.winners,
-    required this.prizePool,
-    required this.totalTeam,
-    required this.joinTeam,
-    required this.entry,
-    required this.contestDescription,
-    required this.contestNote1,
-    required this.contestNote2,
-    required this.winningNote,
-    required this.matchId,
-    required this.type,
-    required this.firstPrize,
-    required this.winPercent,
-    required this.teamUpto,
-    required this.contestStatus,
-    required this.contestPaid,
-    required this.bonusEntry,
-    required this.spendEarn,
-    required this.offer,
-  });
+  Contest(
+      {required this.contestId,
+      required this.contestName,
+      required this.contestTag,
+      required this.winners,
+      required this.prizePool,
+      required this.totalTeam,
+      required this.joinTeam,
+      required this.entry,
+      required this.contestDescription,
+      required this.contestNote1,
+      required this.contestNote2,
+      required this.winningNote,
+      required this.matchId,
+      required this.type,
+      required this.firstPrize,
+      required this.winPercent,
+      required this.teamUpto,
+      required this.contestStatus,
+      required this.contestPaid,
+      required this.bonusEntry,
+      required this.spendEarn,
+      required this.offer,
+      required this.guaranteed});
   late final String contestId;
   late final String contestName;
   late final String contestTag;
@@ -99,8 +100,9 @@ class Contest {
   late final String bonusEntry;
   late final String spendEarn;
   late final String offer;
-  
-  Contest.fromJson(Map<String, dynamic> json){
+  late final String guaranteed;
+
+  Contest.fromJson(Map<String, dynamic> json) {
     contestId = json['contest_id'];
     contestName = json['contest_name'];
     contestTag = json['contest_tag'];
@@ -123,6 +125,7 @@ class Contest {
     bonusEntry = json['bonus_entry'];
     spendEarn = json['spend_earn'];
     offer = json['offer'].toString();
+    guaranteed = json['guarantee'].toString();
   }
 
   Map<String, dynamic> toJson() {
@@ -149,6 +152,7 @@ class Contest {
     _data['bonus_entry'] = bonusEntry;
     _data['spend_earn'] = spendEarn;
     _data['offer'] = offer;
+    _data['guarantee'] = guaranteed;
     return _data;
   }
 }
@@ -168,8 +172,8 @@ class Offer {
   late final String comment;
   late final String status;
   late final String title;
-  
-  Offer.fromJson(Map<String, dynamic> json){
+
+  Offer.fromJson(Map<String, dynamic> json) {
     offerId = json['offer_id'];
     thumb = json['thumb'];
     contestId = json['contest_id'];

@@ -52,12 +52,17 @@ class _EkycFormScreenState extends State<EkycFormScreen> {
       _bankHolderNameController.text =
           homeController.checkEkyApiResponse!.data.bankHolder;
       _upiIdController.text = homeController.checkEkyApiResponse!.data.upi;
-      List l=homeController.checkEkyApiResponse!.data.img.split(',');
+      List l = homeController.checkEkyApiResponse!.data.img.split(',');
       debugger();
-      aadhaar_front_pic_url = homeController.checkEkyApiResponse!.data.img.split(',').first.toString();
-    // aadhar_back_pic_url=homeController.checkEkyApiResponse!.data.img.split(',')[1];
-    pan_pic_url=homeController.checkEkyApiResponse!.data.img.split(',').last.toString();
-    
+      aadhaar_front_pic_url = homeController.checkEkyApiResponse!.data.img
+          .split(',')
+          .first
+          .toString();
+      // aadhar_back_pic_url=homeController.checkEkyApiResponse!.data.img.split(',')[1];
+      pan_pic_url = homeController.checkEkyApiResponse!.data.img
+          .split(',')
+          .last
+          .toString();
     }
     // TODO: implement initState
     super.initState();
@@ -103,7 +108,7 @@ class _EkycFormScreenState extends State<EkycFormScreen> {
                           SizedBox(
                             height: 20,
                           ),
-                           _getItemWidget(
+                          _getItemWidget(
                               title: 'Account Holder Name',
                               tController: _bankHolderNameController),
                           SizedBox(
@@ -126,7 +131,6 @@ class _EkycFormScreenState extends State<EkycFormScreen> {
                           SizedBox(
                             height: 20,
                           ),
-                         
                           _getItemWidget(
                               title: 'UPI ID', tController: _upiIdController),
                           SizedBox(
@@ -145,15 +149,15 @@ class _EkycFormScreenState extends State<EkycFormScreen> {
                                 SizedBox(
                                   height: 10,
                                 ),
-                                 TextFormField(
-          controller: _aadhaarNumberController,
-          decoration: InputDecoration(
-              focusedBorder: InputBorder.none,
-              enabledBorder: InputBorder.none,
-              filled: true,
-              hintText: "Aadhaar number here.."),
-        ),
-         SizedBox(
+                                TextFormField(
+                                  controller: _aadhaarNumberController,
+                                  decoration: InputDecoration(
+                                      focusedBorder: InputBorder.none,
+                                      enabledBorder: InputBorder.none,
+                                      filled: true,
+                                      hintText: "Aadhaar number here.."),
+                                ),
+                                SizedBox(
                                   height: 10,
                                 ),
                                 InkWell(
@@ -200,13 +204,10 @@ class _EkycFormScreenState extends State<EkycFormScreen> {
                                                   border: Border.all(
                                                       width: 1,
                                                       color: Colors.black38),
-image: DecorationImage(image: 
-AssetImage('assets/new_icons/image_upload_placeholder.jpg'),
-fit: BoxFit.contain
-
-)
-
-                                                )
+                                                  image: DecorationImage(
+                                                      image: AssetImage(
+                                                          'assets/new_icons/image_upload_placeholder.jpg'),
+                                                      fit: BoxFit.contain))
                                               : BoxDecoration(
                                                   borderRadius:
                                                       BorderRadius.circular(10),
@@ -271,10 +272,6 @@ fit: BoxFit.contain
                                                       image: NetworkImage(
                                                           _aadhar_back_pic),
                                                       fit: BoxFit.fill)
-
-
-
-
                                                   : DecorationImage(
                                                       image: FileImage(File(
                                                           _aadhar_back_pic
@@ -295,13 +292,10 @@ fit: BoxFit.contain
                                                   border: Border.all(
                                                       width: 1,
                                                       color: Colors.black38),
-                                              
-                                              image: DecorationImage(image: 
-AssetImage('assets/new_icons/image_upload_placeholder.jpg'),
-fit: BoxFit.contain
-
-)
-                                                )
+                                                  image: DecorationImage(
+                                                      image: AssetImage(
+                                                          'assets/new_icons/image_upload_placeholder.jpg'),
+                                                      fit: BoxFit.contain))
                                               : BoxDecoration(
                                                   borderRadius:
                                                       BorderRadius.circular(10),
@@ -338,18 +332,18 @@ fit: BoxFit.contain
                                       fontSize: 15,
                                       fontWeight: FontWeight.w500),
                                 ),
-                                  SizedBox(
+                                SizedBox(
                                   height: 10,
                                 ),
-                                 TextFormField(
-          controller: _panNumberController,
-          decoration: InputDecoration(
-              focusedBorder: InputBorder.none,
-              enabledBorder: InputBorder.none,
-              filled: true,
-              hintText: "PAN number here.."),
-        ),
-         SizedBox(
+                                TextFormField(
+                                  controller: _panNumberController,
+                                  decoration: InputDecoration(
+                                      focusedBorder: InputBorder.none,
+                                      enabledBorder: InputBorder.none,
+                                      filled: true,
+                                      hintText: "PAN number here.."),
+                                ),
+                                SizedBox(
                                   height: 10,
                                 ),
                                 InkWell(
@@ -394,13 +388,10 @@ fit: BoxFit.contain
                                                   border: Border.all(
                                                       width: 1,
                                                       color: Colors.black38),
-                                              
-                                              image: DecorationImage(image: 
-AssetImage('assets/new_icons/image_upload_placeholder.jpg'),
-fit: BoxFit.contain
-
-)
-                                                )
+                                                  image: DecorationImage(
+                                                      image: AssetImage(
+                                                          'assets/new_icons/image_upload_placeholder.jpg'),
+                                                      fit: BoxFit.contain))
                                               : BoxDecoration(
                                                   borderRadius:
                                                       BorderRadius.circular(10),
@@ -413,7 +404,7 @@ fit: BoxFit.contain
                                                       fit: BoxFit.fill)),
                                           alignment: Alignment.center,
                                           child: _pan_pic == null
-                                              ?Container()
+                                              ? Container()
                                               : imageUploading == true &&
                                                       pan_pic_url == ''
                                                   ? CircularProgressIndicator(
@@ -435,72 +426,73 @@ fit: BoxFit.contain
                                     if (_bankHolderNameController
                                         .text.isNotEmpty) {
                                       if (_upiIdController.text.isNotEmpty) {
-                                        if(_aadhaarNumberController.text.isNotEmpty){
-                                          if(_panNumberController.text.isNotEmpty){
-if (aadhaar_front_pic_url != '') {
-                                          if (_aadhar_back_pic != '') {
-                                            if (pan_pic_url != '') {
-                                              EkycRequestBody body = EkycRequestBody(
-                                                  bankName:
-                                                      _bankNameController.text,
-                                                  ifscCode:
-                                                      _ifscController.text,
-                                                  accountNumber:
-                                                      _accountNumberController
-                                                          .text,
-                                                  bankHolderName:
-                                                      _bankHolderNameController
-                                                          .text,
-                                                  upi: _upiIdController.text,
-                                                  adhaarPicUlr:
-                                                      aadhaar_front_pic_url,
-                                                      adhaarBackPicUrl: aadhar_back_pic_url,
+                                        if (_aadhaarNumberController
+                                            .text.isNotEmpty) {
+                                          if (_panNumberController
+                                              .text.isNotEmpty) {
+                                            if (aadhaar_front_pic_url != '') {
+                                              if (_aadhar_back_pic != '') {
+                                                if (pan_pic_url != '') {
+                                                  EkycRequestBody body = EkycRequestBody(
+                                                      bankName:
+                                                          _bankNameController
+                                                              .text,
+                                                      ifscCode:
+                                                          _ifscController.text,
+                                                      accountNumber:
+                                                          _accountNumberController
+                                                              .text,
+                                                      bankHolderName:
+                                                          _bankHolderNameController
+                                                              .text,
+                                                      upi:
+                                                          _upiIdController.text,
+                                                      adhaarPicUlr:
+                                                          aadhaar_front_pic_url,
+                                                      adhaarBackPicUrl:
+                                                          aadhar_back_pic_url,
                                                       panPicUrl: pan_pic_url,
-                                                      aadhaarNumber: _aadhaarNumberController.text,
-                                                      panNumber: _panNumberController.text
-                                                      
-                                                      
-                                                      );
-                                              homeController.requestEky(
-                                                  context: context,
-                                                  ekycRequestBody: body);
+                                                      aadhaarNumber:
+                                                          _aadhaarNumberController
+                                                              .text,
+                                                      panNumber:
+                                                          _panNumberController
+                                                              .text);
+                                                  homeController.requestEky(
+                                                      context: context,
+                                                      ekycRequestBody: body);
+                                                } else {
+                                                  Messages().showErrorMsg(
+                                                      context: context,
+                                                      message:
+                                                          'PAN Photo is Required');
+                                                }
+                                              } else {
+                                                Messages().showErrorMsg(
+                                                    context: context,
+                                                    message:
+                                                        'Aadhaar Back Photo is Required');
+                                              }
                                             } else {
                                               Messages().showErrorMsg(
                                                   context: context,
                                                   message:
-                                                      'PAN Photo is Required');
+                                                      'Aadhaar Front Photo is Required');
                                             }
                                           } else {
+                                            //error
                                             Messages().showErrorMsg(
                                                 context: context,
                                                 message:
-                                                    'Aadhaar Back Photo is Required');
+                                                    'PAN Number is required.');
                                           }
                                         } else {
-                                          Messages().showErrorMsg(
-                                              context: context,
-                                              message:
-                                                  'Aadhaar Front Photo is Required');
-                                        }
-                                          }else{
-                                            //error
-                                             Messages().showErrorMsg(
-                                              context: context,
-                                              message:
-                                                  'PAN Number is required.');
-                                      
-                                          }
-                                        }else{
                                           Messages().showErrorMsg(
                                               context: context,
                                               message:
                                                   'Aadhaar Number is required');
                                           //erro
                                         }
-                                     
-                                     
-                                     
-                                     
                                       } else {
                                         Messages().showErrorMsg(
                                             context: context,
@@ -533,7 +525,11 @@ if (aadhaar_front_pic_url != '') {
                               width: MediaQuery.of(context).size.width / 1,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(5),
-                                  color: ColorConstant.primaryBlackColor),
+                                  color: aadhaar_front_pic_url == '' ||
+                                          aadhar_back_pic_url == '' ||
+                                          pan_pic_url == ''
+                                      ? ColorConstant.disableColor
+                                      : ColorConstant.primaryBlackColor),
                               alignment: Alignment.center,
                               child: Text(
                                 widget.isItForEdit == true ? "Edit" : "Submit",
@@ -544,7 +540,9 @@ if (aadhaar_front_pic_url != '') {
                               ),
                             ),
                           ),
-                          SizedBox(height: 30,),
+                          SizedBox(
+                            height: 30,
+                          ),
                         ],
                       ),
                     ),

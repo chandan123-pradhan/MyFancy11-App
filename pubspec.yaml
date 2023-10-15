@@ -45,6 +45,7 @@ dependencies:
   pinput: ^2.2.31
   intl: 
   flutter_countdown_timer:
+  timer_count_down: ^2.2.2
   shimmer: ^3.0.0
   cached_network_image: ^3.2.3
   permission_handler: 

@@ -115,7 +115,7 @@ class _UpcommingMatchesDetailsState extends State<JoinContest>
                 }));
               },
               child: Container(
-width: 30,
+                width: 30,
                 height: 40,
                 child: Padding(
                   padding: const EdgeInsets.all(5.0),
@@ -169,26 +169,29 @@ width: 30,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  width: 
-                  
-                   widget.contest.bonusEntry!='0'? 
-                  MediaQuery.of(context).size.width / 1.5:MediaQuery.of(context).size.width/1.09,
+                  width: widget.contest.bonusEntry != '0'
+                      ? MediaQuery.of(context).size.width / 1.5
+                      : MediaQuery.of(context).size.width / 1.09,
                   child: LinearProgressIndicator(
                     minHeight: 4,
-                    value:  ((int.parse(widget.contest.joinTeam)/int.parse(widget.contest.totalTeam))*100)/100,
+                    value: ((int.parse(widget.contest.joinTeam) /
+                                int.parse(widget.contest.totalTeam)) *
+                            100) /
+                        100,
                     backgroundColor: Colors.red[50],
-                    valueColor:
-                        AlwaysStoppedAnimation<Color>(ColorConstant.primaryColor),
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                        ColorConstant.primaryColor),
                   ),
                 ),
-                  widget.contest.bonusEntry!='0'?     Text("Use Bonus ₹${widget.contest.bonusEntry}",
-                style: TextStyle(
-                  color: ColorConstant.primaryColor,
-                  fontSize: 13,
-                  fontWeight: FontWeight.w500
-                  
-                ),
-                ):Container()
+                widget.contest.bonusEntry != '0'
+                    ? Text(
+                        "Use Bonus ₹${widget.contest.bonusEntry}",
+                        style: TextStyle(
+                            color: ColorConstant.primaryColor,
+                            fontSize: 13,
+                            fontWeight: FontWeight.w500),
+                      )
+                    : Container()
               ],
             ),
           ),
@@ -221,9 +224,11 @@ width: 30,
             child: InkWell(
               onTap: () async {
                 controller
-                    .getMyTeam(matchId: widget.matches.matchId.toString(),context: context)
+                    .getMyTeam(
+                        matchId: widget.matches.matchId.toString(),
+                        context: context)
                     .then((value) {
-                     // debugger();
+                  // debugger();
                   if (value != null) {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
@@ -277,7 +282,7 @@ width: 30,
                     //       fontWeight: FontWeight.w500),
                     // ),
                     Text(
-                      " ₹${int.parse(widget.contest.entry)+int.parse(widget.contest.bonusEntry)}",
+                      " ₹${int.parse(widget.contest.entry) + int.parse(widget.contest.bonusEntry)}",
                       style: TextStyle(
                           color: ColorConstant.primaryWhiteColor,
                           fontSize: 14,
@@ -307,10 +312,11 @@ width: 30,
                         Row(children: [
                           Row(
                             children: [
-                                                    Image.asset('assets/new_icons/winner_not.png',
-                       height: 14,
-                       width: 14,
-                       ),
+                              Image.asset(
+                                'assets/new_icons/winner_not.png',
+                                height: 14,
+                                width: 14,
+                              ),
                               Text(
                                 " ₹${widget.contest.firstPrize}  ",
                                 style: TextStyle(
@@ -322,7 +328,6 @@ width: 30,
                           ),
                           Row(
                             children: [
-                           
                               Text(
                                 "Max winners:- ${widget.contest.winPercent} ",
                                 style: TextStyle(
@@ -333,22 +338,24 @@ width: 30,
                             ],
                           ),
                         ]),
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.check_circle_outline,
-                              size: 15,
-                              color: Colors.black45,
-                            ),
-                            Text(
-                              " guaranteed",
-                              style: TextStyle(
-                                  color: Colors.black45,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w500),
-                            )
-                          ],
-                        ),
+                        widget.contest.guaranteed == '0'
+                            ? Container()
+                            : Row(
+                                children: [
+                                  Icon(
+                                    Icons.check_circle_outline,
+                                    size: 15,
+                                    color: Colors.black45,
+                                  ),
+                                  Text(
+                                    " Guaranteed",
+                                    style: TextStyle(
+                                        color: Colors.black45,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500),
+                                  )
+                                ],
+                              ),
                       ],
                     ),
                   ),

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cricket_fantacy/src/controllers/auth_controllers.dart';
 import 'package:cricket_fantacy/src/ui/screens/dashboard_screen.dart';
 import 'package:cricket_fantacy/src/utils/color_scheme.dart';
@@ -8,6 +10,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
+import 'package:timer_count_down/timer_count_down.dart';
 
 class OtpScreen extends StatefulWidget {
   String type;
@@ -21,6 +24,25 @@ class OtpScreen extends StatefulWidget {
 class _OtpScreenState extends State<OtpScreen> {
   bool _isActive = false;
   var controller = Get.put(AuthController());
+  bool isResendEnable = false;
+  int duration = 60;
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  void onEnd() {
+    setState(() {
+      isResendEnable = true;
+    });
+    print('onEnd');
+  }
+
+  void restart() {
+    isResendEnable = false;
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,17 +112,17 @@ class _OtpScreenState extends State<OtpScreen> {
                       height: 15,
                     ),
                     Container(
-                      width: MediaQuery.of(context).size.width/1,
+                      width: MediaQuery.of(context).size.width / 1,
                       height: 50,
                       child: Pinput(
-                        onChanged: (val){
-                          if(val!=null){
+                        onChanged: (val) {
+                          if (val != null) {
                             setState(() {
-                              _isActive=true;
+                              _isActive = true;
                             });
-                          }else{
+                          } else {
                             setState(() {
-                              _isActive=false;
+                              _isActive = false;
                             });
                           }
                         },
@@ -114,14 +136,12 @@ class _OtpScreenState extends State<OtpScreen> {
               ),
             ),
           ),
-         
-         
           Padding(
             padding: const EdgeInsets.fromLTRB(15, 15, 15, 20),
             child: InkWell(
               onTap: () {
                 if (_isActive == true) {
-                  controller.validateOtp(context,widget.type);
+                  controller.validateOtp(context, widget.type);
                   // Navigator.push(
                   //   context,
                   //   (MaterialPageRoute(
@@ -150,6 +170,48 @@ class _OtpScreenState extends State<OtpScreen> {
                 ),
               ),
             ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              InkWell(
+                onTap: () {
+                  if (isResendEnable == true) {
+                    controller.callValidatePhoneApi(context, widget.type, true);
+                    controller.otpController.clear();
+                  }
+                },
+                child: Text(
+                  "Resend OTP",
+                  style: TextStyle(
+                      color: isResendEnable
+                          ? ColorConstant.primaryColor
+                          : ColorConstant.disableColor,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600),
+                ),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Countdown(
+                seconds: duration,
+                build: (BuildContext context, double time) => isResendEnable
+                    ? Text("")
+                    : Text(
+                        time.toStringAsFixed(0) + ' Sec',
+                        style: TextStyle(
+                            color: ColorConstant.primaryColor,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600),
+                      ),
+                interval: Duration(milliseconds: 100),
+                onFinished: () {
+                  onEnd();
+                  print('Timer is done!');
+                },
+              ),
+            ],
           ),
         ]),
       ),
