@@ -45,12 +45,12 @@ class _PickPlayerScreenState extends State<PickPlayerScreen>
 
   void callGetWinningInfo() {
     if (widget.myTeamId == '') {
-       controller.totalCreditPoint=100;
-       controller.isLineupPressed=false; 
+      controller.totalCreditPoint = 100;
+      controller.isLineupPressed = false;
       controller.getSquad(context, widget.contest.matchId);
     } else {
-      controller.totalCreditPoint=0;
-      controller.isLineupPressed=false; 
+      controller.totalCreditPoint = 0;
+      controller.isLineupPressed = false;
       controller.getMyTeamSquad(context, widget.contest.matchId,
           widget.myTeamId, widget.matches.teamid1, widget.matches.teamid2);
     }
@@ -144,7 +144,7 @@ class _PickPlayerScreenState extends State<PickPlayerScreen>
                 }));
               },
               child: Container(
-width: 30,
+                width: 30,
                 height: 40,
                 child: Padding(
                   padding: const EdgeInsets.all(5.0),
@@ -154,7 +154,8 @@ width: 30,
                     width: 20,
                   ),
                 ),
-              ),            ),
+              ),
+            ),
           )
         ],
       ),
@@ -419,15 +420,14 @@ width: 30,
                                               fontSize: 10,
                                               fontWeight: FontWeight.w400),
                                         ),
-                                         Text(
+                                        Text(
                                           widget.matches.vanue,
                                           style: TextStyle(
                                               color: Colors.white,
                                               fontSize: 10,
                                               fontWeight: FontWeight.w400),
                                         ),
-                                       
-                                          ],
+                                      ],
                                     ),
                                   ),
                                   SizedBox(
@@ -515,8 +515,7 @@ width: 30,
                             }));
                           },
                           child: Row(
-                            children:  [
-
+                            children: [
                               Icon(
                                 Icons.remove_red_eye,
                                 size: 15,
@@ -532,8 +531,7 @@ width: 30,
                                     fontSize: 12,
                                     fontWeight: FontWeight.w500),
                               ),
-                              
-                             
+
                               // InkWell(
                               //   onTap: (){
                               //       controller.lineupBottonPressed();
@@ -552,40 +550,41 @@ width: 30,
                         const SizedBox(
                           width: 10,
                         ),
-                  widget.matches.elevenOut==0?Container():        const Text(
-                          "/",
-                          style: TextStyle(
-                              color: Colors.white38,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w500),
-                        ),
-                       widget.matches.elevenOut==0?Container():   const SizedBox(
-                          width: 10,
-                        ),
-                   
-                   widget.matches.elevenOut==0?Container():
-                   
-                        Row(
-                          children:  [
-                            Icon(
-                              Icons.remove_red_eye,
-                              size: 15,
-                              color: ColorConstant.primaryWhiteColor,
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                          
-                          
-                           "LINEUP",
-                              style: TextStyle(
-                                  color: ColorConstant.primaryWhiteColor,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          ],
-                        ),
+                        widget.matches.elevenOut == 0
+                            ? Container()
+                            : const Text(
+                                "/",
+                                style: TextStyle(
+                                    color: Colors.white38,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                        widget.matches.elevenOut == 0
+                            ? Container()
+                            : const SizedBox(
+                                width: 10,
+                              ),
+                        widget.matches.elevenOut == 0
+                            ? Container()
+                            : Row(
+                                children: [
+                                  Icon(
+                                    Icons.remove_red_eye,
+                                    size: 15,
+                                    color: ColorConstant.primaryWhiteColor,
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(
+                                    "LINEUP",
+                                    style: TextStyle(
+                                        color: ColorConstant.primaryWhiteColor,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                ],
+                              ),
                       ],
                     ),
                   ),
@@ -662,8 +661,7 @@ width: 30,
                             ],
                           ),
                           child: Padding(
-                            padding:
-                                const EdgeInsets.only(left: 0.0, right: 0),
+                            padding: const EdgeInsets.only(left: 0.0, right: 0),
                             child: Text(
                               "NEXT",
                               style: TextStyle(
@@ -728,7 +726,6 @@ width: 30,
                             fontSize: 15,
                             fontWeight: FontWeight.w600),
                       ),
-                     
                     ],
                   ),
                 ),
@@ -753,7 +750,6 @@ width: 30,
                         children: [
                           Row(
                             children: [
-                             
                               Text(
                                 "POINTS",
                                 style: TextStyle(
@@ -778,7 +774,6 @@ width: 30,
                               SizedBox(
                                 width: 20,
                               ),
-                              
                             ],
                           )
                         ],
@@ -797,25 +792,19 @@ width: 30,
                             onTap: () {
                               if (dummyPlayer[index] == 0) {
                                 if (controller.choosedPlayerList.length < 11) {
-                                  
                                   if (controller.totalCreditPoint <
                                       int.parse(players[index].creditPoints)) {
                                     Messages().showErrorMsg(
                                         context: context,
                                         message: 'Credit point is less');
                                   } else {
-
-                                  
-                                  
-                                  
-                                  
                                     controller.chosedPlayer(
                                         players[index],
                                         index,
                                         widget.matches.team1.teamId,
                                         widget.matches.team2.teamId,
                                         context);
-                                  }  
+                                  }
                                 } else {
                                   print("player full");
                                 }
@@ -832,22 +821,24 @@ width: 30,
                               height: 100,
                               width: MediaQuery.of(context).size.width / 1,
                               decoration: BoxDecoration(
-                                color:  dummyPlayer[index] == 0?Colors.white:Colors.yellow[50],
+                                  color: dummyPlayer[index] == 0
+                                      ? Colors.white
+                                      : Colors.yellow[50],
                                   border: Border(
-                                top: BorderSide(
-                                    width: 1,
-                                    color: ColorConstant.deviderColor),
-
-
-
-                              )),
+                                    top: BorderSide(
+                                        width: 1,
+                                        color: ColorConstant.deviderColor),
+                                  )),
                               child: Padding(
                                 padding:
                                     const EdgeInsets.only(left: 5, right: 0),
                                 child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
                                   children: [
                                     Container(
-                                      // width: MediaQuery.of(context).size.width/2.2,
+                                      width: MediaQuery.of(context).size.width /
+                                          1.5,
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
@@ -879,23 +870,24 @@ width: 30,
                                                     width: 20,
                                                   ),
                                                 ),
-                                                 Visibility(
-                                      visible:            widget.matches
-                                                                      .elevenOut ==
-                                                                  1,
-                                                   child: Positioned(
+                                                Visibility(
+                                                  visible: widget
+                                                          .matches.elevenOut ==
+                                                      1,
+                                                  child: Positioned(
                                                     right: 10,
                                                     top: 0,
                                                     child: Image.asset(
-                                                    
-                                                     players[index].playingStatus=='0'?
-                                                     'assets/new_icons/lineup_not.png':
-                                                      'assets/new_icons/lineup.png',
+                                                      players[index]
+                                                                  .playingStatus ==
+                                                              '0'
+                                                          ? 'assets/new_icons/lineup_not.png'
+                                                          : 'assets/new_icons/lineup.png',
                                                       height: 20,
                                                       width: 20,
                                                     ),
-                                                                                                 ),
-                                                 )
+                                                  ),
+                                                )
                                               ]),
                                             ),
                                           ),
@@ -960,8 +952,8 @@ width: 30,
                                       ),
                                     ),
                                     Container(
-                                      width:
-                                          MediaQuery.of(context).size.width / 5,
+                                      width: MediaQuery.of(context).size.width /
+                                          10,
                                       alignment: Alignment.center,
                                       child: Text(
                                         players[index].playerPoints,
@@ -971,7 +963,10 @@ width: 30,
                                             fontWeight: FontWeight.w500),
                                       ),
                                     ),
-                                    SizedBox(width: 10,),
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width /
+                                          20,
+                                    ),
                                     Expanded(
                                       // width: MediaQuery.of(context).size.width / 6,
                                       child: Row(
@@ -985,7 +980,9 @@ width: 30,
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.w500),
                                           ),
-                                          SizedBox(width: 0,),
+                                          SizedBox(
+                                            width: 0,
+                                          ),
 
                                           dummyPlayer[index] == 0
                                               ? Icon(
