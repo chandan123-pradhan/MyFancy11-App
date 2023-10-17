@@ -1574,7 +1574,11 @@ class _WalletScreenState extends State<WalletScreen>
                                                       context,
                                                       controller
                                                           .selectedPaymentGateway
-                                                          .toString());
+                                                          .toString(),
+                                                      controller.selectedPaymentGateway ==
+                                                              '0'
+                                                          ? 'upi'
+                                                          : 'bank');
                                                 }
                                               },
                                               child: Container(

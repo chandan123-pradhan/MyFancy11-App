@@ -871,15 +871,19 @@ class HomeController extends GetxController {
   }
 
   void requestForWithdrawal(
-      String amount, context, selectedPaymentMethod) async {
+      String amount, context, selectedPaymentMethod, type) async {
     if (double.parse(splashDataApiResponse.data.withdrawMinimum) <=
         double.parse(amount)) {
       showLoaderDialog(context);
-      Map parameter = {'amount': amount, 'is_default': selectedPaymentMethod};
+      Map parameter = {
+        'amount': amount,
+        'is_default': selectedPaymentMethod,
+        'type': type
+      };
       var response = await apiProvider.postAfterAuth(
           routeUrl: NetworkConstant.requestForWithdrawal,
           bodyParams: parameter);
-      // debugger();
+      debugger();
       Navigator.pop(context);
       if (response['status'] == 200) {
         Messages().showErrorMsg(context: context, message: response['message']);
