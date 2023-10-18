@@ -59,7 +59,8 @@ class Matches {
     required this.team1,
     required this.team2,
     required this.is_subscribe,
-    required this.vanue
+    required this.vanue,
+    required this.freeGiveway
   });
   late final int matchId;
   late final int uniqueId;
@@ -96,6 +97,7 @@ class Matches {
   late final Team2 team2;
   late final String is_subscribe;
   late final String vanue;
+  late final String freeGiveway;
   
   Matches.fromJson(Map<String, dynamic> json){
     matchId = json['match_id'];
@@ -133,6 +135,7 @@ class Matches {
     team2 = Team2.fromJson(json['team2']);
     is_subscribe=json['is_subscribe'].toString();
     vanue=json['venue'].toString();
+    freeGiveway=json['freegiveway'].toString();
   }
 
   Map<String, dynamic> toJson() {
@@ -172,6 +175,7 @@ class Matches {
     _data['team2'] = team2.toJson();
     _data['is_subscribe']=is_subscribe;
     _data['venue']=vanue;
+    _data['freegiveway']=freeGiveway;
     return _data;
   }
 }

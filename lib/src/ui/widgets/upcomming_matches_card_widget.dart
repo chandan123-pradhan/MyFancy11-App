@@ -152,189 +152,195 @@ class _UpcommingMatchCardWidgetState extends State<UpcommingMatchCardWidget> {
                         padding: const EdgeInsets.all(0.0),
                         child: Padding(
                           padding: const EdgeInsets.only(
-                              left: 10, top: 5, right: 10, bottom: 0),
+                              left: 10, top: 5, right: 0, bottom: 0),
                           child: Stack(
                             children: [
                               Column(
                                 children: [
                                   SizedBox(height: 0),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        widget.matches.leagueName,
-                                        style: TextStyle(
-                                            color:
-                                                ColorConstant.primaryBlackColor,
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.w600),
-                                      ),
-                                      Expanded(
-                                          
-                                              child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.end,
-                                                  children: [
-                                                    // Icon(
-                                                    //   Icons.live_tv_sharp,
-                                                    //   size: 18,
-                                                    //   color: Colors.black38,
-                                                    // ),
-                                                    SizedBox(
-                                                      width: 5,
-                                                    ),
-                                                    Row(
-                                                      children: [
-                                                        Image.asset(
-                                                          widget.matches
-                                                                      .elevenOut ==
-                                                                  0
-                                                              ? "assets/new_icons/lineup_not.png"
-                                                              : "assets/new_icons/lineup.png",
-                                                          height: 20,
-                                                          width: 20,
-                                                        ),
-
-                                                        //  InkWell(
-                                                        //       onTap: () {
-                                                        //         //                                       (WidgetsBinding.instance).addPostFrameCallback(
-                                                        //         //   (_) => ShowCaseWidget.of(context)
-                                                        //         //       .startShowCase([_one]),
-                                                        //         // );
-                                                        //       },
-                                                        //       child: Image.asset(
-                                                        //         widget.matches.elevenOut == 0?
-                                                        //         "assets/new_icons/lineup_not.png":
-                                                        //         "assets/new_icons/lineup.png",
-                                                        //       height: 20,
-                                                        //       width: 20,
-
-                                                        //       )
-
-                                                        //       // Text(
-                                                        //       //   widget.matches.elevenOut == 0
-                                                        //       //       ? 'Linupout not available'
-                                                        //       //       : 'Linup out',
-                                                        //       //   style: TextStyle(
-                                                        //       //       color: widget.matches.elevenOut ==
-                                                        //       //               0
-                                                        //       //           ? Colors.black38
-                                                        //       //           : ColorConstant.greenColor,
-                                                        //       //       fontSize: 12,
-                                                        //       //       fontWeight: FontWeight.w500),
-                                                        //       // ),
-
-                                                        //   )
-                                                      ],
-                                                    )
-                                                  ],
-                                                ),
-                                              )
-                                    ],
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal:10.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          widget.matches.leagueName,
+                                          style: TextStyle(
+                                              color:
+                                                  ColorConstant.primaryBlackColor,
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                        Expanded(
+                                            
+                                                child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.end,
+                                                    children: [
+                                                      // Icon(
+                                                      //   Icons.live_tv_sharp,
+                                                      //   size: 18,
+                                                      //   color: Colors.black38,
+                                                      // ),
+                                                      SizedBox(
+                                                        width: 5,
+                                                      ),
+                                                      Row(
+                                                        children: [
+                                                          Image.asset(
+                                                            widget.matches
+                                                                        .elevenOut ==
+                                                                    0
+                                                                ? "assets/new_icons/lineup_not.png"
+                                                                : "assets/new_icons/lineup.png",
+                                                            height: 20,
+                                                            width: 20,
+                                                          ),
+                                  
+                                                          //  InkWell(
+                                                          //       onTap: () {
+                                                          //         //                                       (WidgetsBinding.instance).addPostFrameCallback(
+                                                          //         //   (_) => ShowCaseWidget.of(context)
+                                                          //         //       .startShowCase([_one]),
+                                                          //         // );
+                                                          //       },
+                                                          //       child: Image.asset(
+                                                          //         widget.matches.elevenOut == 0?
+                                                          //         "assets/new_icons/lineup_not.png":
+                                                          //         "assets/new_icons/lineup.png",
+                                                          //       height: 20,
+                                                          //       width: 20,
+                                  
+                                                          //       )
+                                  
+                                                          //       // Text(
+                                                          //       //   widget.matches.elevenOut == 0
+                                                          //       //       ? 'Linupout not available'
+                                                          //       //       : 'Linup out',
+                                                          //       //   style: TextStyle(
+                                                          //       //       color: widget.matches.elevenOut ==
+                                                          //       //               0
+                                                          //       //           ? Colors.black38
+                                                          //       //           : ColorConstant.greenColor,
+                                                          //       //       fontSize: 12,
+                                                          //       //       fontWeight: FontWeight.w500),
+                                                          //       // ),
+                                  
+                                                          //   )
+                                                        ],
+                                                      )
+                                                    ],
+                                                  ),
+                                                )
+                                      ],
+                                    ),
                                   ),
                                   SizedBox(
                                     height: 15,
                                   ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Container(
-                                            height: 35,
-                                            width: 35,
-                                            decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                image: DecorationImage(
-                                                    image: NetworkImage(widget
-                                                        .matches
-                                                        .team1
-                                                        .teamImage),
-                                                    fit: BoxFit.fill)),
-                                          ),
-                                          const SizedBox(
-                                            width: 10,
-                                          ),
-                                          Text(
-                                            widget.matches.team1.teamShortName,
-                                            style: TextStyle(
-                                                color: ColorConstant
-                                                    .primaryBlackColor,
-                                                fontSize: 13,
-                                                fontWeight: FontWeight.w600),
-                                          ),
-                                        ],
-                                      ),
-                                      Column(
-                                        children: [
-                                          SizedBox(
-                                            height: 15,
-                                          ),
-                                          Container(
-                                              height: 25,
-                                              // width: 80,
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal:10.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Container(
+                                              height: 35,
+                                              width: 35,
                                               decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                  color: Colors.deepOrange[50]),
-                                              alignment: Alignment.center,
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.fromLTRB(
-                                                        10, 0, 10, 0),
-                                                child: CountdownTimer(
-                                                  endWidget: Text("Live"),
-                                                  endTime: targetDate
-                                                      .millisecondsSinceEpoch,
-                                                  textStyle: TextStyle(
-                                                      fontSize: 12,
-                                                      color: Colors.red,
-                                                      fontWeight:
-                                                          FontWeight.w600),
-                                                ),
-                                              )),
-                                          SizedBox(
-                                            height: 5,
-                                          ),
-                                          Text(
-                                            widget.matches.matchDateTime,
-                                            style: TextStyle(
-                                                color: Colors.black45,
-                                                fontSize: 11,
-                                                fontWeight: FontWeight.w400),
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            widget.matches.team2.teamShortName,
-                                            style: TextStyle(
-                                                color: ColorConstant
-                                                    .primaryBlackColor,
-                                                fontSize: 13,
-                                                fontWeight: FontWeight.w600),
-                                          ),
-                                          SizedBox(
-                                            width: 10,
-                                          ),
-                                          Container(
-                                            height: 35,
-                                            width: 35,
-                                            decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                image: DecorationImage(
-                                                    image: NetworkImage(widget
-                                                        .matches
-                                                        .team2
-                                                        .teamImage),
-                                                    fit: BoxFit.fill)),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
+                                                  shape: BoxShape.circle,
+                                                  image: DecorationImage(
+                                                      image: NetworkImage(widget
+                                                          .matches
+                                                          .team1
+                                                          .teamImage),
+                                                      fit: BoxFit.fill)),
+                                            ),
+                                            const SizedBox(
+                                              width: 10,
+                                            ),
+                                            Text(
+                                              widget.matches.team1.teamShortName,
+                                              style: TextStyle(
+                                                  color: ColorConstant
+                                                      .primaryBlackColor,
+                                                  fontSize: 13,
+                                                  fontWeight: FontWeight.w600),
+                                            ),
+                                          ],
+                                        ),
+                                        Column(
+                                          children: [
+                                            SizedBox(
+                                              height: 15,
+                                            ),
+                                            Container(
+                                                height: 25,
+                                                // width: 80,
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(5),
+                                                    color: Colors.deepOrange[50]),
+                                                alignment: Alignment.center,
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          10, 0, 10, 0),
+                                                  child: CountdownTimer(
+                                                    endWidget: Text("Live"),
+                                                    endTime: targetDate
+                                                        .millisecondsSinceEpoch,
+                                                    textStyle: TextStyle(
+                                                        fontSize: 12,
+                                                        color: Colors.red,
+                                                        fontWeight:
+                                                            FontWeight.w600),
+                                                  ),
+                                                )),
+                                            SizedBox(
+                                              height: 5,
+                                            ),
+                                            Text(
+                                              widget.matches.matchDateTime,
+                                              style: TextStyle(
+                                                  color: Colors.black45,
+                                                  fontSize: 11,
+                                                  fontWeight: FontWeight.w400),
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              widget.matches.team2.teamShortName,
+                                              style: TextStyle(
+                                                  color: ColorConstant
+                                                      .primaryBlackColor,
+                                                  fontSize: 13,
+                                                  fontWeight: FontWeight.w600),
+                                            ),
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Container(
+                                              height: 35,
+                                              width: 35,
+                                              decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  image: DecorationImage(
+                                                      image: NetworkImage(widget
+                                                          .matches
+                                                          .team2
+                                                          .teamImage),
+                                                      fit: BoxFit.fill)),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                   Padding(
                                     padding:
@@ -389,7 +395,7 @@ class _UpcommingMatchCardWidgetState extends State<UpcommingMatchCardWidget> {
                                           padding: const EdgeInsets.all(5.0),
                                           child: Text(
                                      widget
-                                              .matches.mega=='0'?'Mega Comming Soon':     
+                                              .matches.mega=='0'?'Mega Coming Soon':     
                                           
                                             "Mega ₹${widget
                                               .matches.mega}",
@@ -400,43 +406,78 @@ class _UpcommingMatchCardWidgetState extends State<UpcommingMatchCardWidget> {
                                           ),
                                         ),
                                       ),
-                                      InkWell(
-                                        onTap: () {
-                                          controller.setReminder(widget
-                                              .matches.matchId
-                                              .toString(),context);
-                                          setState(() {
-                                            isSetReminder = true;
-                                          });
-                                        },
-                                        child: Container(
-                                          height: 25,
-                                          width: 30,
-                                          alignment: Alignment.center,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              color: widget.matches
-                                                              .is_subscribe ==
-                                                          '1' ||
-                                                      isSetReminder == true
-                                                  ? ColorConstant.primaryColor
-                                                  : Colors.white,
-                                              border: Border.all(
-                                                  width: 1,
-                                                  color: Colors.black26)),
-                                          child: Image.asset(
-                                            ImageUitls.Notification_icon,
-                                            height: 15,
-                                            width: 15,
-                                            color:
-                                                widget.matches.is_subscribe ==
-                                                            '1' ||
-                                                        isSetReminder == true
-                                                    ? Colors.white
-                                                    : Colors.black,
+                                      Row(
+                                        children: [
+                                          InkWell(
+                                            onTap: () {
+                                              controller.setReminder(widget
+                                                  .matches.matchId
+                                                  .toString(),context);
+                                              setState(() {
+                                                isSetReminder = true;
+                                              });
+                                            },
+                                            child: Container(
+                                              height: 25,
+                                              width: 30,
+                                              alignment: Alignment.center,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  color: widget.matches
+                                                                  .is_subscribe ==
+                                                              '1' ||
+                                                          isSetReminder == true
+                                                      ? ColorConstant.primaryColor
+                                                      : Colors.white,
+                                                  border: Border.all(
+                                                      width: 1,
+                                                      color: Colors.black26)),
+                                              child: Image.asset(
+                                                ImageUitls.Notification_icon,
+                                                height: 15,
+                                                width: 15,
+                                                color:
+                                                    widget.matches.is_subscribe ==
+                                                                '1' ||
+                                                            isSetReminder == true
+                                                        ? Colors.white
+                                                        : Colors.black,
+                                              ),
+                                            ),
                                           ),
+                             widget.matches.freeGiveway=='0'?SizedBox(width: 10,):        SizedBox(width: 20,),
+                                  widget.matches.freeGiveway=='0'?Container():     Container(
+                                     // height: 30,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.only(
+                                          bottomRight: Radius.circular(10),
+                                          topLeft: Radius.circular(10)
                                         ),
+                                      color: ColorConstant.primaryColor
+                                      ),
+                                      alignment: Alignment.center,
+                                      child: Padding(
+                                        padding: const EdgeInsets.fromLTRB(12,6,12,8),
+                                        child: Row(
+                                          children: [
+                                            Image.asset('assets/icons/gift.png',
+                                            height: 10,
+                                            width: 10,
+                                            ),
+
+                                            Text("  ₹ ${widget.matches.freeGiveway}",
+                                            style: TextStyle(
+                                              color: ColorConstant.primaryWhiteColor,
+                                              fontSize: 12,fontWeight: FontWeight.w500
+                                            ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                     )
+                                     
+                                        ],
                                       ),
                                     ],
                                   ),

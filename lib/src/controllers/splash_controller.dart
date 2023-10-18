@@ -165,7 +165,7 @@ class HomeController extends GetxController {
       response = await apiProvider.postBeforeAuth(
           routeUrl: NetworkConstant.GET_MATCHES, bodyParams: parameter);
     }
-    //  debugger();
+      // debugger();
     print(response);
     if (response != null) {
       getMatchesApiResponse = GetMatchesApiResponse.fromJson(response);
@@ -190,7 +190,7 @@ class HomeController extends GetxController {
     //  debugger();
     var response = await apiProvider.postAfterAuth(
         routeUrl: NetworkConstant.GET_CONTEST, bodyParams: parameter);
-    debugger();
+    // debugger();
 
     // print(response);
 
@@ -782,12 +782,12 @@ class HomeController extends GetxController {
       required Contest contest}) async {
     showLoaderDialog(context);
     update();
-    debugger();
+    // debugger();
     Map parameter = {'team_id': teamId};
     var response = await apiProvider.postAfterAuth(
         routeUrl: NetworkConstant.cloneTeam, bodyParams: parameter);
     print(response);
-    debugger();
+    // debugger();
     Navigator.pop(context);
     if (response['status'] == 200) {
       Navigator.push(context, MaterialPageRoute(builder: (context) {
