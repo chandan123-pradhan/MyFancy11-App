@@ -12,6 +12,7 @@ import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:get/instance_manager.dart';
 import 'package:intl/intl.dart';
 import 'package:just_the_tooltip/just_the_tooltip.dart';
+import 'package:lottie/lottie.dart';
 import 'package:showcaseview/showcaseview.dart';
 
 class UpcommingMatchCardWidget extends StatefulWidget {
@@ -97,12 +98,22 @@ class _UpcommingMatchCardWidgetState extends State<UpcommingMatchCardWidget> {
                               bottomRight: Radius.circular(0)
                             )),
                         alignment: Alignment.center,
-                        child: const Text(
-                          "Prediction",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 13,
-                              fontWeight: FontWeight.w600),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Lottie.asset('assets/lotties/prediction_animation.json',
+                            height: 18,
+                            width: 18
+                            ),
+                            SizedBox(width: 5,),
+                            const Text(
+                              "Prediction",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                          ],
                         ),
                       ),
                     ),

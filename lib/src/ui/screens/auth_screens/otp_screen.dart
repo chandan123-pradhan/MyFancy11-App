@@ -179,16 +179,29 @@ class _OtpScreenState extends State<OtpScreen> {
                   if (isResendEnable == true) {
                     controller.callValidatePhoneApi(context, widget.type, true);
                     controller.otpController.clear();
+                    // setState(() {
+                    //  // time=60;
+                    //   isResendEnable=false;
+                    // });
                   }
                 },
-                child: Text(
-                  "Resend OTP",
-                  style: TextStyle(
-                      color: isResendEnable
-                          ? ColorConstant.primaryColor
-                          : ColorConstant.disableColor,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600),
+                child: Container(
+                  height: 35,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color: isResendEnable?ColorConstant.primaryColor:ColorConstant.disableColor
+                  ),
+                  alignment: Alignment.center,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal:10.0),
+                    child: Text(
+                      "Resend OTP",
+                      style: TextStyle(
+                          color: ColorConstant.primaryWhiteColor,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600),
+                    ),
+                  ),
                 ),
               ),
               SizedBox(

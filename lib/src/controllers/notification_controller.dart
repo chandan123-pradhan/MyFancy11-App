@@ -13,7 +13,7 @@ class NotificationController extends GetxController {
     Map parameter = {};
     var response = await apiProvider.postAfterAuth(
         routeUrl: NetworkConstant.Notification_url, bodyParams: parameter);
- debugger();
+//  debugger();
  
  if(response['status']==200){
    isNotFound=false;

@@ -12,6 +12,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:lottie/lottie.dart';
 
 class MyUpcommingMatchCardWidget extends StatefulWidget {
   final MyMatchModel matches;
@@ -95,12 +96,22 @@ class _MyUpcommingMatchCardWidgetState
                               topLeft: Radius.circular(20),
                             )),
                         alignment: Alignment.center,
-                        child: const Text(
-                          "Prediction",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 13,
-                              fontWeight: FontWeight.w600),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Lottie.asset('assets/lotties/prediction_animation.json',
+                            height: 18,
+                            width: 18
+                            ),
+                            SizedBox(width: 5,),
+                            const Text(
+                              "Prediction",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -358,7 +369,7 @@ class _MyUpcommingMatchCardWidgetState
                                           padding: const EdgeInsets.all(5.0),
                                           child: Text(
   widget
-                                              .matches.mega=='0'?'Mega Comming Soon':     
+                                              .matches.mega=='0'?'Mega Coming Soon':     
                                           
                                             "Mega ₹${widget
                                               .matches.mega}",

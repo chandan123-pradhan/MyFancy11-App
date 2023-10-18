@@ -93,8 +93,6 @@ PODS:
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
-  - get_upi (0.0.1):
-    - Flutter
   - google_sign_in_ios (0.0.1):
     - Flutter
     - GoogleSignIn (~> 6.2)
@@ -168,7 +166,6 @@ DEPENDENCIES:
   - Flutter (from `Flutter`)
   - flutter_facebook_auth (from `.symlinks/plugins/flutter_facebook_auth/ios`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
-  - get_upi (from `.symlinks/plugins/get_upi/ios`)
   - google_sign_in_ios (from `.symlinks/plugins/google_sign_in_ios/ios`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
@@ -229,8 +226,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_facebook_auth/ios"
   fluttertoast:
     :path: ".symlinks/plugins/fluttertoast/ios"
-  get_upi:
-    :path: ".symlinks/plugins/get_upi/ios"
   google_sign_in_ios:
     :path: ".symlinks/plugins/google_sign_in_ios/ios"
   image_picker_ios:
@@ -279,7 +274,6 @@ SPEC CHECKSUMS:
   flutter_facebook_auth: dfd6b2563406c538098e2127512d385c9ffd70ad
   fluttertoast: 31b00dabfa7fb7bacd9e7dbee580d7a2ff4bf265
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
-  get_upi: 0844bbe5b833e69bb6e21b3eb9ba072c94ed4ef0
   google_sign_in_ios: 1256ff9d941db546373826966720b0c24804bcdd
   GoogleDataTransport: 54dee9d48d14580407f8f5fbf2f496e92437a2f2
   GoogleSignIn: 5651ce3a61e56ca864160e79b484cd9ed3f49b7a
