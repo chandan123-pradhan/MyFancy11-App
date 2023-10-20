@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:get/get.dart';
+import 'package:share_plus/share_plus.dart';
 
 class LeaderboardTab extends StatefulWidget {
   String contestId;
@@ -358,7 +359,15 @@ void updateLive(){
                                                                       .w500),
                                                         ),
                                                       ),
-                                                      Container(
+                                                    
+                                                    
+                      controller
+                                                              .getLeaderboardApiResponse!
+                                                              .data[i]
+                                                              .userId ==
+                                                          appToken && widget.flag==true ?
+                                                          
+                                                                                          Container(
                                                         width:
                                                             MediaQuery.of(context)
                                                                     .size
@@ -366,20 +375,69 @@ void updateLive(){
                                                                 6,
                                                         alignment:
                                                             Alignment.center,
-                                                        child: Text(
-                                                          controller
-                                                              .getLeaderboardApiResponse!
-                                                              .data[i]
-                                                              .rank,
-                                                          style: TextStyle(
-                                                              color: ColorConstant
-                                                                  .primaryWhiteColor,
-                                                              fontSize: 14,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500),
+                                                        child: Row(
+                                                          mainAxisAlignment: MainAxisAlignment.end,
+                                                          children: [
+                                                            Text(
+                                                              controller
+                                                                  .getLeaderboardApiResponse!
+                                                                  .data[i]
+                                                                  .rank,
+                                                              style: TextStyle(
+                                                                  color: ColorConstant
+                                                                      .primaryWhiteColor,
+                                                                  fontSize: 14,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500),
+                                                            ),
+                                                            SizedBox(width: 10,),
+                                                        
+                                                        
+                                                            InkWell(
+                                                              onTap: (){
+                                                                                                      Share.share(
+                                          // '$refferAndEarnMsg\n${controller.refferalApiResponse!.refer.refercode}');
+
+                                     'Hey, I am ${controller.getLeaderboardApiResponse!.data[i].name},\nI have Earned ₹${controller
+                                                                  .getLeaderboardApiResponse!
+                                                                  .data[i]
+                                                                  .winAmount} amount by joining Live matches from Myfancy11 App.'
+                                     );
+                                 
+                                                              },
+                                                              child: Icon(Icons.share,size:15,color: Colors.white,))
+                                                         , SizedBox(width: 5,),
+                                                          ],
                                                         ),
                                                       )
+                                                 
+                                                 :                                Container(
+                                                        width:
+                                                            MediaQuery.of(context)
+                                                                    .size
+                                                                    .width /
+                                                                6,
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child:
+                                                            Text(
+                                                              controller
+                                                                  .getLeaderboardApiResponse!
+                                                                  .data[i]
+                                                                  .rank,
+                                                              style: TextStyle(
+                                                                  color: ColorConstant
+                                                                      .primaryWhiteColor,
+                                                                  fontSize: 14,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500),
+                                                            ),
+                                                          
+                                                      )
+                                                    
+                                                 
                                                     ],
                                                   ),
                                                 ),

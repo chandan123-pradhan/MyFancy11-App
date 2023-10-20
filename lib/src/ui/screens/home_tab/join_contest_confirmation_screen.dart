@@ -144,7 +144,7 @@ class _JoinCotestConfirmationScreenState
                                     )
                                   ]),
                                   Text(
-                                    "₹${int.parse(widget.contest.entry) + int.parse(widget.contest.bonusEntry)}",
+                                    "₹${int.parse(widget.contest.entry)}",
                                     style: TextStyle(
                                         color: ColorConstant.primaryBlackColor,
                                         fontSize: 14,
@@ -169,7 +169,7 @@ class _JoinCotestConfirmationScreenState
                                     )
                                   ]),
                                   Text(
-                                    "₹${controller.getWalletApiResponse!.data.bonusWallet}",
+                                    "₹${widget.contest.bonusEntry}",
                                     style: TextStyle(
                                         color: ColorConstant.primaryBlackColor,
                                         fontSize: 14,
@@ -181,7 +181,7 @@ class _JoinCotestConfirmationScreenState
                                 height: 20,
                               ),
                               Text(
-                                "Amount from deposit account shall be debited to ₹${widget.contest.entry} and Amount of ₹${int.parse(widget.contest.bonusEntry)} hall be bonus account",
+                                "Amount from deposit account or winning account shall be debited to ₹${widget.contest.entry} and Amount of ₹${int.parse(widget.contest.bonusEntry)} shall be bonus account.",
                                 style: TextStyle(
                                     color: Colors.black38,
                                     fontSize: 14,
@@ -346,19 +346,15 @@ class _JoinCotestConfirmationScreenState
                       //         ],
                       //       )
                       //     : Container(),
-                   
-                   
-                   
+
                       Padding(
                         padding: const EdgeInsets.fromLTRB(15, 15, 15, 20),
                         child: InkWell(
                           onTap: () {
-                         if(checkAmount()){
-
-                         
-                            controller.joinContest(
-                                context: context, contest: widget.contest);
-                         }
+                            if (checkAmount()) {
+                              controller.joinContest(
+                                  context: context, contest: widget.contest);
+                            }
 
                             //           if (_isActive == true) {
                             //             final snackBar = SnackBar(
@@ -415,6 +411,10 @@ class _JoinCotestConfirmationScreenState
         return true;
       } else
         return false;
+    } else if (double.parse(widget.contest.entry) +
+            double.parse(widget.contest.bonusEntry) <=
+        double.parse(controller.getWalletApiResponse!.data.winningWallet)) {
+      return true;
     } else {
       return false;
     }

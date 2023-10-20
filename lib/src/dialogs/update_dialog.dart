@@ -37,59 +37,61 @@ class _UpdateDialogState extends State<UpdateDialog> {
         height: MediaQuery.of(context).size.height / 2.1,
         child: Padding(
           padding: const EdgeInsets.all(20.0),
-          child: Column(
-            children: [
-              Platform.isIOS
-                  ? Text(
-                      "Update Available (V${controller.splashDataApiResponse.data.iosVersion})",
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Platform.isIOS
+                    ? Text(
+                        "Update Available (V${controller.splashDataApiResponse.data.iosVersion})",
+                        style: TextStyle(
+                            color: ColorConstant.primaryBlackColor,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600),
+                      )
+                    : Text(
+                        "Update Available (V${controller.splashDataApiResponse.data.androidVersion})",
+                        style: TextStyle(
+                            color: ColorConstant.primaryBlackColor,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600),
+                      ),
+                SizedBox(
+                  height: 10,
+                ),
+                Html(data: controller.splashDataApiResponse.data.updateMsgHtml),
+                SizedBox(
+                  height: 10,
+                ),
+                Lottie.asset(
+                  'assets/lotties/update.json',
+                  height: MediaQuery.of(context).size.height / 4,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                InkWell(
+                  onTap: () {
+                    // Navigator.pop(context);
+                    openWeb(widget.apkUrl);
+                  },
+                  child: Container(
+                    height: 40,
+                    width: MediaQuery.of(context).size.width / 1,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: ColorConstant.primaryBlackColor),
+                    alignment: Alignment.center,
+                    child: Text(
+                      "UPDATE",
                       style: TextStyle(
-                          color: ColorConstant.primaryBlackColor,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600),
-                    )
-                  : Text(
-                      "Update Available (V${controller.splashDataApiResponse.data.androidVersion})",
-                      style: TextStyle(
-                          color: ColorConstant.primaryBlackColor,
-                          fontSize: 18,
+                          color: ColorConstant.primaryWhiteColor,
+                          fontSize: 16,
                           fontWeight: FontWeight.w600),
                     ),
-              SizedBox(
-                height: 10,
-              ),
-              Html(data: controller.splashDataApiResponse.data.updateMsgHtml),
-              SizedBox(
-                height: 10,
-              ),
-              Lottie.asset(
-                'assets/lotties/update.json',
-                height: MediaQuery.of(context).size.height / 4,
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              InkWell(
-                onTap: () {
-                  // Navigator.pop(context);
-                  openWeb(widget.apkUrl);
-                },
-                child: Container(
-                  height: 40,
-                  width: MediaQuery.of(context).size.width / 1,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: ColorConstant.primaryBlackColor),
-                  alignment: Alignment.center,
-                  child: Text(
-                    "UPDATE",
-                    style: TextStyle(
-                        color: ColorConstant.primaryWhiteColor,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

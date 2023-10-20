@@ -31,7 +31,7 @@ class _QuizListPageState extends State<QuizListPage> {
         backgroundColor: Colors.grey[50],
         body:  RefreshIndicator(
         onRefresh: () async {
-         controller.getQuizCategory();
+        controller.refreshQuizList(selectedCategory);
         },
         
           child: Column(

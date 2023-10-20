@@ -52,11 +52,16 @@ class QuizController extends GetxController {
       getQuizCategoryApiResponse =
           GetQuizCategoryApiResponse.fromJson(response);
       isFetchingData = false;
+      //debugger();
       update();
       getQuizList(getQuizCategoryApiResponse!.data[0].categoryId.toString());
     } catch (e) {
       print(e);
     }
+  }
+
+  refreshQuizList(index){
+    getQuizList(getQuizCategoryApiResponse!.data[index].categoryId.toString());
   }
 
   void getQuizList(String catId) async {
@@ -69,7 +74,7 @@ class QuizController extends GetxController {
           routeUrl: NetworkConstant.getQuizByCategory, bodyParams: paramter);
       getQuizByCategoryApiResponse =
           GetQuizByCategoryApiResponse.fromJson(response);
-
+// debugger()
       update();
       _startCallingQuizList(catId);
     } catch (e) {
@@ -125,6 +130,9 @@ class QuizController extends GetxController {
 
   Timer? quizDetailsTimer;
   startQuizDetailsCallingApi(String quizId, flag) {
+    if(quizDetailsTimer!=null){
+      quizDetailsTimer!.cancel();
+    }
     //quizDetailsTimer!.cancel();
     quizDetailsTimer = Timer.periodic((Duration(seconds: 5)), (timer) {
       print("quiz details api calling");
@@ -253,6 +261,9 @@ class QuizController extends GetxController {
 
   Timer? myQuizTimer;
   void updateMyPortfolio(String status) async {
+    if(myQuizTimer!=null){
+      myQuizTimer!.cancel();
+    }
     myQuizTimer = Timer.periodic(Duration(seconds: 5), (timer) async {
       print("updating my portfolio");
       try {

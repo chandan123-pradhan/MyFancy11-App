@@ -741,6 +741,7 @@ class _LiveContestScreenState extends State<LiveContestScreen>
                                         'my_status'],
                                         flag: widget.flag=='Completed Match'?true:false,
                                         isForLive: true,
+                                        
                                       
                                       )
                                   : MyContestTab(

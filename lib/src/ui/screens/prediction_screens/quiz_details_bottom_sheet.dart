@@ -267,7 +267,7 @@ class _QuizDetailsBottomSheetState extends State<QuizDetailsBottomSheet> {
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(
-                                                "True ₹${controller.quizDetailsApiResponse!.data.option1}",
+                                                "Yes ₹${controller.quizDetailsApiResponse!.data.option1}",
                                                 style: TextStyle(
                                                     color: widget.flag == 'yes'
                                                         ? ColorConstant
@@ -326,7 +326,7 @@ class _QuizDetailsBottomSheetState extends State<QuizDetailsBottomSheet> {
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(
-                                                " False ₹${controller.quizDetailsApiResponse!.data.option2}",
+                                                " No ₹${controller.quizDetailsApiResponse!.data.option2}",
                                                 style: TextStyle(
                                                     color: widget.flag == 'no'
                                                         ? Colors.white
@@ -663,7 +663,7 @@ class _QuizDetailsBottomSheetState extends State<QuizDetailsBottomSheet> {
                                                 BorderRadius.circular(5)),
                                         alignment: Alignment.center,
                                         child: Text(
-                                          "Entry Fee ₹${controller.defaultInvenstmentAmount}",
+                                          "Join With Entry Fee ₹${controller.defaultInvenstmentAmount}",
                                           style: TextStyle(
                                               color: ColorConstant
                                                   .primaryWhiteColor,
