@@ -405,7 +405,7 @@ void updateLive(){
                                                                   .winAmount} amount by joining Live matches from Myfancy11 App.'
                                      );
                                  
-                                                              },
+                                                            },
                                                               child: Icon(Icons.share,size:15,color: Colors.white,))
                                                          , SizedBox(width: 5,),
                                                           ],

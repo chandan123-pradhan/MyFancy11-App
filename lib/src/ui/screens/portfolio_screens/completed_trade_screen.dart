@@ -218,7 +218,7 @@ class _CompletedTradePageState extends State<CompletedTradePage> {
                                                                                 ),
                                                                                 Text(
                                                                                   "₹" +  controller
-                                                  .completedQuiz[index].pl.toString(),
+                                                  .completedQuiz[index].win.toString(),
                                                                                   style: TextStyle(color: double.parse( controller
                                                   .completedQuiz[index].win) > double.parse( controller
                                                   .completedQuiz[index].pl) ? ColorConstant.primaryColor : ColorConstant.primaryBlackColor, fontSize: 15, fontWeight: FontWeight.w500),
@@ -243,7 +243,7 @@ class _CompletedTradePageState extends State<CompletedTradePage> {
                                                                                 ),
                                                                                 Text(
                                                                                    controller
-                                                  .completedQuiz[index].win.toString() + "%",
+                                                  .completedQuiz[index].pl.toString() + "%",
                                                                                   style: TextStyle(color: double.parse(controller.completedQuiz[index].pl) <= 0 ? ColorConstant.primaryColor : ColorConstant.primaryBlackColor, fontSize: 15, fontWeight: FontWeight.w500),
                                                                                 ),
                                                                               ],

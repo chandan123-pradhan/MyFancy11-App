@@ -115,13 +115,13 @@ class RefferUserData {
   late final String name;
   late final String profile;
   late final String userToken;
-  late final int amount;
+  late final String amount;
 
   RefferUserData.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     profile = json['profile'];
     userToken = json['user_token'];
-    amount = json['amount'];
+    amount = json['amount'].toString();
   }
 
   Map<String, dynamic> toJson() {

@@ -234,18 +234,19 @@ class QuizController extends GetxController {
 
     update();
   }
-
+// bool isRef
   void getMyPortfolioList(String status) async {
     try {
       // debugger();
       Map paramter = {'status': status};
       //isFetchingData = true;
 
-      liveQuiz.clear();
+      
       var response = await apiProvider.postAfterAuth(
           routeUrl: NetworkConstant.getMyQuizList, bodyParams: paramter);
       //  debugger();
       getQuizMyListApiResponse = GetQuizMyListApiResponse.fromJson(response);
+     liveQuiz.clear();
       for (int i = 0; i < getQuizMyListApiResponse!.data.length; i++) {
         if (status == '1') {
           liveQuiz.add(getQuizMyListApiResponse!.data[i]);
