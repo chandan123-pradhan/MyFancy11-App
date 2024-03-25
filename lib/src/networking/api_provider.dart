@@ -22,8 +22,24 @@ class ApiProvider {
     var response = await http.get(
         Uri.parse(NetworkConstant.BASE_URL + routeUrl),
         headers: {'Autherization': 'Bearer $token'});
+        debugger();
     if (response.statusCode == 200) {
       return json.decode(response.body);
+    } else {}
+  }
+
+   Future<dynamic> getMethod({required String routeUrl}) async {
+    String token = '';
+    var response = await http.get(
+        Uri.parse(NetworkConstant.BASE_URL + routeUrl),
+        headers: {'Autherization': 'Bearer $token'});
+        debugger();
+    if (response.statusCode == 200) {
+      try{
+          return json.decode(response.body);
+      }catch(e){
+return "";
+      }
     } else {}
   }
 

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:cricket_fantacy/src/dialogs/AlertDialog.dart';
 import 'package:cricket_fantacy/src/dialogs/loadingDialog.dart';
@@ -26,6 +27,7 @@ import 'package:cricket_fantacy/src/networking/network_contant.dart';
 import 'package:cricket_fantacy/src/ui/screens/auth_screens/auth_landing_page.dart';
 import 'package:cricket_fantacy/src/ui/screens/dashboard_screen.dart';
 import 'package:cricket_fantacy/src/ui/screens/home_tab/pick_player_screen.dart';
+import 'package:cricket_fantacy/src/ui/screens/payment_webview_screen.dart';
 import 'package:cricket_fantacy/src/utils/app_constant.dart';
 import 'package:cricket_fantacy/src/utils/local_storage/shared_prefrences.dart';
 // import 'package:cricket_fantacy/src/utils/local_storage/shared_prefrences.dart';
@@ -113,6 +115,7 @@ class HomeController extends GetxController {
     print(response);
     splashDataApiResponse = SplashDataApiResponse.fromJson(response);
     sharedPref.setAppToken(splashDataApiResponse.data.appToken);
+    sharedPref.setUserId(splashDataApiResponse.data.id);
     update();
 
     if (flag != 0) {
@@ -652,6 +655,7 @@ class HomeController extends GetxController {
   void recharge({
     required context,
     required String amount,
+    required bool isGoingBack
   }) async {
     showLoaderDialog(context);
     Map parameter = {
@@ -668,6 +672,9 @@ class HomeController extends GetxController {
     if (response['status'] == 200) {
       Messages()
           .showMsg(context: context, message: 'Recharge Successfully Done');
+          if(isGoingBack){
+            Navigator.pop(context);
+          }
     }
     getWalletApi(context);
     // getWalletApiResponse = GetWalletApiResponse.fromJson(response);
@@ -977,42 +984,72 @@ class HomeController extends GetxController {
 
   String orderId = '';
 
-  void getUpiId(amount, context) async {
-    showLoaderDialog(context);
-    Map parameter = {'amount': amount};
-    var response = await apiProvider.postAfterAuth(
-        routeUrl: NetworkConstant.getUpi, bodyParams: parameter);
-    // debugger();
-    Navigator.pop(context);
-    //  debugger();
-    if (response['status'] == 200) {
-      // upiId=response['']
-      orderId = response['order_id'];
-      openWeb(response['data']);
-    } else {
-      Messages().showErrorMsg(context: context, message: response['message']);
-    }
-    update();
+
+   generateTaxId(){
+ DateTime now = DateTime.now();
+  String year = now.year.toString();
+  String month = now.month.toString().padLeft(2, '0');
+  String day = now.day.toString().padLeft(2, '0');
+
+  // Generate random 4-digit number
+  Random random = Random();
+  String randomDigits = (1000 + random.nextInt(9000)).toString();
+
+  // Concatenate the parts to form the tax ID
+  String taxId = '$year$month$day' + '_' + randomDigits;
+  return taxId;
   }
 
-  void updatePayment(context) async {
-    showLoaderDialog(context);
-    Map parameter = {'order_id': orderId};
-    var response = await apiProvider.postAfterAuth(
-        routeUrl: NetworkConstant.check_status, bodyParams: parameter);
-    Navigator.pop(context);
+  void getUpiId(amount, context, isGoingBack) async {
+orderId=generateTaxId();
+    // showLoaderDialog(context);
+    // Map parameter = {'amount': amount};
+    // var response = await apiProvider.postAfterAuth(
+    //     routeUrl: NetworkConstant.getUpi, bodyParams: parameter);
+    // // debugger()
+    // Navigator.pop(context);
+    // //  debugger();
+    // if (response['status'] == 200) {
+    //   // upiId=response['']
+    //   orderId = response['order_id'];
+    //   openWeb(response['data']);
+    // } else {
+    //   Messages().showErrorMsg(context: context, message: response['message']);
+    // }
+    // update();
+    print(promocodeController.text);
+    String? userId=await sharedPref.getUserToken();
+    Navigator.push(context, MaterialPageRoute(builder: (context){
+      return WebViewContainer(amount: amount.toString(),userId: userId!,promoCode: promocodeController.text,
+      tax_id: orderId,
+      );
+    })).then((value) {
+      updatePayment(context,isGoingBack);
+    });
+  }
 
+  void updatePayment(context,isGoingBack) async {
+    showLoaderDialog(context);
+   String? userToken=await sharedPref.getUserToken();
+   print(orderId);
+   debugger();
+    var response = await apiProvider.getMethod(
+        routeUrl: NetworkConstant.check_status+'userId=$userToken&txn=$orderId');
+    Navigator.pop(context);
+debugger();
     orderId = '';
     if (response['status'] == 200) {
-      if (response['data']['code'] == 'PAYMENT_SUCCESS') {
+      debugger();
+      //if (response['data']['code'] == 'PAYMENT_SUCCESS') {
         // Messages().showErrorMsg(
         //     context: context, message: response['data']['message']);
         // amountController.clear();
-        recharge(amount: amountController.text, context: context);
-      } else {
-        Messages().showErrorMsg(
-            context: context, message: response['data']['message']);
-      }
+         getWalletApi(context);
+       // recharge(amount: amountController.text, context: context, isGoingBack: isGoingBack);
+      // } else {
+      //   Messages().showErrorMsg(
+      //       context: context, message: response['data']['message']);
+      // }
     } else {
       Messages().showErrorMsg(context: context, message: response['message']);
     }

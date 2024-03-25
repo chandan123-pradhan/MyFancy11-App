@@ -116,7 +116,7 @@ class _LiveContestScreenState extends State<LiveContestScreen>
               padding: const EdgeInsets.only(right: 20.0),
               child: InkWell(
                   onTap: () {
-                    openWeb('https://myfancy11.com/points-table.html');
+                    openWeb('https://fighters11.com/points-table.html');
                   },
                   child: Container(
                     height: 22,

@@ -12,8 +12,8 @@ class ImageUitls{
   static const String Banner1='assets/images/banners1.jpeg';
   static const String Banner2='assets/images/banner2.jpeg';
   static const String Splash_screen='assets/images/splash_screen.jpeg';
-  static const String App_Logo='assets/images/app_logo.png';
-
+  static const String App_Logo='assets/images/app_logo.jpeg';
+  static const String home_page_app_Logo='assets/images/home_page.png';
   static const String Slider1='assets/images/slider_sq1.png';
   static const String Slider2='assets/images/slider_sq2.png';
   static const String Slider3='assets/images/slider_sq3.png';

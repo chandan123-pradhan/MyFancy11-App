@@ -1,44 +1,26 @@
 {
   "project_info": {
-    "project_number": "803591512115",
-    "project_id": "myfancy11-4680b",
-    "storage_bucket": "myfancy11-4680b.appspot.com"
+    "project_number": "379590872717",
+    "project_id": "fighters11-47960",
+    "storage_bucket": "fighters11-47960.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:803591512115:android:31189a15d7bb51c275c346",
+        "mobilesdk_app_id": "1:379590872717:android:abdcc4464f28543f09dcc4",
         "android_client_info": {
-          "package_name": "com.cricket.myfancy11"
+          "package_name": "com.fighters.eleven"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "803591512115-0nifo25qi5c7in60kd95ftbqus2c89ap.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.cricket.myfancy11",
-            "certificate_hash": "3e46bf8df841a66f81324719fc4f2256560313e2"
-          }
-        },
-        {
-          "client_id": "803591512115-n5ivv6ulib5ial20c0fmo903mim8l7d8.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyBRbNDhznCT4JYInwjAjaNyrnebeCDvt5A"
+          "current_key": "AIzaSyAWnmNTydVft4YeCCY8Wn1NqKqPIV4A9Mk"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "803591512115-n5ivv6ulib5ial20c0fmo903mim8l7d8.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

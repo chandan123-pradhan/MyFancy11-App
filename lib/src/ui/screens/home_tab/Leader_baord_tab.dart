@@ -402,7 +402,7 @@ void updateLive(){
                                      'Hey, I am ${controller.getLeaderboardApiResponse!.data[i].name},\nI have Earned ₹${controller
                                                                   .getLeaderboardApiResponse!
                                                                   .data[i]
-                                                                  .winAmount} amount by joining Live matches from Myfancy11 App.'
+                                                                  .winAmount} amount by joining Live matches from Fighters11 App.'
                                      );
                                  
                                                             },

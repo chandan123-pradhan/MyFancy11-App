@@ -92,7 +92,7 @@ class _QuizDetailsBottomSheetState extends State<QuizDetailsBottomSheet> {
                                         Expanded(
                                           child: InkWell(
                                             onTap: (){
-                                              launchUrl(Uri.parse('https://myfancy11.com/how_to_quiz.html'),
+                                              launchUrl(Uri.parse('https://fighters11.com/how_to_quiz.html'),
  mode: LaunchMode.inAppWebView,
  );
                                             },
@@ -752,7 +752,9 @@ class _QuizDetailsBottomSheetState extends State<QuizDetailsBottomSheet> {
                                                   Navigator.push(context,
                                                       MaterialPageRoute(
                                                           builder: (context) {
-                                                    return WalletScreen();
+                                                    return WalletScreen(
+                                                      isGoingBack: false,
+                                                    );
                                                   }));
                                                 },
                                                 child: Text(

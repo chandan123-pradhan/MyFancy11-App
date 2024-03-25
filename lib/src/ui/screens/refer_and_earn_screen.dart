@@ -166,11 +166,11 @@ class _RefferAndEarnScreenState extends State<RefferAndEarnScreen> {
                                       Share.share(
                                           // '$refferAndEarnMsg\n${controller.refferalApiResponse!.refer.refercode}');
 
-                                          "\uD83C\uDDEE\uD83C\uDDF3Bharat Ka Aapna Fantasy App: Myfancy11\uD83C\uDDEE\uD83C\uDDF3\n" +
+                                          "\uD83C\uDDEE\uD83C\uDDF3Bharat Ka Aapna Fantasy App: Fighters11\uD83C\uDDEE\uD83C\uDDF3\n" +
                                               "\n" +
                                               "\uD83D\uDFE2Play Fantasy Cricket and Option Trading On Bharat's Leading Fantasy App\uD83D\uDFE2\n" +
                                               "\n" +
-                                              "\uD83D\uDC49Download Myfancy11 From Here:\n" +
+                                              "\uD83D\uDC49Download Fighters11 From Here:\n" +
                                               "\n" +
                                               "✅Use My Refer Code To Get ${controller.refferalApiResponse!.referBonusAmount} Rs. Directly to your Bonus Account As a Welcome Bonus, My Refer Code is ${controller.refferalApiResponse!.refer.refercode}\n" +
                                               "\n" +

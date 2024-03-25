@@ -107,7 +107,9 @@ class _ChooseTeamPageState extends State<ChooseTeamPage>
             child: InkWell(
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return WalletScreen();
+                  return WalletScreen(
+                    isGoingBack: false,
+                  );
                 }));
               },
               child: Container(

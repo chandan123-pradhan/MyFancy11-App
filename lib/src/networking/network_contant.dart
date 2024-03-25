@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class NetworkConstant{
 
-  static const String BASE_URL='https://myfancy11.com';//'https://bigfan247.com';
+  static const String BASE_URL='https://fighters11.com';//'https://bigfan247.com';
   static const String VERIFY_MOBILE_NUMBER_URL='/app/phone_valided';
   static const String REFER_VALIDATION_ROUTE_URL='/app/refer_valided';
   static const String LOGIN_ROUTE_URL='/app/login';
@@ -48,7 +48,7 @@ class NetworkConstant{
  static const String winner_api='/app/winner';
  static const String myTeamApi='/app/my_team';
 static const String getUpi='/app/getupi';
-static const String check_status='/app/check_status';
+static const String check_status='/app/check_payment.php?';
   //parames.
 
   static const String PHONE_PARAMS='phone';

@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.cricket.myfancy11">
+    package="com.fighters.eleven">
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.CAMERA" />
 <uses-permission android:name="android.permission.access_fine_location" />
@@ -10,7 +10,7 @@
         <provider android:authorities="com.facebook.katana.provider.PlatformProvider" />
     </queries>
    <application
-        android:label="Myfancy11"
+        android:label="Fighters11"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <meta-data

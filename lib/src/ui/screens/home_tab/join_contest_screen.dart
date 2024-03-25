@@ -111,7 +111,9 @@ class _UpcommingMatchesDetailsState extends State<JoinContest>
             child: InkWell(
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return WalletScreen();
+                  return WalletScreen(
+                    isGoingBack: false,
+                  );
                 }));
               },
               child: Container(

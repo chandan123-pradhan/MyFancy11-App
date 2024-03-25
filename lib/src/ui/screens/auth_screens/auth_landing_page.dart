@@ -35,8 +35,10 @@ class _AuthLandingPageState extends State<AuthLandingPage> {
           children: [
             Padding(
                 padding: EdgeInsets.fromLTRB(20, 60, 20, 0),
-                child: Image.asset(
-                  ImageUitls.App_Logo,
+                child: 
+                
+                Image.asset(
+                 ImageUitls.home_page_app_Logo,
                   height: 50,
                   fit: BoxFit.cover,
                 )),

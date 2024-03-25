@@ -155,6 +155,7 @@ class AuthController extends GetxController {
       modelName = iosInfo.model;
     }
     final fcmToken = await FirebaseMessaging.instance.getToken();
+    debugger();
     print("fireabase token = $fcmToken");
     Map parameter = {
       NetworkConstant.Login_Method: 'phone',

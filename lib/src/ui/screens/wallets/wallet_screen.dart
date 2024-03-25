@@ -20,6 +20,8 @@ import 'package:url_launcher/url_launcher.dart';
 // import 'package:upi_pay/upi_pay.dart';
 
 class WalletScreen extends StatefulWidget {
+  bool isGoingBack;
+  WalletScreen({required this.isGoingBack});
   @override
   State<WalletScreen> createState() => _WalletScreenState();
 }
@@ -62,7 +64,7 @@ class _WalletScreenState extends State<WalletScreen>
     switch (state) {
       case AppLifecycleState.resumed:
         if (controller.orderId != '') {
-          controller.updatePayment(context);
+          controller.updatePayment(context, widget.isGoingBack);
         }
         print("RESUMED");
         break;
@@ -78,8 +80,8 @@ class _WalletScreenState extends State<WalletScreen>
     }
   }
 
-  void _getUpiApp() async {
-    controller.getUpiId(controller.amountController.text, context);
+  void _getUpiApp(bool isGoingBack) async {
+    controller.getUpiId(controller.amountController.text, context,isGoingBack);
 
     // _upiIndia.getAllUpiApps(mandatoryTransactionId: false).then((value) {
     //   setState(() {
@@ -478,7 +480,9 @@ class _WalletScreenState extends State<WalletScreen>
                                     controller.amountController.text) >=
                                 double.parse(controller.splashDataApiResponse
                                     .data.rechargeMinimum)) {
-                              _getUpiApp();
+                              _getUpiApp(
+                                widget.isGoingBack
+                              );
                             } else {
                               Messages().showErrorMsg(
                                   context: context,

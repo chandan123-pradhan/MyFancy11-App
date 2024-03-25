@@ -280,7 +280,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     InkWell(
                       onTap: () async {
-                       openWeb('https://myfancy11.com/terms.html');
+                       openWeb('https://fighters11.com/terms.html');
                       },
                       child: Text(
                         "Terms & Conditions",
@@ -300,7 +300,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     InkWell(
                       onTap: (){
-                        openWeb('https://myfancy11.com/privacy.html');
+                        openWeb('https://fighters11.com/privacy.html');
                       },
                       child: Text(
                         "Privacy Policy",

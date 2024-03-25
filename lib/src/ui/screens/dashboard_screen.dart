@@ -248,7 +248,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ),
             centerTitle: true,
             title: Image.asset(
-              ImageUitls.App_Logo,
+              ImageUitls.home_page_app_Logo,
               height: 40,
             ),
             actions: [
@@ -289,7 +289,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   if (logInStatus == true) {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
-                      return WalletScreen();
+                      return WalletScreen(
+                        isGoingBack: false,
+                      );
                     }));
                   } else {
                     Navigator.push(context,

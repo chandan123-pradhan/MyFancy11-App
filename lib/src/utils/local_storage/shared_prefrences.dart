@@ -14,6 +14,7 @@ class SharedPref {
   String email='email';
   String phone='phone';
   String isLoggedIn='isLoggedIn';
+  String userId='user_id';
   Future<String?> getUserToken() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String? uToken = preferences.getString(userToken);
@@ -28,8 +29,29 @@ class SharedPref {
 
   void setUserToken(token) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
+    print(token);
     preferences.setString(userToken, token);
   }
+
+
+
+
+
+ Future<String?> getUserID() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+   
+    String? aToken = preferences.getString(userId);
+     debugger();
+    return aToken;
+  }
+
+  void setUserId(id) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    debugger();
+    print(id);
+    preferences.setString(userId, id);
+  }
+
 
   void setAppToken(token) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();

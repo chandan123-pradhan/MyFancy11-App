@@ -3,6 +3,7 @@ import 'package:cricket_fantacy/src/models/GetContestListApiResponse.dart';
 import 'package:cricket_fantacy/src/models/GetMatchesApiResponse.dart';
 import 'package:cricket_fantacy/src/ui/screens/dashboard_screen.dart';
 import 'package:cricket_fantacy/src/ui/screens/my_matches_tab/my_matches_tab.dart';
+import 'package:cricket_fantacy/src/ui/screens/wallets/wallet_screen.dart';
 import 'package:cricket_fantacy/src/utils/color_scheme.dart';
 import 'package:cricket_fantacy/src/utils/image_utils.dart';
 import 'package:flutter/material.dart';
@@ -354,6 +355,14 @@ class _JoinCotestConfirmationScreenState
                             if (checkAmount()) {
                               controller.joinContest(
                                   context: context, contest: widget.contest);
+                            }else{
+ Navigator.push(context, MaterialPageRoute(builder: (context) {
+                            return WalletScreen(
+                              isGoingBack: true,
+                            );
+                          })).then((value){
+                            getWallets();
+                          });
                             }
 
                             //           if (_isActive == true) {
@@ -383,12 +392,11 @@ class _JoinCotestConfirmationScreenState
                             width: MediaQuery.of(context).size.width / 1,
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(5),
-                                color: checkAmount()
-                                    ? ColorConstant.primaryBlackColor
-                                    : Colors.grey[400]),
+                                color: ColorConstant.primaryBlackColor
+                                    ),
                             alignment: Alignment.center,
                             child: Text(
-                              "Next",
+                      checkAmount()?        "Next":"Add Money",
                               style: TextStyle(
                                   color: ColorConstant.primaryWhiteColor,
                                   fontSize: 16,
@@ -396,6 +404,11 @@ class _JoinCotestConfirmationScreenState
                             ),
                           ),
                         ),
+
+
+
+
+
                       ),
                     ],
                   );

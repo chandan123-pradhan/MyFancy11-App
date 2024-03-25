@@ -7,7 +7,8 @@ import 'package:cricket_fantacy/src/global_variable.dart';
 import 'package:cricket_fantacy/src/models/splahs_api_response.dart';
 import 'package:cricket_fantacy/src/ui/screens/auth_screens/login_screen.dart';
 import 'package:cricket_fantacy/src/ui/screens/dashboard_screen.dart';
-import 'package:cricket_fantacy/src/ui/screens/home_tab/upcomming_matches_details.dart';
+import 'package:cricket_fantacy/src/ui/screens/home_tab/upcomming_matches_detail.dart';
+// import 'package:cricket_fantacy/src/ui/screens/home_tab/upcomming_matches_details.dart';
 import 'package:cricket_fantacy/src/ui/screens/live_contest_screens/live_contest_screen.dart';
 import 'package:cricket_fantacy/src/ui/screens/prediction_screens/prediction_home_screen.dart';
 import 'package:cricket_fantacy/src/ui/screens/refer_and_earn_screen.dart';
@@ -375,7 +376,9 @@ class _FantacyTabState extends State<FantacyTab> {
   void navigateRechargePage() {
     if (logInStatus) {
       Navigator.push(context, MaterialPageRoute(builder: (context) {
-        return WalletScreen();
+        return WalletScreen(
+          isGoingBack: false,
+        );
       }));
     } else {
       Navigator.push(context, MaterialPageRoute(builder: (context) {

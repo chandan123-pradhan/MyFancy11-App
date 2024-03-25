@@ -321,7 +321,7 @@ Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context){
                              Divider(),
                     InkWell(
                         onTap: () {
-                         openWeb('https://myfancy11.com/how_to_quiz.html');
+                         openWeb('https://fighters11.com/how_to_quiz.html');
                         },
                         child: Padding(
                           padding: const EdgeInsets.fromLTRB(15, 0, 15, 5),
@@ -356,7 +356,7 @@ Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context){
                           Divider(),
                     InkWell(
                         onTap: () {
-                        openWeb('https://myfancy11.com/code.html');
+                        openWeb('https://fighters11.com/code.html');
                         },
                         child: Padding(
                           padding: const EdgeInsets.fromLTRB(15, 0, 15, 5),
@@ -389,7 +389,7 @@ Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context){
                           Divider(),
                     InkWell(
                         onTap: () {
-                          openWeb('https://myfancy11.com/responsible-gaming.html');
+                          openWeb('https://fighters11.com/responsible-gaming.html');
                         },
                         child: Padding(
                           padding: const EdgeInsets.fromLTRB(15, 0, 15, 5),
@@ -429,7 +429,7 @@ Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context){
         
                     InkWell(
                         onTap: () {
-                         openWeb('https://myfancy11.com/legality.html');
+                         openWeb('https://fighters11.com/legality.html');
                         },
                         child: Padding(
                           padding: const EdgeInsets.fromLTRB(15, 0, 15, 5),
@@ -464,7 +464,7 @@ Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context){
                         Divider(),
                     InkWell(
                         onTap: () {
-                          openWeb('https://myfancy11.com/refund.html');
+                          openWeb('https://fighters11.com/refund.html');
                         },
                         child: Padding(
                           padding: const EdgeInsets.fromLTRB(15, 0, 15, 5),
@@ -498,7 +498,7 @@ Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context){
                         Divider(),
                     InkWell(
                         onTap: () {
-                        openWeb('https://myfancy11.com/points-table.html');
+                        openWeb('https://fighters11.com/points-table.html');
                         },
                         child: Padding(
                           padding: const EdgeInsets.fromLTRB(15, 0, 15, 5),
@@ -534,7 +534,7 @@ Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context){
                       Divider(),
                     InkWell(
                         onTap: () {
-                        openWeb('https://myfancy11.com/terms.html');
+                        openWeb('https://fighters11.com/terms.html');
                         },
                         child: Padding(
                           padding: const EdgeInsets.fromLTRB(15, 0, 15, 5),
@@ -568,7 +568,7 @@ Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context){
                         Divider(),
                     InkWell(
                         onTap: () {
-                        openWeb('https://myfancy11.com/privacy.html');
+                        openWeb('https://fighters11.com/privacy.html');
                         },
                         child: Padding(
                           padding: const EdgeInsets.fromLTRB(15, 0, 15, 5),
@@ -602,7 +602,7 @@ Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context){
                           Divider(),
                     InkWell(
                         onTap: () {
-                       openWeb('https://myfancy11.com/about-us.html');
+                       openWeb('https://fighters11.com/about-us.html');
                         },
                         child: Padding(
                           padding: const EdgeInsets.fromLTRB(15, 0, 15, 5),
@@ -797,7 +797,9 @@ child: Padding(
        child: InkWell(
         onTap: (){
   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                            return WalletScreen();
+                            return WalletScreen(
+                              isGoingBack: false,
+                            );
                           }));
         },
          child: Container(

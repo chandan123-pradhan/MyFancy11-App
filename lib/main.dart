@@ -71,7 +71,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Myfancy11',
+        title: 'Fighter11',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
