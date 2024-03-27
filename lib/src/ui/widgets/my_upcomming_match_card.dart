@@ -165,7 +165,7 @@ class _MyUpcommingMatchCardWidgetState
                                         style: TextStyle(
                                             color:
                                                 ColorConstant.primaryBlackColor,
-                                            fontSize: 13,
+                                            fontSize: 15,
                                             fontWeight: FontWeight.w600),
                                       ),
                                     

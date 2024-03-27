@@ -169,7 +169,7 @@ class _UpcommingMatchCardWidgetState extends State<UpcommingMatchCardWidget> {
                                           style: TextStyle(
                                               color:
                                                   ColorConstant.primaryBlackColor,
-                                              fontSize: 13,
+                                              fontSize: 15,
                                               fontWeight: FontWeight.w600),
                                         ),
                                         Expanded(

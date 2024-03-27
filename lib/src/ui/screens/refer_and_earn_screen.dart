@@ -170,7 +170,7 @@ class _RefferAndEarnScreenState extends State<RefferAndEarnScreen> {
                                               "\n" +
                                               "\uD83D\uDFE2Play Fantasy Cricket and Option Trading On Bharat's Leading Fantasy App\uD83D\uDFE2\n" +
                                               "\n" +
-                                              "\uD83D\uDC49Download Fighters11 From Here:\n" +
+                                              "\uD83D\uDC49Download Fighters11 From Here: https://fighters11.com/fighters11.apk\n" +
                                               "\n" +
                                               "✅Use My Refer Code To Get ${controller.refferalApiResponse!.referBonusAmount} Rs. Directly to your Bonus Account As a Welcome Bonus, My Refer Code is ${controller.refferalApiResponse!.refer.refercode}\n" +
                                               "\n" +
