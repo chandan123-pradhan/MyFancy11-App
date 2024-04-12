@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cricket_fantacy/src/controllers/splash_controller.dart';
 import 'package:cricket_fantacy/src/models/GetContestListApiResponse.dart';
 import 'package:cricket_fantacy/src/models/GetMatchesApiResponse.dart';
@@ -355,14 +357,15 @@ class _JoinCotestConfirmationScreenState
                             if (checkAmount()) {
                               controller.joinContest(
                                   context: context, contest: widget.contest);
-                            }else{
- Navigator.push(context, MaterialPageRoute(builder: (context) {
-                            return WalletScreen(
-                              isGoingBack: true,
-                            );
-                          })).then((value){
-                            getWallets();
-                          });
+                            } else {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return WalletScreen(
+                                  isGoingBack: true,
+                                );
+                              })).then((value) {
+                                getWallets();
+                              });
                             }
 
                             //           if (_isActive == true) {
@@ -392,11 +395,10 @@ class _JoinCotestConfirmationScreenState
                             width: MediaQuery.of(context).size.width / 1,
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(5),
-                                color: ColorConstant.primaryBlackColor
-                                    ),
+                                color: ColorConstant.primaryBlackColor),
                             alignment: Alignment.center,
                             child: Text(
-                      checkAmount()?        "Next":"Add Money",
+                              checkAmount() ? "Next" : "Add Money",
                               style: TextStyle(
                                   color: ColorConstant.primaryWhiteColor,
                                   fontSize: 16,
@@ -404,11 +406,6 @@ class _JoinCotestConfirmationScreenState
                             ),
                           ),
                         ),
-
-
-
-
-
                       ),
                     ],
                   );
@@ -417,19 +414,43 @@ class _JoinCotestConfirmationScreenState
   }
 
   bool checkAmount() {
-    if (int.parse(widget.contest.entry) <=
-        double.parse(controller.getWalletApiResponse!.data.depositWallet)) {
+  
+
+
+print(widget.contest);
+print(controller.getWalletApiResponse!.data);
+//  debugger();
+
+    if (int.parse(widget.contest.bonusEntry) > 0) {
       if (int.parse(widget.contest.bonusEntry) <=
           double.parse(controller.getWalletApiResponse!.data.bonusWallet)) {
-        return true;
-      } else
+        if (int.parse(widget.contest.entry) <=
+            double.parse(controller.getWalletApiResponse!.data.depositWallet)) {
+          return true;
+        } else {
+          if (double.parse(widget.contest.entry) +
+                  double.parse(widget.contest.bonusEntry) <=
+              double.parse(
+                  controller.getWalletApiResponse!.data.winningWallet)) {
+            return true;
+          } else {
+            return false;
+          }
+        }
+      }else{
         return false;
-    } else if (double.parse(widget.contest.entry) +
-            double.parse(widget.contest.bonusEntry) <=
-        double.parse(controller.getWalletApiResponse!.data.winningWallet)) {
-      return true;
+      }
     } else {
-      return false;
+      if (int.parse(widget.contest.entry) <=
+          double.parse(controller.getWalletApiResponse!.data.depositWallet)) {
+        return true;
+      } else if (double.parse(widget.contest.entry) +
+              double.parse(widget.contest.bonusEntry) <=
+          double.parse(controller.getWalletApiResponse!.data.winningWallet)) {
+        return true;
+      } else {
+        return false;
+      }
     }
   }
 }

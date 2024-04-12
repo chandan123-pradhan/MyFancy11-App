@@ -41,7 +41,7 @@ class _WebViewContainerState extends State<WebViewContainer> {
           },
         ),
       )
-      ..loadRequest(Uri.parse( widget.promoCode==''?  'https://fighters11.com/app/pay.php?userid=${widget.userId}&am=${widget.amount}&txn=${widget.tax_id}':'https://fighters11.com/app/pay.php?userid=${widget.userId}&am=${widget.amount}&promocode=${widget.promoCode}&txn=${widget.tax_id}'));
+      ..loadRequest(Uri.parse( widget.promoCode==''?  'https://fighters11.com/app/pay.php?userid=${widget.userId}&am=${widget.amount}&txn=${widget.tax_id}':'https://fighters11.com/app/pay.php?userid=${widget.userId}&am=1&promocode=${widget.promoCode}&txn=${widget.tax_id}'));
   }
 
   @override

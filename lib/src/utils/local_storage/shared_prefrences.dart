@@ -52,7 +52,6 @@ class SharedPref {
     preferences.setString(userId, id);
   }
 
-
   void setAppToken(token) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     

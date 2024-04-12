@@ -111,7 +111,7 @@ class HomeController extends GetxController {
     var response = await apiProvider.postBeforeAuthStaticToken(
         routeUrl: NetworkConstant.CUSTOMER_DATE_ROUTE_URL,
         bodyParams: parameter);
-    // debugger();
+     debugger();
     print(response);
     splashDataApiResponse = SplashDataApiResponse.fromJson(response);
     sharedPref.setAppToken(splashDataApiResponse.data.appToken);
